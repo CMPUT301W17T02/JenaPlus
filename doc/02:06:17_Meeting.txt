@@ -1,0 +1,42 @@
+Date: February 16/17
+Time: 18:55 - 19:11
+
+Meeting Breakdown:
+
+1) Discussion of group contributions throughout the week:
+	
+	- Carlo Oliva:
+		1) 2 screens of the User Interface
+		2) Use Cases for Geolocation 
+		3) Contributed to design of the app
+
+	- Carrol Jirakul:
+		1) Drafted StoryBoard
+		2) Drafted initial User Interface
+		3) Use Cases for Mood - Add/Delete/Update
+
+	- Hong (Helen) Zhou
+		1) Use cases for other details
+		2) 3 screens of the User Interface 
+		3) Contributed to design of the app
+
+	- Xiaoxuan (Cecelia) Xiang
+		1) Use cases for Mood history
+		2) Contributed to design of the app
+
+	- Julienne Belardo
+		1) Use cases for Following/Sharing
+		2) 1 1/2 screens of the User Interface
+		3) Contributed to design of the app.
+
+2) Total hours group met up throughout the week:
+
+	- Met on Tuesday February 13, 17 for approximately 4 hours
+
+3) Major method of communication:
+
+	- Facebook Group/Chat
+
+4) Other miscellaneous details:
+
+	- Talked about Glossary, Use Cases, and Release planning.
