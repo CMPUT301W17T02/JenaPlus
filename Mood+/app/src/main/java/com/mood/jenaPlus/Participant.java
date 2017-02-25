@@ -9,12 +9,14 @@ import java.util.ArrayList;
 public class Participant extends User {
 
     private String userName;
-    private ArrayList<Mood> moodList;
-    private ArrayList<Mood> followingMoodList;
+    private MoodList moodList;
+    private MoodList followingMoodList;
 
 
+    public Participant(String userName) {
+        this.userName = userName;
+    }
 
-
-
+    
 
 }
