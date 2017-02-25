@@ -6,7 +6,7 @@ package com.mood.jenaPlus;
 
 public class MoodIcon  {
 
-    private Integer icon;
+    private MoodIcon icon;
     private Integer color;
 
     public Integer getColor(Integer icon) {
@@ -15,5 +15,9 @@ public class MoodIcon  {
 
     public void setColor(Integer color) {
         this.color = color;
+    }
+
+    public MoodIcon getIcon(Integer iconNum) {
+
     }
 }
