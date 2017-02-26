@@ -22,7 +22,7 @@ public class Mood {
 
     }
 
-    public Mood(Date date, String id) {
+    public Mood(String id) {
         this.date = new Date();
         this.id = id;
     }
