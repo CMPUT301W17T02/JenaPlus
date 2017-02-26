@@ -17,7 +17,7 @@ public class MoodIcon  {
         this.color = color;
     }
 
-    public String getMood(Integer iconNum) {
+    public static String getMood(Integer iconNum) {
         String mood;
         switch (iconNum) {
             case 0: mood = "surprised";
