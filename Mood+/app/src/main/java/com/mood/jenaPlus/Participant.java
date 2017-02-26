@@ -13,19 +13,31 @@ import java.util.Date;
 public class Participant extends User {
 
     private String userName;
-    private MoodList userMoodList;
-    private MoodList followingMoodList;
+    private MoodList userMoodList = new MoodList();
+    private MoodList followingMoodList = new MoodList();
+
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public boolean hasUserName(String newName) {
+        if (newName.equals(this.userName)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public Participant(String userName) {
         this.userName = userName;
     }
 
-    public void addMoodEvent(String text, Date date, Boolean addLocation, Location location, String id,
+    public void addMoodEvent(String text, Boolean addLocation, Location location, String id,
                              String social, String photo, String color) {
         Mood mood = new Mood();
 
         mood.setText(text);
-        mood.setDate(date);
+        mood.setAddLocation(addLocation);
         mood.setLocation(location);
         mood.setId(id);
         mood.setSocial(social);
@@ -34,6 +46,24 @@ public class Participant extends User {
 
         userMoodList.addUserMood(mood);
     }
+
+    public MoodList getUserMoodList() {
+        return userMoodList;
+    }
+
+    public void setUserMoodList(MoodList userMoodList) {
+        this.userMoodList = userMoodList;
+    }
+
+    public MoodList getFollowingMoodList() {
+        return followingMoodList;
+    }
+
+    public void setFollowingMoodList(MoodList followingMoodList) {
+        this.followingMoodList = followingMoodList;
+    }
+
+
 
 
 }
