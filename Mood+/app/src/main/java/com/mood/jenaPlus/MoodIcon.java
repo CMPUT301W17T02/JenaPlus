@@ -34,7 +34,6 @@ public class MoodIcon  {
     }
 
     public String getMood(Integer iconNum) {
-        String mood;
         switch (iconNum) {
             case 0: this.moodString = "surprised";
                 break;
