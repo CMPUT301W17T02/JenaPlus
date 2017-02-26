@@ -33,7 +33,7 @@ public class Participant extends User {
         this.userName = userName;
     }
 
-    public void addMoodEvent(String text, Boolean addLocation, Location location, String id,
+    public void addNewMood(String text, Boolean addLocation, Location location, String id,
                              String social, String photo, String color) {
         Mood mood = new Mood();
 

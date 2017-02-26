@@ -55,7 +55,7 @@ public class ParticipantTest{
         String color = m.getMood(8);
 
         Participant newParticipant = new Participant(userName);
-        newParticipant.addMoodEvent(text,addLocation,location,id,social,photo,color);
+        newParticipant.addNewMood(text,addLocation,location,id,social,photo,color);
         MoodList moodList = newParticipant.getUserMoodList();
 
         //Checking if the mood was added
@@ -84,8 +84,8 @@ public class ParticipantTest{
         String color2 = m2.getMood(3);
 
         Participant newParticipant = new Participant(userName);
-        newParticipant.addMoodEvent(text,addLocation,location,id,social,photo,color);
-        newParticipant.addMoodEvent(text2,addLocation2,location2,id2,social2,photo2,color2);
+        newParticipant.addNewMood(text,addLocation,location,id,social,photo,color);
+        newParticipant.addNewMood(text2,addLocation2,location2,id2,social2,photo2,color2);
 
         MoodList userList = newParticipant.getUserMoodList();
         Mood mood0 = userList.getUserMood(0);
@@ -93,6 +93,5 @@ public class ParticipantTest{
 
         assertEquals(mood0.getText(),text);
         assertEquals(mood1.getText(),text2);
-        
     }
 }
