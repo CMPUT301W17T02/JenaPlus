@@ -1,11 +1,12 @@
 package com.mood.jenaPlus;
 
+import android.graphics.Color;
 import android.location.Location;
 
 import java.util.Date;
 
 /**
- * Created by Helen on 2017/2/25.
+ * Created by Helen and Carlo on 2017/2/25.
  */
 
 public class Mood {
@@ -16,7 +17,13 @@ public class Mood {
     private MoodIcon mood;
     private String social;
     private String photo;
-    private MoodColor color;
+    private Color color;
+
+    public enum Moods {
+        SURPRISED,DISGUST,FEAR,CONFUSED,HAPPY,ANGRY,SAD,SHAME,ANNOYED
+    }
+    
+    Moods m;
 
     public String getText() {
         return text;
@@ -54,7 +61,31 @@ public class Mood {
         }
     }
 
-    public MoodIcon getMood() {
+    public String getMood() {
+        Integer moodNum = null;
+        String mood;
+        switch(m) {
+            case SURPRISED: moodNum = 0;
+                break;
+            case DISGUST: moodNum = 1;
+                break;
+            case FEAR: moodNum = 2;
+                break;
+            case CONFUSED: moodNum = 3;
+                break;
+            case HAPPY: moodNum = 4;
+                break;
+            case ANGRY: moodNum = 5;
+                break;
+            case SAD: moodNum = 6;
+                break;
+            case SHAME: moodNum = 7;
+                break;
+            case ANNOYED: moodNum = 8;
+                break;
+            
+        }
+        mood = MoodIcon.getMood(moodNum);
         return mood;
     }
 
@@ -88,11 +119,15 @@ public class Mood {
         }
     }
 
-    public MoodColor getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(MoodColor color) {
+    public void setColor(Color color) {
         this.color = color;
     }
+
+
 }
+
+
