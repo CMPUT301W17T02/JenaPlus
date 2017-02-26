@@ -36,27 +36,26 @@ public class MoodIcon  {
     public String getMood(Integer iconNum) {
         String mood;
         switch (iconNum) {
-            case 0: mood = "surprised";
+            case 0: this.moodString = "surprised";
                 break;
-            case 1: mood = "disgust";
+            case 1: this.moodString = "disgust";
                 break;
-            case 2: mood = "fear";
+            case 2: this.moodString = "fear";
                 break;
-            case 3: mood = "confused";
+            case 3: this.moodString = "confused";
                 break;
-            case 4: mood = "happy";
+            case 4: this.moodString = "happy";
                 break;
-            case 5: mood = "angry";
+            case 5: this.moodString = "angry";
                 break;
-            case 6: mood = "sad";
+            case 6: this.moodString = "sad";
                 break;
-            case 7: mood = "shame";
+            case 7: this.moodString = "shame";
                 break;
-            default: mood = "annoyed";
+            case 8: this.moodString = "annoyed";
                 break;
         }
 
-        this.moodString = mood;
         return moodString;
     }
 }

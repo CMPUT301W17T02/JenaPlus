@@ -12,11 +12,11 @@ import org.junit.Test;
 public class MoodListTest  {
     @Test
     public void testAddMood() throws Exception{
-        Date date = new Date();
+
         String moodId = "happy";
         String color = "#A7FFF649";
         MoodList userList = new MoodList();
-        Mood userMood = new Mood(date,moodId);
+        Mood userMood = new Mood(moodId);
 
         //Adding a text
         userMood.setText("I'm happy today!");

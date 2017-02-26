@@ -6,12 +6,9 @@ package com.mood.jenaPlus;
 
 public abstract class User {
 
-
     protected String userName;
 
-    public String getUserName(){
-        return userName;
-    }
-
+    public abstract String getUserName();
+    public abstract boolean hasUserName(String userName);
 
 }
