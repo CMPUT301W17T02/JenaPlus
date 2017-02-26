@@ -94,4 +94,9 @@ public class ParticipantTest{
         assertEquals(mood0.getText(),text);
         assertEquals(mood1.getText(),text2);
     }
+
+    @Test
+    public void testGetFollowingMoodList() throws Exception {
+
+    }
 }
