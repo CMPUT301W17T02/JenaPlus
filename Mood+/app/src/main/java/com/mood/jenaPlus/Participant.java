@@ -15,6 +15,7 @@ public class Participant extends User {
     private String userName;
     private MoodList userMoodList = new MoodList();
     private MoodList followingMoodList = new MoodList();
+    private FollowingList followingParticipants = new FollowingList();
 
     public String getUserName() {
         return this.userName;
@@ -61,6 +62,10 @@ public class Participant extends User {
 
     public void setFollowingMoodList(MoodList followingMoodList) {
         this.followingMoodList = followingMoodList;
+    }
+
+    public void followingParticipantsAccepted(Participant userName) {
+        followingParticipants.followingAccepted(userName);
     }
 
 

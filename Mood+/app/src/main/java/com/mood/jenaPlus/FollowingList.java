@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by carrotji on 2017-02-26.
  */
 
-public class Following {
+public class FollowingList {
     private ArrayList<Participant> pending = new ArrayList<Participant>();
     private ArrayList<Participant> followingList = new ArrayList<Participant>();
 
