@@ -1,10 +1,8 @@
 package com.mood.jenaPlus;
 
-import android.graphics.Color;
 import android.location.Location;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by ceciliaxiang on 2017-02-25.
@@ -15,6 +13,8 @@ public class Participant extends User {
     private String userName;
     private MoodList userMoodList = new MoodList();
     private MoodList followingMoodList = new MoodList();
+    private FollowList followingParticipants = new FollowList();
+    private FollowList followersParticipants = new FollowList();
 
     public String getUserName() {
         return this.userName;
@@ -63,7 +63,35 @@ public class Participant extends User {
         this.followingMoodList = followingMoodList;
     }
 
+    public void followingParticipantsAccepted(Participant userName) {
+        followingParticipants.followingAccepted(userName);
+    }
 
+    public void followingParticipantsRejected(Participant userName) {
+        followingParticipants.followingRejected(userName);
+    }
 
+    public void followingParticipantsRequest(Participant userName){
+        followingParticipants.followerRequest(userName);
+    }
 
+    public void followerParticipantsAccepted(Participant userName) {
+        followersParticipants.followerAccepted(userName);
+    }
+
+    public void followerParticipantsRejected(Participant userName) {
+        followersParticipants.followerRejected(userName);
+    }
+
+    public void followerParticipantsRequest(Participant userName){
+        followersParticipants.followerRequest(userName);
+    }
+
+    public ArrayList<Participant> getPendingFollowers(){
+        return followersParticipants.getPendingFollowers();
+    }
+
+    public FollowList getFollowersParticipants() {
+        return followersParticipants;
+    }
 }
