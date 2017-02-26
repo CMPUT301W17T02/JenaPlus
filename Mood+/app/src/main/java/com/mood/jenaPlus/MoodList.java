@@ -26,6 +26,9 @@ public class MoodList {
         UserMoodList.remove(mood);
     }
 
+    public boolean hasUserMood (Mood mood) {
+        return UserMoodList.contains(mood);
+    }
 
     public Mood getUserIndex(int index){
         return UserMoodList.get(index);
