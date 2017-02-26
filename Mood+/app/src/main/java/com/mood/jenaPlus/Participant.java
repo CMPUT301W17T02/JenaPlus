@@ -21,7 +21,7 @@ public class Participant extends User {
     }
 
     public void addMoodEvent(String text, Date date, Boolean addLocation, Location location, String id,
-                             String social, String photo, Color color) {
+                             String social, String photo, String color) {
         Mood mood = new Mood();
 
         mood.setText(text);
@@ -32,7 +32,7 @@ public class Participant extends User {
         mood.setPhoto(photo);
         mood.setColor(color);
 
-        userMoodList.addMood(mood);
+        userMoodList.addUserMood(mood);
     }
 
 

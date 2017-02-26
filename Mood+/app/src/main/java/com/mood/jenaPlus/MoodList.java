@@ -16,12 +16,12 @@ public class MoodList {
     private ArrayList<Mood> FollowingMoodList = new ArrayList<>();
 
 
-    public void addMood(Mood mood){
+    public void addUserMood(Mood mood){
         
         UserMoodList.add(mood);
     }
 
-    public void deleteMood(Mood mood){
+    public void deleteUserMood(Mood mood){
 
         UserMoodList.remove(mood);
     }
@@ -35,6 +35,9 @@ public class MoodList {
         return FollowingMoodList.get(index);
     }
 
+    public Mood getUserMood(int index) {
+        return UserMoodList.get(index);
+    }
 
     public ArrayList<Mood> getUserMood() {
         return UserMoodList;

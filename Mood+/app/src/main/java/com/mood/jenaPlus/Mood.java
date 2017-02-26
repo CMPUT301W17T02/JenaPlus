@@ -1,6 +1,5 @@
 package com.mood.jenaPlus;
 
-import android.graphics.Color;
 import android.location.Location;
 
 import java.util.Date;
@@ -17,13 +16,7 @@ public class Mood {
     private String id;
     private String social;
     private String photo;
-    private Color color;
-
-    public enum Moods {
-        SURPRISED,DISGUST,FEAR,CONFUSED,HAPPY,ANGRY,SAD,SHAME,ANNOYED
-    }
-    
-    Moods m;
+    private String color;
 
     public Mood() {
 
@@ -36,7 +29,7 @@ public class Mood {
 
     //@TODO: implement cases for empty fields/inputs
     public Mood(String text, Date date, Boolean addLocation, Location location, String id,
-                String social, String photo, Color color) {
+                String social, String photo, String color) {
         this.text = text;
         this.date = new Date();
         this.addLocation = addLocation;
@@ -83,37 +76,6 @@ public class Mood {
         }
     }
 
-    public String getMood() {
-        Integer moodNum = null;
-        String mood;
-        switch(m) {
-            case SURPRISED: moodNum = 0;
-                break;
-            case DISGUST: moodNum = 1;
-                break;
-            case FEAR: moodNum = 2;
-                break;
-            case CONFUSED: moodNum = 3;
-                break;
-            case HAPPY: moodNum = 4;
-                break;
-            case ANGRY: moodNum = 5;
-                break;
-            case SAD: moodNum = 6;
-                break;
-            case SHAME: moodNum = 7;
-                break;
-            case ANNOYED: moodNum = 8;
-                break;
-        }
-        mood = MoodIcon.getMood(moodNum);
-        return mood;
-    }
-
-    public void setMood(String mood) {
-        this.id = mood;
-    }
-
     public String getSocial() {
         return social;
     }
@@ -140,11 +102,11 @@ public class Mood {
         }
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -154,6 +116,14 @@ public class Mood {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Boolean getAddLocation() {
+        return addLocation;
+    }
+
+    public void setAddLocation(Boolean addLocation) {
+        this.addLocation = addLocation;
     }
 
 }
