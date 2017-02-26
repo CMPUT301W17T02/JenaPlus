@@ -29,8 +29,6 @@ public class MoodList {
         return FollowingMoodList;
     }
 
-    public void addUserMood
-
 
 
 }
