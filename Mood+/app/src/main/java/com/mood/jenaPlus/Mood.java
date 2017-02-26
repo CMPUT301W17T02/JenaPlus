@@ -14,7 +14,7 @@ public class Mood {
     private Date date;
     private Boolean addLocation;
     private Location location;
-    private MoodIcon mood;
+    private String id;
     private String social;
     private String photo;
     private Color color;
@@ -24,6 +24,28 @@ public class Mood {
     }
     
     Moods m;
+
+    public Mood() {
+
+    }
+
+    public Mood(Date date, MoodIcon mood) {
+        this.date = new Date();
+        this.mood = mood;
+    }
+
+    //@TODO: implement cases for empty fields/inputs
+    public Mood(String text, Date date, Boolean addLocation, Location location, MoodIcon mood,
+                String social, String photo, MoodColor color) {
+        this.text = text;
+        this.date = new Date();
+        this.addLocation = addLocation;
+        this.location = location;
+        this.mood = mood;
+        this.social = social;
+        this.photo = photo;
+        this.color = color;
+    };
 
     public String getText() {
         return text;
@@ -83,14 +105,13 @@ public class Mood {
                 break;
             case ANNOYED: moodNum = 8;
                 break;
-            
         }
         mood = MoodIcon.getMood(moodNum);
         return mood;
     }
 
-    public void setMood(MoodIcon mood) {
-        this.mood = mood;
+    public void setMood(String mood) {
+        this.id = mood;
     }
 
     public String getSocial() {
