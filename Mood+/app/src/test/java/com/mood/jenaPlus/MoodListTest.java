@@ -185,7 +185,7 @@ public class MoodListTest  {
 
         Mood returnedMood = userList.getUserMood(0);
 
-        assertEquals(returnedMood.getId(), userMood.getId());
+        assertEquals(returnedMood.getSocial(), userMood.getSocial());
 
     }
 
@@ -277,11 +277,13 @@ public class MoodListTest  {
         // adding a color
         userMood.setColor(color);
 
+        userMood.setText(text);
+
         userList.addUserMood(userMood);
 
         Mood returnedMood = userList.getUserMood(0);
 
-        assertEquals(returnedMood.getId(), userMood.getId());
+        assertEquals(returnedMood.getText(), userMood.getText());
 
     }
 
@@ -328,6 +330,7 @@ public class MoodListTest  {
 
         userMood1.setColor(color1);
         userMood2.setColor(color2);
+        userMood3.setColor(color3);
 
         userList.addUserMood(userMood1);
         userList.addUserMood(userMood2);
