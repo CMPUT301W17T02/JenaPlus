@@ -19,7 +19,11 @@ public class MoodList {
     public void addMood(Mood mood){
         
         UserMoodList.add(mood);
+    }
 
+    public void deleteMood(Mood mood){
+
+        UserMoodList.remove(mood);
     }
 
 
