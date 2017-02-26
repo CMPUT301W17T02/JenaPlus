@@ -12,6 +12,13 @@ public class MoodList {
     private ArrayList<Mood> FollowingMoodList = new ArrayList<>();
 
 
+    public void addMood(Mood mood){
+        
+        UserMoodList.add(mood);
+
+    }
+
+
     public Mood getUserIndex(int index){
         return UserMoodList.get(index);
     }
