@@ -17,6 +17,8 @@ import android.view.MenuItem;
 public class moodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MoodListController mlc;    // controller
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
