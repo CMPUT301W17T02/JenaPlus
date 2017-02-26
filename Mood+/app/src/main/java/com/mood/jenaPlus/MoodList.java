@@ -1,6 +1,10 @@
 package com.mood.jenaPlus;
 
+import android.graphics.Color;
+import android.location.Location;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by ceciliaxiang on 2017-02-25.
@@ -15,7 +19,11 @@ public class MoodList {
     public void addMood(Mood mood){
         
         UserMoodList.add(mood);
+    }
 
+    public void deleteMood(Mood mood){
+
+        UserMoodList.remove(mood);
     }
 
 
@@ -35,8 +43,6 @@ public class MoodList {
     public ArrayList<Mood> getFollowingMood() {
         return FollowingMoodList;
     }
-
-    public void addUserMood
 
 
 
