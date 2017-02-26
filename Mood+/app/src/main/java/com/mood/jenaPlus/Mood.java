@@ -29,19 +29,19 @@ public class Mood {
 
     }
 
-    public Mood(Date date, MoodIcon mood) {
+    public Mood(Date date, String id) {
         this.date = new Date();
-        this.mood = mood;
+        this.id = id;
     }
 
     //@TODO: implement cases for empty fields/inputs
-    public Mood(String text, Date date, Boolean addLocation, Location location, MoodIcon mood,
-                String social, String photo, MoodColor color) {
+    public Mood(String text, Date date, Boolean addLocation, Location location, String id,
+                String social, String photo, Color color) {
         this.text = text;
         this.date = new Date();
         this.addLocation = addLocation;
         this.location = location;
-        this.mood = mood;
+        this.id = id;
         this.social = social;
         this.photo = photo;
         this.color = color;
@@ -148,6 +148,13 @@ public class Mood {
         this.color = color;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 }
 

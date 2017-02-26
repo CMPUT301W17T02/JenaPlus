@@ -1,6 +1,10 @@
 package com.mood.jenaPlus;
 
+import android.graphics.Color;
+import android.location.Location;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by ceciliaxiang on 2017-02-25.
