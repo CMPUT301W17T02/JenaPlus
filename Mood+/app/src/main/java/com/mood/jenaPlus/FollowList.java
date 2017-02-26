@@ -41,8 +41,6 @@ public class FollowList {
     }
 
 
-
-
     public ArrayList<Participant> getPendingFollowing() {
         return pendingFollowing;
     }

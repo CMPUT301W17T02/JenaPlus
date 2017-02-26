@@ -90,8 +90,15 @@ public class Participant extends User {
     public ArrayList<Participant> getPendingFollowers(){
         return followersParticipants.getPendingFollowers();
     }
-
-    public FollowList getFollowersParticipants() {
-        return followersParticipants;
+    public ArrayList<Participant> getFollowers(){
+        return followersParticipants.getFollowerList();
     }
+    public ArrayList<Participant> getFollowing(){
+        return followingParticipants.getFollowingList();
+    }
+    public ArrayList<Participant> getPendingFollowing(){
+        return followingParticipants.getPendingFollowing();
+    }
+
+
 }
