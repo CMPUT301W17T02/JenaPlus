@@ -14,7 +14,7 @@ public class Mood {
     private Date date;
     private Boolean addLocation;
     private Location location;
-    private MoodIcon mood;
+    private String id;
     private String social;
     private String photo;
     private Color color;
@@ -105,14 +105,13 @@ public class Mood {
                 break;
             case ANNOYED: moodNum = 8;
                 break;
-            
         }
         mood = MoodIcon.getMood(moodNum);
         return mood;
     }
 
-    public void setMood(MoodIcon mood) {
-        this.mood = mood;
+    public void setMood(String mood) {
+        this.id = mood;
     }
 
     public String getSocial() {
