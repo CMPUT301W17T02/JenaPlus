@@ -31,7 +31,7 @@ public class Mood {
     public Mood(String text, Date date, Boolean addLocation, Location location, String id,
                 String social, String photo, String color) {
         this.text = text;
-        this.date = date;
+        this.date = new Date();
         this.addLocation = addLocation;
         this.location = location;
         this.id = id;
