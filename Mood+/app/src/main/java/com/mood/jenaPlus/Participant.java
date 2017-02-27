@@ -72,7 +72,7 @@ public class Participant extends User {
     }
 
     public void followingParticipantsRequest(Participant userName){
-        followingParticipants.followerRequest(userName);
+        followingParticipants.followingRequest(userName);
     }
 
     public void followerParticipantsAccepted(Participant userName) {
