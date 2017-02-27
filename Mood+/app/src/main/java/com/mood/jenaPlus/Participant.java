@@ -12,9 +12,13 @@ public class Participant extends User {
 
     private String userName;
     private MoodList userMoodList = new MoodList();
-    private MoodList followingMoodList = new MoodList();
+    private ArrayList<Mood> followingMoodList = new ArrayList<>();
     private FollowList followingParticipants = new FollowList();
     private FollowList followersParticipants = new FollowList();
+
+    public void addFollowingParticipant(Participant participant) {
+        followingParticipants.addToFollowingList(participant);
+    }
 
     public String getUserName() {
         return this.userName;
@@ -52,14 +56,15 @@ public class Participant extends User {
     }
 
     public void setUserMoodList(MoodList userMoodList) {
+
         this.userMoodList = userMoodList;
     }
 
-    public MoodList getFollowingMoodList() {
+    public ArrayList<Mood> getFollowingMoodList() {
         return followingMoodList;
     }
 
-    public void setFollowingMoodList(MoodList followingMoodList) {
+    public void setFollowingMoodList(ArrayList<Mood> followingMoodList) {
         this.followingMoodList = followingMoodList;
     }
 
@@ -94,4 +99,17 @@ public class Participant extends User {
     public FollowList getFollowersParticipants() {
         return followersParticipants;
     }
+
+    public void setFollowersParticipants(FollowList followersParticipants) {
+        this.followersParticipants = followersParticipants;
+    }
+
+    public FollowList getFollowingParticipants() {
+        return followingParticipants;
+    }
+
+    public void setFollowingParticipants(FollowList followingParticipants) {
+        this.followingParticipants = followingParticipants;
+    }
+
 }
