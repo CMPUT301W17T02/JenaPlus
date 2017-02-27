@@ -16,6 +16,10 @@ public class Participant extends User {
     private FollowList followingParticipants = new FollowList();
     private FollowList followersParticipants = new FollowList();
 
+    public void addFollowingParticipant(Participant participant) {
+        followingParticipants.addToFollowingList(participant);
+    }
+
     public String getUserName() {
         return this.userName;
     }
@@ -98,6 +102,22 @@ public class Participant extends User {
     }
     public ArrayList<Participant> getPendingFollowing(){
         return followingParticipants.getPendingFollowing();
+    }
+
+    public FollowList getFollowersParticipants() {
+        return followersParticipants;
+    }
+
+    public void setFollowersParticipants(FollowList followersParticipants) {
+        this.followersParticipants = followersParticipants;
+    }
+
+    public FollowList getFollowingParticipants() {
+        return followingParticipants;
+    }
+
+    public void setFollowingParticipants(FollowList followingParticipants) {
+        this.followingParticipants = followingParticipants;
     }
 
 }
