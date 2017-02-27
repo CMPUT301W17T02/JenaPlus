@@ -55,7 +55,6 @@ public class FollowListTest {
         Participant par2 = new Participant(UserName2);
 
         par1.followingParticipantsRequest(par2);
-        par1.followingParticipantsRequest(par2);
         assertFalse(par1.getPendingFollowing().isEmpty());
         assertTrue(par1.getFollowing().isEmpty());
         assertTrue(par2.getFollowers().isEmpty());
@@ -69,10 +68,11 @@ public class FollowListTest {
         Participant par1 = new Participant(UserName1);
         Participant par2 = new Participant(UserName2);
 
+        //par2 wants to follow par1
         par1.followerParticipantsRequest(par2);
-        //assertFalse(par1.getPendingFollowers().isEmpty());
-        //assertTrue(par1.getFollowers().isEmpty());
-        //assertTrue(par2.getFollowing().isEmpty());
+        assertFalse(par1.getPendingFollowers().isEmpty());
+        assertTrue(par1.getFollowers().isEmpty());
+        assertTrue(par2.getFollowing().isEmpty());
 
     }
 
@@ -83,6 +83,15 @@ public class FollowListTest {
         Participant par1 = new Participant(UserName1);
         Participant par2 = new Participant(UserName2);
 
+        par1.followerParticipantsRequest(par2);
+        assertFalse(par1.getPendingFollowers().isEmpty());
+        assertTrue(par1.getFollowers().isEmpty());
+        assertTrue(par2.getFollowing().isEmpty());
+
+        par1.followerParticipantsAccepted(par2);
+        assertTrue(par1.getPendingFollowers().isEmpty());
+        assertFalse(par1.getFollowers().isEmpty());
+
     }
 
     @Test
@@ -92,6 +101,15 @@ public class FollowListTest {
         Participant par1 = new Participant(UserName1);
         Participant par2 = new Participant(UserName2);
 
+        par1.followerParticipantsRequest(par2);
+        assertFalse(par1.getPendingFollowers().isEmpty());
+        assertTrue(par1.getFollowers().isEmpty());
+        assertTrue(par2.getFollowing().isEmpty());
 
+        par1.followerParticipantsRejected(par2);
+        assertTrue(par1.getFollowers().isEmpty());
+        assertTrue(par2.getFollowing().isEmpty());
+        assertTrue(par1.getPendingFollowers().isEmpty());
+        
     }
 }
