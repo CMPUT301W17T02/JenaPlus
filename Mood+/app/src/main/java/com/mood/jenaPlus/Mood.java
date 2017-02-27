@@ -68,11 +68,11 @@ public class Mood {
     }
 
     public void setLocation(Location location) {
-        if (addLocation == true && location!=null) {
-            this.location = location;
+        if (!addLocation && location == null) {
+            this.location = null;
         }
         else {
-            this.location = null;
+            this.location = location;
         }
     }
 

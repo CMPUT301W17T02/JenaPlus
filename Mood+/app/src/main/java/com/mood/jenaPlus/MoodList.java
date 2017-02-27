@@ -50,5 +50,19 @@ public class MoodList {
         return FollowingMoodList;
     }
 
+    public boolean userIsEmpty() {
+        if(UserMoodList.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    public boolean followingIsEmpty() {
+        if(FollowingMoodList.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
