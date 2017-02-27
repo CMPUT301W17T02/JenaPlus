@@ -110,6 +110,6 @@ public class FollowListTest {
         assertTrue(par1.getFollowers().isEmpty());
         assertTrue(par2.getFollowing().isEmpty());
         assertTrue(par1.getPendingFollowers().isEmpty());
-        
+
     }
 }

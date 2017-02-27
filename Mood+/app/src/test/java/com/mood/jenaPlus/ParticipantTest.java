@@ -3,7 +3,6 @@ import android.location.Location;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-
 import org.junit.Test;
 
 /**
@@ -62,6 +61,11 @@ public class ParticipantTest{
         assertFalse(moodList.userIsEmpty());
     }
 
+    /**
+     * Test get user mood list.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetUserMoodList() throws Exception {
         MoodIcon m = new MoodIcon();
@@ -94,4 +98,52 @@ public class ParticipantTest{
         assertEquals(mood0.getText(),text);
         assertEquals(mood1.getText(),text2);
     }
+
+    /**
+     * Test get following mood list.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void testGetFollowingMoodList() throws Exception {
+        Participant newParticipant = new Participant("user1");
+        Participant follow0 = new Participant("f0");
+        Participant follow1 = new Participant("f2");
+        Participant follow2 = new Participant("f3");
+
+        follow0.addNewMood("I'm happy", false, null, "happy", null, null, "#A7FFF649");
+        follow1.addNewMood("I'm sad", false, null, "sad", null, null, "#FF33B5E5");
+        follow2.addNewMood("I'm happy", false, null, "happy", null, null, "#A7FFF649");
+
+        newParticipant.addFollowingParticipant(follow0);
+        newParticipant.addFollowingParticipant(follow1);
+        newParticipant.addFollowingParticipant(follow2);
+
+        FollowList followList = newParticipant.getFollowingParticipants();
+
+        Participant t0 = followList.getFollowingParticipant(0);
+        Participant t1 = followList.getFollowingParticipant(1);
+        Participant t2 = followList.getFollowingParticipant(2);
+
+        MoodList t0List;
+        MoodList t1List;
+        MoodList t2List;
+
+        Mood t0Mood;
+        Mood t1Mood;
+        Mood t2Mood;
+
+        t0List = t0.getUserMoodList();
+        t1List = t1.getUserMoodList();
+        t2List = t2.getUserMoodList();
+
+        t0Mood = t0List.getUserMood(0);
+        t1Mood = t1List.getUserMood(0);
+        t2Mood = t2List.getUserMood(0);
+
+        assertEquals(t0Mood.getColor(),"#A7FFF649");
+        assertEquals(t1Mood.getText(),"I'm sad");
+        assertEquals(t2Mood.getId(), "happy");
+    }
+
 }
