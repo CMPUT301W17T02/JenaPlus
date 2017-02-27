@@ -41,9 +41,9 @@ public class FollowListTest {
         assertTrue(par1.getFollowing().isEmpty());
         assertTrue(par2.getFollowers().isEmpty());
 
-        par2.followerParticipantsAccepted(par1);
+        par2.followingParticipantsAccepted(par1);
         assertTrue(par2.getPendingFollowers().isEmpty());
-        assertFalse(par2.getFollowers().isEmpty());
+        assertFalse(par2.getFollowing().isEmpty());
 
     }
 
@@ -54,20 +54,44 @@ public class FollowListTest {
         Participant par1 = new Participant(UserName1);
         Participant par2 = new Participant(UserName2);
 
+        par1.followingParticipantsRequest(par2);
+        par1.followingParticipantsRequest(par2);
+        assertFalse(par1.getPendingFollowing().isEmpty());
+        assertTrue(par1.getFollowing().isEmpty());
+        assertTrue(par2.getFollowers().isEmpty());
+
     }
 
     @Test
     public void testFollowersRequest(){
+        String UserName1 = "Jena1";
+        String UserName2 = "Jena2";
+        Participant par1 = new Participant(UserName1);
+        Participant par2 = new Participant(UserName2);
+
+        par1.followerParticipantsRequest(par2);
+        //assertFalse(par1.getPendingFollowers().isEmpty());
+        //assertTrue(par1.getFollowers().isEmpty());
+        //assertTrue(par2.getFollowing().isEmpty());
 
     }
 
     @Test
     public void testFollowersAccepted(){
+        String UserName1 = "Jena1";
+        String UserName2 = "Jena2";
+        Participant par1 = new Participant(UserName1);
+        Participant par2 = new Participant(UserName2);
 
     }
 
     @Test
     public void testFollowersRejected(){
+        String UserName1 = "Jena1";
+        String UserName2 = "Jena2";
+        Participant par1 = new Participant(UserName1);
+        Participant par2 = new Participant(UserName2);
+
 
     }
 }
