@@ -121,6 +121,22 @@ public class MoodListTest  {
      */
     @Test
     public void testHasMood() throws Exception {
+        List<String> moodIdList = Arrays.asList("surprised","disgust","fear","confused","happy","angry","sad","shame","annoyed");
+        List<String> moodColorList = Arrays.asList("#96F57113","#BF54A62F","#A4131313","#A16A00FF","#A7FFF649","#A0FF0000","#FF33B5E5","#AFDE30C9","#B5277384");
+
+        int length = 9;
+
+        for (int i = 0; i<length; i++) {
+            MoodList userList = new MoodList();
+            Mood userMood = new Mood(moodIdList.get(i));
+            userMood.setColor(moodColorList.get(i));
+
+            assertFalse(userList.hasUserMood(userMood));
+
+            userList.addUserMood(userMood);
+
+            assertTrue(userList.hasUserMood(userMood));
+        }
         String moodId = "happy";
         String color = "#A7FFF649";
         MoodList userList = new MoodList();
