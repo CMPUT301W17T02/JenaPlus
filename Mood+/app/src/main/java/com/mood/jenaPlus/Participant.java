@@ -100,6 +100,4 @@ public class Participant extends User {
         return followingParticipants.getPendingFollowing();
     }
 
-
-
 }
