@@ -11,8 +11,12 @@ import org.junit.Test;
 /**
  * Created by Carlo on 2017-02-25.
  */
-
 public class MoodListTest  {
+    /**
+     * Test add mood.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testAddMood() throws Exception{
         String moodId = "happy";
@@ -44,6 +48,11 @@ public class MoodListTest  {
 
     }*/
 
+    /**
+     * Test delete mood.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testDeleteMood() throws Exception {
         String moodId = "happy";
@@ -72,6 +81,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test has mood.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testHasMood() throws Exception {
         String moodId = "happy";
@@ -100,6 +114,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get mood.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetMood() throws Exception {
         String moodId = "happy";
@@ -128,6 +147,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get color.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetColor() throws Exception {
         String moodId = "happy";
@@ -146,6 +170,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get photo.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetPhoto() throws Exception {
         String moodID = "happy";
@@ -167,6 +196,11 @@ public class MoodListTest  {
         assertEquals(returnedMood.getPhoto(), userMood.getPhoto());
     }
 
+    /**
+     * Test get social.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetSocial() throws Exception {
         String moodID = "happy";
@@ -189,6 +223,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetID() throws Exception {
         String moodID = "happy";
@@ -207,6 +246,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get location.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetLocation() throws Exception {
         String moodID = "happy";
@@ -229,6 +273,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get add location.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetAddLocation() throws Exception {
         String moodID = "happy";
@@ -248,6 +297,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get date.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetDate() throws Exception {
         String moodID = "happy";
@@ -266,6 +320,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get text.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetText() throws Exception {
         String moodID = "happy";
@@ -287,6 +346,11 @@ public class MoodListTest  {
 
     }
 
+    /**
+     * Test get user index.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetUserIndex() throws Exception {
         String moodID1 = "happy";
@@ -312,6 +376,11 @@ public class MoodListTest  {
         assertEquals(returnedIndex2, 1);
     }
 
+    /**
+     * Test get user mood list.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void testGetUserMoodList() throws Exception {
         String moodID1 = "happy";
