@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,8 @@ import android.view.MenuItem;
 public class moodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MoodListController mlc;    // controller
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +30,11 @@ public class moodPlusActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                Intent intent = new Intent(moodPlusActivity.this, AddMoodActivity.class);
+                startActivity(intent);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
 
@@ -40,6 +46,8 @@ public class moodPlusActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent intent = getIntent();
     }
 
     @Override
