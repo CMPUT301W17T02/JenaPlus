@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="376dp">
 
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:orientation="horizontal"
         android:rowCount="3"
         android:columnCount="3"
         android:horizontalSpacing="5dp"
         android:verticalSpacing="5dp"
         >
-
 
         <ImageView
             android:id="@+id/surprised"
@@ -21,8 +23,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/surprised"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack"/>
 
         <ImageView
@@ -31,9 +33,9 @@
             android:layout_column="1"
             android:padding="10dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/surprised"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:src="@drawable/disgust"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack2"
 
             />
@@ -45,8 +47,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/fear"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack"
             />
 
@@ -57,8 +59,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/confused"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack2"
             />
 
@@ -69,8 +71,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/happy"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack"
             />
 
@@ -81,8 +83,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/angry"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack2"
             />
 
@@ -93,8 +95,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/sad"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack"
             />
 
@@ -105,8 +107,8 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/shame"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack2"
             />
 
@@ -117,11 +119,20 @@
             android:padding="10dp"
             android:scaleType="fitCenter"
             android:src="@drawable/annoyed"
-            android:layout_width="96dp"
-            android:layout_height="114dp"
+            android:layout_width="81dp"
+            android:layout_height="81dp"
             android:background="@color/gridBack"
             />
 
     </GridLayout>
+
+</LinearLayout>
+
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/AddMood"
+    android:id="@+id/AddButton"
+    android:layout_gravity="center"/>
 
 </LinearLayout>

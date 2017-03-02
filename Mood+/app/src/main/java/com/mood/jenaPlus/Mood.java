@@ -18,13 +18,9 @@ public class Mood {
     private String photo;
     private String color;
 
+
     public Mood() {
-
-    }
-
-    public Mood(String id) {
         this.date = new Date();
-        this.id = id;
     }
 
     //@TODO: implement cases for empty fields/inputs
