@@ -5,5 +5,12 @@ package com.mood.jenaPlus;
  */
 
 public class MoodListController {
+    private AddMoodActivity theView;
+    private Mood theModel;
+
+    public MoodListController(AddMoodActivity theView, Mood theModel) {
+        this.theView = theView;
+        this.theModel = theModel;
+    }
 
 }
