@@ -4,10 +4,13 @@
     android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    android:background="@color/addBack">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
 
     <TextView
         android:id="@+id/Select"
@@ -20,12 +23,13 @@
         android:text="Select a Mood" />
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="376dp">
+    android:orientation="vertical" android:layout_width="244dp"
+    android:layout_height="248dp"
+    android:layout_gravity="center">
 
-    <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="270dp"
+    <GridLayout
+        android:layout_width="246dp"
+        android:layout_height="246dp"
         android:orientation="horizontal"
         android:rowCount="3"
         android:columnCount="3"
@@ -167,22 +171,21 @@
 
     <Button
         android:id="@+id/socialPopup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Social Situation"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:background="@color/buttonColor"/>
 
     <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/Save"
-    android:id="@+id/AddButton"
-    android:layout_gravity="center"/>
-
-
-
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:text="@string/Save"
+        android:id="@+id/AddButton"
+        android:layout_gravity="center"
+        />
 
 
 </LinearLayout>

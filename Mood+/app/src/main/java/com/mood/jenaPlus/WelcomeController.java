@@ -12,8 +12,9 @@ public class WelcomeController {
         this.welcomeView = view;
         this.participantListModel = model;
 
-
     }
+
+
 
 
 }
