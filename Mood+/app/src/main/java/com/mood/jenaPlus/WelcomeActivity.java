@@ -49,7 +49,11 @@ public class WelcomeActivity extends Activity{
             public void onClick(View v) {
                 WelcomeActivity theView = new WelcomeActivity();
                 ParticipantList theModel = new ParticipantList();
-                ///WelcomeController wc = new WelcomeController(theView,theModel);
+                WelcomeController wc = new WelcomeController(theView,theModel);
+
+
+
+
                 Intent intent = new Intent(WelcomeActivity.this, moodPlusActivity.class);
                 startActivity(intent);
 
