@@ -8,6 +8,13 @@
         android:layout_height="wrap_content"
         android:text="Welcome to Mood+!"
         android:layout_gravity="center"/>
+
+    <EditText
+        android:id="@+id/loginUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint = "Enter Username"
+        android:layout_gravity="center"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,5 +35,15 @@
         android:textSize="30dp"
         android:layout_gravity="center"
         android:id="@+id/textView2" />
+    <ListView
+        android:id="@+id/participantList"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:layout_below="@+id/counting"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        </ListView>
 
 </LinearLayout>

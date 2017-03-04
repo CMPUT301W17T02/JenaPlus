@@ -177,7 +177,7 @@
     <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="@string/AddMood"
+    android:text="@string/Save"
     android:id="@+id/AddButton"
     android:layout_gravity="center"/>
 
