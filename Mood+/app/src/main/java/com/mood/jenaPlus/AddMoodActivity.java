@@ -1,13 +1,13 @@
 package com.mood.jenaPlus;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
+import android.support.v7.widget.PopupMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -17,12 +17,23 @@ import android.widget.Toast;
 public class AddMoodActivity extends AppCompatActivity {
 
     ImageView t1, t2, t3, t4, t5, t6, t7, t8, t9;
-    String id;
+    int idNum;
+    int colorNum;
+    String socialSituation;
+
+    private Button addButton;
+    private EditText message;
+    private Button socialPopup;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_mood_interface);
+
+        message = (EditText) findViewById(R.id.message);
+        socialPopup = (Button) findViewById(R.id.socialPopup);
+        addButton = (Button) findViewById(R.id.AddButton);
+
         t1 = (ImageView) findViewById(R.id.surprised);
         t2 = (ImageView) findViewById(R.id.disgust);
         t3 = (ImageView) findViewById(R.id.fear);
@@ -47,8 +58,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "surprised";
-                Toast.makeText(getBaseContext(), "Surprised Clicked",
+                idNum = colorNum = 0;
+                Toast.makeText(getBaseContext(), "Feeling surprised",
                         Toast.LENGTH_SHORT).show();
                 t1.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -59,9 +70,9 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "disgust";
+                idNum = colorNum = 1;
 
-                Toast.makeText(getBaseContext(), "Disgust Clicked",
+                Toast.makeText(getBaseContext(), "Feeling disgusted",
                         Toast.LENGTH_SHORT).show();
                 t2.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -71,8 +82,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "fear";
-                Toast.makeText(getBaseContext(), "Fear Clicked",
+                idNum = 2;
+                Toast.makeText(getBaseContext(), "Feeling fearful",
                         Toast.LENGTH_SHORT).show();
                 t3.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -82,8 +93,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "confused";
-                Toast.makeText(getBaseContext(), "Confused Clicked",
+                idNum = colorNum = 3;
+                Toast.makeText(getBaseContext(), "Feeling confused",
                         Toast.LENGTH_SHORT).show();
                 t4.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -93,8 +104,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "happy";
-                Toast.makeText(getBaseContext(), "Happy Clicked",
+                idNum = 4;
+                Toast.makeText(getBaseContext(), "Feeling happy",
                         Toast.LENGTH_SHORT).show();
                 t5.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -104,8 +115,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "angry";
-                Toast.makeText(getBaseContext(), "Angry Clicked",
+                idNum = colorNum = 5;
+                Toast.makeText(getBaseContext(), "Feeling angry",
                         Toast.LENGTH_SHORT).show();
                 t6.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -115,8 +126,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id = "sad";
-                Toast.makeText(getBaseContext(), "Sad Clicked",
+                idNum = colorNum = 6;
+                Toast.makeText(getBaseContext(), "Feeling sad",
                         Toast.LENGTH_SHORT).show();
                 t7.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -126,8 +137,8 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id ="shame";
-                Toast.makeText(getBaseContext(), "Shame Clicked",
+                idNum = colorNum = 7;
+                Toast.makeText(getBaseContext(), "Shame",
                         Toast.LENGTH_SHORT).show();
                 t8.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
@@ -137,20 +148,49 @@ public class AddMoodActivity extends AppCompatActivity {
 
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                id ="annoyed";
-                Toast.makeText(getBaseContext(), "Annoyed Clicked",
+                idNum = colorNum = 8;
+                Toast.makeText(getBaseContext(), "Feeling annoyed",
                         Toast.LENGTH_SHORT).show();
                 t9.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
         });
 
-        Button button = (Button) findViewById(R.id.AddButton);
+        socialPopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+                // 04-03-2015 01:16
+                //Creating the instance of PopupMenu
+                PopupMenu popup = new PopupMenu(AddMoodActivity.this, socialPopup);
+                //Inflating the Popup using xml file
+                popup.getMenuInflater()
+                        .inflate(R.menu.social_popup, popup.getMenu());
+
+                //registering popup with OnMenuItemClickListener
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toast.makeText(
+                                AddMoodActivity.this,
+                                "Social Situation : " + item.getTitle(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                        socialSituation = (String) item.getTitle();
+                        return true;
+                    }
+                });
+
+                popup.show(); //showing popup menu
+            }
+        }); //closing the setOnClickListener method
     }
 
 
-    public String getID() {
-        return id;
+    public int getID() {
+        return idNum;
     }
+    public int getColorNum() { return colorNum; }
+    public EditText getMessage() { return message; }
+    public String getSocialSituation() { return socialSituation; }
 
 }
 

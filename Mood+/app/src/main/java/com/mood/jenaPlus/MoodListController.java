@@ -13,7 +13,11 @@ public class MoodListController {
         this.theView = view;
         this.theModel = model;
 
-        theModel.setId(theView.getID());
+        theModel.setId(theModel.getMoodId(theView.getID())); // Setting the mood ID
+        theModel.setColor(theModel.getMoodColor(theView.getColorNum())); // Setting the Color
+        theModel.setSocial(theView.getSocialSituation()); // Setting the social situation
+        theModel.setText(theView.getMessage().toString()); //Setting the message
+
 
     }
 

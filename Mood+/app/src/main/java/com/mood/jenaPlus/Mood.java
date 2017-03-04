@@ -59,6 +59,18 @@ public class Mood {
         }
     }
 
+    public String getMoodId(int moodId) {
+        MoodIcon m = new MoodIcon();
+        id = m.getMood(moodId);
+        return id;
+    }
+
+    public String getMoodColor(int moodId) {
+        MoodIcon m = new MoodIcon();
+        color = m.getColor(moodId);
+        return color;
+    }
+
     public Location getLocation() {
         return location;
     }
@@ -111,6 +123,7 @@ public class Mood {
     }
 
     public void setId(String id) {
+
         this.id = id;
     }
 
