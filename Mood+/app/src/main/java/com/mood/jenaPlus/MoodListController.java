@@ -18,11 +18,5 @@ public class MoodListController {
         theModel.setSocial(theView.getSocialSituation()); // Setting the social situation
         theModel.setText(theView.getMessage().toString()); //Setting the message
 
-
     }
-
-
-
-
-
 }

@@ -61,6 +61,7 @@ public class AddMoodActivity extends AppCompatActivity {
                 idNum = colorNum = 0;
                 Toast.makeText(getBaseContext(), "Feeling surprised",
                         Toast.LENGTH_SHORT).show();
+
                 t1.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
 
@@ -191,6 +192,8 @@ public class AddMoodActivity extends AppCompatActivity {
     public int getColorNum() { return colorNum; }
     public EditText getMessage() { return message; }
     public String getSocialSituation() { return socialSituation; }
+
+
 
 }
 
