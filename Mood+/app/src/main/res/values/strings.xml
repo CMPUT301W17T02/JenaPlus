@@ -6,6 +6,6 @@
 
     <string name="action_settings">Settings</string>
     <string name="Login">Log in</string>
-    <string name="AddMood">Add Mood</string>
+    <string name="Save">Save</string>
     <string name="EnterMessage">What\'s your mood today?</string>
 </resources>
