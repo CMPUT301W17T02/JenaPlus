@@ -38,6 +38,7 @@
         android:text="@string/Login"
         android:id="@+id/Login_button"
         android:background="#42A5F5"
+        android:width="150dp"
         android:textColor="@android:color/white"
         android:layout_centerInParent="true"/>
     <ListView
