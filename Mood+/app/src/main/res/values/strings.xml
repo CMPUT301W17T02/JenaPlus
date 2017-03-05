@@ -8,4 +8,5 @@
     <string name="Login">Log in</string>
     <string name="Save">Save</string>
     <string name="EnterMessage">What\'s your mood today?</string>
+    <string name="title_activity_welcome_page">WelcomePage</string>
 </resources>
