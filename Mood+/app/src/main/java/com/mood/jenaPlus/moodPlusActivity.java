@@ -13,7 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class moodPlusActivity extends AppCompatActivity
+public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MoodListController mlc;    // controller
@@ -31,7 +31,7 @@ public class moodPlusActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(moodPlusActivity.this, AddMoodActivity.class);
+                Intent intent = new Intent(MoodPlusActivity.this, AddMoodActivity.class);
                 startActivity(intent);
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
