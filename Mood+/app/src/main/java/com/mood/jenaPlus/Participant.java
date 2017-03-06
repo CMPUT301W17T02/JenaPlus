@@ -20,10 +20,6 @@ public class Participant extends User {
         followingParticipants.addToFollowingList(participant);
     }
 
-    public String getUserName() {
-        return this.userName;
-    }
-
     public boolean hasUserName(String newName) {
         if (newName.equals(this.userName)) {
             return true;
@@ -33,7 +29,7 @@ public class Participant extends User {
     }
 
     public Participant(String userName) {
-        this.userName = userName;
+        super(userName);
     }
 
     public void addNewMood(String text, Boolean addLocation, Location location, String id,
