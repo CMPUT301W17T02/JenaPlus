@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/alone"
+        android:title="Alone"/>
+
+    <item
+        android:id="@+id/one"
+        android:title="With one other person"/>
+
+    <item
+        android:id="@+id/several"
+        android:title="With several people"/>
+
+    <item
+        android:id="@+id/crowd"
+        android:title="With a crowd"/>
+
+</menu>

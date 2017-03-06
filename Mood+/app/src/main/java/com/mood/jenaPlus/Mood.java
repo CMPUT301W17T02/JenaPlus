@@ -1,6 +1,5 @@
 package com.mood.jenaPlus;
 
-import android.graphics.Color;
 import android.location.Location;
 
 import java.util.Date;
@@ -17,31 +16,21 @@ public class Mood {
     private String id;
     private String social;
     private String photo;
-    private Color color;
+    private String color;
 
-    public enum Moods {
-        SURPRISED,DISGUST,FEAR,CONFUSED,HAPPY,ANGRY,SAD,SHAME,ANNOYED
-    }
-    
-    Moods m;
 
     public Mood() {
-
-    }
-
-    public Mood(Date date, MoodIcon mood) {
         this.date = new Date();
-        this.mood = mood;
     }
 
     //@TODO: implement cases for empty fields/inputs
-    public Mood(String text, Date date, Boolean addLocation, Location location, MoodIcon mood,
-                String social, String photo, MoodColor color) {
+    public Mood(String text, Date date, Boolean addLocation, Location location, String id,
+                String social, String photo, String color) {
         this.text = text;
         this.date = new Date();
         this.addLocation = addLocation;
         this.location = location;
-        this.mood = mood;
+        this.id = id;
         this.social = social;
         this.photo = photo;
         this.color = color;
@@ -70,48 +59,29 @@ public class Mood {
         }
     }
 
+    public String getMoodId(int moodId) {
+        MoodIcon m = new MoodIcon();
+        id = m.getMood(moodId);
+        return id;
+    }
+
+    public String getMoodColor(int moodId) {
+        MoodIcon m = new MoodIcon();
+        color = m.getColor(moodId);
+        return color;
+    }
+
     public Location getLocation() {
         return location;
     }
 
     public void setLocation(Location location) {
-        if (addLocation == true && location!=null) {
-            this.location = location;
-        }
-        else {
+        if (!addLocation && location == null) {
             this.location = null;
         }
-    }
-
-    public String getMood() {
-        Integer moodNum = null;
-        String mood;
-        switch(m) {
-            case SURPRISED: moodNum = 0;
-                break;
-            case DISGUST: moodNum = 1;
-                break;
-            case FEAR: moodNum = 2;
-                break;
-            case CONFUSED: moodNum = 3;
-                break;
-            case HAPPY: moodNum = 4;
-                break;
-            case ANGRY: moodNum = 5;
-                break;
-            case SAD: moodNum = 6;
-                break;
-            case SHAME: moodNum = 7;
-                break;
-            case ANNOYED: moodNum = 8;
-                break;
+        else {
+            this.location = location;
         }
-        mood = MoodIcon.getMood(moodNum);
-        return mood;
-    }
-
-    public void setMood(String mood) {
-        this.id = mood;
     }
 
     public String getSocial() {
@@ -140,14 +110,30 @@ public class Mood {
         }
     }
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+
+        this.id = id;
+    }
+
+    public Boolean getAddLocation() {
+        return addLocation;
+    }
+
+    public void setAddLocation(Boolean addLocation) {
+        this.addLocation = addLocation;
+    }
 
 }
 
