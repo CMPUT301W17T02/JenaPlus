@@ -41,10 +41,17 @@
         android:width="150dp"
         android:textColor="@android:color/white"
         android:layout_centerInParent="true"/>
+    <Button
+        android:id="@+id/get_users"
+        android:text="Get Users"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Login_button"
+        android:layout_centerInParent="true"/>
     <ListView
         android:id="@+id/participantList"
         android:layout_width="wrap_content"
-        android:layout_below="@+id/Login_button"
+        android:layout_below="@+id/get_users"
         android:layout_height="wrap_content"></ListView>
 
 

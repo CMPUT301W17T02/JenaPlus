@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,12 +17,17 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
+import static com.mood.jenaPlus.R.id.text;
+
 public class WelcomeActivity extends AppCompatActivity {
+
     private EditText userName;
     private ArrayList<Participant> participantList;
     private ArrayAdapter<Participant> adapter;
@@ -35,7 +41,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText userName = (EditText) findViewById(R.id.loginUserName);
+        final EditText userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
         participants = (ListView) findViewById(R.id.participantList);
         button.setOnClickListener(new View.OnClickListener() {
@@ -50,13 +56,52 @@ public class WelcomeActivity extends AppCompatActivity {
 
             }
         });
+
+        Button getButton = (Button) findViewById(R.id.get_users);
+
+        getButton.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View v){
+                setResult(RESULT_OK);
+                String text = userName.getText().toString();
+                Participant participant = new Participant(text);
+                ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+                getUsersTask.execute("");
+
+                String query = "{\n" +
+                                " \"query\" : {\n" +
+                                " \"term\" : {\n" +
+                                " \"message\": \""+ text +"\" \n"+
+                                "            }\n" +
+                                "       }\n" +
+                                " }";
+
+                getUsersTask.execute(query);
+                try{
+                    participantList.addAll(getUsersTask.get());
+                }catch (Exception e){
+                    Log.i("Error","Failed");
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        loadFromFile(); // TODO replace this with elastic search
+        //loadFromFile(); // TODO replace this with elastic search
+
+        ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+        getUsersTask.execute("");
+
+        try{
+            participantList = getUsersTask.get();
+
+        }catch (Exception e){
+            Log.i("Error","Failed to get the users out of the async object");
+        }
 
         adapter = new ArrayAdapter<Participant>(this,
                 R.layout.participant_list, participantList);
@@ -80,6 +125,8 @@ public class WelcomeActivity extends AppCompatActivity {
             throw new RuntimeException();
         }
     }
+
+
 
 
 }

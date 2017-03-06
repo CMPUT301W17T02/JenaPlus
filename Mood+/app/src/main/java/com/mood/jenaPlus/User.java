@@ -10,7 +10,14 @@ public abstract class User {
 
     protected String userName;
 
-    public abstract String getUserName();
+    public User(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
     public abstract boolean hasUserName(String userName);
 
     @JestId

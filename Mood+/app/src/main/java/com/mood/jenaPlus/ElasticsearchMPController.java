@@ -23,19 +23,19 @@ public class ElasticsearchMPController {
 
     private static JestDroidClient client;
 
-    public static class AddUsersTask extends AsyncTask<User,Void,Void>{
+    public static class AddUsersTask extends AsyncTask<Participant,Void,Void>{
         @Override
-        protected Void doInBackground(User... users){
+        protected Void doInBackground(Participant... participants){
             // ... : arbitrary number of arguments in Java
 
-            for (User user : users){
-                Index index = new Index.Builder(user).index("cmput301w17t2").type("user").build();
+            for (Participant participant : participants){
+                Index index = new Index.Builder(participant).index("cmput301w17t2").type("user").build();
 
                 try {
                     // where is client?
                     DocumentResult result = client.execute(index);
                     if(result.isSucceeded()){
-                        user.setId(result.getId());
+                        participant.setId(result.getId());
                     }
                     else{
                         Log.i("Error","Elasticsearch was not able to add the user.");
@@ -49,19 +49,19 @@ public class ElasticsearchMPController {
         }
     }
 
-    public static class GetUsersTask extends AsyncTask<String,Void,ArrayList<User>> {
+    public static class GetUsersTask extends AsyncTask<String,Void,ArrayList<Participant>> {
         @Override
-        protected ArrayList<User> doInBackground(String... search_parameters){
+        protected ArrayList<Participant> doInBackground(String... search_parameters){
             verifySettings();
 
-            ArrayList<User> users = new ArrayList<User>();
+            ArrayList<Participant> participants = new ArrayList<Participant>();
 
             String query = "" +search_parameters[0]+ "";
             System.out.println(query);
 
             // TODO Build the query
             Search search = new Search.Builder(query)
-                    .addIndex("cmput304w17t2")
+                    .addIndex("cmput301w17t2")
                     .addType("user")
                     .build();
 
@@ -69,8 +69,8 @@ public class ElasticsearchMPController {
                 // TODO get the results of the query
                 SearchResult result = client.execute(search);
                 if(result.isSucceeded()){
-                    List<User> foundUser = result.getSourceAsObjectList(User.class);
-                    users.addAll(foundUser);
+                    List<Participant> foundParticipant = result.getSourceAsObjectList(Participant.class);
+                    participants.addAll(foundParticipant);
                 }
                 else{
                     Log.i("Error","The search query failed to find any users that matched");
@@ -80,7 +80,7 @@ public class ElasticsearchMPController {
             catch(Exception e){
                 Log.i("Error","Something went wrong when tried to communicate with the elasticsearch server!");
             }
-            return users;
+            return participants;
         }
 
     }
