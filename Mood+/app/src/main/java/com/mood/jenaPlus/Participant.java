@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Participant extends User {
 
-    private String userName;
     private MoodList userMoodList = new MoodList();
     private MoodList followingMoodList = new MoodList();
     private FollowList followingParticipants = new FollowList();
@@ -29,6 +28,7 @@ public class Participant extends User {
     }
 
     public Participant(String userName) {
+
         super(userName);
     }
 
@@ -116,8 +116,8 @@ public class Participant extends User {
         this.followingParticipants = followingParticipants;
     }
 
-    @Override public String toString() {
+    /*@Override public String toString() {
         return userName;
-    }
+    }*/
 
 }
