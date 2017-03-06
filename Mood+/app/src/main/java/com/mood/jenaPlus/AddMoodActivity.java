@@ -15,7 +15,7 @@ import android.widget.Toast;
  * Created by carrotji on 2017-02-25.
  */
 
-public class AddMoodActivity extends AppCompatActivity {
+public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     ImageView t1, t2, t3, t4, t5, t6, t7, t8, t9;
     int idNum;
@@ -205,10 +205,13 @@ public class AddMoodActivity extends AppCompatActivity {
     public EditText getMessage() { return message; }
     public String getSocialSituation() { return socialSituation; }
 
+    public void update(MoodPlus moodPlus){
+        // TODO implements update method
+    }
 
     protected void generateRecord(){
         Intent intent = new Intent();
-        setResult(moodPlusActivity.RESULT_OK, intent);
+        setResult(MoodPlusActivity.RESULT_OK, intent);
         finish();
 
     }
