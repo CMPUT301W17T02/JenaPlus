@@ -43,7 +43,6 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 WelcomeActivity theView = new WelcomeActivity();
                 ParticipantList theModel = new ParticipantList();
-                WelcomeController wc = new WelcomeController(theView,theModel);
 
                 Intent intent = new Intent(WelcomeActivity.this, moodPlusActivity.class);
                 startActivity(intent);
