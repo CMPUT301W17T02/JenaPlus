@@ -4,189 +4,189 @@
     android:id="@+id/ScrollView01"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:scrollbars="vertical"
-    android:background="@color/addBack">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:scrollbars="vertical">
 
-    <TextView
-        android:id="@+id/Select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:text="Select a Mood" />
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="244dp"
-    android:layout_height="248dp"
-    android:layout_gravity="center">
+        <TextView
+            android:id="@+id/Select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:textSize="30sp"
+            android:text="Select a Mood" />
 
-    <GridLayout
-        android:layout_width="246dp"
-        android:layout_height="246dp"
-        android:orientation="horizontal"
-        android:rowCount="3"
-        android:columnCount="3"
-        android:horizontalSpacing="5dp"
-        android:verticalSpacing="5dp"
-        >
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="244dp"
+            android:layout_height="248dp"
+            android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/surprised"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/surprised"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack"/>
+            <GridLayout
+                android:layout_width="246dp"
+                android:layout_height="246dp"
+                android:orientation="horizontal"
+                android:rowCount="3"
+                android:columnCount="3"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="5dp"
+                >
 
-        <ImageView
-            android:id="@+id/disgust"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/disgust"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack2"
+                <ImageView
+                    android:id="@+id/surprised"
+                    android:layout_row="0"
+                    android:layout_column="0"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/surprised"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack"/>
 
+                <ImageView
+                    android:id="@+id/disgust"
+                    android:layout_row="0"
+                    android:layout_column="1"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/disgust"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack2"
+
+                    />
+
+                <ImageView
+                    android:id="@+id/fear"
+                    android:layout_row="0"
+                    android:layout_column="2"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/fear"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack"
+                    />
+
+                <ImageView
+                    android:id="@+id/confused"
+                    android:layout_row="1"
+                    android:layout_column="0"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/confused"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack2"
+                    />
+
+                <ImageView
+                    android:id="@+id/happy"
+                    android:layout_row="1"
+                    android:layout_column="1"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/happy"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack"
+                    />
+
+                <ImageView
+                    android:id="@+id/angry"
+                    android:layout_row="1"
+                    android:layout_column="2"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/angry"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack2"
+                    />
+
+                <ImageView
+                    android:id="@+id/sad"
+                    android:layout_row="2"
+                    android:layout_column="0"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sad"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack"
+                    />
+
+                <ImageView
+                    android:id="@+id/shame"
+                    android:layout_row="2"
+                    android:layout_column="1"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/shame"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack2"
+                    />
+
+                <ImageView
+                    android:id="@+id/annoyed"
+                    android:layout_row="2"
+                    android:layout_column="2"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/annoyed"
+                    android:layout_width="81dp"
+                    android:layout_height="81dp"
+                    android:background="@color/gridBack"
+                    />
+
+            </GridLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/howFeel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:text="How are you feeling?" />
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_width="200dp"
+            android:textSize="15sp"
+            android:hint="@string/EnterMessage"
+            android:imeOptions="actionDone"
+            android:maxLength="20"/>
+
+        <Button
+            android:id="@+id/socialPopup"
+            android:layout_width="146dp"
+            android:layout_height="46dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Social Situation"
+            android:layout_gravity="center"
+            android:background="@color/buttonColor"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/Save"
+            android:id="@+id/AddButton"
+            android:layout_gravity="center"
             />
 
-        <ImageView
-            android:id="@+id/fear"
-            android:layout_row="0"
-            android:layout_column="2"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/fear"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack"
-            />
 
-        <ImageView
-            android:id="@+id/confused"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/confused"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack2"
-            />
+    </LinearLayout>
 
-        <ImageView
-            android:id="@+id/happy"
-            android:layout_row="1"
-            android:layout_column="1"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/happy"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack"
-            />
-
-        <ImageView
-            android:id="@+id/angry"
-            android:layout_row="1"
-            android:layout_column="2"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/angry"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack2"
-            />
-
-        <ImageView
-            android:id="@+id/sad"
-            android:layout_row="2"
-            android:layout_column="0"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/sad"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack"
-            />
-
-        <ImageView
-            android:id="@+id/shame"
-            android:layout_row="2"
-            android:layout_column="1"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/shame"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack2"
-            />
-
-        <ImageView
-            android:id="@+id/annoyed"
-            android:layout_row="2"
-            android:layout_column="2"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/annoyed"
-            android:layout_width="81dp"
-            android:layout_height="81dp"
-            android:background="@color/gridBack"
-            />
-
-    </GridLayout>
-
-</LinearLayout>
-
-    <TextView
-        android:id="@+id/howFeel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center"
-        android:textSize="15sp"
-        android:text="How are you feeling?" />
-
-    <EditText
-        android:id="@+id/message"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
-        android:layout_width="200dp"
-        android:textSize="15sp"
-        android:hint="@string/EnterMessage"
-        android:imeOptions="actionDone"
-        android:maxLength="20"/>
-
-    <Button
-        android:id="@+id/socialPopup"
-        android:layout_width="146dp"
-        android:layout_height="46dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="Social Situation"
-        android:layout_gravity="center"
-        android:background="@color/buttonColor"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:text="@string/Save"
-        android:id="@+id/AddButton"
-        android:layout_gravity="center"
-        />
-
-
-</LinearLayout>
-    </ScrollView>
+</ScrollView>
