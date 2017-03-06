@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -183,7 +184,18 @@ public class AddMoodActivity extends AppCompatActivity {
                 popup.show(); //showing popup menu
             }
         }); //closing the setOnClickListener method
+
+        addButton.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+                if (view == addButton){
+                    generateRecord();
+                }
+            }
+        });
     }
+
+
 
 
     public int getID() {
@@ -194,6 +206,12 @@ public class AddMoodActivity extends AppCompatActivity {
     public String getSocialSituation() { return socialSituation; }
 
 
+    protected void generateRecord(){
+        Intent intent = new Intent();
+        setResult(moodPlusActivity.RESULT_OK, intent);
+        finish();
+
+    }
 
 }
 
