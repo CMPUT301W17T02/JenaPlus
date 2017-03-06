@@ -27,6 +27,7 @@ public class ElasticsearchMPController {
         @Override
         protected Void doInBackground(Participant... participants){
             // ... : arbitrary number of arguments in Java
+            verifySettings();
 
             for (Participant participant : participants){
                 Index index = new Index.Builder(participant).index("cmput301w17t2").type("user").build();
