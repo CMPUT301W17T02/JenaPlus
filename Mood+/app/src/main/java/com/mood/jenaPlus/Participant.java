@@ -116,4 +116,8 @@ public class Participant extends User {
         this.followingParticipants = followingParticipants;
     }
 
+    @Override public String toString() {
+        return userName;
+    }
+
 }
