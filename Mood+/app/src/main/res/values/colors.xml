@@ -8,6 +8,8 @@
     <color name="gridBack3">#a2aa5bbf</color>
     <color name="addBack">#8bb4b4b4</color>
     <color name="buttonColor">#4AB2AE</color>
-    <color name="grey">#F0FFFF</color>
+    <color name="blue">#F0FFFF</color>
+    <color name="red">#FF0000</color>
+
 
 </resources>
