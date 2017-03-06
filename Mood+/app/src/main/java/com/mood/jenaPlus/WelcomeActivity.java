@@ -63,25 +63,11 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View v){
                 setResult(RESULT_OK);
                 String text = userName.getText().toString();
-                Participant participant = new Participant(text);
-                ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
-                getUsersTask.execute("");
-
-                String query = "{\n" +
-                                " \"query\" : {\n" +
-                                " \"term\" : {\n" +
-                                " \"message\": \""+ text +"\" \n"+
-                                "            }\n" +
-                                "       }\n" +
-                                " }";
-
-                getUsersTask.execute(query);
-                try{
-                    participantList.addAll(getUsersTask.get());
-                }catch (Exception e){
-                    Log.i("Error","Failed");
-                }
+                Participant newParticipant = new Participant(text);
+                participantList.add(newParticipant);
                 adapter.notifyDataSetChanged();
+                ElasticsearchMPController.AddUsersTask addUsersTask = new ElasticsearchMPController.AddUsersTask();
+                addUsersTask.execute(newParticipant);
             }
         });
     }
