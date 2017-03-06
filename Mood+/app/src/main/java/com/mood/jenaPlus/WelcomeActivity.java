@@ -1,8 +1,9 @@
 package com.mood.jenaPlus;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,26 +21,19 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-/**
- * Created by carrotji on 2017-02-25.
- */
-
-public class WelcomeActivity extends Activity{
-
+public class WelcomeActivity extends AppCompatActivity {
     private EditText userName;
     private ArrayList<Participant> participantList;
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
     private ListView participants; // List view for testing and debugging
 
-
-
-    /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_interface);
-
+        setContentView(R.layout.activity_welcome_activity);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         EditText userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
@@ -50,9 +44,6 @@ public class WelcomeActivity extends Activity{
                 WelcomeActivity theView = new WelcomeActivity();
                 ParticipantList theModel = new ParticipantList();
                 WelcomeController wc = new WelcomeController(theView,theModel);
-
-
-
 
                 Intent intent = new Intent(WelcomeActivity.this, moodPlusActivity.class);
                 startActivity(intent);
@@ -89,5 +80,6 @@ public class WelcomeActivity extends Activity{
             throw new RuntimeException();
         }
     }
+
 
 }
