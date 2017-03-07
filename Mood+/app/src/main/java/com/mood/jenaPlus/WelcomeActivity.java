@@ -17,14 +17,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import static com.mood.jenaPlus.R.id.text;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -50,7 +46,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 WelcomeActivity theView = new WelcomeActivity();
                 ParticipantList theModel = new ParticipantList();
 
-                Intent intent = new Intent(WelcomeActivity.this, moodPlusActivity.class);
+                Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                 startActivity(intent);
 
             }

@@ -6,4 +6,6 @@ package com.mood.jenaPlus;
 
 public interface MPView<M> {
     public void update(M model);
+
+    //public abstract void update(M model);
 }
