@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -14,7 +15,7 @@ import android.widget.Toast;
  * Created by carrotji on 2017-02-25.
  */
 
-public class AddMoodActivity extends AppCompatActivity {
+public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     ImageView t1, t2, t3, t4, t5, t6, t7, t8, t9;
     int idNum;
@@ -183,7 +184,18 @@ public class AddMoodActivity extends AppCompatActivity {
                 popup.show(); //showing popup menu
             }
         }); //closing the setOnClickListener method
+
+        addButton.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+                if (view == addButton){
+                    generateRecord();
+                }
+            }
+        });
     }
+
+
 
 
     public int getID() {
@@ -193,7 +205,16 @@ public class AddMoodActivity extends AppCompatActivity {
     public EditText getMessage() { return message; }
     public String getSocialSituation() { return socialSituation; }
 
+    public void update(MoodPlus moodPlus){
+        // TODO implements update method
+    }
 
+    protected void generateRecord(){
+        Intent intent = new Intent();
+        setResult(MoodPlusActivity.RESULT_OK, intent);
+        finish();
+
+    }
 
 }
 
