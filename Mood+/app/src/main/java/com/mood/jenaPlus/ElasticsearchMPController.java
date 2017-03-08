@@ -25,46 +25,45 @@ public class ElasticsearchMPController {
 
     private static JestDroidClient client;
     MoodPlus moodPlus = null;
+
     public ElasticsearchMPController(MoodPlus aMoodPlus) {
         this.moodPlus = aMoodPlus; // Adding a model to a controller.
     }
 
-    public static class AddUsersTask extends AsyncTask<Participant,Void,Void>{
+    public static class AddUsersTask extends AsyncTask<Participant, Void, Void> {
         @Override
-        protected Void doInBackground(Participant... participants){
+        protected Void doInBackground(Participant... participants) {
             // ... : arbitrary number of arguments in Java
             verifySettings();
 
-            for (Participant participant : participants){
+            for (Participant participant : participants) {
 
                 Index index = new Index.Builder(participant).index("cmput301w17t2").type("user").build();
 
                 try {
                     // where is client?
                     DocumentResult result = client.execute(index);
-                    if(result.isSucceeded()){
+                    if (result.isSucceeded()) {
                         participant.setId(result.getId());
+                    } else {
+                        Log.i("Error", "Elasticsearch was not able to add the user.");
                     }
-                    else{
-                        Log.i("Error","Elasticsearch was not able to add the user.");
-                    }
-                }
-                catch (Exception e){
-                    Log.i("Error","The application failed to build and send the users");
+                } catch (Exception e) {
+                    Log.i("Error", "The application failed to build and send the users");
                 }
             }
             return null;
         }
     }
 
-    public static class GetUsersTask extends AsyncTask<String,Void,ArrayList<Participant>> {
+    public static class GetUsersTask extends AsyncTask<String, Void, ArrayList<Participant>> {
         @Override
-        protected ArrayList<Participant> doInBackground(String... search_parameters){
+        protected ArrayList<Participant> doInBackground(String... search_parameters) {
             verifySettings();
 
             ArrayList<Participant> participants = new ArrayList<Participant>();
 
-            String query = "" +search_parameters[0]+ "";
+            String query = "" + search_parameters[0] + "";
             System.out.println(query);
 
 
@@ -74,29 +73,27 @@ public class ElasticsearchMPController {
                     .addType("user")
                     .build();
 
-            try{
+            try {
                 // TODO get the results of the query
                 SearchResult result = client.execute(search);
-                if(result.isSucceeded()){
+                if (result.isSucceeded()) {
                     List<Participant> foundParticipant = result.getSourceAsObjectList(Participant.class);
                     participants.addAll(foundParticipant);
-                }
-                else{
-                    Log.i("Error","The search query failed to find any users that matched");
+                } else {
+                    Log.i("Error", "The search query failed to find any users that matched");
                     System.out.println("could not find error");
                 }
-            }
-            catch(Exception e){
-                Log.i("Error","Something went wrong when tried to communicate with the elasticsearch server!");
+            } catch (Exception e) {
+                Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
             }
             return participants;
         }
 
     }
 
-    public static class GetOneUserTask extends AsyncTask<String,Void,Participant> {
+    public static class GetOneUserTask extends AsyncTask<String, Void, Participant> {
         @Override
-        protected Participant doInBackground(String... search_parameters){
+        protected Participant doInBackground(String... search_parameters) {
             verifySettings();
 
             Participant participant = new Participant(null);
@@ -111,19 +108,17 @@ public class ElasticsearchMPController {
                     .addType("user")
                     .build();
 
-            try{
+            try {
                 // TODO get the results of the query
                 SearchResult result = client.execute(search);
-                if(result.isSucceeded()){
+                if (result.isSucceeded()) {
                     participant = result.getSourceAsObject(Participant.class);
-                }
-                else{
-                    Log.i("Error","The search query failed to find any users that matched");
+                } else {
+                    Log.i("Error", "The search query failed to find any users that matched");
                     System.out.println("could not find error");
                 }
-            }
-            catch(Exception e){
-                Log.i("Error","Something went wrong when tried to communicate with the elasticsearch server!");
+            } catch (Exception e) {
+                Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
             }
             return participant;
         }
@@ -138,15 +133,14 @@ public class ElasticsearchMPController {
         try {
             returnedParticipant = getOneUserTask.get();
         } catch (Exception e) {
-            Log.i("Error","Something went wrong when tried to communicate with the elasticsearch server!");
+            Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
         }
         return returnedParticipant;
     }
 
 
-
-    public static void verifySettings(){
-        if(client == null){
+    public static void verifySettings() {
+        if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("http://cmput301.softwareprocess.es:8080");
             DroidClientConfig config = builder.build();
 
