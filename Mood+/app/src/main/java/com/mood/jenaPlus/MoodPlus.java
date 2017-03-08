@@ -10,4 +10,13 @@ public class MoodPlus extends MPModel<MPView> {
         super();
     }
 
+    public Participant usingParticipant;
+
+    public void getUsingParticipantUsername(String aName) {
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        usingParticipant = eController.getUsingParticipant(aName);
+        notifyViews();
+
+    }
+
 }

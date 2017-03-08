@@ -18,12 +18,21 @@ public class MoodPlusApplication extends Application {
     }
 
     // Singleton
-    /*transient private static ElasticsearchMPController elasticsearchMPController = null;
+    transient private static ElasticsearchMPController elasticsearchMPController = null;
 
     public static ElasticsearchMPController getElasticsearchMPController(){
         if(elasticsearchMPController == null){
             elasticsearchMPController = new ElasticsearchMPController(getMoodPlus());
 
         }
-    }*/
+        return elasticsearchMPController;
+    }
+
+    transient private static MoodListController moodListController = null;
+    static MoodListController getMoodListController() {
+        if (moodListController == null) {
+            moodListController = new MoodListController(getMoodPlus());
+        }
+        return moodListController;
+    }
 }
