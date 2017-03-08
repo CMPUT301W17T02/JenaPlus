@@ -9,11 +9,12 @@
     <item
         android:id="@+id/action_schedules"
         android:enabled="true"
-        android:icon="@drawable/ic_menu_gallery"
+        android:icon="@drawable/ic_menu_tag"
         android:title="social situation" />
     <item
         android:id="@+id/action_music"
         android:enabled="true"
-        android:icon="@drawable/ic_menu_share"
+        android:icon="@drawable/ic_navigation"
         android:title="nagivation" />
+
 </menu>
