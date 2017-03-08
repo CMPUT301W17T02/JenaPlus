@@ -39,12 +39,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     private ArrayList<Participant> participantList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
-<<<<<<< HEAD
-    private ListView participantsList; // List view for testing and debugging
-=======
     private ListView participants; // List view for testing and debugging
     Context context = this;
->>>>>>> e8fb30d80126dee556db5a73c73d8656e3988d70
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +49,12 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-<<<<<<< HEAD
-=======
         MoodPlus moodPlus = MoodPlusApplication.getMoodPlus(); // Taken from FillerCreep
         moodPlus.addView(this); // Taken from FillerCreep
 
->>>>>>> e8fb30d80126dee556db5a73c73d8656e3988d70
         userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
-        participantsList = (ListView) findViewById(R.id.participantList);
+        participants = (ListView) findViewById(R.id.participantList);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,7 +68,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 boolean isConnected = activeNetwork != null &&
                         activeNetwork.isConnectedOrConnecting();
 
-                // Will only continue if connected to the internet. 
+                // Will only continue if connected to the internet.
                 if (isConnected) {
                     String strUser = userName.getText().toString();
                     MoodPlus model = MoodPlusApplication.getMoodPlus();
@@ -129,28 +122,17 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        loadFromFile(); // TODO replace this with elastic search
-
+        //loadFromFile(); // TODO replace this with elastic search
         ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");
-
         try{
             participantList = getUsersTask.get();
-
         }catch (Exception e){
             Log.i("Error","Failed to get the users out of the async object");
         }
-
-<<<<<<< HEAD
-        adapter = new ArrayAdapter<Participant>(this,
-                R.layout.participant_list, participantList);
-        participantsList.setAdapter(adapter);
-    }
-=======
         adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
         participants.setAdapter(adapter);
     }*/
->>>>>>> e8fb30d80126dee556db5a73c73d8656e3988d70
 
 
     private void loadFromFile() {
@@ -176,5 +158,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
     }
 }
+
 
 
