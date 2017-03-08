@@ -1,6 +1,10 @@
 package com.mood.jenaPlus;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ExecutionException;
@@ -31,7 +37,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
     private ListView participants; // List view for testing and debugging
-
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +55,26 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WelcomeActivity theView = new WelcomeActivity();
-                ParticipantList theModel = new ParticipantList();
 
-                Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
-                startActivity(intent);
+                // Taken from http://stackoverflow.com/questions/7071578/connectivitymanager-to-verify-internet-connection
+                // 03-07-2017 23:06
+                ConnectivityManager cm =
+                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+
+                // Will only continue if connected to the internet. 
+                if (isConnected) {
+                    String strUser = userName.getText().toString();
+                    MoodPlus model = MoodPlusApplication.getMoodPlus();
+                    model.getUsingParticipantUsername(strUser);
+                    Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
+                    startActivity(intent);
+                } else {
+                    userName.setError("Not Connected To the Internet");
+                }
 
             }
         });
@@ -84,11 +105,9 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 try {
                     participantList.clear();
-                    participantList.addAll((Collection<? extends Participant>) getOneUserTask.get());
+                    //participantList.addAll((Collection<? extends Participant>) getOneUserTask.get());
                     adapter.notifyDataSetChanged();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
@@ -140,3 +159,5 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
     }
 }
+
+
