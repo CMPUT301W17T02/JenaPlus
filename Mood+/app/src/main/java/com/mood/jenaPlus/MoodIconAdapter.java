@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 /**
  * Created by carrotji on 2017-03-06.
  */
@@ -36,7 +38,7 @@ public class MoodIconAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {
@@ -49,9 +51,9 @@ public class MoodIconAdapter extends BaseAdapter {
 
     // references to our images
     private Integer[] mThumbIds = {
-            R.drawable.angry, R.drawable.annoyed, R.drawable.confused,
-            R.drawable.disgust, R.drawable.fear,R.drawable.happy,
-            R.drawable.shame,R.drawable.surprised, R.drawable.sad
+            R.drawable.surprised,R.drawable.disgust,R.drawable.fear,
+            R.drawable.confused, R.drawable.happy, R.drawable.angry,
+            R.drawable.sad,  R.drawable.shame,R.drawable.annoyed,
     };
 
 }

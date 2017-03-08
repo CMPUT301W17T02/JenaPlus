@@ -4,6 +4,8 @@ import android.location.Location;
 
 import java.util.ArrayList;
 
+import io.searchbox.annotations.JestId;
+
 /**
  * Created by ceciliaxiang on 2017-02-25.
  */
@@ -14,6 +16,17 @@ public class Participant extends User {
     private MoodList followingMoodList = new MoodList();
     private FollowList followingParticipants = new FollowList();
     private FollowList followersParticipants = new FollowList();
+
+    @JestId
+    private String id;
+
+    public String getId(){
+        return id;
+    }
+
+    public void setId(String id){
+        this.id = id;
+    }
 
     public void addFollowingParticipant(Participant participant) {
         followingParticipants.addToFollowingList(participant);
@@ -29,7 +42,7 @@ public class Participant extends User {
 
     public Participant(String userName) {
 
-        super(userName);
+        this.userName = userName;
     }
 
     public void addNewMood(String text, Boolean addLocation, Location location, String id,
@@ -116,8 +129,8 @@ public class Participant extends User {
         this.followingParticipants = followingParticipants;
     }
 
-    /*@Override public String toString() {
+    @Override public String toString() {
         return userName;
-    }*/
+    }
 
 }

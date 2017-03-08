@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 /**
  * Created by carrotji on 2017-02-25.
  */
@@ -36,19 +37,21 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         message = (EditText) findViewById(R.id.message);
         socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        /*GridView gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(AddMoodActivity.this,""+position,Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(AddMoodActivity.this,"HI",Toast.LENGTH_SHORT).show();
+
+
             }
-        });
+        });*/
 
 
-
-      /*  t1 = (ImageView) findViewById(R.id.surprised);
+        t1 = (ImageView) findViewById(R.id.surprised);
         t2 = (ImageView) findViewById(R.id.disgust);
         t3 = (ImageView) findViewById(R.id.fear);
         t4 = (ImageView) findViewById(R.id.confused);
@@ -168,7 +171,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         Toast.LENGTH_SHORT).show();
                 t9.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
-        }); */
+        });
 
         socialPopup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -220,7 +223,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     public void update(MoodPlus moodPlus){
         // TODO implements update method
+
     }
+
 
     protected void generateRecord(){
         Intent intent = new Intent();

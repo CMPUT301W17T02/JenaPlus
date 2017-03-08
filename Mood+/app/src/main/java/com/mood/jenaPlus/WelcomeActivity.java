@@ -10,9 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -28,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private ArrayList<Participant> participantList;
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
-    private ListView participants; // List view for testing and debugging
+    private ListView participantsList; // List view for testing and debugging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +40,9 @@ public class WelcomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final EditText userName = (EditText) findViewById(R.id.loginUserName);
+        userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
-        participants = (ListView) findViewById(R.id.participantList);
+        participantsList = (ListView) findViewById(R.id.participantList);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +75,7 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
-        //loadFromFile(); // TODO replace this with elastic search
+        loadFromFile(); // TODO replace this with elastic search
 
         ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");
@@ -86,7 +89,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         adapter = new ArrayAdapter<Participant>(this,
                 R.layout.participant_list, participantList);
-        participants.setAdapter(adapter);
+        participantsList.setAdapter(adapter);
     }
 
 
