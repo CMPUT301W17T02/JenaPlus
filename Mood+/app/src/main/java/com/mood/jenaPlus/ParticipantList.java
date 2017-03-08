@@ -19,9 +19,6 @@ public class ParticipantList {
 
     }
 
-    //public ArrayList<Participant> getParticipantArrayList() {
-     //   return participantArrayList;
-    //}
 
     public void setParticipantArrayList(ArrayList<Participant> participantArrayList) {
         this.participantArrayList = participantArrayList;
