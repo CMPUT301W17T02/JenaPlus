@@ -21,14 +21,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.ExecutionException;
 
-public class WelcomeActivity extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     private EditText userName;
-    private ArrayList<Participant> participantList;
+    private ArrayList<Participant> participantList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
     private ListView participants; // List view for testing and debugging
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,10 @@ public class WelcomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final EditText userName = (EditText) findViewById(R.id.loginUserName);
+        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus(); // Taken from FillerCreep
+        moodPlus.addView(this); // Taken from FillerCreep
+
+        userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
         participants = (ListView) findViewById(R.id.participantList);
         button.setOnClickListener(new View.OnClickListener() {
@@ -52,23 +58,45 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+        ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+        getUsersTask.execute("");
+
+        try {
+            participantList = getUsersTask.get();
+
+        } catch (Exception e) {
+            Log.i("Error", "Failed to get the users out of the async object");
+        }
+
+        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+        participants.setAdapter(adapter);
+
+
         Button getButton = (Button) findViewById(R.id.get_users);
 
-        getButton.setOnClickListener(new View.OnClickListener(){
+        getButton.setOnClickListener(new View.OnClickListener() {
 
-            public void onClick(View v){
+            public void onClick(View v) {
                 setResult(RESULT_OK);
                 String text = userName.getText().toString();
-                Participant newParticipant = new Participant(text);
-                participantList.add(newParticipant);
-                adapter.notifyDataSetChanged();
-                ElasticsearchMPController.AddUsersTask addUsersTask = new ElasticsearchMPController.AddUsersTask();
-                addUsersTask.execute(newParticipant);
+                ElasticsearchMPController.GetOneUserTask getOneUserTask = new ElasticsearchMPController.GetOneUserTask();
+                getOneUserTask.execute(text);
+
+                try {
+                    participantList.clear();
+                    participantList.addAll((Collection<? extends Participant>) getOneUserTask.get());
+                    adapter.notifyDataSetChanged();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
     }
 
-    @Override
+    /*@Override
     protected void onStart() {
         // TODO Auto-generated method stub
         super.onStart();
@@ -84,10 +112,9 @@ public class WelcomeActivity extends AppCompatActivity {
             Log.i("Error","Failed to get the users out of the async object");
         }
 
-        adapter = new ArrayAdapter<Participant>(this,
-                R.layout.participant_list, participantList);
+        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
         participants.setAdapter(adapter);
-    }
+    }*/
 
 
     private void loadFromFile() {
@@ -96,7 +123,8 @@ public class WelcomeActivity extends AppCompatActivity {
             BufferedReader in = new BufferedReader(new InputStreamReader(fis));
             Gson gson = new Gson();
             //Code taken from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt Sept.22,2016
-            Type listType = new TypeToken<ArrayList<Participant>>(){}.getType();
+            Type listType = new TypeToken<ArrayList<Participant>>() {
+            }.getType();
             participantList = gson.fromJson(in, listType);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -107,7 +135,8 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void update(MoodPlus model) {
 
-
-
+    }
 }
