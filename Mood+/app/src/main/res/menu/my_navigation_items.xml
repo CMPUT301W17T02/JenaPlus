@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_favorites"
+        android:id="@+id/action_camera"
         android:enabled="true"
         android:icon="@drawable/ic_menu_camera"
         android:title="camera"/>
     <item
-        android:id="@+id/action_schedules"
+        android:id="@+id/socialPopup"
         android:enabled="true"
         android:icon="@drawable/ic_menu_tag"
         android:title="social situation" />
     <item
-        android:id="@+id/action_music"
+        android:id="@+id/action_navigation"
         android:enabled="true"
         android:icon="@drawable/ic_navigation"
         android:title="nagivation" />

@@ -159,7 +159,7 @@
             android:hint="@string/EnterMessage"
             android:imeOptions="actionDone"
             android:maxLength="20"/>
-
+<!--
         <Button
             android:id="@+id/socialPopup"
             android:layout_width="146dp"
@@ -168,7 +168,7 @@
             android:layout_alignParentTop="true"
             android:text="Social Situation"
             android:layout_gravity="center"
-            android:background="@color/buttonColor"/>
+            android:background="@color/buttonColor"/> -->
 
 
     </LinearLayout>
@@ -195,7 +195,7 @@
             android:layout_height="48dp"
             android:text="@string/Save"
             android:id="@+id/AddButton"
-            android:layout_gravity="center"
+            android:backgroundTint="@android:color/holo_blue_light"
             />
 
     </LinearLayout>
