@@ -74,8 +74,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 // Will only continue if connected to the internet.
                 if (isConnected) {
-                    String strUser = userName.getText().toString();
-                    MoodPlus model = MoodPlusApplication.getMoodPlus();
                     model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
