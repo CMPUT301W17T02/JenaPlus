@@ -12,12 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 public class MoodPlusActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus> {
 
     private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
+    private ListView participantListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,4 +109,8 @@ public class MoodPlusActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    public void update(MoodPlus model) {
+        // From the MPView interface
+    }
 }

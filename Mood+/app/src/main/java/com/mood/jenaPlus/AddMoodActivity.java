@@ -31,6 +31,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_mood_interface);
 
+        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
+        moodPlus.addView(this);
+
         message = (EditText) findViewById(R.id.message);
         socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
@@ -196,18 +199,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
 
-
-
-    public int getID() {
-        return idNum;
-    }
-    public int getColorNum() { return colorNum; }
-    public EditText getMessage() { return message; }
-    public String getSocialSituation() { return socialSituation; }
-
     public void update(MoodPlus moodPlus){
         // TODO implements update method
     }
+
+
 
     protected void generateRecord(){
         Intent intent = new Intent();
