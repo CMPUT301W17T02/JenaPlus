@@ -2,14 +2,20 @@ package com.mood.jenaPlus;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 
 /**
  * Created by carrotji on 2017-02-25.
@@ -32,8 +38,22 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.add_mood_interface);
 
         message = (EditText) findViewById(R.id.message);
-        socialPopup = (Button) findViewById(R.id.socialPopup);
+        //socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        /*GridView gridview = (GridView) findViewById(R.id.gridView);
+        gridview.setAdapter(new MoodIconAdapter(this));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Toast.makeText(AddMoodActivity.this,"HI",Toast.LENGTH_SHORT).show();
+
+
+            }
+        });*/
+
 
         t1 = (ImageView) findViewById(R.id.surprised);
         t2 = (ImageView) findViewById(R.id.disgust);
@@ -157,6 +177,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             }
         });
 
+
+/*
         socialPopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,7 +205,47 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 popup.show(); //showing popup menu
             }
-        }); //closing the setOnClickListener method
+        }); //closing the setOnClickListener method */
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener(){
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_camera:
+                                System.out.println("do camera");
+                                break;
+                            case R.id.socialPopup:
+                                View menuItemView = findViewById(R.id.socialPopup);
+                                PopupMenu popup = new PopupMenu(AddMoodActivity.this, menuItemView );
+                                //Inflating the Popup using xml file
+                                popup.getMenuInflater()
+                                        .inflate(R.menu.social_popup, popup.getMenu());
+
+                                //registering popup with OnMenuItemClickListener
+                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        Toast.makeText(
+                                                AddMoodActivity.this,
+                                                "Social Situation : " + item.getTitle(),
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                        socialSituation = (String) item.getTitle();
+                                        return true;
+                                    }
+                                });
+
+                                popup.show();
+                                break;
+
+                            case R.id.action_navigation:
+                                System.out.println("do navigation");
+                                break;
+                        }
+                        return true;
+                    }
+                }
+        );
 
         addButton.setOnClickListener(new View.OnClickListener(){
 
@@ -207,7 +269,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     public void update(MoodPlus moodPlus){
         // TODO implements update method
+
     }
+
 
     protected void generateRecord(){
         Intent intent = new Intent();

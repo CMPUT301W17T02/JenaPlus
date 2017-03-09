@@ -14,9 +14,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -65,7 +68,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 boolean isConnected = activeNetwork != null &&
                         activeNetwork.isConnectedOrConnecting();
 
-                // Will only continue if connected to the internet. 
+                // Will only continue if connected to the internet.
                 if (isConnected) {
                     String strUser = userName.getText().toString();
                     MoodPlus model = MoodPlusApplication.getMoodPlus();
@@ -120,17 +123,13 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         // TODO Auto-generated method stub
         super.onStart();
         //loadFromFile(); // TODO replace this with elastic search
-
         ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");
-
         try{
             participantList = getUsersTask.get();
-
         }catch (Exception e){
             Log.i("Error","Failed to get the users out of the async object");
         }
-
         adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
         participants.setAdapter(adapter);
     }*/
@@ -159,5 +158,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
     }
 }
+
 
 
