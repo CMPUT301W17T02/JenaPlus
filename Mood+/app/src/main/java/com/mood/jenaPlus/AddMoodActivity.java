@@ -266,11 +266,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     }
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> master
     protected void generateRecord(){
         Intent intent = new Intent();
         setResult(MoodPlusActivity.RESULT_OK, intent);

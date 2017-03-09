@@ -67,22 +67,19 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 boolean isConnected = activeNetwork != null &&
                         activeNetwork.isConnectedOrConnecting();
 
-<<<<<<< HEAD
                 String strUser = userName.getText().toString();
                 MoodPlus model = MoodPlusApplication.getMoodPlus();
                 model.getUsingParticipantUsername(strUser);
 
-                // Will only continue if connected to the internet. 
-                if (isConnected)  {
-=======
+
                 // Will only continue if connected to the internet.
                 if (isConnected) {
                     String strUser = userName.getText().toString();
                     MoodPlus model = MoodPlusApplication.getMoodPlus();
                     model.getUsingParticipantUsername(strUser);
->>>>>>> master
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
+                    
                 } else {
                     userName.setError("Not Connected To the Internet");
                 }
