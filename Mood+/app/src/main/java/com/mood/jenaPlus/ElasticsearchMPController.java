@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.searchbox.core.DocumentResult;
+import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
