@@ -187,36 +187,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             }
         });*/
 
-
-/*
-        socialPopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
-                // 04-03-2015 01:16
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(AddMoodActivity.this, socialPopup);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.social_popup, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(
-                                AddMoodActivity.this,
-                                "Social Situation : " + item.getTitle(),
-                                Toast.LENGTH_SHORT
-                        ).show();
-                        socialSituation = (String) item.getTitle();
-                        return true;
-                    }
-                });
-
-                popup.show(); //showing popup menu
-            }
-        }); //closing the setOnClickListener method */
-
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener(){
                     @Override
@@ -226,6 +196,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 System.out.println("do camera");
                                 break;
                             case R.id.socialPopup:
+                                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+                                // 04-03-2015 01:16
                                 View menuItemView = findViewById(R.id.socialPopup);
                                 PopupMenu popup = new PopupMenu(AddMoodActivity.this, menuItemView );
                                 //Inflating the Popup using xml file
@@ -245,7 +217,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                     }
                                 });
 
-                                popup.show();
+                                popup.show(); //showing popup menu
                                 break;
 
                             case R.id.action_navigation:

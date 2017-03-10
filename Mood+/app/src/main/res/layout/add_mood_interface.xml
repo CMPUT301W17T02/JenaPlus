@@ -171,16 +171,6 @@
             android:hint="@string/EnterMessage"
             android:imeOptions="actionDone"
             android:maxLength="20"/>
-<!--
-        <Button
-            android:id="@+id/socialPopup"
-            android:layout_width="146dp"
-            android:layout_height="46dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="Social Situation"
-            android:layout_gravity="center"
-            android:background="@color/buttonColor"/> -->
 
 
     </LinearLayout>
