@@ -9,11 +9,12 @@ import java.util.Date;
  */
 
 public class Mood {
+    private String id;
     private String text;
     private Date date;
     private Boolean addLocation;
     private Location location;
-    private String id;
+
     private String social;
     private String photo;
     private String color;
@@ -23,7 +24,7 @@ public class Mood {
         this.date = new Date();
     }
 
-    //@TODO: implement cases for empty fields/inputs
+
     public Mood(String text, Date date, Boolean addLocation, Location location, String id,
                 String social, String photo, String color) {
         this.text = text;
@@ -34,7 +35,9 @@ public class Mood {
         this.social = social;
         this.photo = photo;
         this.color = color;
-    };
+
+        this.save();    // saves to elastic search server
+    }
 
     public String getText() {
         return text;
@@ -133,6 +136,13 @@ public class Mood {
 
     public void setAddLocation(Boolean addLocation) {
         this.addLocation = addLocation;
+    }
+
+
+    // saves mood event to elastic search server
+    private void save() {
+        MoodListController.AddMoodTask addMoodTask = new MoodListController.AddMoodTask();
+        addMoodTask.execute();
     }
 
 }
