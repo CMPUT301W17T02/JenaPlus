@@ -13,8 +13,10 @@
     tools:context="com.mood.jenaPlus.MoodPlusActivity"
     tools:showIn="@layout/app_bar_mood_plus">
 
-    <TextView
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/listView">
+
+    </ListView>
 </RelativeLayout>

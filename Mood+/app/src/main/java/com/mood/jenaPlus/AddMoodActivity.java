@@ -261,6 +261,16 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
 
+
+    public int getID() {
+        return idNum;
+    }
+
+    public int getColorNum() { return colorNum; }
+    public EditText getMessage() { return message; }
+    public String getSocialSituation() { return socialSituation; }
+
+
     public void update(MoodPlus moodPlus){
         // TODO implements update method
 
