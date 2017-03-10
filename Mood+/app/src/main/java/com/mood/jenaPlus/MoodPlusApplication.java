@@ -28,6 +28,7 @@ public class MoodPlusApplication extends Application {
         return elasticsearchMPController;
     }
 
+    // Singleton
     transient private static MoodListController moodListController = null;
     static MoodListController getMoodListController() {
         if (moodListController == null) {

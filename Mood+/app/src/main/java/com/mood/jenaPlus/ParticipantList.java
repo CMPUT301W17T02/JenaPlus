@@ -9,16 +9,26 @@ import java.util.ArrayList;
 public class ParticipantList {
 
 
-    private ArrayList<Participant> participantArrayList;
-
-    public ParticipantList(ArrayList<Participant> newList) {
-        participantArrayList = newList;
-    }
+    private ArrayList<Participant> participantArrayList = new ArrayList<>();
 
     public ParticipantList() {
 
     }
 
+    public void addParticipant(Participant participant) {
+        boolean seen = true;
+        int pListSize = participantArrayList.size();
+        for (int i = 0; i<pListSize; i++) {
+            if(participantArrayList.get(i).getUserName().equals(participant.getUserName())){
+                throw new IllegalArgumentException("Participant exists.");
+            } else {
+                seen = false;
+            }
+        }
+        if (seen) {
+            participantArrayList.add(participant);
+        }
+    }
 
     public void setParticipantArrayList(ArrayList<Participant> participantArrayList) {
         this.participantArrayList = participantArrayList;

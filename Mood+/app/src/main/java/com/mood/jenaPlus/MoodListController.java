@@ -1,6 +1,10 @@
 package com.mood.jenaPlus;
 
 
+import android.location.Location;
+
+import java.util.Date;
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -19,6 +23,7 @@ import io.searchbox.params.Parameters;
 
 import static com.mood.jenaPlus.ElasticsearchMPController.verifySettings;
 
+
 /**
  * Created by Bernice on 2017-02-25.
  */
@@ -27,6 +32,7 @@ public class MoodListController {
 
     private static JestDroidClient client;
     MoodPlus moodPlus = null; // a singleton
+
 
     public static class AddMoodTask extends AsyncTask<Mood, Void, Void> {
         // add mood event to elastic search
@@ -56,7 +62,6 @@ public class MoodListController {
             return null;
         }
     }
-
 
     public static class GetMoodsTask extends AsyncTask<String, Void, ArrayList<Mood>> {
         @Override
@@ -108,7 +113,22 @@ public class MoodListController {
 
 
 
+
     public MoodListController(MoodPlus aMoodPlus) {
         this.moodPlus = aMoodPlus;
     }
+
+    public void addMood(Mood aMood) {
+        String text = aMood.getText();
+        Date date = aMood.getDate();
+        Boolean addLocation = aMood.getAddLocation();
+        Location location = aMood.getLocation();
+        String id = aMood.getId();
+        String social = aMood.getSocial();
+        String photo = aMood.getPhoto();
+        String color = aMood.getColor();
+        moodPlus.usingParticipant.addNewMood(text,addLocation,location,id,social,photo,color);
+    }
+
+
 }
