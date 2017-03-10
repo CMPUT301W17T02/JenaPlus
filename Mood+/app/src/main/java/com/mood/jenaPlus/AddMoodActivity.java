@@ -27,10 +27,14 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     int idNum;
     int colorNum;
     String socialSituation;
+    String trigger;
+    String idString;
+    String colorString;
 
     private Button addButton;
     private EditText message;
     private Button socialPopup;
+    private GridView gridview;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -44,20 +48,26 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         //socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        /*GridView gridview = (GridView) findViewById(R.id.gridView);
+
+
+        gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MoodIcon mi = new MoodIcon();
 
-                Toast.makeText(AddMoodActivity.this,"HI",Toast.LENGTH_SHORT).show();
+                idNum = colorNum = position;
+                idString = mi.getMood(idNum);
+                colorString = mi.getColor(colorNum);
+                Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
 
 
             }
-        });*/
+        });
 
-
+/*
         t1 = (ImageView) findViewById(R.id.surprised);
         t2 = (ImageView) findViewById(R.id.disgust);
         t3 = (ImageView) findViewById(R.id.fear);
@@ -178,37 +188,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         Toast.LENGTH_SHORT).show();
                 t9.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
-        });
-
-
-/*
-        socialPopup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
-                // 04-03-2015 01:16
-                //Creating the instance of PopupMenu
-                PopupMenu popup = new PopupMenu(AddMoodActivity.this, socialPopup);
-                //Inflating the Popup using xml file
-                popup.getMenuInflater()
-                        .inflate(R.menu.social_popup, popup.getMenu());
-
-                //registering popup with OnMenuItemClickListener
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    public boolean onMenuItemClick(MenuItem item) {
-                        Toast.makeText(
-                                AddMoodActivity.this,
-                                "Social Situation : " + item.getTitle(),
-                                Toast.LENGTH_SHORT
-                        ).show();
-                        socialSituation = (String) item.getTitle();
-                        return true;
-                    }
-                });
-
-                popup.show(); //showing popup menu
-            }
-        }); //closing the setOnClickListener method */
+        });*/
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -219,6 +199,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 System.out.println("do camera");
                                 break;
                             case R.id.socialPopup:
+                                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+                                // 04-03-2015 01:16
                                 View menuItemView = findViewById(R.id.socialPopup);
                                 PopupMenu popup = new PopupMenu(AddMoodActivity.this, menuItemView );
                                 //Inflating the Popup using xml file
@@ -238,7 +220,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                     }
                                 });
 
-                                popup.show();
+                                popup.show(); //showing popup menu
                                 break;
 
                             case R.id.action_navigation:
@@ -253,9 +235,17 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         addButton.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
-                if (view == addButton){
-                    generateRecord();
-                }
+
+                trigger = message.getText().toString();
+
+                Mood newMood = new Mood();
+                newMood.setText(trigger);
+                Intent intent = new Intent(AddMoodActivity.this, MoodPlusActivity.class);
+
+                //intent.putExtra("result",trigger);
+                //startActivity(intent);
+                //intent.putExtra("result", newMood);
+                startActivityForResult(intent,1);
             }
         });
     }
