@@ -10,10 +10,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="151c5cbc-9e6a-409f-9b7c-0b9165abf516" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/circleimageview_1_3_0.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ViewActivity.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/misc.xml" afterPath="$PROJECT_DIR$/../.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/AddMoodActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/AddMoodActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/res/layout/add_mood_interface.xml" afterPath="$PROJECT_DIR$/src/main/res/layout/add_mood_interface.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ElasticsearchMPController.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ElasticsearchMPController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodListController.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodListController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlus.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlus.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusApplication.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusApplication.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ParticipantList.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ParticipantList.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/WelcomeActivity.java" afterPath="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/WelcomeActivity.java" />
     </list>
     <ignored path="app.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,26 +52,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AddMoodActivity.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AddMoodActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/AddMoodActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
-              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state relative-caret-position="918">
+              <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding>
-                <marker date="1489112653570" expanded="false" signature="3324:3395" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="3699:3714" ph="}" />
-                <marker date="1489112653570" expanded="false" signature="3748:3819" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="4109:4124" ph="}" />
-                <marker date="1489112653570" expanded="false" signature="4158:4229" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="4531:4546" ph="}" />
-                <marker date="1489112653570" expanded="false" signature="4580:4651" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="4939:4954" ph="}" />
-                <marker date="1489112653570" expanded="false" signature="4988:5059" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="5358:5373" ph="}" />
-                <marker date="1489112653570" expanded="false" signature="5407:5478" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="5775:5790" ph="}" />
-                <marker date="1489112653570" expanded="false" signature="5824:5895" ph="(v) → {" />
-                <marker date="1489112653570" expanded="false" signature="6186:6201" ph="}" />
+                <element signature="e#1734#2211#0" expanded="true" />
+                <element signature="e#2210#2211#0" expanded="true" />
+                <element signature="e#6806#9010#0" expanded="true" />
+                <element signature="e#7966#8632#0" expanded="true" />
+                <element signature="e#8631#8632#0" expanded="true" />
+                <element signature="e#9009#9010#0" expanded="true" />
+                <element signature="e#9060#9588#0" expanded="true" />
+                <element signature="e#9587#9588#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -84,15 +84,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MoodPlusActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MoodPlusActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1584">
+            <state relative-caret-position="238">
               <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
               <folding>
                 <element signature="e#1075#1081#0" expanded="true" />
                 <element signature="e#1647#1871#0" expanded="true" />
                 <element signature="e#1870#1871#0" expanded="true" />
+                <element signature="e#1989#2391#0" expanded="true" />
+                <element signature="e#2390#2391#0" expanded="true" />
+                <element signature="e#2579#2610#0" expanded="true" />
+                <element signature="e#2612#2644#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -101,11 +105,10 @@
       <file leaf-file-name="MoodListController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodListController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1768">
-              <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+            <state relative-caret-position="1853">
+              <caret line="109" column="13" selection-start-line="109" selection-start-column="13" selection-end-line="109" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2027#2033#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -115,7 +118,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ElasticsearchMPController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1309">
-              <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+              <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -1925,10 +1928,10 @@
         <option value="$PROJECT_DIR$/src/main/res/layout/content_mood_plus.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ViewMoodActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/Mood.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusActivity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodListController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/AddMoodActivity.java" />
         <option value="$PROJECT_DIR$/src/main/res/layout/add_mood_interface.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/AddMoodActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusActivity.java" />
       </list>
     </option>
   </component>
@@ -2415,12 +2418,19 @@
       <option name="project" value="LOCAL" />
       <updated>1489112297137</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="clean up">
+      <created>1489112817448</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1489112817448</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <editor active="false" />
     <layout>
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2509,7 +2519,8 @@
     <MESSAGE value="add person icon&#10;" />
     <MESSAGE value="add icons&#10;" />
     <MESSAGE value="use Grid View" />
-    <option name="LAST_COMMIT_MESSAGE" value="use Grid View" />
+    <MESSAGE value="clean up" />
+    <option name="LAST_COMMIT_MESSAGE" value="clean up" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -2521,20 +2532,14 @@
         <state relative-caret-position="527">
           <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="65" />
           <folding>
-            <marker date="1489112653570" expanded="false" signature="3324:3395" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="3699:3714" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="3748:3819" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="4109:4124" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="4158:4229" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="4531:4546" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="4580:4651" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="4939:4954" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="4988:5059" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="5358:5373" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="5407:5478" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="5775:5790" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="5824:5895" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="6186:6201" ph="}" />
+            <element signature="e#1734#2211#0" expanded="true" />
+            <element signature="e#2210#2211#0" expanded="true" />
+            <element signature="e#6806#9010#0" expanded="true" />
+            <element signature="e#7966#8632#0" expanded="true" />
+            <element signature="e#8631#8632#0" expanded="true" />
+            <element signature="e#9009#9010#0" expanded="true" />
+            <element signature="e#9060#9588#0" expanded="true" />
+            <element signature="e#9587#9588#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2547,6 +2552,10 @@
             <element signature="e#1075#1081#0" expanded="true" />
             <element signature="e#1647#1871#0" expanded="true" />
             <element signature="e#1870#1871#0" expanded="true" />
+            <element signature="e#1989#2391#0" expanded="true" />
+            <element signature="e#2390#2391#0" expanded="true" />
+            <element signature="e#2579#2610#0" expanded="true" />
+            <element signature="e#2612#2644#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2586,6 +2595,10 @@
             <element signature="e#1075#1081#0" expanded="true" />
             <element signature="e#1647#1871#0" expanded="true" />
             <element signature="e#1870#1871#0" expanded="true" />
+            <element signature="e#1989#2391#0" expanded="true" />
+            <element signature="e#2390#2391#0" expanded="true" />
+            <element signature="e#2579#2610#0" expanded="true" />
+            <element signature="e#2612#2644#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2620,6 +2633,10 @@
             <element signature="e#1075#1081#0" expanded="true" />
             <element signature="e#1647#1871#0" expanded="true" />
             <element signature="e#1870#1871#0" expanded="true" />
+            <element signature="e#1989#2391#0" expanded="true" />
+            <element signature="e#2390#2391#0" expanded="true" />
+            <element signature="e#2579#2610#0" expanded="true" />
+            <element signature="e#2612#2644#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2847,25 +2864,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1584">
-          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
-          <folding>
-            <element signature="e#1075#1081#0" expanded="true" />
-            <element signature="e#1647#1871#0" expanded="true" />
-            <element signature="e#1870#1871#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodListController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1768">
-          <caret line="104" column="13" selection-start-line="104" selection-start-column="13" selection-end-line="104" selection-end-column="13" />
+        <state relative-caret-position="1853">
+          <caret line="109" column="13" selection-start-line="109" selection-start-column="13" selection-end-line="109" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2027#2033#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2873,7 +2877,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/ElasticsearchMPController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1309">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
           <folding />
         </state>
       </provider>
@@ -2902,23 +2906,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/AddMoodActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+        <state relative-caret-position="918">
+          <caret line="68" column="0" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
           <folding>
-            <marker date="1489112653570" expanded="false" signature="3324:3395" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="3699:3714" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="3748:3819" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="4109:4124" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="4158:4229" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="4531:4546" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="4580:4651" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="4939:4954" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="4988:5059" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="5358:5373" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="5407:5478" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="5775:5790" ph="}" />
-            <marker date="1489112653570" expanded="false" signature="5824:5895" ph="(v) → {" />
-            <marker date="1489112653570" expanded="false" signature="6186:6201" ph="}" />
+            <element signature="e#1734#2211#0" expanded="true" />
+            <element signature="e#2210#2211#0" expanded="true" />
+            <element signature="e#6806#9010#0" expanded="true" />
+            <element signature="e#7966#8632#0" expanded="true" />
+            <element signature="e#8631#8632#0" expanded="true" />
+            <element signature="e#9009#9010#0" expanded="true" />
+            <element signature="e#9060#9588#0" expanded="true" />
+            <element signature="e#9587#9588#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/mood/jenaPlus/MoodPlusActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="33" column="13" selection-start-line="33" selection-start-column="13" selection-end-line="33" selection-end-column="13" />
+          <folding>
+            <element signature="e#1075#1081#0" expanded="true" />
+            <element signature="e#1647#1871#0" expanded="true" />
+            <element signature="e#1870#1871#0" expanded="true" />
+            <element signature="e#1989#2391#0" expanded="true" />
+            <element signature="e#2390#2391#0" expanded="true" />
+            <element signature="e#2579#2610#0" expanded="true" />
+            <element signature="e#2612#2644#0" expanded="true" />
           </folding>
         </state>
       </provider>
