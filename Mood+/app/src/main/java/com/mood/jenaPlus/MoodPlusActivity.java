@@ -13,6 +13,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+
+
+import android.widget.ListView;
+
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,9 +32,14 @@ public class MoodPlusActivity extends AppCompatActivity
     private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
+
+    ArrayList<MoodList> moodList = new ArrayList<MoodList>();
+
+
     private ArrayList<Mood> myMoodArrayList = new ArrayList<Mood>();
     private ArrayAdapter<Mood> adapter;
     TextView test;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,5 +162,4 @@ public class MoodPlusActivity extends AppCompatActivity
 
 
     }
-
 }

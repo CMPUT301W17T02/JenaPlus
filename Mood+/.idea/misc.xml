@@ -40,6 +40,8 @@
   <component name="ProjectType">
     <option name="id" value="Android" />
   </component>
+<<<<<<< HEAD
+=======
 
   <component name="masterDetails">
     <states>
@@ -68,4 +70,5 @@
       </state>
     </states>
   </component>
+>>>>>>> master
 </project>
