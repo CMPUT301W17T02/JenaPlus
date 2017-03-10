@@ -40,6 +40,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
     private ListView participants; // List view for testing and debugging
+
+    private ParticipantList checkList;
     Context context = this;
 
     @Override
@@ -48,9 +50,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.activity_welcome_activity);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus(); // Taken from FillerCreep
-        moodPlus.addView(this); // Taken from FillerCreep
 
         userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
@@ -68,19 +67,28 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 boolean isConnected = activeNetwork != null &&
                         activeNetwork.isConnectedOrConnecting();
 
+                String strUser = userName.getText().toString();
+                MoodPlus model = MoodPlusApplication.getMoodPlus();
+                model.getUsingParticipantUsername(strUser);
+
+
                 // Will only continue if connected to the internet.
                 if (isConnected) {
-                    String strUser = userName.getText().toString();
-                    MoodPlus model = MoodPlusApplication.getMoodPlus();
                     model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
+                    
                 } else {
                     userName.setError("Not Connected To the Internet");
                 }
 
             }
         });
+
+        /* FOR DEBUGGING PURPOSES - WANT TO SEE USERS IN THE INDEX */
+
+        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus(); // Taken from FillerCreep
+        moodPlus.addView(this); // Taken from FillerCreep
 
         ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");
