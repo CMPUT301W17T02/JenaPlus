@@ -12,13 +12,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-<<<<<<< HEAD
 
 import android.widget.ListView;
 
-=======
+
 import android.widget.ListView;
->>>>>>> master
+
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -37,10 +36,6 @@ public class MoodPlusActivity extends AppCompatActivity
     protected ListView moodListView;
     ArrayList<MoodList> moodList = new ArrayList<MoodList>();
 
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,9 +135,4 @@ public class MoodPlusActivity extends AppCompatActivity
         // From the MPView interface
     }
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> master
 }
