@@ -136,7 +136,7 @@ public class ElasticsearchMPController {
 
         String q = "{\n" +
                 " \"query\" : {\n" +
-                " \"term\" : {\n" +
+                " \"match\" : {\n" +
                 " \"userName\": \"" + aName + "\"\n"+
                 "            }\n" +
                 "        }\n" +
@@ -145,8 +145,12 @@ public class ElasticsearchMPController {
         getOneUserTask.execute(q);
         try {
             returnedParticipant = getOneUserTask.get();
+            String testName = returnedParticipant.getUserName();
+            Log.i("Username", testName);
         } catch (Exception e) {
             Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
+            Log.e("Error","NULLLLLLLLLLLL");
+
         }
         return returnedParticipant;
     }
