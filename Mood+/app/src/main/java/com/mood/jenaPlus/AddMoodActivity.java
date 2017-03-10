@@ -27,10 +27,14 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     int idNum;
     int colorNum;
     String socialSituation;
+    String trigger;
+    String idString;
+    String colorString;
 
     private Button addButton;
     private EditText message;
     private Button socialPopup;
+    private GridView gridview;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -41,20 +45,26 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         //socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        /*GridView gridview = (GridView) findViewById(R.id.gridView);
+
+
+        gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MoodIcon mi = new MoodIcon();
 
-                Toast.makeText(AddMoodActivity.this,"HI",Toast.LENGTH_SHORT).show();
+                idNum = colorNum = position;
+                idString = mi.getMood(idNum);
+                colorString = mi.getColor(colorNum);
+                Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
 
 
             }
-        });*/
+        });
 
-
+/*
         t1 = (ImageView) findViewById(R.id.surprised);
         t2 = (ImageView) findViewById(R.id.disgust);
         t3 = (ImageView) findViewById(R.id.fear);
@@ -175,7 +185,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         Toast.LENGTH_SHORT).show();
                 t9.setBackgroundColor(getResources().getColor(R.color.gridBack3));
             }
-        });
+        });*/
 
 
 /*
@@ -250,9 +260,17 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         addButton.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View view){
-                if (view == addButton){
-                    generateRecord();
-                }
+
+                trigger = message.getText().toString();
+
+                Mood newMood = new Mood();
+                newMood.setText(trigger);
+                Intent intent = new Intent(AddMoodActivity.this, MoodPlusActivity.class);
+
+                //intent.putExtra("result",trigger);
+                //startActivity(intent);
+                //intent.putExtra("result", newMood);
+                startActivityForResult(intent,1);
             }
         });
     }

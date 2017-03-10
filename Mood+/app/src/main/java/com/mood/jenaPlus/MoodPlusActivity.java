@@ -1,6 +1,7 @@
 package com.mood.jenaPlus;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -13,7 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -22,21 +26,33 @@ public class MoodPlusActivity extends AppCompatActivity
 
     private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
-    protected ArrayAdapter<MoodList> moodListAdapter;
     protected ListView moodListView;
-    ArrayList<MoodList> moodList = new ArrayList<MoodList>();
-
+    private ArrayList<Mood> myMoodArrayList = new ArrayList<Mood>();
+    private ArrayAdapter<Mood> adapter;
+    TextView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_plus);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        moodListView = (ListView) findViewById(R.id.listView);
+
+        test = (TextView) findViewById(R.id.test_string);
         setSupportActionBar(toolbar);
 
-        moodListAdapter = new MoodListAdapter(this,moodList);
-        moodListView = (ListView) findViewById(R.id.listView);
-        moodListView.setAdapter(moodListAdapter);
+        Button testButton = (Button) findViewById(R.id.test_button);
+
+        testButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
+
+                startActivity(intent);
+
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,7 +75,6 @@ public class MoodPlusActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent intent = getIntent();
     }
 
     @Override
@@ -113,5 +128,29 @@ public class MoodPlusActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == 1){
+            if(resultCode == MoodPlusActivity.RESULT_OK){
+                Mood mood = (Mood)data.getExtras().getSerializable("result");
+                //int position = data.getIntExtra("position",-1);
+
+                String trigger = mood.getText();
+                test.setText(trigger);
+                myMoodArrayList.add(mood);
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, myMoodArrayList);
+        moodListView.setAdapter(adapter);
+
+
+    }
 
 }

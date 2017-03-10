@@ -13,6 +13,18 @@
     tools:context="com.mood.jenaPlus.MoodPlusActivity"
     tools:showIn="@layout/app_bar_mood_plus">
 
+    <TextView
+        android:id="@+id/test_string"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="TEST"/>
+    <Button
+        android:id="@+id/test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/test_string"
+        android:text="test"/>
+
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

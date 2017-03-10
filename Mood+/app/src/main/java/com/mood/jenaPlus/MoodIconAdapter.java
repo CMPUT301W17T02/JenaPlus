@@ -50,7 +50,7 @@ public class MoodIconAdapter extends BaseAdapter {
     }
 
     // references to our images
-    private Integer[] mThumbIds = {
+    public Integer[] mThumbIds = {
             R.drawable.surprised,R.drawable.disgust,R.drawable.fear,
             R.drawable.confused, R.drawable.happy, R.drawable.angry,
             R.drawable.sad,  R.drawable.shame,R.drawable.annoyed,
