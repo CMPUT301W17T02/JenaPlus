@@ -12,19 +12,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
+
 public class MoodPlusActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus> {
 
     private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
+
+    private ListView participantListView;
+
     protected ArrayAdapter<MoodList> moodListAdapter;
     protected ListView moodListView;
     ArrayList<MoodList> moodList = new ArrayList<MoodList>();
+
 
 
     @Override
@@ -118,6 +124,13 @@ public class MoodPlusActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    @Override
+    public void update(MoodPlus model) {
+        // From the MPView interface
+    }
+
 
 
 }

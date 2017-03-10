@@ -114,12 +114,15 @@ public class ElasticsearchMPController {
                 SearchResult result = client.execute(search);
                 if (result.isSucceeded()) {
                     participant = result.getSourceAsObject(Participant.class);
+                    Log.i("Good", "User Found!!");
                 } else {
-                    Log.i("Error", "The search query failed to find any users that matched");
+                    Log.i("Error", "No Users matched in the cmput301w17t2 index");
                     System.out.println("could not find error");
+                    throw new IllegalArgumentException("YARRR");
+
                 }
             } catch (Exception e) {
-                Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
+                return null;
             }
             return participant;
         }
@@ -130,11 +133,24 @@ public class ElasticsearchMPController {
         Participant returnedParticipant = new Participant(null);
 
         GetOneUserTask getOneUserTask = new GetOneUserTask();
-        getOneUserTask.execute(aName);
+
+        String q = "{\n" +
+                " \"query\" : {\n" +
+                " \"match\" : {\n" +
+                " \"userName\": \"" + aName + "\"\n"+
+                "            }\n" +
+                "        }\n" +
+                " }";
+
+        getOneUserTask.execute(q);
         try {
             returnedParticipant = getOneUserTask.get();
+            String testName = returnedParticipant.getUserName();
+            Log.i("Username", testName);
         } catch (Exception e) {
             Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
+            Log.e("Error","NULLLLLLLLLLLL");
+
         }
         return returnedParticipant;
     }
