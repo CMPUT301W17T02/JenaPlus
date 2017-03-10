@@ -1,17 +1,17 @@
 package com.mood.jenaPlus;
 
 
-<<<<<<< HEAD
+
 
 import android.location.Location;
 
 import java.util.Date;
-=======
+
 import android.location.Location;
 
 import java.util.Date;
 
->>>>>>> master
+
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -119,11 +119,8 @@ public class MoodListController {
     }
 
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> master
     public MoodListController(MoodPlus aMoodPlus) {
         this.moodPlus = aMoodPlus;
     }
