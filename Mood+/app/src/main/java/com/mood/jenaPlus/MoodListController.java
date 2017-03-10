@@ -1,7 +1,6 @@
 package com.mood.jenaPlus;
 
 
-<<<<<<< HEAD
 import android.location.Location;
 
 import java.util.Date;
@@ -63,8 +62,7 @@ public class MoodListController {
             return null;
         }
     }
-
-
+    
     public static class GetMoodsTask extends AsyncTask<String, Void, ArrayList<Mood>> {
         @Override
         protected ArrayList<Mood> doInBackground(String... search_parameters) {
