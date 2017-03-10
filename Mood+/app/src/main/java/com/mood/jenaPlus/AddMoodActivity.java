@@ -261,6 +261,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
 
+<<<<<<< HEAD
 
     public int getID() {
         return idNum;
@@ -271,6 +272,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     public String getSocialSituation() { return socialSituation; }
 
 
+=======
+>>>>>>> master
     public void update(MoodPlus moodPlus){
         // TODO implements update method
 
