@@ -31,19 +31,29 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class EditMoodActivity extends AppCompatActivity {
+public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
-    private Button addButton;
+
     private EditText message;
     private Button socialPopup;
-    private GridView gridview;
     private ImageView image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_mood_interface);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
+        moodPlus.addView(this);
+
+        message = (EditText) findViewById(R.id.message);
+
+
+    }
+
+    public void update(MoodPlus moodPlus){
+        // TODO implements update method
     }
 
 }
