@@ -171,6 +171,10 @@
             android:hint="@string/EnterMessage"
             android:imeOptions="actionDone"
             android:maxLength="20"/>
+        <ImageView
+            android:id="@+id/selected_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
 
     </LinearLayout>
