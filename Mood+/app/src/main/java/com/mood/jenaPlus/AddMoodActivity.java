@@ -1,20 +1,35 @@
 package com.mood.jenaPlus;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 /**
@@ -23,6 +38,7 @@ import android.widget.Toast;
 
 public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
+    private static final String TAG = "ERROR" ;
     ImageView t1, t2, t3, t4, t5, t6, t7, t8, t9;
     int idNum;
     int colorNum;
@@ -35,11 +51,13 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private EditText message;
     private Button socialPopup;
     private GridView gridview;
+    private ImageView image;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_mood_interface);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
         moodPlus.addView(this);
@@ -48,6 +66,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         //socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        image = (ImageView) findViewById(R.id.selected_image);
 
 
         gridview = (GridView) findViewById(R.id.gridView);
@@ -197,6 +216,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 System.out.println("do camera");
+                                galleryIntent();
                                 break;
                             case R.id.socialPopup:
                                 // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
@@ -241,16 +261,29 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 Mood newMood = new Mood();
                 newMood.setText(trigger);
                 Intent intent = new Intent(AddMoodActivity.this, MoodPlusActivity.class);
-
-                //intent.putExtra("result",trigger);
-                //startActivity(intent);
-                //intent.putExtra("result", newMood);
                 startActivityForResult(intent,1);
             }
         });
     }
 
+    private void galleryIntent(){
+        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+        // 2017-03-10 5:32
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode,data);
+        if(requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                Uri selectedImage = data.getData();
+                image.setImageURI(selectedImage);
+            }
+        }
+    }
 
 
     public int getID() {
