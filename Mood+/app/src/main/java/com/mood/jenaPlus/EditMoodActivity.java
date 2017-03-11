@@ -36,6 +36,8 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     private EditText message;
     private Button socialPopup;
+    private Button save;
+    private ImageView selected_image;
 
     int idNum;
     int colorNum;
@@ -43,6 +45,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     String trigger;
     String idString;
     String colorString;
+
 
 
     @Override
@@ -56,7 +59,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
         message = (EditText) findViewById(R.id.message);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-
+        selected_image = (ImageView) findViewById(R.id.selected_image);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -102,7 +105,20 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         );
 
 
+
+        save = (Button) findViewById(R.id.AddButton);
+        save.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+
+                Intent intent = new Intent(EditMoodActivity.this, MoodPlusActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
+
+
     }
+
 
     private void galleryIntent(){
         // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
@@ -112,6 +128,16 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         startActivityForResult(intent, 1);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode,data);
+        if(requestCode == 1){
+            if(resultCode == Activity.RESULT_OK){
+                Uri selectedImage = data.getData();
+                selected_image.setImageURI(selectedImage);
+            }
+        }
+    }
 
     public void update(MoodPlus moodPlus){
         // TODO implements update method
