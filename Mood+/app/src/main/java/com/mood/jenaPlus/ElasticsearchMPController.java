@@ -101,16 +101,11 @@ public class ElasticsearchMPController {
 
             Participant participant = new Participant(null);
 
-            String userName = search_parameters[0];
-            String query = "\t\"query\": {\n" +
-                    "\t\t\"match\": {\n" +
-                    "\t\t\t\"userName\": \"" + userName + "\"\n"+
-                    "\t\t}\n" +
-                    "\t}\n" +
-                    "}";
+            //String userName = search_parameters[0];
+
+            String query = search_parameters[0];
 
             System.out.println(query);
-
 
 
             // TODO Build the query
@@ -128,11 +123,11 @@ public class ElasticsearchMPController {
                 } else {
                     Log.i("Error", "No Users matched in the cmput301w17t2 index");
                     System.out.println("could not find error");
-                    throw new IllegalArgumentException("YARRR");
+
 
                 }
             } catch (Exception e) {
-                return null;
+                Log.e("Error", "Not returning the participant...");
             }
             return participant;
         }
@@ -161,8 +156,6 @@ public class ElasticsearchMPController {
 
         } catch (Exception e) {
             Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
-            Log.e("Error","NULLLLLLLLLLLL");
-
 
         }
         return returnedParticipant;
