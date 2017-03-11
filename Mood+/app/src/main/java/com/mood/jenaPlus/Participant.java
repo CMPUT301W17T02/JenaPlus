@@ -12,7 +12,7 @@ import io.searchbox.annotations.JestId;
 
 public class Participant extends User {
 
-    private MoodList userMoodList = new MoodList();
+    private UserMoodList userMoodList = new UserMoodList();
     private MoodList followingMoodList = new MoodList();
     private FollowList followingParticipants = new FollowList();
     private FollowList followersParticipants = new FollowList();
@@ -60,11 +60,11 @@ public class Participant extends User {
         userMoodList.addUserMood(mood);
     }
 
-    public MoodList getUserMoodList() {
+    public UserMoodList getUserMoodList() {
         return userMoodList;
     }
 
-    public void setUserMoodList(MoodList userMoodList) {
+    public void setUserMoodList(UserMoodList userMoodList) {
         this.userMoodList = userMoodList;
     }
 

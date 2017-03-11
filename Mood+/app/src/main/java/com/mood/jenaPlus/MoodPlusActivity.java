@@ -54,6 +54,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
         Button testButton = (Button) findViewById(R.id.test_button);
 
+        /* LOADING THE LOGGED IN PARTICIPANT */
+
+
         testButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);

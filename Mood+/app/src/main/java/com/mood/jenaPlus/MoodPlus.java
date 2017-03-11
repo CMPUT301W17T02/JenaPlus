@@ -8,29 +8,41 @@ import java.util.ArrayList;
 
 public class MoodPlus extends MPModel<MPView> {
 
-    protected ArrayList<Mood> moods;
+    public Participant participant; // The participant who logs in
 
-    public ArrayList<Mood> getMoods() {
-        return moods;
+    protected UserMoodList userMoods; // ArrayList of user moods
+
+    public UserMoodList getUserMoods() {
+        return userMoods;
     }
 
-    public void setMoods(ArrayList<Mood> newMoods) {
-        this.moods = newMoods;
+    public void setMoods(UserMoodList newMoods) {
+        this.userMoods = newMoods;
     }
+
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant aParticipant) {
+        this.participant = aParticipant;
+    }
+
+
 
     public void addNewMood(Mood aMood) {
-        moods.add(aMood);
+        userMoods.addUserMood(aMood);
         notifyViews();
     }
 
-    public Participant usingParticipant;
-
-    public void getUsingParticipantUsername(String aName) {
+    public void getParticipantElastic(String aName) {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
-        usingParticipant = eController.getUsingParticipant(aName);
+        participant = eController.getUsingParticipant(aName);
         notifyViews();
-
     }
+
+
+
 
 
 
