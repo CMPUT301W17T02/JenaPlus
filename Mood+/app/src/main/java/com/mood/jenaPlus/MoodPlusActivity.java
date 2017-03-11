@@ -63,6 +63,15 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
+        testButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Intent intent = new Intent(MoodPlusActivity.this, EditMoodActivity.class);
+                startActivity(intent);
+                return true;
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
