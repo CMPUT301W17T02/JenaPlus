@@ -245,6 +245,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                             case R.id.action_navigation:
                                 System.out.println("do navigation");
+                                Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
+                                startActivity(intent);
                                 break;
                         }
                         return true;
