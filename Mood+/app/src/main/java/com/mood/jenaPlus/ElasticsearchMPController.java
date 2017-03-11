@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
 
+
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
@@ -92,6 +93,7 @@ public class ElasticsearchMPController {
 
     }
 
+
     public static class GetOneUserTask extends AsyncTask<String, Void, Participant> {
         @Override
         protected Participant doInBackground(String... search_parameters) {
@@ -99,8 +101,16 @@ public class ElasticsearchMPController {
 
             Participant participant = new Participant(null);
 
-            String query = search_parameters[0];
+            String userName = search_parameters[0];
+            String query = "\t\"query\": {\n" +
+                    "\t\t\"match\": {\n" +
+                    "\t\t\t\"userName\": \"" + userName + "\"\n"+
+                    "\t\t}\n" +
+                    "\t}\n" +
+                    "}";
+
             System.out.println(query);
+
 
 
             // TODO Build the query
