@@ -71,14 +71,38 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 MoodPlus model = MoodPlusApplication.getMoodPlus();
                 model.getUsingParticipantUsername(strUser);
 
+                boolean seen = true;
+                int pListSize = participantList.size();
+
+                for (int i = 0; i<pListSize; i++) {
+                    String user = participantList.get(i).getUserName();
+                    Log.i("error","Participant: "+ user);
+                }
+
+                for (int i = 0; i<pListSize; i++) {
+                    if (participantList.get(i).getUserName().equals(strUser)){
+                        Log.i("Error:","THE PARTICIPANT EXISTSSSSS OMG");
+                        seen = true;
+                        break;
+                        //throw new IllegalArgumentException("Participant exists.");
+                    } else {
+                        seen = false;
+                    }
+                }
+
+                Log.i("Error", "seen is: " + seen);
 
                 // Will only continue if connected to the internet.
-                if (isConnected) {
+                if (seen== false){
+                    userName.setError("User Doesn't Exist, Press Get User ");
+                }
+
+                else if (isConnected) {
                     model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
-                    
-                } else {
+                }
+                else {
                     userName.setError("Not Connected To the Internet");
                 }
 
