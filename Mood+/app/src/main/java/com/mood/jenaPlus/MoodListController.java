@@ -41,6 +41,8 @@ public class MoodListController {
     MoodPlus moodPlus = null; // a singleton
 
 
+
+
     public static class AddMoodTask extends AsyncTask<Mood, Void, Void> {
         // add mood event to elastic search
         @Override
