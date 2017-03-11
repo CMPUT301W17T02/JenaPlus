@@ -173,6 +173,11 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 }
 
                 else if (isConnected) {
+                    setResult(RESULT_OK);
+                    Participant newParticipant = new Participant(strUser);
+                    ElasticsearchMPController.AddUsersTask addUser = new ElasticsearchMPController.AddUsersTask();
+                    addUser.execute(newParticipant);
+    
                     model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
