@@ -263,8 +263,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 Mood newMood = new Mood();
                 newMood.setText(trigger);
-                Intent intent = new Intent(AddMoodActivity.this, MoodPlusActivity.class);
-                startActivityForResult(intent,1);
+
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+
+                mpController.addMoodUsingParticipant(newMood);
+                finish();
             }
         });
     }
