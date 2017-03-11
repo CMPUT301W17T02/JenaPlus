@@ -18,4 +18,16 @@ public class MainMPController {
         return moodPlus.getParticipant();
     }
 
+    public void usingParticipant(String aName) {
+
+        // Get the participant via elastic search
+        moodPlus.getParticipantElastic(aName);
+
+    }
+
+    public void addMoodUsingParticipant(Mood aMood) {
+        moodPlus.addNewMood(aMood);
+        moodPlus.notifyViews();
+    }
+
 }
