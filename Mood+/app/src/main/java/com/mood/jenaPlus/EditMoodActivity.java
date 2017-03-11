@@ -36,6 +36,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     private EditText message;
     private Button socialPopup;
+    private Button save;
 
     int idNum;
     int colorNum;
@@ -102,7 +103,21 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         );
 
 
+
+        save = (Button) findViewById(R.id.AddButton);
+        save.setOnClickListener(new View.OnClickListener(){
+
+            public void onClick(View view){
+                
+                Intent intent = new Intent(EditMoodActivity.this, MoodPlusActivity.class);
+                startActivityForResult(intent,1);
+            }
+        });
+
+
     }
+
+
 
     private void galleryIntent(){
         // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
