@@ -71,14 +71,38 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 MoodPlus model = MoodPlusApplication.getMoodPlus();
                 model.getUsingParticipantUsername(strUser);
 
+                boolean seen = true;
+                int pListSize = participantList.size();
+
+                for (int i = 0; i<pListSize; i++) {
+                    String user = participantList.get(i).getUserName();
+                    Log.i("error","Participant: "+ user);
+                }
+
+                for (int i = 0; i<pListSize; i++) {
+                    if (participantList.get(i).getUserName().equals(strUser)){
+                        Log.i("Error:","THE PARTICIPANT EXISTSSSSS OMG");
+                        seen = true;
+                        break;
+                        //throw new IllegalArgumentException("Participant exists.");
+                    } else {
+                        seen = false;
+                    }
+                }
+
+                Log.i("Error", "seen is: " + seen);
 
                 // Will only continue if connected to the internet.
-                if (isConnected) {
+                if (seen== false){
+                    userName.setError("User Doesn't Exist, Press Get User ");
+                }
+
+                else if (isConnected) {
                     model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
-                    
-                } else {
+                }
+                else {
                     userName.setError("Not Connected To the Internet");
                 }
 
@@ -110,38 +134,62 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                String text = userName.getText().toString();
-                ElasticsearchMPController.GetOneUserTask getOneUserTask = new ElasticsearchMPController.GetOneUserTask();
-                getOneUserTask.execute(text);
+                String strUser = userName.getText().toString();
 
-                try {
-                    participantList.clear();
-                    //participantList.addAll((Collection<? extends Participant>) getOneUserTask.get());
-                    adapter.notifyDataSetChanged();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                ConnectivityManager cm =
+                        (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+                boolean isConnected = activeNetwork != null &&
+                        activeNetwork.isConnectedOrConnecting();
+
+                MoodPlus model = MoodPlusApplication.getMoodPlus();
+                model.getUsingParticipantUsername(strUser);
+
+                boolean seen = true;
+                int pListSize = participantList.size();
+
+                for (int i = 0; i<pListSize; i++) {
+                    String user = participantList.get(i).getUserName();
+                    Log.i("error","Participant: "+ user);
                 }
+
+                for (int i = 0; i<pListSize; i++) {
+                    if (participantList.get(i).getUserName().equals(strUser)){
+                        Log.i("Error:","THE PARTICIPANT EXISTSSSSS OMG");
+                        seen = true;
+                        break;
+                        //throw new IllegalArgumentException("Participant exists.");
+                    } else {
+                        seen = false;
+                    }
+                }
+
+                Log.i("Error", "seen is: " + seen);
+
+                // Will only continue if connected to the internet.
+                if (seen== true){
+                    userName.setError("User Name already taken. Try again. ");
+                }
+
+                else if (isConnected) {
+                    setResult(RESULT_OK);
+                    Participant newParticipant = new Participant(strUser);
+                    ElasticsearchMPController.AddUsersTask addUser = new ElasticsearchMPController.AddUsersTask();
+                    addUser.execute(newParticipant);
+    
+                    model.getUsingParticipantUsername(strUser);
+                    Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    userName.setError("Not Connected To the Internet");
+                }
+
 
             }
         });
     }
-
-    /*@Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-        //loadFromFile(); // TODO replace this with elastic search
-        ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
-        getUsersTask.execute("");
-        try{
-            participantList = getUsersTask.get();
-        }catch (Exception e){
-            Log.i("Error","Failed to get the users out of the async object");
-        }
-        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
-        participants.setAdapter(adapter);
-    }*/
-
 
     private void loadFromFile() {
         try {
