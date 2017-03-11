@@ -52,6 +52,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Button socialPopup;
     private GridView gridview;
     private ImageView image;
+    private MoodListController mlc;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -251,6 +252,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                     }
                 }
         );
+
+        mlc = new MoodListController(moodPlus);
 
         addButton.setOnClickListener(new View.OnClickListener(){
 
