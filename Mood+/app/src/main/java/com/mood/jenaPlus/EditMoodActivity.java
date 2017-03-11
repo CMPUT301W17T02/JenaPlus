@@ -36,7 +36,14 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     private EditText message;
     private Button socialPopup;
-    private ImageView image;
+
+    int idNum;
+    int colorNum;
+    String socialSituation;
+    String trigger;
+    String idString;
+    String colorString;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +55,63 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         moodPlus.addView(this);
 
         message = (EditText) findViewById(R.id.message);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener(){
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.action_camera:
+                                System.out.println("do camera");
+                                galleryIntent();
+                                break;
+                            case R.id.socialPopup:
+                                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+                                // 04-03-2015 01:16
+                                View menuItemView = findViewById(R.id.socialPopup);
+                                PopupMenu popup = new PopupMenu(EditMoodActivity.this, menuItemView );
+                                //Inflating the Popup using xml file
+                                popup.getMenuInflater()
+                                        .inflate(R.menu.social_popup, popup.getMenu());
+
+                                //registering popup with OnMenuItemClickListener
+                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        Toast.makeText(
+                                                EditMoodActivity.this,
+                                                "Social Situation : " + item.getTitle(),
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                        socialSituation = (String) item.getTitle();
+                                        return true;
+                                    }
+                                });
+
+                                popup.show(); //showing popup menu
+                                break;
+
+                            case R.id.action_navigation:
+                                System.out.println("do navigation");
+                                break;
+                        }
+                        return true;
+                    }
+                }
+        );
 
 
     }
+
+    private void galleryIntent(){
+        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+        // 2017-03-10 5:32
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
+    }
+
 
     public void update(MoodPlus moodPlus){
         // TODO implements update method
