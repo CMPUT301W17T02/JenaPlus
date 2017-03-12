@@ -102,7 +102,7 @@ public class MoodPlusActivity extends AppCompatActivity
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						mpController.deleteMoodParticipant(moodArrayList.get(position));
-						//adapter.remove(moodArrayList.remove(position));
+						
 						adapter.notifyDataSetChanged();
 					}
 				});
