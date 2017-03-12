@@ -5,6 +5,7 @@ package com.mood.jenaPlus;
 
 import android.location.Location;
 
+import java.lang.reflect.Array;
 import java.util.Date;
 
 import android.location.Location;
@@ -135,6 +136,32 @@ public class MoodListController {
         String photo = aMood.getPhoto();
         String color = aMood.getColor();
         moodPlus.participant.addNewMood(text,addLocation,location,id,social,photo,color);
+    }
+
+    public ArrayList<Mood> getUserMoods() {
+        return moodPlus.participant.getUserMoodList().getUserMoodList();
+    }
+
+    public ArrayList<String> getUserMoodsIDString() {
+        ArrayList<Mood> userMoods = moodPlus.participant.getUserMoodList().getUserMoodList();
+        ArrayList<String> userMoodsIDString = new ArrayList<String>();
+
+        for (int i = 0; i < userMoods.size(); i++) {
+            userMoodsIDString.add(userMoods.get(i).getId());
+        }
+
+        return userMoodsIDString;
+    }
+
+    public ArrayList<String> getUserMoodsDateString() {
+        ArrayList<Mood> userMoods = moodPlus.participant.getUserMoodList().getUserMoodList();
+        ArrayList<String> userMoodsDateString = new ArrayList<String>();
+
+        for (int i = 0; i < userMoods.size(); i++) {
+            userMoodsDateString.add(userMoods.get(i).getDateString());
+        }
+
+        return userMoodsDateString;
     }
 
 
