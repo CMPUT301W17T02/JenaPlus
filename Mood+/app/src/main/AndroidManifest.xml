@@ -58,10 +58,15 @@
             android:label="@string/title_activity_edit_mood"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
-        <activity android:name=".FilteredTextActivity"
+        <activity
+            android:name=".FilteredTextActivity"
             android:label="Mood+"
-            android:parentActivityName=".MoodPlusActivity">
-        </activity>
+            android:parentActivityName=".MoodPlusActivity"/>
+        <activity
+            android:name=".FilteredMoodActivity"
+            android:label="Mood+"
+            android:parentActivityName=".MoodPlusActivity"/>
+
     </application>
 
 </manifest>

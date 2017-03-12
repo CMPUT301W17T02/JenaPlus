@@ -131,4 +131,27 @@ public class UserMoodList {
 
         return tempArrayList2;
     }
+
+    public ArrayList<Mood> getFilteredMood(String keyword) {
+        int listSize = UserMoodList.size();
+        ArrayList<Mood> tempArrayList1 = UserMoodList;
+        ArrayList<Mood> tempArrayList2 = new ArrayList<>();
+
+        for (int i = 0; i<listSize; i++){
+            String m1 = keyword;
+            String m2 = tempArrayList1.get(i).getId();
+            if (m2.equals(m1)) {
+                tempArrayList2.add(tempArrayList1.get(i));
+            }
+        }
+
+        Collections.sort(tempArrayList2, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return tempArrayList2;
+    }
 }
