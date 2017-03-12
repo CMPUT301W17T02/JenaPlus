@@ -2,7 +2,6 @@ package com.mood.jenaPlus;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -23,18 +21,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 
-import android.widget.ListView;
-
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
@@ -243,7 +234,7 @@ public class MoodPlusActivity extends AppCompatActivity
                 Log.i("Error","searchtext is: "+searchText);
 
 
-                Intent intent = new Intent(MoodPlusActivity.this, ViewFilteredMoodActivity.class);
+                Intent intent = new Intent(MoodPlusActivity.this, FilteredTextActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("testText",searchText);
                 intent.putExtras(bundle);

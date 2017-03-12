@@ -1,7 +1,6 @@
 package com.mood.jenaPlus;
 
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ViewFilteredMoodActivity extends AppCompatActivity implements MPView<MoodPlus>{
+public class FilteredTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
@@ -54,7 +53,7 @@ public class ViewFilteredMoodActivity extends AppCompatActivity implements MPVie
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ViewFilteredMoodActivity.this, ViewMoodActivity.class);
+                Intent intent = new Intent(FilteredTextActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
