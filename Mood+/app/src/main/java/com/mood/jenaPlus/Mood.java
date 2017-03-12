@@ -2,7 +2,10 @@ package com.mood.jenaPlus;
 
 import android.location.Location;
 
+
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -58,6 +61,13 @@ public class Mood implements Serializable{
 
     public Date getDate() {
         return date;
+    }
+
+    public String getDateString() {
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String s = formatter.format(date);
+
+        return s;
     }
 
     public void setDate(Date date) {
