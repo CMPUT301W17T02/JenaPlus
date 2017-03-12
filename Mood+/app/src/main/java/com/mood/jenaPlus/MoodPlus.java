@@ -1,5 +1,7 @@
 package com.mood.jenaPlus;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 
 /**
@@ -28,10 +30,12 @@ public class MoodPlus extends MPModel<MPView> {
         this.participant = aParticipant;
     }
 
+    public void addNewMood(String text, Boolean addLocation, Location location, String id,
+                           String social, String photo, String color) {
 
-
-    public void addNewMood(Mood aMood) {
-        userMoods.addUserMood(aMood);
+        participant.addNewMood(text,addLocation,location,id,social,photo,color);
+        //userMoods.addUserMood(aMood);
+        updateParticipant();
         notifyViews();
     }
 
@@ -39,6 +43,11 @@ public class MoodPlus extends MPModel<MPView> {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
         participant = eController.getUsingParticipant(aName);
         notifyViews();
+    }
+
+    public void updateParticipant() {
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        eController.updateUser(participant);
     }
 
 

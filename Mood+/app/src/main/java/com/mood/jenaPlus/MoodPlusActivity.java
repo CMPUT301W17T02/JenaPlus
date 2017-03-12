@@ -58,7 +58,10 @@ public class MoodPlusActivity extends AppCompatActivity
         MainMPController mpController = MoodPlusApplication.getMainMPController();
 
         Participant participant = mpController.getParticipant();
-        test.setText(participant.getUserName());
+        String name = participant.getUserName();
+        String id = participant.getId();
+        String who = "Name: "+ name + ", id: "+id;
+        test.setText(who);
 
 
         testButton.setOnClickListener(new View.OnClickListener(){
