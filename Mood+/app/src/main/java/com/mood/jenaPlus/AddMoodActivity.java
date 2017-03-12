@@ -122,7 +122,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 colorString = mi.getColor(colorNum);
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -224,7 +223,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             }
         }
     }
-
 
     private boolean getDropboxIMGSize(Uri uri){
         // Taken from http://stackoverflow.com/questions/16440863/can-i-get-image-file-width-and-height-from-uri-in-android
