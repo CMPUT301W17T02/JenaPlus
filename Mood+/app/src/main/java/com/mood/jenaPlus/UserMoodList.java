@@ -31,10 +31,21 @@ public class UserMoodList {
         UserMoodList.remove(mood);
     }
 
+    public Mood getUserMood(int index) {
+        return UserMoodList.get(index);
+    }
+
     public boolean hasUserMood (Mood mood) {
         return UserMoodList.contains(mood);
     }
 
+    public boolean userIsEmpty() {
+        if(UserMoodList.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 
