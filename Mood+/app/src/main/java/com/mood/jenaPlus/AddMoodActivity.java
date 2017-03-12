@@ -1,20 +1,27 @@
 package com.mood.jenaPlus;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -30,11 +37,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+
 
 
 /**
@@ -56,6 +67,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Button socialPopup;
     private GridView gridview;
     private ImageView image;
+    final static int MAX_SIZE = 65536;
+
     Context context = this;
 
     Boolean addLocation = false;
@@ -63,6 +76,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     String photo = "";
 
     Boolean moodChosen = false;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -93,7 +107,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         image = (ImageView) findViewById(R.id.selected_image);
 
-
         gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
 
@@ -107,7 +120,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 colorString = mi.getColor(colorNum);
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
-
 
             }
         });
@@ -150,7 +162,10 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                             case R.id.action_navigation:
                                 System.out.println("do navigation");
+                                Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
+                                startActivity(intent);
                                 addLocation = true;
+
                                 break;
                         }
                         return true;
@@ -163,9 +178,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 addMood();
             }
         });
-
-
-
     }
 
     private void galleryIntent(){
@@ -176,17 +188,52 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         startActivityForResult(intent, 1);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode,data);
         if(requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
                 Uri selectedImage = data.getData();
-                image.setImageURI(selectedImage);
+
+                if (getDropboxIMGSize(selectedImage))
+                    image.setImageURI(selectedImage);
+                else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(AddMoodActivity.this).create();
+                    alertDialog.setTitle("Adding Image");
+                    alertDialog.setMessage("Image is too large");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
             }
         }
     }
 
+
+    private boolean getDropboxIMGSize(Uri uri){
+        // Taken from http://stackoverflow.com/questions/16440863/can-i-get-image-file-width-and-height-from-uri-in-android
+        // 2017-03-11 8:30
+        boolean size = false;
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(new File(uri.getPath()).getAbsolutePath(), options);
+        int imageHeight = options.outHeight;
+        int imageWidth = options.outWidth;
+
+        int totalPixels;
+        totalPixels = imageHeight*imageWidth;
+        if (totalPixels < MAX_SIZE/3){
+            size = true;
+        }
+
+        return size;
+
+    }
 
     public int getID() {
         return idNum;
@@ -283,9 +330,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-
-
-
-
+    
 }
 
