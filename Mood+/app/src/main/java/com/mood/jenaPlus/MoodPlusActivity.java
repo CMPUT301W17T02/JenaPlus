@@ -107,14 +107,13 @@ public class MoodPlusActivity extends AppCompatActivity
 			public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
 				setResult(RESULT_OK);
 
-				deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event");
+				deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event?");
 
 				// user selects "Yes" and the Mood Event long clicked will be deleted.
 				deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						mpController.deleteMoodParticipant(moodArrayList.get(position));
-						//adapter.remove(moodArrayList.remove(position));
 						adapter.notifyDataSetChanged();
 					}
 				});
