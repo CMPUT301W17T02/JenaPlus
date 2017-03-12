@@ -122,6 +122,13 @@ public class UserMoodList {
             }
         }
 
+        Collections.sort(tempArrayList2, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
         return tempArrayList2;
     }
 }
