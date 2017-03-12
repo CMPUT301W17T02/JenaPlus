@@ -12,7 +12,7 @@ import io.searchbox.annotations.JestId;
 
 public class Participant extends User {
 
-    private UserMoodList userMoodList = new UserMoodList();
+    private MoodList userMoodList = new MoodList();
     private MoodList followingMoodList = new MoodList();
     private FollowList followingParticipants = new FollowList();
     private FollowList followersParticipants = new FollowList();
@@ -45,14 +45,9 @@ public class Participant extends User {
         this.userName = userName;
     }
 
-    public void addNew(Mood aMood) {
-        Mood mood = aMood;
-        userMoodList.addUserMood(mood);
-    }
-
     public void addNewMood(String text, Boolean addLocation, Location location, String id,
                              String social, String photo, String color) {
-        Mood mood = new Mood(text,addLocation,location,id,social,photo,color);
+        Mood mood = new Mood();
 
         mood.setText(text);
         mood.setAddLocation(addLocation);
@@ -65,11 +60,11 @@ public class Participant extends User {
         userMoodList.addUserMood(mood);
     }
 
-    public UserMoodList getUserMoodList() {
+    public MoodList getUserMoodList() {
         return userMoodList;
     }
 
-    public void setUserMoodList(UserMoodList userMoodList) {
+    public void setUserMoodList(MoodList userMoodList) {
         this.userMoodList = userMoodList;
     }
 

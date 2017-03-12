@@ -19,7 +19,7 @@ public class MoodListTest  {
      *
      * @throws Exception the exception
      */
-   /* @Test
+    @Test
     public void testAddMood() throws Exception{
         List<String> moodIdList = Arrays.asList("surprised","disgust","fear","confused","happy","angry","sad","shame","annoyed");
         List<String> moodColorList = Arrays.asList("#96F57113","#BF54A62F","#A4131313","#A16A00FF","#A7FFF649","#A0FF0000","#FF33B5E5","#AFDE30C9","#B5277384");
@@ -57,7 +57,7 @@ public class MoodListTest  {
 
         assertTrue(userList.hasUserMood(userMood));
 
-    }*/
+    }
 
     /*@Test
     public void testAddMood() throws Exception{
@@ -69,7 +69,7 @@ public class MoodListTest  {
      *
      * @throws Exception the exception
      */
-    /*@Test
+    @Test
     public void testDeleteMood() throws Exception {
         List<String> moodIdList = Arrays.asList("surprised","disgust","fear","confused","happy","angry","sad","shame","annoyed");
         List<String> moodColorList = Arrays.asList("#96F57113","#BF54A62F","#A4131313","#A16A00FF","#A7FFF649","#A0FF0000","#FF33B5E5","#AFDE30C9","#B5277384");
@@ -112,14 +112,14 @@ public class MoodListTest  {
 
         assertFalse(userList.hasUserMood(userMood));
 
-    }*/
+    }
 
     /**
      * Test has mood.
      *
      * @throws Exception the exception
      */
-   /* @Test
+    @Test
     public void testHasMood() throws Exception {
         List<String> moodIdList = Arrays.asList("surprised","disgust","fear","confused","happy","angry","sad","shame","annoyed");
         List<String> moodColorList = Arrays.asList("#96F57113","#BF54A62F","#A4131313","#A16A00FF","#A7FFF649","#A0FF0000","#FF33B5E5","#AFDE30C9","#B5277384");
@@ -168,7 +168,7 @@ public class MoodListTest  {
      *
      * @throws Exception the exception
      */
-    /*@Test
+    @Test
     public void testGetMood() throws Exception {
         String moodId = "happy";
         String color = "#A7FFF649";
@@ -194,14 +194,14 @@ public class MoodListTest  {
 
         assertEquals(userList.hasUserMood(userMood),userList.hasUserMood(returnedMood));
 
-    }*/
+    }
 
     /**
      * Test get color.
      *
      * @throws Exception the exception
      */
-  /*  @Test
+    @Test
     public void testGetColor() throws Exception {
         String moodId = "happy";
         String color = "#A7FFF649";
@@ -217,14 +217,14 @@ public class MoodListTest  {
 
         assertEquals(returnedMood.getColor(), userMood.getColor());
 
-    }*/
+    }
 
     /**
      * Test get photo.
      *
      * @throws Exception the exception
      */
-   /* @Test
+    @Test
     public void testGetPhoto() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -243,14 +243,14 @@ public class MoodListTest  {
         Mood returnedMood = userList.getUserMood(0);
 
         assertEquals(returnedMood.getPhoto(), userMood.getPhoto());
-    }*/
+    }
 
     /**
      * Test get social.
      *
      * @throws Exception the exception
      */
-   /* @Test/*
+    @Test
     public void testGetSocial() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -277,7 +277,7 @@ public class MoodListTest  {
      *
      * @throws Exception the exception
      */
-   /* @Test
+    @Test
     public void testGetID() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -293,14 +293,14 @@ public class MoodListTest  {
 
         assertEquals(returnedMood.getId(), userMood.getId());
 
-    }*/
+    }
 
     /**
      * Test get location.
      *
      * @throws Exception the exception
      */
-    /*@Test
+    @Test
     public void testGetLocation() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -327,7 +327,7 @@ public class MoodListTest  {
      *
      * @throws Exception the exception
      */
-    /*@Test
+    @Test
     public void testGetAddLocation() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -344,14 +344,14 @@ public class MoodListTest  {
 
         assertFalse(returnedMood.getAddLocation());
 
-    }*/
+    }
 
     /**
      * Test get date.
      *
      * @throws Exception the exception
      */
-    /*@Test
+    @Test
     public void testGetDate() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -367,14 +367,14 @@ public class MoodListTest  {
 
         assertEquals(returnedMood.getDate(), userMood.getDate());
 
-    }*/
+    }
 
     /**
      * Test get text.
      *
      * @throws Exception the exception
      */
-   /* @Test
+    @Test
     public void testGetText() throws Exception {
         String moodID = "happy";
         String color = "#A7FFF649";
@@ -393,14 +393,14 @@ public class MoodListTest  {
 
         assertEquals(returnedMood.getText(), userMood.getText());
 
-    }*/
+    }
 
     /**
      * Test get user index.
      *
      * @throws Exception the exception
      */
-   /* @Test
+    @Test
     public void testGetUserIndex() throws Exception {
         String moodID1 = "happy";
         String color1 = "#A7FFF649";
@@ -424,13 +424,13 @@ public class MoodListTest  {
         assertEquals(returnedIndex1, 0);
         assertEquals(returnedIndex2, 1);
     }
-*/
+
     /**
      * Test get user mood list.
      *
      * @throws Exception the exception
      */
-    /*@Test
+    @Test
     public void testGetUserMoodList() throws Exception {
         String moodID1 = "happy";
         String color1 = "#A7FFF649";
@@ -465,6 +465,6 @@ public class MoodListTest  {
 
         assertEquals(userList.getUserMoodList(), returnedUserMoodList);
 
-    }*/
+    }
 
 }

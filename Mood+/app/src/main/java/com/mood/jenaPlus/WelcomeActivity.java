@@ -41,6 +41,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     private static final String FILENAME = "moodPlus.sav";
     private ListView participants; // List view for testing and debugging
 
+    private ParticipantList checkList;
     Context context = this;
 
     @Override
@@ -68,7 +69,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 String strUser = userName.getText().toString();
                 MoodPlus model = MoodPlusApplication.getMoodPlus();
-                model.getParticipantElastic(strUser);
+                model.getUsingParticipantUsername(strUser);
 
                 boolean seen = true;
                 int pListSize = participantList.size();
@@ -93,11 +94,11 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 // Will only continue if connected to the internet.
                 if (seen== false){
-                    userName.setError("User Doesn't Exist, Press Add New ");
+                    userName.setError("User Doesn't Exist, Press Get User ");
                 }
 
                 else if (isConnected) {
-                    model.getParticipantElastic(strUser); // model is a MoodPlus
+                    model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
                 }
@@ -143,7 +144,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                         activeNetwork.isConnectedOrConnecting();
 
                 MoodPlus model = MoodPlusApplication.getMoodPlus();
-                model.getParticipantElastic(strUser);
+                model.getUsingParticipantUsername(strUser);
 
                 boolean seen = true;
                 int pListSize = participantList.size();
@@ -176,8 +177,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                     Participant newParticipant = new Participant(strUser);
                     ElasticsearchMPController.AddUsersTask addUser = new ElasticsearchMPController.AddUsersTask();
                     addUser.execute(newParticipant);
-
-                    model.getParticipantElastic(strUser);
+    
+                    model.getUsingParticipantUsername(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
                     startActivity(intent);
                 }
@@ -206,27 +207,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
             // TODO Auto-generated catch block
             throw new RuntimeException();
         }
-    }
-
-    @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-        //loadFromFile(); // TODO replace this with elastic search
-
-        ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
-        getUsersTask.execute("");
-
-        try {
-            participantList = getUsersTask.get();
-
-        } catch (Exception e) {
-            Log.i("Error", "Failed to get the users out of the async object");
-        }
-
-        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
-        participants.setAdapter(adapter);
-
     }
 
     @Override

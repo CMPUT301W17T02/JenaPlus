@@ -38,7 +38,7 @@ import java.util.Map;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener {
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
@@ -65,6 +65,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
 
         LatLng home = new LatLng(53.519804, -113.518012);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 11.0f));
@@ -132,6 +133,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 == PackageManager.PERMISSION_GRANTED) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,  this);
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff34233df9f3f941d595004a27778bb31778d28c
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
@@ -142,6 +147,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff34233df9f3f941d595004a27778bb31778d28c
     }
 
 

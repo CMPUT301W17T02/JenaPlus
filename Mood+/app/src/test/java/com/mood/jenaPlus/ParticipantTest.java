@@ -55,7 +55,7 @@ public class ParticipantTest{
 
         Participant newParticipant = new Participant(userName);
         newParticipant.addNewMood(text,addLocation,location,id,social,photo,color);
-        UserMoodList moodList = newParticipant.getUserMoodList();
+        MoodList moodList = newParticipant.getUserMoodList();
 
         //Checking if the mood was added
         assertFalse(moodList.userIsEmpty());
@@ -91,7 +91,7 @@ public class ParticipantTest{
         newParticipant.addNewMood(text,addLocation,location,id,social,photo,color);
         newParticipant.addNewMood(text2,addLocation2,location2,id2,social2,photo2,color2);
 
-        UserMoodList userList = newParticipant.getUserMoodList();
+        MoodList userList = newParticipant.getUserMoodList();
         Mood mood0 = userList.getUserMood(0);
         Mood mood1 = userList.getUserMood(1);
 
@@ -125,9 +125,9 @@ public class ParticipantTest{
         Participant t1 = followList.getFollowingParticipant(1);
         Participant t2 = followList.getFollowingParticipant(2);
 
-        UserMoodList t0List;
-        UserMoodList t1List;
-        UserMoodList t2List;
+        MoodList t0List;
+        MoodList t1List;
+        MoodList t2List;
 
         Mood t0Mood;
         Mood t1Mood;

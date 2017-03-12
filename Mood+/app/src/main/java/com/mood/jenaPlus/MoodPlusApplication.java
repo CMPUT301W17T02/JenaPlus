@@ -36,13 +36,4 @@ public class MoodPlusApplication extends Application {
         }
         return moodListController;
     }
-
-    // Singleton
-    transient private static MainMPController mainMPController = null;
-    static MainMPController getMainMPController() {
-        if (mainMPController == null) {
-            mainMPController = new MainMPController(getMoodPlus());
-        }
-        return mainMPController;
-    }
 }
