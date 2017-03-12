@@ -102,7 +102,7 @@ public class MoodPlusActivity extends AppCompatActivity
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						mpController.deleteMoodParticipant(moodArrayList.get(position));
-						
+
 						adapter.notifyDataSetChanged();
 					}
 				});
@@ -203,7 +203,7 @@ public class MoodPlusActivity extends AppCompatActivity
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getUserMoodList();
+        moodArrayList = myMoodList.getUserMoodOrderedList();
 
         adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);

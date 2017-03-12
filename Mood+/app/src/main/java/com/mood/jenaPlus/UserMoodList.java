@@ -1,6 +1,9 @@
 package com.mood.jenaPlus;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Carlo on 2017-03-10.
@@ -43,6 +46,19 @@ public class UserMoodList {
             return false;
         }
     }
+
+	// sorted Mood List in reverse chronological order (most recent coming first).
+	public ArrayList<Mood> getUserMoodOrderedList() {
+
+		Collections.sort(UserMoodList, new Comparator<Mood>() {
+
+			public int compare(Mood o1, Mood o2) {
+				return o2.getDate().compareTo(o1.getDate());
+			}
+		});
+
+		return this.UserMoodList;
+	}
 
 
 
