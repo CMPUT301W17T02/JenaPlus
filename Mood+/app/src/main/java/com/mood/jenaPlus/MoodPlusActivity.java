@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -8,11 +9,13 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -33,16 +36,13 @@ public class MoodPlusActivity extends AppCompatActivity
     private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
+	private AlertDialog.Builder deleteAlertBuilder;
 
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
 
 
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-
-	// ARRAYLISTS BELOW FOR TESTING
-	private ArrayList<String> myMoodIDStringList = new ArrayList<String>();
-	//private ArrayList<String> myMoodIDDatesStringList = new ArrayList<String>();
 
 
     @Override
@@ -60,20 +60,15 @@ public class MoodPlusActivity extends AppCompatActivity
 
         /* LOADING THE LOGGED IN PARTICIPANT */
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-		MoodListController moodListController = MoodPlusApplication.getMoodListController();
+        final MainMPController mpController = MoodPlusApplication.getMainMPController();
 
         Participant participant = mpController.getParticipant();
 
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Name: "+ name + ", id: "+id;
-        //test.setText(who);
+        test.setText(who);
 
-		myMoodIDStringList = moodListController.getUserMoodsIDString();
-		String testing = myMoodIDStringList.get(3);
-
-		test.setText(testing);
 
         /*testButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -93,6 +88,39 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });*/
 
+		deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
+
+		moodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+				setResult(RESULT_OK);
+
+				deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event");
+
+				// user selects "Yes" and the Mood Event long clicked will be deleted.
+				deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						mpController.deleteMoodParticipant(moodArrayList.get(position));
+						adapter.remove(moodArrayList.remove(position));
+						adapter.notifyDataSetChanged();
+					}
+				});
+
+				// user selects "No" and the Mood Even long clicked will NOT be deleted.
+				deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+
+				AlertDialog alertDialog = deleteAlertBuilder.create();
+				alertDialog.show();
+
+				return false;
+			}
+		});
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

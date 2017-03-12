@@ -31,6 +31,11 @@ public class MainMPController {
         moodPlus.notifyViews();
     }
 
+    public void deleteMoodParticipant(Mood mood) {
+        moodPlus.deleteMood(mood);
+        moodPlus.notifyViews();
+    }
+
 
 
 }

@@ -39,6 +39,12 @@ public class MoodPlus extends MPModel<MPView> {
         notifyViews();
     }
 
+	public void deleteMood(Mood mood) {
+		participant.getUserMoodList().deleteUserMood(mood);
+		updateParticipant();
+		notifyViews();
+	}
+
     public void getParticipantElastic(String aName) {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
         participant = eController.getUsingParticipant(aName);
