@@ -19,6 +19,17 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_filter"
                 android:title="Filter" />
+            <item
+                android:id="@+id/menuSortMood"
+                android:title="Sort by moods" />
+
+            <item
+                android:id="@+id/menuSortRecent"
+                android:title="Sort by most recent" />
+            <item
+                android:id="@+id/menuSortText"
+                android:title="Sort by text" />
+
 
         </menu>
     </item>
