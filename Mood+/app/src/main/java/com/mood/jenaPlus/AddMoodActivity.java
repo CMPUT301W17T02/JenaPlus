@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -37,6 +38,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
@@ -47,14 +50,13 @@ import java.net.URL;
 import java.net.URLConnection;
 
 
-
 /**
  * Created by carrotji on 2017-02-25.
  */
 
 public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
-    private static final String TAG = "ERROR" ;
+    private static final String TAG = "ERROR";
     int idNum;
     int colorNum;
     String socialSituation;
@@ -63,8 +65,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     String colorString;
 
     private Button addButton;
+    private Button getLocation;
     private EditText message;
-    private Button socialPopup;
     private GridView gridview;
     private ImageView image;
     final static int MAX_SIZE = 65536;
@@ -79,15 +81,32 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private static final int CAMERA_REQUEST = 1888;
 
+    String provider;
+
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-       //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
+        //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
         //moodPlus.addView(this);
+
+
+        getLocation = (Button) findViewById(R.id.get_location);
+
+        getLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LatLng latlng = getLocation();
+                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
+                Log.i("tag","what thef");
+                System.out.println("WTF");
+
+            }
+        });
+
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
@@ -104,7 +123,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         /*------------------------------------------------*/
 
         message = (EditText) findViewById(R.id.message);
-        //socialPopup = (Button) findViewById(R.id.socialPopup);
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         image = (ImageView) findViewById(R.id.selected_image);
@@ -181,6 +199,23 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 addMood();
             }
         });
+    }
+
+    public LatLng getLocation() {
+        GPSTracker gps = new GPSTracker(AddMoodActivity.this);
+        if(gps.canGetLocation()){
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+            return new LatLng(latitude,longitude);
+        }else{
+            gps.showSettingsAlert();
+        }
+        return null;
+        //CurrentLocation currentLocation = new CurrentLocation(AddMoodActivity.this);
+        //double latitude = currentLocation.getLatitude();
+        //double longitude = currentLocation.getLongitude();
+
+        //return new LatLng(latitude,longitude);
     }
 
     private void galleryIntent(){
@@ -341,6 +376,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-    
+
+
+
 }
 
