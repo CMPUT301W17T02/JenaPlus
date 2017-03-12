@@ -20,6 +20,16 @@
             android:textSize="30sp"
             android:text="Select a Mood" />
 
+        <TextView
+            android:id="@+id/addtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:textSize="10sp"
+            android:text="Select a Mood" />
+
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/gridView"
             android:layout_width="match_parent"

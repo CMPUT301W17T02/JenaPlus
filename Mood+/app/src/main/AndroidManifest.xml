@@ -44,7 +44,8 @@
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:parentActivityName=".MoodPlusActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
