@@ -22,8 +22,7 @@
 
     </group>
 
-<<<<<<< HEAD
-=======
+
     <item android:title="Filter">
         <menu>
             <item
@@ -45,5 +44,4 @@
         </menu>
     </item>
 
->>>>>>> 8151baa37e9c7682a011b87ac1b51c3c16fcaa77
 </menu>
