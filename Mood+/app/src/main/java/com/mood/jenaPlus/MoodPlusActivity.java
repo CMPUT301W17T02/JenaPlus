@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
@@ -33,10 +34,10 @@ public class MoodPlusActivity extends AppCompatActivity
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
 
-    ArrayList<MoodList> moodList = new ArrayList<MoodList>();
+    ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
 
 
-    private ArrayList<Mood> myMoodArrayList = new ArrayList<Mood>();
+    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
 
 	// ARRAYLISTS BELOW FOR TESTING
@@ -55,7 +56,7 @@ public class MoodPlusActivity extends AppCompatActivity
         TextView test = (TextView) findViewById(R.id.test_string);
         setSupportActionBar(toolbar);
 
-        Button testButton = (Button) findViewById(R.id.test_button);
+        //Button testButton = (Button) findViewById(R.id.test_button);
 
         /* LOADING THE LOGGED IN PARTICIPANT */
 
@@ -63,6 +64,7 @@ public class MoodPlusActivity extends AppCompatActivity
 		MoodListController moodListController = MoodPlusApplication.getMoodListController();
 
         Participant participant = mpController.getParticipant();
+
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Name: "+ name + ", id: "+id;
@@ -73,7 +75,7 @@ public class MoodPlusActivity extends AppCompatActivity
 
 		test.setText(testing);
 
-        testButton.setOnClickListener(new View.OnClickListener(){
+        /*testButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
 
@@ -89,7 +91,7 @@ public class MoodPlusActivity extends AppCompatActivity
                 startActivity(intent);
                 return true;
             }
-        });
+        });*/
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -170,10 +172,13 @@ public class MoodPlusActivity extends AppCompatActivity
     protected void onStart(){
         super.onStart();
 
-        adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, myMoodArrayList);
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
+        Participant participant = mpController.getParticipant();
+        myMoodList = participant.getUserMoodList();
+        moodArrayList = myMoodList.getUserMoodList();
+
+        adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
-
-
     }
     @Override
     public void update(MoodPlus moodPlus){

@@ -150,6 +150,17 @@ public class Mood {
         this.addLocation = addLocation;
     }
 
+    public String newString() {
+        String output = "Mood: " + id + ", Color: " + color;
+        return output;
+
+    }
+
+    @Override
+    public String toString() {
+        return newString();
+    }
+
 }
 
 
