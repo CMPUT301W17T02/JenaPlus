@@ -77,6 +77,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     Boolean moodChosen = false;
 
+    private static final int CAMERA_REQUEST = 1888;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -132,6 +134,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                             case R.id.action_camera:
                                 System.out.println("do camera");
                                 photo = "photoPicked";
+                                //cameraIntent();
                                 galleryIntent();
 
                                 break;
@@ -188,12 +191,20 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         startActivityForResult(intent, 1);
     }
 
+    private void cameraIntent(){
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode,data);
         if(requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
+                //Bitmap photo = (Bitmap) data.getExtras().get("data");
+                //image.setImageBitmap(photo);
+
                 Uri selectedImage = data.getData();
 
                 if (getDropboxIMGSize(selectedImage))
