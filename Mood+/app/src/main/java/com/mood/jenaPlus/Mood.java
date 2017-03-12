@@ -42,6 +42,7 @@ public class Mood implements Serializable{
         this.social = social;
         this.photo = photo;
         this.color = color;
+        this.date = new Date();
 
         //this.save();    // saves to elastic search server
     }
