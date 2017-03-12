@@ -46,6 +46,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+
+        LatLng home = new LatLng(53.519804, -113.518012);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(home));
+        mMap.addMarker(new MarkerOptions().position(home)
+                .title("Current Location"));
+
+        // Add Location
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                //createMarker(latLng);
+                mMap.addMarker(new MarkerOptions().position(latLng)
+                        .title("Current Location"));
+            }
+        });
 
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -74,6 +89,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 mMap.setMyLocationEnabled(true);
                 UiSettings mUiSettings = mMap.getUiSettings();
                 mUiSettings.setZoomControlsEnabled(true);
+                mUiSettings.setMyLocationButtonEnabled(true);
             }
         }
         else {
@@ -81,8 +97,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mMap.setMyLocationEnabled(true);
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(53.519804, -113.518012)));
+
+
+
     }
+
 
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -122,24 +141,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
-        //Place current location marker
+     /*   //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
-        markerOptions.title("Current Position");
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-
-        //move map camera
+        //System.out.println("Latitude: "+ location.getLatitude() + "Longitude "+ location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.addMarker(new MarkerOptions().position(latLng)
+                .title("Current Location")); */
+
+
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
-
-
 
     }
 

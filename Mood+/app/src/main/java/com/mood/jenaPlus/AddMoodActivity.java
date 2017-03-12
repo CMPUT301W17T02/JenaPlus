@@ -1,17 +1,25 @@
 package com.mood.jenaPlus;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.Image;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -23,13 +31,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+
 
 
 /**
@@ -68,7 +80,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         image = (ImageView) findViewById(R.id.selected_image);
 
-
         gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
 
@@ -81,7 +92,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 idString = mi.getMood(idNum);
                 colorString = mi.getColor(colorNum);
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
-
 
             }
         });
@@ -245,8 +255,10 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                             case R.id.action_navigation:
                                 System.out.println("do navigation");
+
                                 Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
                                 startActivity(intent);
+
                                 break;
                         }
                         return true;
@@ -275,6 +287,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         intent.setType("image/*");
         startActivityForResult(intent, 1);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
