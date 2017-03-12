@@ -17,6 +17,7 @@ import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.Update;
 import io.searchbox.core.search.aggregation.PercentileRanksAggregation;
 
 /**
@@ -134,6 +135,39 @@ public class ElasticsearchMPController {
 
     }
 
+    public static class UpdateUsersTask extends AsyncTask<Participant, Void, Void> {
+        @Override
+        protected Void doInBackground(Participant... participants) {
+            // ... : arbitrary number of arguments in Java
+            verifySettings();
+
+            Participant participant = participants[0];
+
+            String jestId = participant.getId();
+
+            Index index = new Index.Builder(participant).index("cmput301w17t2").type("user").id(jestId).build();
+
+            try {
+                // where is client?
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    Log.i("Works","Possibly works?");
+                } else {
+                    Log.i("Error", "Elasticsearch was not able to update");
+                }
+            } catch (Exception e) {
+                Log.i("Error", "The application failed to build and send the users");
+            }
+
+            return null;
+        }
+    }
+
+    public void updateUser(Participant participant) {
+        UpdateUsersTask updateUsersTask = new UpdateUsersTask();
+        updateUsersTask.execute(participant);
+    }
+
     public Participant getUsingParticipant(String aName) {
         Participant returnedParticipant = new Participant(null);
 
@@ -160,7 +194,6 @@ public class ElasticsearchMPController {
         }
         return returnedParticipant;
     }
-
 
     public static void verifySettings() {
         if (client == null) {

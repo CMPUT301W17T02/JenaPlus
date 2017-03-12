@@ -10,9 +10,6 @@ public class UserMoodList {
 
     private ArrayList<Mood> UserMoodList = new ArrayList<>();
 
-
-
-
     public ArrayList<Mood> getUserMoodList() {
         return UserMoodList;
     }

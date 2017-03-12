@@ -121,8 +121,6 @@ public class MoodListController {
     }
 
 
-
-
     public MoodListController(MoodPlus aMoodPlus) {
         this.moodPlus = aMoodPlus;
     }

@@ -45,6 +45,11 @@ public class Participant extends User {
         this.userName = userName;
     }
 
+    public void addNew(Mood aMood) {
+        Mood mood = aMood;
+        userMoodList.addUserMood(mood);
+    }
+
     public void addNewMood(String text, Boolean addLocation, Location location, String id,
                              String social, String photo, String color) {
         Mood mood = new Mood();

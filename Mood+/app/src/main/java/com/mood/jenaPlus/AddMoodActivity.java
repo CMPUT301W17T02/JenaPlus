@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -60,8 +62,22 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
-        moodPlus.addView(this);
+       //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
+        //moodPlus.addView(this);
+
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
+        Participant participant = mpController.getParticipant();
+
+        TextView test = (TextView) findViewById(R.id.addtext);
+
+        /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
+
+        String name = participant.getUserName();
+        String id = participant.getId();
+        String who = "Name: "+ name + ", id: "+id;
+        test.setText(who);
+
+        /*------------------------------------------------*/
 
         message = (EditText) findViewById(R.id.message);
         //socialPopup = (Button) findViewById(R.id.socialPopup);
@@ -253,7 +269,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 }
         );
 
-        mlc = new MoodListController(moodPlus);
+        //mlc = new MoodListController(moodPlus);
 
         addButton.setOnClickListener(new View.OnClickListener(){
 
@@ -261,11 +277,23 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 trigger = message.getText().toString();
 
-                Mood newMood = new Mood();
-                newMood.setText(trigger);
+                String text ="Test";
+                Boolean addLocation = false;
+                Location location = null;
+                String id = "sad";
+                String social ="Alone";
+                String photo = "";
+                String color ="color";
+
 
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addMoodUsingParticipant(newMood);
+
+                /*
+                Participant participant = mpController.getParticipant();
+                participant.addNewMood(newMood);*/
+
+                mpController.addMoodParticipant(text,addLocation,location,id,social,photo,color);
+
                 finish();
             }
         });
@@ -294,7 +322,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     public int getID() {
         return idNum;
     }
-
     public int getColorNum() { return colorNum; }
     public EditText getMessage() { return message; }
     public String getSocialSituation() { return socialSituation; }

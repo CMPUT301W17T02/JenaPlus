@@ -25,10 +25,9 @@ public class Mood {
     }
 
 
-    public Mood(String text, Date date, Boolean addLocation, Location location, String id,
+    public Mood(String text, Boolean addLocation, Location location, String id,
                 String social, String photo, String color) {
         this.text = text;
-        this.date = new Date();
         this.addLocation = addLocation;
         this.location = location;
         this.id = id;
@@ -36,7 +35,7 @@ public class Mood {
         this.photo = photo;
         this.color = color;
 
-        this.save();    // saves to elastic search server
+        //this.save();    // saves to elastic search server
     }
 
     public String getText() {
@@ -140,10 +139,12 @@ public class Mood {
 
 
     // saves mood event to elastic search server
-    private void save() {
+   /* private void save() {
         MoodListController.AddMoodTask addMoodTask = new MoodListController.AddMoodTask();
         addMoodTask.execute();
-    }
+    }*/
+
+
 
 }
 
