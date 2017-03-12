@@ -176,16 +176,16 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                     Participant newParticipant = new Participant(strUser);
                     ElasticsearchMPController.AddUsersTask addUser = new ElasticsearchMPController.AddUsersTask();
                     addUser.execute(newParticipant);
+                    finish();
+                    startActivity(getIntent());
 
-                    model.getParticipantElastic(strUser);
-                    Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
-                    startActivity(intent);
+                    //model.getParticipantElastic(strUser);
+                    //Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
+                    //startActivity(intent);
                 }
                 else {
                     userName.setError("Not Connected To the Internet");
                 }
-
-
             }
         });
     }
@@ -233,6 +233,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     public void update(MoodPlus model) {
 
     }
+
 }
 
 
