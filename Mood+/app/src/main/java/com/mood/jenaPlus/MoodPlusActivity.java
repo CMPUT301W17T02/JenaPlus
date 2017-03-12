@@ -107,7 +107,7 @@ public class MoodPlusActivity extends AppCompatActivity
 				AlertDialog alertDialog = deleteAlertBuilder.create();
 				alertDialog.show();
 
-				return false;
+				return true;
 			}
 		});
 
