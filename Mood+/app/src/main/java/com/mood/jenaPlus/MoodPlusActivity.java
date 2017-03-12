@@ -2,7 +2,6 @@ package com.mood.jenaPlus;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -12,24 +11,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
-
-import android.widget.ListView;
 
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
@@ -44,6 +40,10 @@ public class MoodPlusActivity extends AppCompatActivity
 
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
+    private String searchText = "";
+    private Boolean yesText = true;
+
+
 
 
     @Override
@@ -81,24 +81,6 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
-
-        /*testButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
-
-                startActivity(intent);
-
-            }
-        });
-
-        testButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(MoodPlusActivity.this, EditMoodActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });*/
 
 		deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
 
@@ -194,11 +176,19 @@ public class MoodPlusActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nearMe) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-            
+        } else if (id == R.id.request) {
+
+        } else if (id == R.id.filter) {
+            //filterOptions();
+
         } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.menuSortText){
+            getTextActivity();
+
+        }else if (id == R.id.menuSortRecent) {
 
         }
 
@@ -219,8 +209,50 @@ public class MoodPlusActivity extends AppCompatActivity
         adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
     }
+
     @Override
     public void update(MoodPlus moodPlus){
 
     }
+
+    public void getTextActivity() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Keyword");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                searchText = input.getText().toString();
+                Log.i("Error","searchtext is: "+searchText);
+
+
+                Intent intent = new Intent(MoodPlusActivity.this, FilteredTextActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("testText",searchText);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                yesText = false;
+            }
+        });
+
+        builder.show();
+
+    }
+
+
+
 }

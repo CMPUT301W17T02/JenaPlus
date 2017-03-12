@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:title="Filter">
+        <menu>
+            <item
+                android:id="@+id/filter"
+                android:icon="@drawable/ic_filter"
+                android:title="Filter" />
+        </menu>
+    </item>
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nearMe"
             android:icon="@drawable/ic_near_me"
             android:title="Near Me" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/request"
             android:icon="@drawable/ic_request"
             android:title="Request" />
 
@@ -19,6 +28,17 @@
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_filter"
                 android:title="Filter" />
+            <item
+                android:id="@+id/menuSortMood"
+                android:title="Sort by moods" />
+
+            <item
+                android:id="@+id/menuSortRecent"
+                android:title="Sort by most recent" />
+            <item
+                android:id="@+id/menuSortText"
+                android:title="Sort by text" />
+
 
         </menu>
     </item>
