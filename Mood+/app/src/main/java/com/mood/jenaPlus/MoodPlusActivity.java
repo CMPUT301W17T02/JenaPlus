@@ -41,10 +41,6 @@ public class MoodPlusActivity extends AppCompatActivity
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     private String searchText = "";
-    private Boolean yesText = true;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -180,17 +176,30 @@ public class MoodPlusActivity extends AppCompatActivity
             // Handle the camera action
         } else if (id == R.id.request) {
 
-        } else if (id == R.id.filter) {
-            //filterOptions();
-
-        } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.menuSortText){
             getTextActivity();
+        } else if (id == R.id.menuSortRecent) {
 
-        }else if (id == R.id.menuSortRecent) {
-
+        } else if (id == R.id.menuMoodSurprise){
+            getMoodFiltered("surprised");
+        } else if (id == R.id.menuMoodDisgust) {
+            getMoodFiltered("disgust");
+        } else if (id == R.id.menuMoodFear) {
+            getMoodFiltered("fear");
+        } else if (id == R.id.menuMoodConfused){
+            getMoodFiltered("confused");
+        } else if (id == R.id.menuMoodHappy) {
+            getMoodFiltered("happy");
+        } else if (id == R.id.menuMoodAngry) {
+            getMoodFiltered("angry");
+        } else if (id == R.id.menuMoodSad) {
+            getMoodFiltered("sad");
+        } else if (id == R.id.menuMoodShame) {
+            getMoodFiltered("shame");
+        } else if (id == R.id.menuMoodAnnoyed){
+            getMoodFiltered("annoyed");
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -245,12 +254,19 @@ public class MoodPlusActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
-                yesText = false;
             }
         });
 
         builder.show();
 
+    }
+
+    public void getMoodFiltered(String mood) {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("moodString",mood);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
 
