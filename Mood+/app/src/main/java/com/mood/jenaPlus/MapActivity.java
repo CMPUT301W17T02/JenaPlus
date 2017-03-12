@@ -38,13 +38,14 @@ import java.util.Map;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener {
 
     private GoogleMap mMap;
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
+    double lat =0, lng=0;
 
 
     @Override
@@ -65,8 +66,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+
         LatLng home = new LatLng(53.519804, -113.518012);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(home));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 11.0f));
         mMap.addMarker(new MarkerOptions().position(home)
                 .title("Current Location"));
 
@@ -76,11 +78,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             public void onMapLongClick(LatLng latLng) {
                 //createMarker(latLng);
                 mMap.addMarker(new MarkerOptions().position(latLng)
-                        .title("Current Location"));
+                        .title("New Location"));
             }
         });
 
-        //Initialize Google Play Services
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            UiSettings mUiSettings = mMap.getUiSettings();
+            mUiSettings.setZoomControlsEnabled(true);
+        }
+
+        buildGoogleApiClient();
+
+
+     /*   //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)
@@ -95,10 +107,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
-        }
-
-
-
+        }*/
 
     }
 
@@ -125,6 +134,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,  this);
         }
 
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        if (mLastLocation != null) {
+            lat = mLastLocation.getLatitude();
+            lng = mLastLocation.getLongitude();
+
+            LatLng loc = new LatLng(lat, lng);
+            mMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+        }
+
     }
 
 
@@ -141,17 +161,18 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mCurrLocationMarker.remove();
         }
 
-     /*   //Place current location marker
+        //Place current location marker
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        //System.out.println("Latitude: "+ location.getLatitude() + "Longitude "+ location.getLongitude());
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(latLng);
+        markerOptions.title("Current Position");
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+        //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.addMarker(new MarkerOptions().position(latLng)
-                .title("Current Location")); */
-
-
         mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
 
-        //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
