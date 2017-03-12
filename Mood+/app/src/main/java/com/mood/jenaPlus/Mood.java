@@ -36,7 +36,6 @@ public class Mood implements Serializable{
     public Mood(String text, Boolean addLocation, Location location, String id,
                 String social, String photo, String color) {
         this.text = text;
-        this.date = new Date();
         this.addLocation = addLocation;
         this.location = location;
         this.id = id;
