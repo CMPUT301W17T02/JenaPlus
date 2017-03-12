@@ -2,14 +2,6 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="Filter">
-        <menu>
-            <item
-                android:id="@+id/filter"
-                android:icon="@drawable/ic_filter"
-                android:title="Filter" />
-        </menu>
-    </item>
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nearMe"
@@ -24,20 +16,40 @@
 
     <item android:title="Filter">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_filter"
-                android:title="Filter" />
-            <item
-                android:id="@+id/menuSortMood"
-                android:title="Sort by moods" />
 
             <item
                 android:id="@+id/menuSortRecent"
-                android:title="Sort by most recent" />
+                android:title="Filter By Most Recent" />
             <item
                 android:id="@+id/menuSortText"
-                android:title="Sort by text" />
+                android:title="Filter By Text" />
+            <item
+                android:id="@+id/menuMoodSurprise"
+                android:title="Filter by Surprised Moods" />
+            <item
+                android:id="@+id/menuMoodDisgust"
+                android:title="Filter by Disgusted Moods" />
+            <item
+                android:id="@+id/menuMoodFear"
+                android:title="Filter by Fearful Moods" />
+            <item
+                android:id="@+id/menuMoodConfused"
+                android:title="Filter by Confused Moods" />
+            <item
+                android:id="@+id/menuMoodHappy"
+                android:title="Filter by Happy Moods" />
+            <item
+                android:id="@+id/menuMoodAngry"
+                android:title="Filter by Angry Moods" />
+            <item
+                android:id="@+id/menuMoodSad"
+                android:title="Filter by Sad Moods" />
+            <item
+                android:id="@+id/menuMoodShame"
+                android:title="Filter by Shameful Moods" />
+            <item
+                android:id="@+id/menuMoodAnnoyed"
+                android:title="Filter by Annoyed Moods" />
 
 
         </menu>
