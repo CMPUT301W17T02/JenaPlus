@@ -19,6 +19,7 @@ import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
 import io.searchbox.core.Update;
 import io.searchbox.core.search.aggregation.PercentileRanksAggregation;
+import io.searchbox.params.Parameters;
 
 /**
  * Created by carrotji on 2017-03-05.
@@ -41,7 +42,10 @@ public class ElasticsearchMPController {
 
             for (Participant participant : participants) {
 
-                Index index = new Index.Builder(participant).index("cmput301w17t2").type("user").build();
+                Index index = new Index.Builder(participant)
+                        .setParameter(Parameters.REFRESH, true)
+                        .index("cmput301w17t2").type("user")
+                        .build();
 
                 try {
                     // where is client?
