@@ -24,6 +24,11 @@ public class Mood {
         this.date = new Date();
     }
 
+    public Mood(String id) {
+        this.id = id;
+        this.date = new Date();
+    }
+
 
     public Mood(String text, Boolean addLocation, Location location, String id,
                 String social, String photo, String color) {
