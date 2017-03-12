@@ -41,6 +41,8 @@ public class MoodListController {
     MoodPlus moodPlus = null; // a singleton
 
 
+
+
     public static class AddMoodTask extends AsyncTask<Mood, Void, Void> {
         // add mood event to elastic search
         @Override
@@ -119,8 +121,6 @@ public class MoodListController {
     }
 
 
-
-
     public MoodListController(MoodPlus aMoodPlus) {
         this.moodPlus = aMoodPlus;
     }
@@ -134,7 +134,7 @@ public class MoodListController {
         String social = aMood.getSocial();
         String photo = aMood.getPhoto();
         String color = aMood.getColor();
-        moodPlus.usingParticipant.addNewMood(text,addLocation,location,id,social,photo,color);
+        moodPlus.participant.addNewMood(text,addLocation,location,id,social,photo,color);
     }
 
 

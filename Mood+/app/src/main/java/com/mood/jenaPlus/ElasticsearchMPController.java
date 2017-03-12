@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.EditText;
 
+
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
@@ -16,6 +17,7 @@ import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.Update;
 import io.searchbox.core.search.aggregation.PercentileRanksAggregation;
 
 /**
@@ -92,6 +94,7 @@ public class ElasticsearchMPController {
 
     }
 
+
     public static class GetOneUserTask extends AsyncTask<String, Void, Participant> {
         @Override
         protected Participant doInBackground(String... search_parameters) {
@@ -99,7 +102,10 @@ public class ElasticsearchMPController {
 
             Participant participant = new Participant(null);
 
+            //String userName = search_parameters[0];
+
             String query = search_parameters[0];
+
             System.out.println(query);
 
 
@@ -118,15 +124,48 @@ public class ElasticsearchMPController {
                 } else {
                     Log.i("Error", "No Users matched in the cmput301w17t2 index");
                     System.out.println("could not find error");
-                    throw new IllegalArgumentException("YARRR");
+
 
                 }
             } catch (Exception e) {
-                return null;
+                Log.e("Error", "Not returning the participant...");
             }
             return participant;
         }
 
+    }
+
+    public static class UpdateUsersTask extends AsyncTask<Participant, Void, Void> {
+        @Override
+        protected Void doInBackground(Participant... participants) {
+            // ... : arbitrary number of arguments in Java
+            verifySettings();
+
+            Participant participant = participants[0];
+
+            String jestId = participant.getId();
+
+            Index index = new Index.Builder(participant).index("cmput301w17t2").type("user").id(jestId).build();
+
+            try {
+                // where is client?
+                DocumentResult result = client.execute(index);
+                if (result.isSucceeded()) {
+                    Log.i("Works","Possibly works?");
+                } else {
+                    Log.i("Error", "Elasticsearch was not able to update");
+                }
+            } catch (Exception e) {
+                Log.i("Error", "The application failed to build and send the users");
+            }
+
+            return null;
+        }
+    }
+
+    public void updateUser(Participant participant) {
+        UpdateUsersTask updateUsersTask = new UpdateUsersTask();
+        updateUsersTask.execute(participant);
     }
 
     public Participant getUsingParticipant(String aName) {
@@ -151,13 +190,10 @@ public class ElasticsearchMPController {
 
         } catch (Exception e) {
             Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
-            Log.e("Error","NULLLLLLLLLLLL");
-
 
         }
         return returnedParticipant;
     }
-
 
     public static void verifySettings() {
         if (client == null) {

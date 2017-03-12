@@ -27,7 +27,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MoodPlusActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
 
     private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
@@ -38,7 +38,6 @@ public class MoodPlusActivity extends AppCompatActivity
 
     private ArrayList<Mood> myMoodArrayList = new ArrayList<Mood>();
     private ArrayAdapter<Mood> adapter;
-    TextView test;
 
 
     @Override
@@ -49,10 +48,21 @@ public class MoodPlusActivity extends AppCompatActivity
 
         moodListView = (ListView) findViewById(R.id.listView);
 
-        test = (TextView) findViewById(R.id.test_string);
+        TextView test = (TextView) findViewById(R.id.test_string);
         setSupportActionBar(toolbar);
 
         Button testButton = (Button) findViewById(R.id.test_button);
+
+        /* LOADING THE LOGGED IN PARTICIPANT */
+
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
+
+        Participant participant = mpController.getParticipant();
+        String name = participant.getUserName();
+        String id = participant.getId();
+        String who = "Name: "+ name + ", id: "+id;
+        test.setText(who);
+
 
         testButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -148,27 +158,16 @@ public class MoodPlusActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (requestCode == 1){
-            if(resultCode == MoodPlusActivity.RESULT_OK){
-                Mood mood = (Mood)data.getExtras().getSerializable("result");
-                //int position = data.getIntExtra("position",-1);
-
-                String trigger = mood.getText();
-                test.setText(trigger);
-                myMoodArrayList.add(mood);
-                adapter.notifyDataSetChanged();
-            }
-        }
-    }
-
-    @Override
     protected void onStart(){
         super.onStart();
 
         adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, myMoodArrayList);
         moodListView.setAdapter(adapter);
 
+
+    }
+    @Override
+    public void update(MoodPlus moodPlus){
 
     }
 }

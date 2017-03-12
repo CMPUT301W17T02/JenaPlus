@@ -1,5 +1,7 @@
 package com.mood.jenaPlus;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 
 /**
@@ -8,29 +10,48 @@ import java.util.ArrayList;
 
 public class MoodPlus extends MPModel<MPView> {
 
-    protected ArrayList<Mood> moods;
+    public Participant participant; // The participant who logs in
 
-    public ArrayList<Mood> getMoods() {
-        return moods;
+    protected UserMoodList userMoods; // ArrayList of user moods
+
+    public UserMoodList getUserMoods() {
+        return userMoods;
     }
 
-    public void setMoods(ArrayList<Mood> newMoods) {
-        this.moods = newMoods;
+    public void setMoods(UserMoodList newMoods) {
+        this.userMoods = newMoods;
     }
 
-    public void addNewMood(Mood aMood) {
-        moods.add(aMood);
+    public Participant getParticipant() {
+        return participant;
+    }
+
+    public void setParticipant(Participant aParticipant) {
+        this.participant = aParticipant;
+    }
+
+    public void addNewMood(String text, Boolean addLocation, Location location, String id,
+                           String social, String photo, String color) {
+
+        participant.addNewMood(text,addLocation,location,id,social,photo,color);
+        //userMoods.addUserMood(aMood);
+        updateParticipant();
         notifyViews();
     }
 
-    public Participant usingParticipant;
-
-    public void getUsingParticipantUsername(String aName) {
+    public void getParticipantElastic(String aName) {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
-        usingParticipant = eController.getUsingParticipant(aName);
+        participant = eController.getUsingParticipant(aName);
         notifyViews();
-
     }
+
+    public void updateParticipant() {
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        eController.updateUser(participant);
+    }
+
+
+
 
 
 
