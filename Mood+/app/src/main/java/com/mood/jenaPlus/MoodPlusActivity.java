@@ -214,7 +214,7 @@ public class MoodPlusActivity extends AppCompatActivity
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getUserMoodList();
+        moodArrayList = myMoodList.getUserMoodOrderedList();
 
         adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
