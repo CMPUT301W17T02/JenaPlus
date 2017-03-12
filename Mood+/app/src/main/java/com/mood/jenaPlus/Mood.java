@@ -11,9 +11,11 @@ import java.util.Date;
 /**
  * This is the Mood class that instantiates a new Mood.
  * A Mood object has all of the information needed about a mood.
+ * Created on 2017/2/25
  *
  * @author Helen and Carlo
- * @date 2017/2/25.
+ * @version 1.0.0
+ * @since 1.0
  */
 
 public class Mood implements Serializable{
@@ -89,7 +91,7 @@ public class Mood implements Serializable{
      * @return the date string
      */
     public String getDateString() {
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String s = formatter.format(date);
 
         return s;
@@ -260,7 +262,8 @@ public class Mood implements Serializable{
      * @return the string
      */
     public String newString() {
-        String output = "Mood: " + id + ", Color: " + color;
+        String dateStr = getDateString();
+        String output = dateStr +"\nMood: " + id + ", Color: " + color;
         return output;
 
     }
