@@ -96,6 +96,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
         getLocation = (Button) findViewById(R.id.get_location);
 
+
+
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

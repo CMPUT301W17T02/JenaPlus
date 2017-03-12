@@ -13,25 +13,34 @@ public class ViewFilteredMoodActivity extends AppCompatActivity implements MPVie
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-
-
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
+    ArrayList<Mood> filteredArrayList = new ArrayList<>();
+    String keyword = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_filtered_mood);
         TextView test = (TextView) findViewById(R.id.test_string);
+        moodListView = (ListView) findViewById(R.id.listView);
+
+        /*------------- LOADING THE KEYWORD  -------------*/
+
+        Bundle bundle = getIntent().getExtras();
+        keyword = bundle.getString("testText");
+
+        //getNewList();
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
-        final MainMPController mpController = MoodPlusApplication.getMainMPController();
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: "+ name + ", id: "+id;
+        String who = "Name: "+ name + ", id: "+id+"\nkeyword: " + keyword;
         test.setText(who);
 
         /*------------------------------------------------*/
@@ -44,16 +53,39 @@ public class ViewFilteredMoodActivity extends AppCompatActivity implements MPVie
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
+
+        Bundle bundle = getIntent().getExtras();
+        keyword = bundle.getString("testText");
+
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getUserMoodOrderedList();
+        moodArrayList = myMoodList.getFilteredMoodText(keyword);
 
         adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
     }
 
-
     @Override
     public void update(MoodPlus moodPlus){
 
+    }
+
+    public void getNewList() {
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
+        Participant participant = mpController.getParticipant();
+
+        myMoodList = participant.getUserMoodList();
+        int listSize = moodArrayList.size();
+
+        for (int i = 0; i<listSize; i++){
+            String m1 = keyword;
+            String m2 = myMoodList.getUserMood(i).getText();
+            if (m2.toLowerCase().contains(m1.toLowerCase())) {
+                filteredArrayList.add(myMoodList.getUserMood(i));
+            }
+        }
+
+        moodArrayList.clear();
+        moodArrayList.addAll(filteredArrayList);
+        adapter.notifyDataSetChanged();
     }
 }

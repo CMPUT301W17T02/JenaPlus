@@ -13,10 +13,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -46,6 +49,10 @@ public class MoodPlusActivity extends AppCompatActivity
 
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
+    private String searchText = "";
+    private Boolean yesText = true;
+
+
 
 
     @Override
@@ -188,10 +195,9 @@ public class MoodPlusActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.menuSortText){
+            getTextActivity();
 
-        }else if (id == R.id.menuSortRecent){
-
-        } else if (id == R.id.menuSortText){
+        }else if (id == R.id.menuSortRecent) {
 
         }
 
@@ -217,27 +223,43 @@ public class MoodPlusActivity extends AppCompatActivity
     public void update(MoodPlus moodPlus){
 
     }
-    public void filterOptions() {
-        View menuItemView = findViewById(R.id.filter);
-        PopupMenu popup = new PopupMenu(MoodPlusActivity.this, menuItemView );
-        //Inflating the Popup using xml file
-        popup.getMenuInflater()
-                .inflate(R.menu.filter_popup, popup.getMenu());
 
-        //registering popup with OnMenuItemClickListener
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                Toast.makeText(
-                        MoodPlusActivity.this,
-                        "Social Situation : " + item.getTitle(),
-                        Toast.LENGTH_SHORT
-                ).show();
+    public void getTextActivity() {
 
-                return true;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Keyword");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                searchText = input.getText().toString();
+                Log.i("Error","searchtext is: "+searchText);
+
+
+                Intent intent = new Intent(MoodPlusActivity.this, ViewFilteredMoodActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("testText",searchText);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                yesText = false;
             }
         });
 
-        popup.show(); //showing popup menu
+        builder.show();
+
     }
 
 
