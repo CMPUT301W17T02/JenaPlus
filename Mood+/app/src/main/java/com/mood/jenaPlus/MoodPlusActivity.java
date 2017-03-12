@@ -181,9 +181,18 @@ public class MoodPlusActivity extends AppCompatActivity
         if (id == R.id.nearMe) {
             // Handle the camera action
         } else if (id == R.id.request) {
-            
+
         } else if (id == R.id.filter) {
             //filterOptions();
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.menuSortText){
+
+        }else if (id == R.id.menuSortRecent){
+
+        } else if (id == R.id.menuSortText){
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
