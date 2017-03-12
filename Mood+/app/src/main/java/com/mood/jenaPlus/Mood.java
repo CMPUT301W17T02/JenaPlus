@@ -2,6 +2,8 @@ package com.mood.jenaPlus;
 
 import android.location.Location;
 
+
+import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +12,7 @@ import java.util.Date;
  * Created by Helen and Carlo on 2017/2/25.
  */
 
-public class Mood {
+public class Mood implements Serializable{
     private String id;
     private String text;
     private Date date;
@@ -41,6 +43,7 @@ public class Mood {
         this.social = social;
         this.photo = photo;
         this.color = color;
+        this.date = new Date();
 
         //this.save();    // saves to elastic search server
     }

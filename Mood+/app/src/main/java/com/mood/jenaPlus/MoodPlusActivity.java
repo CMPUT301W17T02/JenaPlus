@@ -27,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,6 +70,17 @@ public class MoodPlusActivity extends AppCompatActivity
         String who = "Name: "+ name + ", id: "+id;
         test.setText(who);
 
+        moodListView.setAdapter(adapter);
+        moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
+                intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
+                intent.putExtra("pos", position);
+                startActivity(intent);
+            }
+        });
+
 
         /*testButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
@@ -102,7 +114,6 @@ public class MoodPlusActivity extends AppCompatActivity
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						mpController.deleteMoodParticipant(moodArrayList.get(position));
-
 						adapter.notifyDataSetChanged();
 					}
 				});
