@@ -139,7 +139,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
                                 // 04-03-2015 01:16
                                 View menuItemView = findViewById(R.id.socialPopup);
-                                PopupMenu popup = new PopupMenu(AddMoodActivity.this, menuItemView );
+                                PopupMenu popup = new PopupMenu(AddMoodActivity.this, menuItemView);
                                 //Inflating the Popup using xml file
                                 popup.getMenuInflater()
                                         .inflate(R.menu.social_popup, popup.getMenu());

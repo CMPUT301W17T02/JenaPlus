@@ -6,9 +6,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -41,12 +41,12 @@
         <activity
             android:name=".ViewMoodActivity"
             android:label="Mood+"
-            android:parentActivityName=".MoodPlusActivity"/>
+            android:parentActivityName=".MoodPlusActivity" />
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
-            android:windowSoftInputMode="stateHidden"
-            android:parentActivityName=".MoodPlusActivity">
+            android:parentActivityName=".MoodPlusActivity"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +57,8 @@
             android:name=".EditMoodActivity"
             android:label="@string/title_activity_edit_mood"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".ViewFilteredMoodActivity"></activity>
     </application>
 
 </manifest>

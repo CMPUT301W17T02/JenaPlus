@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -81,24 +83,6 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
-
-        /*testButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
-
-                startActivity(intent);
-
-            }
-        });
-
-        testButton.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Intent intent = new Intent(MoodPlusActivity.this, EditMoodActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });*/
 
 		deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
 
@@ -194,12 +178,12 @@ public class MoodPlusActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nearMe) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.request) {
             
-        } else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.filter) {
+            //filterOptions();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -219,8 +203,34 @@ public class MoodPlusActivity extends AppCompatActivity
         adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
     }
+
     @Override
     public void update(MoodPlus moodPlus){
 
     }
+    public void filterOptions() {
+        View menuItemView = findViewById(R.id.filter);
+        PopupMenu popup = new PopupMenu(MoodPlusActivity.this, menuItemView );
+        //Inflating the Popup using xml file
+        popup.getMenuInflater()
+                .inflate(R.menu.filter_popup, popup.getMenu());
+
+        //registering popup with OnMenuItemClickListener
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                Toast.makeText(
+                        MoodPlusActivity.this,
+                        "Social Situation : " + item.getTitle(),
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return true;
+            }
+        });
+
+        popup.show(); //showing popup menu
+    }
+
+
+
 }
