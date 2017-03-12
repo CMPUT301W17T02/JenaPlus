@@ -39,6 +39,10 @@ public class MoodPlusActivity extends AppCompatActivity
     private ArrayList<Mood> myMoodArrayList = new ArrayList<Mood>();
     private ArrayAdapter<Mood> adapter;
 
+	// ARRAYLISTS BELOW FOR TESTING
+	private ArrayList<String> myMoodIDStringList = new ArrayList<String>();
+	//private ArrayList<String> myMoodIDDatesStringList = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +60,18 @@ public class MoodPlusActivity extends AppCompatActivity
         /* LOADING THE LOGGED IN PARTICIPANT */
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
+		MoodListController moodListController = MoodPlusApplication.getMoodListController();
 
         Participant participant = mpController.getParticipant();
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Name: "+ name + ", id: "+id;
-        test.setText(who);
+        //test.setText(who);
 
+		myMoodIDStringList = moodListController.getUserMoodsIDString();
+		String testing = myMoodIDStringList.get(3);
+
+		test.setText(testing);
 
         testButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
