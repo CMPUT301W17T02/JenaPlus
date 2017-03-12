@@ -9,7 +9,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Created by Helen and Carlo on 2017/2/25.
+ * This is the Mood class that instantiates a new Mood.
+ * A Mood object has all of the information needed about a mood.
+ * Created on 2017/2/25
+ *
+ * @author Helen and Carlo
+ * @version 1.0.0
+ * @since 1.0
  */
 
 public class Mood implements Serializable{
@@ -22,17 +28,17 @@ public class Mood implements Serializable{
     private String photo;
     private String color;
 
-
-    /*public Mood() {
-        this.date = new Date();
-    }
-
-    public Mood(String id) {
-        this.id = id;
-        this.date = new Date();
-    }*/
-
-
+    /**
+     * Instantiates a new Mood.
+     *
+     * @param text        The trigger which will be < = 20 characters/<4 words
+     * @param addLocation Boolean if a location is selected
+     * @param location    Location
+     * @param id          The mood icon ID
+     * @param social      The social situation of participant
+     * @param photo       Photo taken
+     * @param color       Color of the associated mood
+     */
     public Mood(String text, Boolean addLocation, Location location, String id,
                 String social, String photo, String color) {
         this.text = text;
@@ -47,10 +53,20 @@ public class Mood implements Serializable{
         //this.save();    // saves to elastic search server
     }
 
+    /**
+     * Gets text.
+     *
+     * @return the text
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Sets text.
+     *
+     * @param text the text
+     */
     public void setText(String text) {
         if(text!=null) {
             this.text = text;
@@ -60,39 +76,76 @@ public class Mood implements Serializable{
         }
     }
 
+    /**
+     * Gets date.
+     *
+     * @return the date
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     * Gets date string.
+     *
+     * @return the date string
+     */
     public String getDateString() {
-        Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String s = formatter.format(date);
 
         return s;
     }
 
+    /**
+     * Sets date.
+     *
+     * @param date the date
+     */
     public void setDate(Date date) {
         if (date!=null) {
             this.date = date;
         }
     }
 
+    /**
+     * Gets mood id.
+     *
+     * @param moodId the mood id
+     * @return the mood id
+     */
     public String getMoodId(int moodId) {
         MoodIcon m = new MoodIcon();
         id = m.getMood(moodId);
         return id;
     }
 
+    /**
+     * Gets mood color.
+     *
+     * @param moodId the mood id
+     * @return the mood color
+     */
     public String getMoodColor(int moodId) {
         MoodIcon m = new MoodIcon();
         color = m.getColor(moodId);
         return color;
     }
 
+    /**
+     * Gets location.
+     *
+     * @return the location
+     */
     public Location getLocation() {
         return location;
     }
 
+    /**
+     * Sets location.
+     *
+     * @param location the location
+     */
     public void setLocation(Location location) {
         if (!addLocation && location == null) {
             this.location = null;
@@ -102,10 +155,20 @@ public class Mood implements Serializable{
         }
     }
 
+    /**
+     * Gets social.
+     *
+     * @return the social
+     */
     public String getSocial() {
         return social;
     }
 
+    /**
+     * Sets social.
+     *
+     * @param social the social
+     */
     public void setSocial(String social) {
         if (social != null) {
             this.social = social;
@@ -115,10 +178,20 @@ public class Mood implements Serializable{
         }
     }
 
+    /**
+     * Gets photo.
+     *
+     * @return the photo
+     */
     public String getPhoto() {
         return photo;
     }
 
+    /**
+     * Sets photo.
+     *
+     * @param photo the photo
+     */
     public void setPhoto(String photo) {
         if(photo!=null) {
             this.photo = photo;
@@ -128,33 +201,69 @@ public class Mood implements Serializable{
         }
     }
 
+    /**
+     * Gets color.
+     *
+     * @return the color
+     */
     public String getColor() {
         return color;
     }
 
+    /**
+     * Sets color.
+     *
+     * @param color the color
+     */
     public void setColor(String color) {
         this.color = color;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(String id) {
 
         this.id = id;
     }
 
+    /**
+     * Gets add location.
+     *
+     * @return the add location
+     */
     public Boolean getAddLocation() {
         return addLocation;
     }
 
+    /**
+     * Sets add location.
+     *
+     * @param addLocation the add location
+     */
     public void setAddLocation(Boolean addLocation) {
         this.addLocation = addLocation;
     }
 
+    /**
+     * New string string.
+     *
+     * @return the string
+     */
     public String newString() {
-        String output = "Mood: " + id + ", Color: " + color;
+        String dateStr = getDateString();
+        String output = dateStr +"\nMood: " + id + ", Color: " + color;
         return output;
 
     }
