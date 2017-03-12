@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +66,17 @@ public class MoodPlusActivity extends AppCompatActivity
         String id = participant.getId();
         String who = "Name: "+ name + ", id: "+id;
         test.setText(who);
+
+        moodListView.setAdapter(adapter);
+        moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
+                intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
+                intent.putExtra("pos", position);
+                startActivity(intent);
+            }
+        });
 
 
         /*testButton.setOnClickListener(new View.OnClickListener(){

@@ -19,6 +19,9 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
         MoodPlus mp = MoodPlusApplication.getMoodPlus();
         mp.addView(this);
 
+        Mood mood = (Mood)getIntent().getSerializableExtra("aMood");
+
+
     }
 
     public void update(MoodPlus moodPlus){

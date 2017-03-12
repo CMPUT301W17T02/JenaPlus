@@ -2,13 +2,14 @@ package com.mood.jenaPlus;
 
 import android.location.Location;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by Helen and Carlo on 2017/2/25.
  */
 
-public class Mood {
+public class Mood implements Serializable{
     private String id;
     private String text;
     private Date date;
