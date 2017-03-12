@@ -1,6 +1,8 @@
 package com.mood.jenaPlus;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -13,6 +15,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -41,7 +44,6 @@ import java.net.URLConnection;
 public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     private static final String TAG = "ERROR" ;
-    ImageView t1, t2, t3, t4, t5, t6, t7, t8, t9;
     int idNum;
     int colorNum;
     String socialSituation;
@@ -54,7 +56,13 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Button socialPopup;
     private GridView gridview;
     private ImageView image;
-    private MoodListController mlc;
+    Context context = this;
+
+    Boolean addLocation = false;
+    Location location = null;
+    String photo = "";
+
+    Boolean moodChosen = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -97,134 +105,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 idNum = colorNum = position;
                 idString = mi.getMood(idNum);
                 colorString = mi.getColor(colorNum);
+                moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
 
 
             }
         });
-
-/*
-        t1 = (ImageView) findViewById(R.id.surprised);
-        t2 = (ImageView) findViewById(R.id.disgust);
-        t3 = (ImageView) findViewById(R.id.fear);
-        t4 = (ImageView) findViewById(R.id.confused);
-        t5 = (ImageView) findViewById(R.id.happy);
-        t6 = (ImageView)findViewById(R.id.angry);
-        t7 = (ImageView) findViewById(R.id.sad);
-        t8 = (ImageView) findViewById(R.id.shame);
-        t9 = (ImageView) findViewById(R.id.annoyed);
-
-        t1.setClickable(true);
-        t2.setClickable(true);
-        t3.setClickable(true);
-        t4.setClickable(true);
-        t5.setClickable(true);
-        t6.setClickable(true);
-        t7.setClickable(true);
-        t8.setClickable(true);
-        t9.setClickable(true);
-
-        t1.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 0;
-                Toast.makeText(getBaseContext(), "Feeling surprised",
-                        Toast.LENGTH_SHORT).show();
-
-                t1.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-
-        });
-
-        t2.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 1;
-
-                Toast.makeText(getBaseContext(), "Feeling disgusted",
-                        Toast.LENGTH_SHORT).show();
-                t2.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t3.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = 2;
-                Toast.makeText(getBaseContext(), "Feeling fearful",
-                        Toast.LENGTH_SHORT).show();
-                t3.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t4.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 3;
-                Toast.makeText(getBaseContext(), "Feeling confused",
-                        Toast.LENGTH_SHORT).show();
-                t4.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t5.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = 4;
-                Toast.makeText(getBaseContext(), "Feeling happy",
-                        Toast.LENGTH_SHORT).show();
-                t5.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t6.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 5;
-                Toast.makeText(getBaseContext(), "Feeling angry",
-                        Toast.LENGTH_SHORT).show();
-                t6.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t7.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 6;
-                Toast.makeText(getBaseContext(), "Feeling sad",
-                        Toast.LENGTH_SHORT).show();
-                t7.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t8.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 7;
-                Toast.makeText(getBaseContext(), "Shame",
-                        Toast.LENGTH_SHORT).show();
-                t8.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });
-
-        t9.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                idNum = colorNum = 8;
-                Toast.makeText(getBaseContext(), "Feeling annoyed",
-                        Toast.LENGTH_SHORT).show();
-                t9.setBackgroundColor(getResources().getColor(R.color.gridBack3));
-            }
-        });*/
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -233,7 +119,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 System.out.println("do camera");
+                                photo = "photoPicked";
                                 galleryIntent();
+
                                 break;
                             case R.id.socialPopup:
                                 // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
@@ -262,6 +150,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                             case R.id.action_navigation:
                                 System.out.println("do navigation");
+                                addLocation = true;
                                 break;
                         }
                         return true;
@@ -269,34 +158,14 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 }
         );
 
-        //mlc = new MoodListController(moodPlus);
-
         addButton.setOnClickListener(new View.OnClickListener(){
-
             public void onClick(View view){
-
-                trigger = message.getText().toString();
-
-                String text ="Test";
-                Boolean addLocation = false;
-                Location location = null;
-                String id = "sad";
-                String social ="Alone";
-                String photo = "";
-                String color ="color";
-
-
-                MainMPController mpController = MoodPlusApplication.getMainMPController();
-
-                /*
-                Participant participant = mpController.getParticipant();
-                participant.addNewMood(newMood);*/
-
-                mpController.addMoodParticipant(text,addLocation,location,id,social,photo,color);
-
-                finish();
+                addMood();
             }
         });
+
+
+
     }
 
     private void galleryIntent(){
@@ -333,12 +202,90 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     }
 
-    protected void generateRecord(){
-        Intent intent = new Intent();
-        setResult(MoodPlusActivity.RESULT_OK, intent);
-        finish();
+    public void addMood() {
+        trigger = message.getText().toString();
+        Boolean trigCheck = triggerCheck();
+
+        if (!trigCheck) {
+            trigMessage();
+        }
+        if (moodChosen == false){
+            idMessage();
+        }
+
+        else {
+
+            MainMPController mpController = MoodPlusApplication.getMainMPController();
+            mpController.addMoodParticipant(trigger,addLocation,location,idString,socialSituation,photo,colorString);
+
+            finish();
+        }
 
     }
+
+    public Boolean triggerCheck() {
+        Boolean check = true;
+        trigger = message.getText().toString();
+        int trigLen = trigger.length();
+        int wordLen = countWord(trigger);
+        if (trigLen>20) {
+            check = false;
+        }
+        else if (wordLen >3) {
+            check = false;
+        }
+        return check;
+    }
+
+    //Taken from http://javarevisited.blogspot.ca/2015/02/how-to-count-number-of-words-in-string.html
+    //11 March 2017 19-41
+    public int countWord(String word) {
+        if (word == null) {
+            return 0;
+        }
+        String input = word.trim();
+        int count = input.isEmpty() ? 0 : input.split("\\s+").length;
+        return count;
+    }
+
+    public void trigMessage() {
+        new AlertDialog.Builder(context)
+                .setTitle("Trigger Message")
+                .setMessage("Trigger must be less than 20 characters or less than 3 words")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    public void idMessage() {
+        new AlertDialog.Builder(context)
+                .setTitle("Mood Message")
+                .setMessage("A mood is required to post")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
+
 
 }
 

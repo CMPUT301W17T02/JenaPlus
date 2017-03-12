@@ -14,20 +14,19 @@ public class Mood {
     private Date date;
     private Boolean addLocation;
     private Location location;
-
     private String social;
     private String photo;
     private String color;
 
 
-    public Mood() {
+    /*public Mood() {
         this.date = new Date();
     }
 
     public Mood(String id) {
         this.id = id;
         this.date = new Date();
-    }
+    }*/
 
 
     public Mood(String text, Boolean addLocation, Location location, String id,
@@ -141,15 +140,6 @@ public class Mood {
     public void setAddLocation(Boolean addLocation) {
         this.addLocation = addLocation;
     }
-
-
-    // saves mood event to elastic search server
-   /* private void save() {
-        MoodListController.AddMoodTask addMoodTask = new MoodListController.AddMoodTask();
-        addMoodTask.execute();
-    }*/
-
-
 
 }
 
