@@ -126,7 +126,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
         participants.setAdapter(adapter);
 
-
         Button getButton = (Button) findViewById(R.id.get_users);
 
         getButton.setOnClickListener(new View.OnClickListener() {

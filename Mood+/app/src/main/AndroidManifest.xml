@@ -61,12 +61,12 @@
         <activity
             android:name=".FilteredTextActivity"
             android:label="Mood+"
-            android:parentActivityName=".MoodPlusActivity"/>
+            android:parentActivityName=".MoodPlusActivity" />
         <activity
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
-            android:parentActivityName=".MoodPlusActivity"/>
-
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".FilteredDateActivity"></activity>
     </application>
 
 </manifest>

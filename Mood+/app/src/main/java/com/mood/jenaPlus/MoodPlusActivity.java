@@ -30,13 +30,11 @@ import java.util.ArrayList;
 public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
 
-    private MoodListController mlc;    // controller
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
 	private AlertDialog.Builder deleteAlertBuilder;
 
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-
     protected ArrayAdapter<Mood> adapter;
     private UserMoodList myMoodList = new UserMoodList();
     //private ArrayAdapter<Mood> adapter;
@@ -52,8 +50,6 @@ public class MoodPlusActivity extends AppCompatActivity
 
         TextView test = (TextView) findViewById(R.id.test_string);
         setSupportActionBar(toolbar);
-
-        //Button testButton = (Button) findViewById(R.id.test_button);
 
         /* LOADING THE LOGGED IN PARTICIPANT */
 
@@ -76,7 +72,6 @@ public class MoodPlusActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
-
 
 		deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
 
@@ -179,7 +174,7 @@ public class MoodPlusActivity extends AppCompatActivity
         } else if (id == R.id.menuSortText){
             getTextActivity();
         } else if (id == R.id.menuSortRecent) {
-
+            getDateFiltered();
         } else if (id == R.id.menuMoodSurprise){
             getMoodFiltered("surprised");
         } else if (id == R.id.menuMoodDisgust) {
@@ -271,5 +266,9 @@ public class MoodPlusActivity extends AppCompatActivity
     }
 
 
+    public void getDateFiltered() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
+        startActivity(intent);
+    }
 
 }
