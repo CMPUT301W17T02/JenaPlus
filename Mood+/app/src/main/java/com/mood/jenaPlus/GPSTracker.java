@@ -25,43 +25,70 @@ import android.location.LocationListener;
  * Taken from http://stackoverflow.com/questions/36915290/getting-latitude-and-longitude-0-0-in-android-m
  * 2017-03-12
  */
-
 public class GPSTracker extends Service {
-    private  Context mContext;
 
-    // flag for GPS status
-    boolean isGPSEnabled = false;
+    private Context mContext;
 
-    // flag for network status
-    boolean isNetworkEnabled = false;
+    /**
+     * flag for GPS status
+     */
+    private boolean isGPSEnabled = false;
 
-    // flag for GPS status
-    boolean canGetLocation = false;
+    /**
+     * flag for network status
+     */
+    private boolean isNetworkEnabled = false;
 
-    Location location; // location
-    double latitude; // latitude
-    double longitude; // longitude
+    /**
+     * flag for GPS status
+     */
+    private boolean canGetLocation = false;
+
+    private Location location;
+
+    private double latitude;
+    private double longitude;
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1000; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1000; // 1000 meters
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
-    Activity activity;
+    /**
+     * The Activity.
+     */
+    private Activity activity;
 
-    // Declaring a Location Manager
+    /**
+     * The Location manager.
+     */
+// Declaring a Location Manager
     protected LocationManager locationManager;
 
+    /**
+     * Instantiates a new Gps tracker.
+     */
     public GPSTracker() {
     }
 
+    /**
+     * Instantiates a new Gps tracker.
+     *
+     * @param context  the context
+     * @param activity the activity
+     */
     public GPSTracker(Context context, Activity activity) {
         this.mContext = context;
         this.activity = activity;
         getLocation();
     }
 
+    /**
+     * Gets location.
+     *
+     * @return the location
+     */
     public Location getLocation() {
         try {
             locationManager = (LocationManager) mContext
@@ -99,7 +126,10 @@ public class GPSTracker extends Service {
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
-                        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        if (ContextCompat.checkSelfPermission(activity,
+                                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                                && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION)
+                                != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 50);
 
                         } else {
@@ -132,38 +162,41 @@ public class GPSTracker extends Service {
     /**
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
-     * */
+     */
     public void stopUsingGPS() {
     }
 
     /**
      * Function to get latitude
-     * */
+     *
+     * @return the double
+     */
     public double getLatitude(){
         if(location != null){
             latitude = location.getLatitude();
         }
 
-        // return latitude
         return latitude;
     }
 
     /**
      * Function to get longitude
-     * */
+     *
+     * @return the double
+     */
     public double getLongitude(){
         if(location != null){
             longitude = location.getLongitude();
         }
 
-        // return longitude
         return longitude;
     }
 
     /**
      * Function to check GPS/wifi enabled
-     * @return boolean
-     * */
+     *
+     * @return boolean boolean
+     */
     public boolean canGetLocation() {
         return this.canGetLocation;
     }
@@ -171,7 +204,7 @@ public class GPSTracker extends Service {
     /**
      * Function to show settings alert dialog
      * On pressing Settings button will lauch Settings Options
-     * */
+     */
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
@@ -199,6 +232,7 @@ public class GPSTracker extends Service {
         // Showing Alert Message
         alertDialog.show();
     }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
