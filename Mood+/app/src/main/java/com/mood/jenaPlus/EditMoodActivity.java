@@ -173,14 +173,19 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                 }
 
                 else {
-                    mood.setText(message.getText().toString());
-                    mood.setAddLocation(addLocation);
-                    mood.setLocation(aLocation);
-                    mood.setId(aId);
-                    mood.setDate(mood.getDate());
-                    mood.setSocial(socialSituation);
-                    mood.setPhoto(aPhoto);
-                    mood.setColor(aColor);
+                    MainMPController mpController = new MainMPController(moodPlus);
+                    UserMoodList userMoodList = mpController.getParticipant().getUserMoodList();
+
+                    Mood editedMood = userMoodList.getUserMood(position);
+
+                    editedMood.setText(message.getText().toString());
+                    editedMood.setAddLocation(addLocation);
+                    editedMood.setLocation(aLocation);
+                    editedMood.setId(aId);
+                    editedMood.setDate(mood.getDate());
+                    editedMood.setSocial(socialSituation);
+                    editedMood.setPhoto(aPhoto);
+                    editedMood.setColor(aColor);
 
                     moodPlus.updateParticipant();
                     finish();
