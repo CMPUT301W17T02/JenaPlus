@@ -16,6 +16,7 @@ import java.util.Date;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
 import com.searchly.jestdroid.JestDroidClient;
@@ -130,7 +131,7 @@ public class MoodListController {
         String text = aMood.getText();
         Date date = aMood.getDate();
         Boolean addLocation = aMood.getAddLocation();
-        Location location = aMood.getLocation();
+        LatLng location = aMood.getLocation();
         String id = aMood.getId();
         String social = aMood.getSocial();
         String photo = aMood.getPhoto();

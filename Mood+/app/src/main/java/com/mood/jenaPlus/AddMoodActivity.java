@@ -75,7 +75,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     Context context = this;
 
     Boolean addLocation = false;
-    Location location = null;
+    LatLng location = null;
     String photo = "";
 
     Boolean moodChosen = false;
@@ -169,8 +169,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
                                 //startActivity(intent);
                                 LatLng latlng = getLocation();
-                                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
                                 addLocation = true;
+                                location = latlng;
+                                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
 
                                 break;
                         }

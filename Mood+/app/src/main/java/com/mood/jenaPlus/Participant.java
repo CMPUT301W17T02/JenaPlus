@@ -2,6 +2,8 @@ package com.mood.jenaPlus;
 
 import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
@@ -85,8 +87,8 @@ public class Participant extends User {
      * @param photo       the photo
      * @param color       the color
      */
-    public void addNewMood(String text, Boolean addLocation, Location location, String id,
-                             String social, String photo, String color) {
+    public void addNewMood(String text, Boolean addLocation, LatLng location, String id,
+                           String social, String photo, String color) {
         Mood mood = new Mood(text,addLocation,location,id,social,photo,color);
 
         mood.setText(text);
