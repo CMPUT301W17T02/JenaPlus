@@ -132,6 +132,12 @@ public class UserMoodList {
         return tempArrayList2;
     }
 
+    /**
+     * Gets filtered moods based on selection from the participant.
+     *
+     * @param keyword the actual mood
+     * @return A list of filtered moods
+     */
     public ArrayList<Mood> getFilteredMood(String keyword) {
         int listSize = UserMoodList.size();
         ArrayList<Mood> tempArrayList1 = UserMoodList;
