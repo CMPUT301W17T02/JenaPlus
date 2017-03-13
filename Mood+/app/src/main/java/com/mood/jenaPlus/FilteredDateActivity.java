@@ -64,7 +64,7 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredDate();
 
-        adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
+        adapter = new MoodListAdapter(FilteredDateActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
     }
