@@ -1,6 +1,7 @@
 package com.mood.jenaPlus;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,10 @@ public class MoodListAdapter extends ArrayAdapter<Mood> {
         //TextView moodIconText = (TextView) view.findViewById(R.id.moodIconString);
         
         String aId = moodList.getId();
+        String color = moodList.getColor();
+
+       view.setBackgroundColor(Color.parseColor(color));
+
 
         int recId = context.getResources().getIdentifier(aId, "drawable", context.getPackageName());
 
@@ -45,6 +50,7 @@ public class MoodListAdapter extends ArrayAdapter<Mood> {
         messageText.setText(moodList.getText());
         //moodIconText.setText(moodList.getId());
         moodIconImage.setImageResource(recId);
+
 
 
         return view;
