@@ -34,22 +34,10 @@ public class FilterActivityTest extends ActivityInstrumentationTestCase2 {
         solo.enterText((EditText) solo.getView(R.id.loginUserName),"herb");
         solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
-        solo.setNavigationDrawer(Solo.OPENED);
 
-        //DrawerLayout drawer = (DrawerLayout)solo.getView(R.id.drawer_layout);
-        //solo.clickOnActionBarHomeButton();
-
-        //Solo solo = new Solo(getInstrumentation(), getActivity());
-        //solo.setNavigationDrawer(Solo.OPENED);
-
-        solo.setNavigationDrawer(Solo.OPENED);
-        //solo.waitForView(DrawerLayout.class);
-        //ListView listView = (ListView) solo.getView(R.id.left_drawer);
-        //View listElement = listView.getChildAt(1);
-        //solo.clickOnView(listElement);
-        //solo.clickOnMenuItem("Filter by Angry Moods");
     }
-    
+
+
 
 
     @Override
