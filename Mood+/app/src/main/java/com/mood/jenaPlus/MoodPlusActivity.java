@@ -194,7 +194,8 @@ public class MoodPlusActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
-            // Handle the camera action
+            Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
+            startActivity(intent);
         } else if (id == R.id.request) {
 
         } else if (id == R.id.menuSortText){

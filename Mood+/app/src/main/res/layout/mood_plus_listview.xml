@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="10dp">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
@@ -15,19 +16,21 @@
     </TextView>
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width = "100dp"
+        android:layout_height= "100dp"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/moodIcon"/>
-    <TextView
+    <!--TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/moodIconString"
         android:layout_gravity="center_horizontal"
-        android:hint="my mood"/>
+        android:hint="my mood"/-->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/message"
+        android:paddingLeft="10dp"
         android:hint="message"/>
 
 

@@ -213,8 +213,8 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        this.location = location;
+    public void onLocationChanged(Location currentLocation) {
+        this.location = currentLocation;
         getLatitude();
         getLongitude();
 
