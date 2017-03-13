@@ -248,7 +248,7 @@ public class MoodPlusActivity extends AppCompatActivity
         menu.add(Menu.NONE, DELETE_PERSON_RESULT_CODE, menu.NONE, "Delete");
     }
 
-    //Go to EditPerson activity if long clicked item
+    //Go to edit mood activity if long clicked item
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case EDIT_PERSON_RESULT_CODE:
