@@ -1,10 +1,14 @@
 package com.mood.jenaPlus;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
@@ -23,18 +28,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
+
+/**
+ * Created by ceciliaxiang on 2017-03-10.
+ */
 
 public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
 
-    private EditText message;
     private Button socialPopup;
     private Button save;
     private ImageView selected_image;
@@ -46,6 +56,21 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     String idString;
     String colorString;
 
+    protected String aId;
+    protected String aText;
+    protected String aDate;
+    protected Boolean addLocation;
+    protected Location aLocation;
+    protected String aSocial;
+    protected String aPhoto;
+    protected String aColor;
+
+    protected ImageView icon;
+    protected TextView situation;
+    protected TextView date;
+    protected EditText message;
+
+    Context context = this;
 
 
     @Override
@@ -54,10 +79,43 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         setContentView(R.layout.edit_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
+        final MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
         moodPlus.addView(this);
 
+        final Mood mood = (Mood)getIntent().getSerializableExtra("editMood");
+
+        Bundle bundle = getIntent().getExtras();
+        final int position = bundle.getInt("pos");
+
+        save = (Button) findViewById(R.id.AddButton);
+
+        aId = mood.getId();
+        icon = (ImageView) findViewById(R.id.cur_mood);
+        int recId = getResources().getIdentifier(aId, "drawable", getApplicationContext().getPackageName());
+        icon.setImageResource(recId);
+
+        aDate = mood.getDate().toString();
+        date = (TextView) findViewById(R.id.time);
+        date.setText(aDate);
+
+        aText = mood.getText().toString();
         message = (EditText) findViewById(R.id.message);
+        message.setText(aText);
+
+        aSocial = mood.getSocial().toString();
+        situation = (TextView) findViewById(R.id.situation);
+        situation.setText(aSocial);
+
+        aPhoto = mood.getPhoto().toString();
+
+        aColor = mood.getColor();
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(Color.parseColor(aColor));
+
+        addLocation = mood.getAddLocation();
+        aLocation = mood.getLocation();
+
+
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         selected_image = (ImageView) findViewById(R.id.selected_image);
 
@@ -104,18 +162,32 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                 }
         );
 
-
-
-        save = (Button) findViewById(R.id.AddButton);
         save.setOnClickListener(new View.OnClickListener(){
-
             public void onClick(View view){
 
-                Intent intent = new Intent(EditMoodActivity.this, MoodPlusActivity.class);
-                startActivityForResult(intent,1);
+                trigger = message.getText().toString();
+                Boolean trigCheck = triggerCheck();
+
+                if (!trigCheck) {
+                    trigMessage();
+                }
+
+                else {
+                    mood.setText(message.getText().toString());
+                    mood.setAddLocation(addLocation);
+                    mood.setLocation(aLocation);
+                    mood.setId(aId);
+                    mood.setDate(mood.getDate());
+                    mood.setSocial(socialSituation);
+                    mood.setPhoto(aPhoto);
+                    mood.setColor(aColor);
+
+                    moodPlus.updateParticipant();
+                    finish();
+                }
+
             }
         });
-
 
     }
 
@@ -138,6 +210,63 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
             }
         }
     }
+
+    // Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
+    // 12 Mar 2017 12:42
+    public static int getId(String resourceName, Class<?> c) {
+        try {
+            Field idField = c.getDeclaredField(resourceName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            throw new RuntimeException("No resource ID found for: "
+                    + resourceName + " / " + c, e);
+        }
+    }
+
+
+    public Boolean triggerCheck() {
+        Boolean check = true;
+        trigger = message.getText().toString();
+        int trigLen = trigger.length();
+        int wordLen = countWord(trigger);
+        if (trigLen>20) {
+            check = false;
+        }
+        else if (wordLen >3) {
+            check = false;
+        }
+        return check;
+    }
+
+    //Taken from http://javarevisited.blogspot.ca/2015/02/how-to-count-number-of-words-in-string.html
+    //11 March 2017 19-41
+    public int countWord(String word) {
+        if (word == null) {
+            return 0;
+        }
+        String input = word.trim();
+        int count = input.isEmpty() ? 0 : input.split("\\s+").length;
+        return count;
+    }
+
+    public void trigMessage() {
+        new AlertDialog.Builder(context)
+                .setTitle("Trigger Message")
+                .setMessage("Trigger must be less than 20 characters or less than 3 words")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
 
     public void update(MoodPlus moodPlus){
         // TODO implements update method
