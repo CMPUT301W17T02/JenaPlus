@@ -15,44 +15,50 @@
     tools:showIn="@layout/activity_welcome_activity">
 
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Login"
+        android:id="@+id/Login_button"
+        android:background="@color/buttonColor"
+        android:width="150dp"
+        android:textColor="@android:color/white"
+        android:layout_centerInParent="true"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        android:adjustViewBounds="true"
+        android:maxWidth="200dp"
+        android:maxHeight="200dp"
+        android:layout_above="@+id/loginUserName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:id="@+id/imageView" />
+
+    <Button
+        android:id="@+id/get_users"
+        android:text="Add New User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/Login_button"
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:id="@+id/loginUserName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint = "Enter Username"
+        android:layout_above="@+id/Login_button"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/Login_button"/>
-    <ImageView
-        android:layout_above="@id/loginUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/logo"
-        android:adjustViewBounds="true"
-        android:maxWidth="200dp"
-        android:layout_centerHorizontal="true"
-        android:maxHeight="200dp" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Login"
-        android:id="@+id/Login_button"
-        android:background="#42A5F5"
-        android:width="150dp"
-        android:textColor="@android:color/white"
-        android:layout_centerInParent="true"/>
-    <Button
-        android:id="@+id/get_users"
-        android:text="Add New"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Login_button"
-        android:layout_centerInParent="true"/>
-    <ListView
+        android:layout_marginBottom="23dp" />
+    <!--<ListView
         android:id="@+id/participantList"
         android:layout_width="wrap_content"
         android:layout_below="@+id/get_users"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"></ListView> -->
 
 
 

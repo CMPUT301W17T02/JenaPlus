@@ -28,7 +28,18 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
+/**
+ * This is the main activity class of the MoodPlus application. From this activity
+ * A participant may add a new mood or view an existing mood.
+ * If the participant uses the slider navigation drawer, the user is able to filter
+ * moods by text, a certain mood, or by the date (last 7 days).
+ * @author Carlo
+ * @author Cecelia
+ * @author Carrol
+ * @author Julienne
+ * @author Helen
+ * @version 1.0
+ */
 
 public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
@@ -37,13 +48,12 @@ public class MoodPlusActivity extends AppCompatActivity
     protected ListView moodListView;
 	private AlertDialog.Builder deleteAlertBuilder;
 
-    ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+    private ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     protected ArrayAdapter<Mood> adapter;
     private UserMoodList myMoodList = new UserMoodList();
-    //private ArrayAdapter<Mood> adapter;
     private String searchText = "";
 
-    int longClickedItemIndex;
+    private int longClickedItemIndex;
     private static final int VIEW_PERSON_RESULT_CODE = 0;
     private static final int DELETE_PERSON_RESULT_CODE = 1;
     private static final int EDIT_PERSON_RESULT_CODE = 2;
@@ -68,10 +78,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: "+ name + ", id: "+id;
+        String who = "Username: "+ name ;
         test.setText(who);
 
-        //moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -82,44 +91,6 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
-
-        /*
-
-		deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
-
-		moodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
-				setResult(RESULT_OK);
-
-				deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event?");
-
-				// user selects "Yes" and the Mood Event long clicked will be deleted.
-				deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface arg0, int arg1) {
-						mpController.deleteMoodParticipant(moodArrayList.get(position));
-						adapter.notifyDataSetChanged();
-					}
-				});
-
-				// user selects "No" and the Mood Even long clicked will NOT be deleted.
-				deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.cancel();
-					}
-				});
-
-				AlertDialog alertDialog = deleteAlertBuilder.create();
-				alertDialog.show();
-
-				return true;
-			}
-		});
-
-
-        */
 
         registerForContextMenu(moodListView);
         moodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

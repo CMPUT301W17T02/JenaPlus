@@ -46,7 +46,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by ceciliaxiang on 2017-03-10.
+ * This is the main activity to edit an existing mood.
+ *
+ * @author Cecelia
  */
 
 public class EditMoodActivity extends Activity implements MPView<MoodPlus> {

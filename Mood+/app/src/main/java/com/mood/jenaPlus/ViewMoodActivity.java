@@ -2,40 +2,67 @@ package com.mood.jenaPlus;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.model.LatLng;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.lang.reflect.Field;
-import java.util.Date;
 
-import static android.os.Build.VERSION_CODES.M;
 
 /**
  * Created by carrotji on 2017-03-06.
  */
-
-
 public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
 
+    /**
+     * The A id.
+     */
     protected String aId;
+    /**
+     * The A text.
+     */
     protected String aText;
+    /**
+     * The A date.
+     */
     protected String aDate;
+    /**
+     * The Add location.
+     */
     protected Boolean addLocation;
+    /**
+     * The A location.
+     */
     protected LatLng aLocation;
+    /**
+     * The A social.
+     */
     protected String aSocial;
+    /**
+     * The A photo.
+     */
     protected String aPhoto;
+    /**
+     * The A color.
+     */
     protected String aColor;
 
+    /**
+     * The Icon.
+     */
     protected ImageView icon;
+    /**
+     * The Situation.
+     */
     protected TextView situation;
+    /**
+     * The Date.
+     */
     protected TextView date;
+    /**
+     * The Message.
+     */
     protected TextView message;
 
     @Override
@@ -57,6 +84,12 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
         aColor = mood.getColor();
 
         icon = (ImageView) findViewById(R.id.cur_mood);
+
+        /**
+         * This gets the resource id
+         */
+        //Taken from http://stackoverflow.com/questions/3276968/drawable-getresources-getidentifier-problem
+        // 13 March 2017 12:01
         int recId = getResources().getIdentifier(aId, "drawable", getApplicationContext().getPackageName());
         icon.setImageResource(recId);
 
@@ -75,7 +108,14 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
 
     }
 
-    // Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
+    /**
+     * Gets id.
+     *
+     * @param resourceName the resource name
+     * @param c            the c
+     * @return the id
+     */
+// Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
     // 12 Mar 2017 12:42
     public static int getId(String resourceName, Class<?> c) {
         try {

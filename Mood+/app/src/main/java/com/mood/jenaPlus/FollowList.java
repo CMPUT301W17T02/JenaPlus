@@ -3,6 +3,7 @@ package com.mood.jenaPlus;
 import java.util.ArrayList;
 
 /**
+ * NOT USING THIS CLASS FOR NOW. WILL BE USED FOR PART 5.
  * Created by carrotji on 2017-02-26.
  */
 

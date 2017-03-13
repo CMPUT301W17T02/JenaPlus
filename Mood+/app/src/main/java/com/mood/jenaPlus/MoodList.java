@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * NOT USING THIS CLASS FOR NOW. WE SEPARATED UserMoodList INTO IT'S OWN SEPARATE CLASS
  * Created by ceciliaxiang on 2017-02-25.
  */
 

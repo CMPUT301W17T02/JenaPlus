@@ -52,7 +52,10 @@ import java.net.URLConnection;
 
 
 /**
- * Created by carrotji on 2017-02-25.
+ * This is the main activity to add a mood.
+ *
+ * @author Carlo
+ * @author Carrol
  *
  */
 
@@ -61,10 +64,10 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private static final String TAG = "ERROR";
     int idNum;
     int colorNum;
-    String socialSituation;
-    String trigger;
-    String idString;
-    String colorString;
+    private String socialSituation;
+    private String trigger;
+    private String idString;
+    private String colorString;
 
     private Button addButton;
     private EditText message;
@@ -74,16 +77,13 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     Context context = this;
 
-    Boolean addLocation = false;
-    LatLng location = null;
-    String photo = "";
+    private Boolean addLocation = false;
+    private LatLng location = null;
+    private String photo = "";
 
-    Boolean moodChosen = false;
+    private Boolean moodChosen = false;
 
     private static final int CAMERA_REQUEST = 1888;
-
-    String provider;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,8 +91,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
-        //moodPlus.addView(this);
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
@@ -103,7 +101,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: "+ name + ", id: "+id;
+        String who = "UserName: "+ name;
         test.setText(who);
 
         /*------------------------------------------------*/
