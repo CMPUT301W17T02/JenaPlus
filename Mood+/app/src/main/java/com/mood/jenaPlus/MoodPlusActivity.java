@@ -37,9 +37,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
 
-
+    protected ArrayAdapter<Mood> adapter;
     private UserMoodList myMoodList = new UserMoodList();
-    private ArrayAdapter<Mood> adapter;
+    //private ArrayAdapter<Mood> adapter;
     private String searchText = "";
 
     @Override
@@ -66,7 +66,7 @@ public class MoodPlusActivity extends AppCompatActivity
         String who = "Name: "+ name + ", id: "+id;
         test.setText(who);
 
-        moodListView.setAdapter(adapter);
+        //moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -215,7 +215,8 @@ public class MoodPlusActivity extends AppCompatActivity
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getUserMoodOrderedList();
 
-        adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
+        adapter = new MoodListAdapter(MoodPlusActivity.this,moodArrayList);
+        //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
     }
 

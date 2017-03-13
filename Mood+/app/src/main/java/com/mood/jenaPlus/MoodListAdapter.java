@@ -31,9 +31,11 @@ public class MoodListAdapter extends ArrayAdapter<Mood> {
         TextView dateText = (TextView) view.findViewById(R.id.date);
         TextView messageText = (TextView) view.findViewById(R.id.message);
         ImageView moodIconImage = (ImageView) view.findViewById(R.id.moodIcon);
+        TextView moodIconText = (TextView) view.findViewById(R.id.moodIconString);
 
         dateText.setText(moodList.getDateString());
         messageText.setText(moodList.getText());
+        moodIconText.setText(moodList.getId());
 
 
         return view;

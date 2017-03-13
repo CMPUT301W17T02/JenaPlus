@@ -18,7 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/moodIcon"/>
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/moodIconString"
+        android:hint="my mood"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
