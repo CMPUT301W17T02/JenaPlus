@@ -23,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -52,6 +53,7 @@ import java.net.URLConnection;
 
 /**
  * Created by carrotji on 2017-02-25.
+ *
  */
 
 public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
@@ -96,16 +98,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
         getLocation = (Button) findViewById(R.id.get_location);
 
-
-
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LatLng latlng = getLocation();
                 Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-                Log.i("tag","what thef");
-                System.out.println("WTF");
-
             }
         });
 
@@ -203,21 +200,34 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
     public LatLng getLocation() {
-        GPSTracker gps = new GPSTracker(AddMoodActivity.this);
-        if(gps.canGetLocation()){
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-            return new LatLng(latitude,longitude);
-        }else{
-            gps.showSettingsAlert();
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
+            GPSTracker gps = new GPSTracker(context, AddMoodActivity.this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+                return new LatLng(latitude, longitude);
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
         }
         return null;
-        //CurrentLocation currentLocation = new CurrentLocation(AddMoodActivity.this);
-        //double latitude = currentLocation.getLatitude();
-        //double longitude = currentLocation.getLongitude();
-
-        //return new LatLng(latitude,longitude);
     }
+
+
 
     private void galleryIntent(){
         // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
@@ -287,7 +297,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     public int getColorNum() { return colorNum; }
     public EditText getMessage() { return message; }
     public String getSocialSituation() { return socialSituation; }
-
 
 
     public void update(MoodPlus moodPlus){
@@ -377,7 +386,41 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 .show();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                    // Permission granted
+                    GPSTracker gps = new GPSTracker(context, AddMoodActivity.this);
+
+                    // Check if GPS enabled
+                    if (gps.canGetLocation()) {
+
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
+
+                        Log.i("tag",""+latitude+longitude);
+                    } else {
+                        // Can't get location.
+                        // GPS or network is not enabled.
+                        // Ask user to enable GPS/network in settings.
+                        gps.showSettingsAlert();
+                    }
+
+                } else {
+
+                    // permission denied, disabled the functionality that depends on this permission.
+
+                    Toast.makeText(context, "You need to grant permission", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+        }
+    }
 }
 
