@@ -184,6 +184,8 @@ public class UserMoodList {
         return tempArrayList2;
     }
 
+    // Taken from http://stackoverflow.com/questions/494180/java-how-do-i-check-if-a-date-is-within-a-certain-range
+    // 12 March 2017 19:18
     boolean isWithinRange(Date testDate) {
         Date endDate = new Date();
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
