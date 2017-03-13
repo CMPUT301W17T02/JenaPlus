@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
+
 public class MoodPlusActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
 
@@ -39,6 +42,12 @@ public class MoodPlusActivity extends AppCompatActivity
     private UserMoodList myMoodList = new UserMoodList();
     //private ArrayAdapter<Mood> adapter;
     private String searchText = "";
+
+    int longClickedItemIndex;
+    private static final int VIEW_PERSON_RESULT_CODE = 0;
+    private static final int DELETE_PERSON_RESULT_CODE = 1;
+    private static final int EDIT_PERSON_RESULT_CODE = 2;
+    protected MainMPController mpController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +82,9 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
+
+        /*
+
 		deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
 
 		moodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -105,6 +117,20 @@ public class MoodPlusActivity extends AppCompatActivity
 				return true;
 			}
 		});
+
+
+        */
+
+        registerForContextMenu(moodListView);
+        moodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+
+                longClickedItemIndex = position;
+                return false;
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +232,7 @@ public class MoodPlusActivity extends AppCompatActivity
     protected void onStart(){
         super.onStart();
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
+        mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getUserMoodOrderedList();
@@ -214,6 +240,58 @@ public class MoodPlusActivity extends AppCompatActivity
         adapter = new MoodListAdapter(MoodPlusActivity.this,moodArrayList);
         //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        menu.add(Menu.NONE, EDIT_PERSON_RESULT_CODE, menu.NONE, "Edit");
+        menu.add(Menu.NONE, DELETE_PERSON_RESULT_CODE, menu.NONE, "Delete");
+    }
+
+    //Go to edit mood activity if long clicked item
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case EDIT_PERSON_RESULT_CODE:
+
+                Intent intent = new Intent(MoodPlusActivity.this, EditMoodActivity.class);
+
+                intent.putExtra("editMood", (Serializable) moodListView.getItemAtPosition(longClickedItemIndex));
+                intent.putExtra("pos", longClickedItemIndex);
+                startActivity(intent);
+                break;
+
+
+            case DELETE_PERSON_RESULT_CODE:
+                deleteAlertBuilder = new AlertDialog.Builder(MoodPlusActivity.this);
+                setResult(RESULT_OK);
+
+                deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event?");
+
+                // user selects "Yes" and the Mood Event long clicked will be deleted.
+                deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        mpController.deleteMoodParticipant(moodArrayList.get(longClickedItemIndex));
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+
+                // user selects "No" and the Mood Even long clicked will NOT be deleted.
+                deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = deleteAlertBuilder.create();
+                alertDialog.show();
+
+                return false;
+
+
+        }
+        return super.onContextItemSelected(item);
     }
 
     @Override
