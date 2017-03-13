@@ -67,7 +67,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     String colorString;
 
     private Button addButton;
-    private Button getLocation;
     private EditText message;
     private GridView gridview;
     private ImageView image;
@@ -94,18 +93,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
         //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
         //moodPlus.addView(this);
-
-
-        getLocation = (Button) findViewById(R.id.get_location);
-
-        getLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LatLng latlng = getLocation();
-                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
@@ -148,7 +135,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
-                                System.out.println("do camera");
                                 photo = "photoPicked";
                                 //cameraIntent();
                                 galleryIntent();
@@ -180,9 +166,10 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 break;
 
                             case R.id.action_navigation:
-                                System.out.println("do navigation");
-                                Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
-                                startActivity(intent);
+                                //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
+                                //startActivity(intent);
+                                LatLng latlng = getLocation();
+                                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
                                 addLocation = true;
 
                                 break;
