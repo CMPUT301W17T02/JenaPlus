@@ -59,6 +59,10 @@ public class MoodPlusActivity extends AppCompatActivity
     private static final int EDIT_PERSON_RESULT_CODE = 2;
     protected MainMPController mpController;
 
+    public ListView getMoodListView(){
+        return moodListView;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
