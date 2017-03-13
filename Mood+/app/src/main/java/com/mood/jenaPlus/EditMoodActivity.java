@@ -33,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -65,7 +67,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected String aText;
     protected String aDate;
     protected Boolean addLocation;
-    protected Location aLocation;
+    protected LatLng aLocation;
     protected String aSocial;
     protected String aPhoto;
     protected String aColor;
