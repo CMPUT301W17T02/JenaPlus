@@ -8,8 +8,8 @@ import java.util.Date;
 
 /**
  * This is the class that defines the mood list of a user.
- * @author Julienne and Carlo
- * Created on 2017-03-10.
+ *
+ * @author Julienne and Carlo Created on 2017-03-10.
  */
 public class UserMoodList {
 
@@ -162,6 +162,11 @@ public class UserMoodList {
         return tempArrayList2;
     }
 
+    /**
+     * Gets filtered moods from current date back to 7 days ago.
+     *
+     * @return the filtered date
+     */
     public ArrayList<Mood> getFilteredDate() {
         int listSize = UserMoodList.size();
         ArrayList<Mood> tempArrayList1 = UserMoodList;
@@ -184,7 +189,13 @@ public class UserMoodList {
         return tempArrayList2;
     }
 
-    // Taken from http://stackoverflow.com/questions/494180/java-how-do-i-check-if-a-date-is-within-a-certain-range
+    /**
+     * Is within range boolean.
+     *
+     * @param testDate the test date
+     * @return the boolean
+     */
+// Taken from http://stackoverflow.com/questions/494180/java-how-do-i-check-if-a-date-is-within-a-certain-range
     // 12 March 2017 19:18
     boolean isWithinRange(Date testDate) {
         Date endDate = new Date();

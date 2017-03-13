@@ -37,9 +37,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private EditText userName;
     private ArrayList<Participant> participantList = new ArrayList<Participant>();
-    private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
-    //private ListView participants; // List view for testing and debugging
+
 
     Context context = this;
 
@@ -52,7 +51,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
         userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
-        //participants = (ListView) findViewById(R.id.participantList);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,8 +106,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
             }
         });
 
-        /* FOR DEBUGGING PURPOSES - WANT TO SEE USERS IN THE INDEX */
-
         MoodPlus moodPlus = MoodPlusApplication.getMoodPlus(); // Taken from FillerCreep
         moodPlus.addView(this); // Taken from FillerCreep
 
@@ -122,9 +118,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         } catch (Exception e) {
             Log.i("Error", "Failed to get the users out of the async object");
         }
-
-        //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
-        //participants.setAdapter(adapter);
 
         Button getButton = (Button) findViewById(R.id.get_users);
 
@@ -175,8 +168,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                     Participant newParticipant = new Participant(strUser);
                     ElasticsearchMPController.AddUsersTask addUser = new ElasticsearchMPController.AddUsersTask();
                     addUser.execute(newParticipant);
-                    //finish();
-                    //startActivity(getIntent());
 
                     model.getParticipantElastic(strUser);
                     Intent intent = new Intent(WelcomeActivity.this, MoodPlusActivity.class);
@@ -187,24 +178,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 }
             }
         });
-    }
-
-    private void loadFromFile() {
-        try {
-            FileInputStream fis = openFileInput(FILENAME);
-            BufferedReader in = new BufferedReader(new InputStreamReader(fis));
-            Gson gson = new Gson();
-            //Code taken from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt Sept.22,2016
-            Type listType = new TypeToken<ArrayList<Participant>>() {
-            }.getType();
-            participantList = gson.fromJson(in, listType);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            participantList = new ArrayList<Participant>();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            throw new RuntimeException();
-        }
     }
 
     @Override
@@ -222,10 +195,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         } catch (Exception e) {
             Log.i("Error", "Failed to get the users out of the async object");
         }
-
-        //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
-        //participants.setAdapter(adapter);
-
     }
 
     @Override

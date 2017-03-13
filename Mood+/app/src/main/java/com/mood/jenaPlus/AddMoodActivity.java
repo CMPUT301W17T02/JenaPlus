@@ -79,7 +79,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     Context context = this;
 
     private Boolean addLocation = false;
-    private LatLng location = null;
+    private LatLng location;
     private String photo = "";
 
     private Boolean moodChosen = false;
@@ -304,19 +304,22 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (!trigCheck) {
+        if (trigCheck && moodChosen) {
+            MainMPController mpController = MoodPlusApplication.getMainMPController();
+            mpController.addMoodParticipant(trigger,addLocation,location,idString,socialSituation,photo,colorString);
+            finish();
+
             trigMessage();
-        }
-        if (moodChosen == false){
-            idMessage();
         }
 
         else {
 
-            MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant(trigger,addLocation,location,idString,socialSituation,photo,colorString);
-
-            finish();
+            if (!trigCheck) {
+                trigMessage();
+            }
+            if (!moodChosen){
+                idMessage();
+            }
         }
 
     }
@@ -329,7 +332,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         if (trigLen>20) {
             check = false;
         }
-        else if (wordLen >3) {
+        if (wordLen >3) {
             check = false;
         }
         return check;
