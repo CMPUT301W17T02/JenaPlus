@@ -14,11 +14,19 @@ import java.util.ArrayList;
 /**
  * Created by carrotji on 2017-03-12.
  */
-
 public class MoodListAdapter extends ArrayAdapter<Mood> {
 
+    /**
+     * The Context.
+     */
     Context context;
-    
+
+    /**
+     * Instantiates a new Mood list adapter.
+     *
+     * @param context  the context
+     * @param moodList the mood list
+     */
     public MoodListAdapter(Context context, ArrayList<Mood> moodList){
         super(context,0,moodList);
         this.context = context;
@@ -50,8 +58,6 @@ public class MoodListAdapter extends ArrayAdapter<Mood> {
         messageText.setText(moodList.getText());
         //moodIconText.setText(moodList.getId());
         moodIconImage.setImageResource(recId);
-
-
 
         return view;
     }
