@@ -79,7 +79,6 @@ public class FilterActivityTest extends ActivityInstrumentationTestCase2 {
 
     }
 
-
     @Override
     public void tearDown() throws Exception{
         solo.finishOpenedActivities();
