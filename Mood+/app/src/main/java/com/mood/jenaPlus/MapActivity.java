@@ -35,19 +35,39 @@ import com.google.android.gms.location.LocationListener;
 
 import java.util.Map;
 
+/**
+ * The type Map activity.
+ */
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
     private GoogleMap mMap;
-    GoogleApiClient mGoogleApiClient;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    LocationRequest mLocationRequest;
-    double lat =0, lng=0;
+    /**
+     * The M google api client.
+     */
+    private GoogleApiClient mGoogleApiClient;
+    /**
+     * The M last location.
+     */
+    private Location mLastLocation;
+    /**
+     * The current location marker.
+     */
+    private Marker mCurrLocationMarker;
+    /**
+     * The map location request.
+     */
+    private LocationRequest mLocationRequest;
 
+    private double lat =0;
+    private double lng =0;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +82,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     *
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -91,27 +115,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         buildGoogleApiClient();
 
-
-     /*   //Initialize Google Play Services
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)
-                    == PackageManager.PERMISSION_GRANTED) {
-                buildGoogleApiClient();
-                mMap.setMyLocationEnabled(true);
-                UiSettings mUiSettings = mMap.getUiSettings();
-                mUiSettings.setZoomControlsEnabled(true);
-                mUiSettings.setMyLocationButtonEnabled(true);
-            }
-        }
-        else {
-            buildGoogleApiClient();
-            mMap.setMyLocationEnabled(true);
-        }*/
-
     }
 
-
+    /**
+     * Build google api client.
+     */
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -121,6 +129,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mGoogleApiClient.connect();
     }
 
+    /**
+     *
+     * @param bundle
+     */
     @Override
     public void onConnected(Bundle bundle) {
 
@@ -142,7 +154,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             LatLng loc = new LatLng(lat, lng);
             mMap.addMarker(new MarkerOptions().position(loc).title("Current Position"));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,14.0f));
         }
 
     }
@@ -153,6 +165,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     }
 
+    /**
+     *
+     * @param location
+     */
     @Override
     public void onLocationChanged(Location location) {
 
@@ -179,13 +195,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     }
 
-
+    /**
+     *
+     * @param connectionResult
+     */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
     }
 
+    /**
+     * The constant MY_PERMISSIONS_REQUEST_LOCATION.
+     */
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
+    /**
+     * Check location permission boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkLocationPermission(){
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
@@ -217,6 +245,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         }
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {

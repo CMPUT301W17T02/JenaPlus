@@ -44,6 +44,7 @@ import com.google.android.gms.maps.model.LatLng;
 import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -134,8 +135,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 photo = "photoPicked";
-                                //cameraIntent();
-                                galleryIntent();
+                                cameraIntent();
+                                //galleryIntent();
 
                                 break;
                             case R.id.socialPopup:
@@ -225,7 +226,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private void cameraIntent(){
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        startActivityForResult(cameraIntent, 1);
     }
 
 
@@ -234,13 +235,14 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         super.onActivityResult(requestCode, resultCode,data);
         if(requestCode == 1){
             if(resultCode == Activity.RESULT_OK){
-                //Bitmap photo = (Bitmap) data.getExtras().get("data");
-                //image.setImageBitmap(photo);
+                Bundle extras = data.getExtras();
+                Bitmap photo = (Bitmap) extras.get("data");
+                image.setImageBitmap(photo);
 
-                Uri selectedImage = data.getData();
+         /*    // Uri selectedImage = data.getData();
 
                 if (getDropboxIMGSize(selectedImage))
-                    image.setImageURI(selectedImage);
+                    //image.setImageURI(selectedImage);
                 else{
                     AlertDialog alertDialog = new AlertDialog.Builder(AddMoodActivity.this).create();
                     alertDialog.setTitle("Adding Image");
@@ -252,7 +254,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 }
                             });
                     alertDialog.show();
-                }
+                }*/
             }
         }
     }
