@@ -92,7 +92,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
