@@ -75,7 +75,8 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredMoodText(keyword);
 
-        adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
+        //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
+        adapter = new MoodListAdapter(FilteredTextActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
     }
