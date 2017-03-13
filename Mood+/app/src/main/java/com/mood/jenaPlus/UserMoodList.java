@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * This is the class that defines the mood list of a user.
@@ -159,5 +160,33 @@ public class UserMoodList {
         });
 
         return tempArrayList2;
+    }
+
+    public ArrayList<Mood> getFilteredDate() {
+        int listSize = UserMoodList.size();
+        ArrayList<Mood> tempArrayList1 = UserMoodList;
+        ArrayList<Mood> tempArrayList2 = new ArrayList<>();
+
+        for (int i = 0; i<listSize; i++) {
+            Date tempDate = tempArrayList1.get(i).getDate();
+            if (isWithinRange(tempDate)){
+                tempArrayList2.add(tempArrayList1.get(i));
+            }
+        }
+
+        Collections.sort(tempArrayList2, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return tempArrayList2;
+    }
+
+    boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 }

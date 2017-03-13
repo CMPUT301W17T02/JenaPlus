@@ -173,7 +173,7 @@ public class MoodPlusActivity extends AppCompatActivity
         } else if (id == R.id.menuSortText){
             getTextActivity();
         } else if (id == R.id.menuSortRecent) {
-
+            getDateFiltered();
         } else if (id == R.id.menuMoodSurprise){
             getMoodFiltered("surprised");
         } else if (id == R.id.menuMoodDisgust) {
@@ -264,5 +264,9 @@ public class MoodPlusActivity extends AppCompatActivity
     }
 
 
+    public void getDateFiltered() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
+        startActivity(intent);
+    }
 
 }
