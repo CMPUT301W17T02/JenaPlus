@@ -92,36 +92,18 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
-        //moodPlus.addView(this);
-
-
-        //getLocation = (Button) findViewById(R.id.get_location);
-
-        /*getLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                LatLng latlng = getLocation();
-                addLocation = true;
-                location = latlng;
-                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
-
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        TextView test = (TextView) findViewById(R.id.addtext);
+        //TextView test = (TextView) findViewById(R.id.addtext);
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
-
+        /*
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Name: "+ name + ", id: "+id;
         test.setText(who);
-
+         */
         /*------------------------------------------------*/
 
         message = (EditText) findViewById(R.id.message);
