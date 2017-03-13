@@ -77,7 +77,7 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
         aId = mood.getId();
         aText = mood.getText();
         aDate = mood.getDate().toString();
-        addLocation = mood.getAddLocation();
+        //addLocation = mood.getAddLocation();
         aLocation = mood.getLocation();
         aSocial = mood.getSocial();
         aPhoto = mood.getPhoto();

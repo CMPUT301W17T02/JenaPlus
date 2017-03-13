@@ -1,10 +1,14 @@
 package com.mood.jenaPlus;
 
 import android.location.Location;
+import android.os.Parcelable;
 
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -25,7 +29,7 @@ public class Mood implements Serializable{
     private String text;
     private Date date;
     private Boolean addLocation;
-    private LatLng location;
+    private transient LatLng location;
     private String social;
     private String photo;
     private String color;
@@ -270,9 +274,24 @@ public class Mood implements Serializable{
 
     }
 
+
     @Override
     public String toString() {
         return newString();
+    }
+
+
+    // Taken from http://stackoverflow.com/questions/14220554/how-to-serialize-a-third-party-non-serializable-final-class-e-g-googles-latln
+    // 13 March 2017 10:22
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeDouble(location.latitude);
+        out.writeDouble(location.longitude);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        location = new LatLng(in.readDouble(), in.readDouble());
     }
 
 }
