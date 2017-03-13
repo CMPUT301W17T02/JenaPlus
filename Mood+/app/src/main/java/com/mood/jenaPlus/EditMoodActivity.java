@@ -1,6 +1,7 @@
 package com.mood.jenaPlus;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -37,6 +39,9 @@ import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by ceciliaxiang on 2017-03-10.
@@ -69,6 +74,11 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected TextView situation;
     protected TextView date;
     protected EditText message;
+    private EditText editDate;
+
+
+    private Calendar dateEditor = Calendar.getInstance();
+    int year, month, day;
 
     Context context = this;
 
@@ -89,13 +99,16 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
         save = (Button) findViewById(R.id.AddButton);
 
+        //final Date date = mood.getDate();
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
         aId = mood.getId();
         icon = (ImageView) findViewById(R.id.cur_mood);
         int recId = getResources().getIdentifier(aId, "drawable", getApplicationContext().getPackageName());
         icon.setImageResource(recId);
 
         aDate = mood.getDate().toString();
-        date = (TextView) findViewById(R.id.time);
+        date = (EditText) findViewById(R.id.time);
         date.setText(aDate);
 
         aText = mood.getText().toString();
@@ -114,6 +127,20 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
         addLocation = mood.getAddLocation();
         aLocation = mood.getLocation();
+
+
+        editDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(EditMoodActivity.this, myDateListener,
+                        year, day,
+                        day).show();
+            }
+        });
+
+        year = dateEditor.get(Calendar.YEAR);
+        month = dateEditor.get(Calendar.MONTH);
+        day = dateEditor.get(Calendar.DAY_OF_MONTH);
 
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
@@ -196,6 +223,15 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     }
 
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            dateEditor.set(Calendar.YEAR, year);
+            dateEditor.set(Calendar.MONTH, monthOfYear);
+            dateEditor.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            editDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+        }
+    };
 
     private void galleryIntent(){
         // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
