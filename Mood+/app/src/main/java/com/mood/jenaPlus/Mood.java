@@ -3,6 +3,8 @@ package com.mood.jenaPlus;
 import android.location.Location;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.text.Format;
 import java.text.SimpleDateFormat;
@@ -23,7 +25,7 @@ public class Mood implements Serializable{
     private String text;
     private Date date;
     private Boolean addLocation;
-    private Location location;
+    private LatLng location;
     private String social;
     private String photo;
     private String color;
@@ -39,7 +41,7 @@ public class Mood implements Serializable{
      * @param photo       Photo taken
      * @param color       Color of the associated mood
      */
-    public Mood(String text, Boolean addLocation, Location location, String id,
+    public Mood(String text, Boolean addLocation, LatLng location, String id,
                 String social, String photo, String color) {
         this.text = text;
         this.addLocation = addLocation;
@@ -137,7 +139,7 @@ public class Mood implements Serializable{
      *
      * @return the location
      */
-    public Location getLocation() {
+    public LatLng getLocation() {
         return location;
     }
 
@@ -146,7 +148,7 @@ public class Mood implements Serializable{
      *
      * @param location the location
      */
-    public void setLocation(Location location) {
+    public void setLocation(LatLng location) {
         if (!addLocation && location == null) {
             this.location = null;
         }

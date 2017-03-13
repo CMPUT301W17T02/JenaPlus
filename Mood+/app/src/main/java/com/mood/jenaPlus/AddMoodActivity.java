@@ -76,7 +76,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     Context context = this;
 
     Boolean addLocation = false;
-    Location location = null;
+    LatLng location = null;
     String photo = "";
 
     Boolean moodChosen = false;
@@ -96,15 +96,18 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         //moodPlus.addView(this);
 
 
-        getLocation = (Button) findViewById(R.id.get_location);
+        //getLocation = (Button) findViewById(R.id.get_location);
 
-        getLocation.setOnClickListener(new View.OnClickListener() {
+        /*getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 LatLng latlng = getLocation();
+                addLocation = true;
+                location = latlng;
                 Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
@@ -180,10 +183,16 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 break;
 
                             case R.id.action_navigation:
+                                LatLng latlng = getLocation();
+                                addLocation = true;
+                                location = latlng;
+                                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
+
+                                /*Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
                                 System.out.println("do navigation");
                                 Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
                                 startActivity(intent);
-                                addLocation = true;
+                                addLocation = true;*/
 
                                 break;
                         }
