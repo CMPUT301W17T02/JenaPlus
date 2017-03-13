@@ -47,7 +47,7 @@ public class ParticipantTest{
         String userName = "testUserName";
         String text = "I'm happy!";
         Boolean addLocation = false;
-        Location location = null;
+        String location = "";
         String id = m.getMood(8);
         String social = null;
         String photo = null;
@@ -72,7 +72,7 @@ public class ParticipantTest{
         String userName = "testUserName";
         String text = "I'm happy!";
         Boolean addLocation = false;
-        Location location = null;
+        String location = "";
         String id = m.getMood(8);
         String social = null;
         String photo = null;
@@ -81,7 +81,7 @@ public class ParticipantTest{
         MoodIcon m2 = new MoodIcon();
         String text2 = "I'm Disgusted";
         Boolean addLocation2 = false;
-        Location location2 = null;
+        String location2 = "";
         String id2 = m2.getMood(3);
         String social2 = null;
         String photo2 = null;

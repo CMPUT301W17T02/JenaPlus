@@ -48,4 +48,9 @@ public class EditMoodActivityTest extends ActivityInstrumentationTestCase2 {
 
     }
 
+    @Override
+    public void tearDown() throws Exception{
+        solo.finishOpenedActivities();
+    }
+
 }
