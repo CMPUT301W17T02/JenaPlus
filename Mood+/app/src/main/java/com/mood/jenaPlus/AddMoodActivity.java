@@ -52,7 +52,10 @@ import java.net.URLConnection;
 
 
 /**
- * Created by carrotji on 2017-02-25.
+ * This is the main activity to add a mood.
+ *
+ * @author Carlo
+ * @author Carrol
  *
  */
 
@@ -61,13 +64,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private static final String TAG = "ERROR";
     int idNum;
     int colorNum;
-    String socialSituation;
-    String trigger;
-    String idString;
-    String colorString;
+    private String socialSituation;
+    private String trigger;
+    private String idString;
+    private String colorString;
 
     private Button addButton;
-    private Button getLocation;
     private EditText message;
     private GridView gridview;
     private ImageView image;
@@ -75,39 +77,19 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     Context context = this;
 
-    Boolean addLocation = false;
-    LatLng location = null;
-    String photo = "";
+    private Boolean addLocation = false;
+    private LatLng location = null;
+    private String photo = "";
 
-    Boolean moodChosen = false;
+    private Boolean moodChosen = false;
 
     private static final int CAMERA_REQUEST = 1888;
-
-    String provider;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-
-        //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
-        //moodPlus.addView(this);
-
-
-        //getLocation = (Button) findViewById(R.id.get_location);
-
-        /*getLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                LatLng latlng = getLocation();
-                addLocation = true;
-                location = latlng;
-                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-            }
-        });*/
 
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
@@ -119,7 +101,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: "+ name + ", id: "+id;
+        String who = "UserName: "+ name;
         test.setText(who);
 
         /*------------------------------------------------*/
@@ -151,7 +133,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
-                                System.out.println("do camera");
                                 photo = "photoPicked";
                                 //cameraIntent();
                                 galleryIntent();
@@ -183,16 +164,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 break;
 
                             case R.id.action_navigation:
+                                //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
+                                //startActivity(intent);
                                 LatLng latlng = getLocation();
                                 addLocation = true;
                                 location = latlng;
                                 Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-
-                                /*Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-                                System.out.println("do navigation");
-                                Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
-                                startActivity(intent);
-                                addLocation = true;*/
 
                                 break;
                         }

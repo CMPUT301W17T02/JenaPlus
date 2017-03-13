@@ -39,7 +39,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
     private ArrayList<Participant> participantList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
     private static final String FILENAME = "moodPlus.sav";
-    private ListView participants; // List view for testing and debugging
+    //private ListView participants; // List view for testing and debugging
 
     Context context = this;
 
@@ -52,7 +52,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
         userName = (EditText) findViewById(R.id.loginUserName);
         Button button = (Button) findViewById(R.id.Login_button);
-        participants = (ListView) findViewById(R.id.participantList);
+        //participants = (ListView) findViewById(R.id.participantList);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,8 +123,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
             Log.i("Error", "Failed to get the users out of the async object");
         }
 
-        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
-        participants.setAdapter(adapter);
+        //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+        //participants.setAdapter(adapter);
 
         Button getButton = (Button) findViewById(R.id.get_users);
 
@@ -223,8 +223,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
             Log.i("Error", "Failed to get the users out of the async object");
         }
 
-        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
-        participants.setAdapter(adapter);
+        //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+        //participants.setAdapter(adapter);
 
     }
 
