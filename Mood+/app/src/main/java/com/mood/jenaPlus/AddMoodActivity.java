@@ -243,7 +243,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 if (getDropboxIMGSize(selectedImage))
                     //image.setImageURI(selectedImage);
-                    image.setImageBitmap(photo);
                 else{
                     AlertDialog alertDialog = new AlertDialog.Builder(AddMoodActivity.this).create();
                     alertDialog.setTitle("Adding Image");
@@ -258,13 +257,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 }*/
             }
         }
-    }
-
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
     }
 
     private boolean getDropboxIMGSize(Uri uri){
