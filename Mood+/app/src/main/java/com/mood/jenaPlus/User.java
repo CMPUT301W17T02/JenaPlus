@@ -5,8 +5,11 @@ import android.icu.text.MessagePattern;
 import io.searchbox.annotations.JestId;
 
 /**
- * Created by ceciliaxiang on 2017-02-25.
+ * This is a general abstract user class.
+ * A user of the app must have a username.
+ * @author Cecelia
  */
+
 public abstract class User {
 
     /**

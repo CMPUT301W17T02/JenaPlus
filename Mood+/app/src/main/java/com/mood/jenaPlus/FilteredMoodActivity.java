@@ -41,7 +41,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: " + name + ", id: " + id + "\nMood: " + moodString;
+        String who = "Name: " + name + "\nMood: " + moodString;
         test.setText(who);
 
         /*------------------------------------------------*/

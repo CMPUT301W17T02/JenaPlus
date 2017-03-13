@@ -35,7 +35,7 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: " + name + ", id: " + id;
+        String who = "Username: " + name ;
         test.setText(who);
 
         /*------------------------------------------------*/
