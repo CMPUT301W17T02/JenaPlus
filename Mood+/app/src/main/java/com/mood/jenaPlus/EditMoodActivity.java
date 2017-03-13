@@ -69,7 +69,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected String aText;
     protected String aDate;
     protected Boolean addLocation;
-    protected LatLng aLocation;
+    protected String aLocation;
     protected String aSocial;
     protected String aPhoto;
     protected String aColor;
