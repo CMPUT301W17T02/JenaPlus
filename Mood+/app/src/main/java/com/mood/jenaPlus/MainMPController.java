@@ -2,6 +2,8 @@ package com.mood.jenaPlus;
 
 import android.location.Location;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Created by Carlo on 2017-03-10.
  */
@@ -25,7 +27,7 @@ public class MainMPController {
         // Get the participant via elastic search
         moodPlus.getParticipantElastic(aName);
     }
-    public void addMoodParticipant(String text, Boolean addLocation, Location location, String id,
+    public void addMoodParticipant(String text, Boolean addLocation, LatLng location, String id,
                                    String social, String photo, String color) {
         moodPlus.addNewMood(text,addLocation,location,id,social,photo,color);
         moodPlus.notifyViews();
