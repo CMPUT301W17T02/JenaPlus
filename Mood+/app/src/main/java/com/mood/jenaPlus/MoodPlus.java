@@ -68,7 +68,7 @@ public class MoodPlus extends MPModel<MPView> {
      * @param photo       the photo
      * @param color       the color
      */
-    public void addNewMood(String text, Boolean addLocation, LatLng location, String id,
+    public void addNewMood(String text, Boolean addLocation, String location, String id,
                            String social, String photo, String color) {
 
         participant.addNewMood(text,addLocation,location,id,social,photo,color);

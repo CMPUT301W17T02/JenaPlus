@@ -81,7 +81,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Boolean addLocation = false;
     private LatLng location;
     private String photo = "";
-
+    private String newLocation = "";
     private Boolean moodChosen = false;
 
     private static final int CAMERA_REQUEST = 1888;
@@ -293,15 +293,18 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
     public void addMood() {
+        try {
+            newLocation = Double.toString(location.latitude);
+        } catch (NullPointerException e) {
+            newLocation = "";
+        }
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
         if (trigCheck && moodChosen) {
             MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant(trigger,addLocation,location,idString,socialSituation,photo,colorString);
+            mpController.addMoodParticipant(trigger,addLocation,newLocation,idString,socialSituation,photo,colorString);
             finish();
-
-            trigMessage();
         }
 
         else {

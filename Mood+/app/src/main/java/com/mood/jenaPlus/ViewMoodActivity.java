@@ -34,7 +34,7 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
     /**
      * The A location.
      */
-    protected LatLng aLocation;
+    protected String aLocation;
     /**
      * The A social.
      */

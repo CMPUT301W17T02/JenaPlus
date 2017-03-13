@@ -29,7 +29,8 @@ public class Mood implements Serializable{
     private String text;
     private Date date;
     private Boolean addLocation;
-    private transient LatLng location;
+    //private LatLng location;
+    private String newLocation; // JUST FOR NOW, NEED TO REVERT BACK TO LATLNG
     private String social;
     private String photo;
     private String color;
@@ -39,17 +40,17 @@ public class Mood implements Serializable{
      *
      * @param text        The trigger which will be < = 20 characters/<4 words
      * @param addLocation Boolean if a location is selected
-     * @param location    Location
+     * @param newLocation    Location
      * @param id          The mood icon ID
      * @param social      The social situation of participant
      * @param photo       Photo taken
      * @param color       Color of the associated mood
      */
-    public Mood(String text, Boolean addLocation, LatLng location, String id,
+    public Mood(String text, Boolean addLocation, String newLocation, String id,
                 String social, String photo, String color) {
         this.text = text;
         this.addLocation = addLocation;
-        this.location = location;
+        this.newLocation = newLocation;
         this.id = id;
         this.social = social;
         this.photo = photo;
@@ -143,8 +144,8 @@ public class Mood implements Serializable{
      *
      * @return the location
      */
-    public LatLng getLocation() {
-        return location;
+    public String getLocation() {
+        return newLocation;
     }
 
     /**
@@ -152,12 +153,13 @@ public class Mood implements Serializable{
      *
      * @param location the location
      */
-    public void setLocation(LatLng location) {
+    public void setLocation(String location) {
         if (!addLocation && location == null) {
-            this.location = null;
+            this.newLocation = "";
         }
         else {
-            this.location = location;
+            //this.location = location;
+            this.newLocation = location;
         }
     }
 
@@ -283,6 +285,7 @@ public class Mood implements Serializable{
 
     // Taken from http://stackoverflow.com/questions/14220554/how-to-serialize-a-third-party-non-serializable-final-class-e-g-googles-latln
     // 13 March 2017 10:22
+    /*
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeDouble(location.latitude);
@@ -290,9 +293,10 @@ public class Mood implements Serializable{
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+
         in.defaultReadObject();
         location = new LatLng(in.readDouble(), in.readDouble());
-    }
+    }*/
 
 }
 
