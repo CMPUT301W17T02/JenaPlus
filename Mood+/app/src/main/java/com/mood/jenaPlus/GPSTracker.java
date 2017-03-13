@@ -1,6 +1,7 @@
 package com.mood.jenaPlus;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
@@ -14,18 +15,19 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 //import com.google.android.gms.location.LocationListener;
 import android.location.LocationListener;
 
 /**
  * Created by carrotji on 2017-03-12.
- * Taken from: http://stackoverflow.com/questions/25948362/android-getting-longitude-and-latitude-always-returns-0-0
+ * Taken from http://stackoverflow.com/questions/36915290/getting-latitude-and-longitude-0-0-in-android-m
  * 2017-03-12
  */
 
-public class GPSTracker extends Service implements LocationListener {
-    private final Context mContext;
+public class GPSTracker extends Service {
+    private  Context mContext;
 
     // flag for GPS status
     boolean isGPSEnabled = false;
@@ -41,16 +43,22 @@ public class GPSTracker extends Service implements LocationListener {
     double longitude; // longitude
 
     // The minimum distance to change Updates in meters
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10; // 10 meters
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1000; // 10 meters
 
     // The minimum time between updates in milliseconds
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1; // 1 minute
 
+    Activity activity;
+
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
+    public GPSTracker() {
+    }
+
+    public GPSTracker(Context context, Activity activity) {
         this.mContext = context;
+        this.activity = activity;
         getLocation();
     }
 
@@ -72,10 +80,12 @@ public class GPSTracker extends Service implements LocationListener {
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
+                    int requestPermissionsCode = 50;
+
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
-                            MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+                            MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener);
                     Log.d("Network", "Network");
                     if (locationManager != null) {
                         location = locationManager
@@ -89,33 +99,29 @@ public class GPSTracker extends Service implements LocationListener {
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
-                        locationManager.requestLocationUpdates(
-                                LocationManager.GPS_PROVIDER,
-                                MIN_TIME_BW_UPDATES,
-                                MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("GPS Enabled", "GPS Enabled");
-                        if (locationManager != null) {
-                            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                // TODO: Consider calling
-                                //    ActivityCompat#requestPermissions
-                                // here to request the missing permissions, and then overriding
-                                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                //                                          int[] grantResults)
-                                // to handle the case where the user grants the permission. See the documentation
-                                // for ActivityCompat#requestPermissions for more details.
-                                Log.i("TAG","OUTPUT ERROR");
-                            }
-                            location = locationManager
-                                    .getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                            if (location != null) {
-                                latitude = location.getLatitude();
-                                longitude = location.getLongitude();
+                        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 50);
+
+                        } else {
+                            locationManager.requestLocationUpdates(
+                                    LocationManager.GPS_PROVIDER,
+                                    MIN_TIME_BW_UPDATES,
+                                    MIN_DISTANCE_CHANGE_FOR_UPDATES, mLocationListener);
+                            Log.d("GPS Enabled", "GPS Enabled");
+                            if (locationManager != null) {
+
+                                location = locationManager
+                                        .getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                                if (location != null) {
+                                    latitude = location.getLatitude();
+                                    longitude = location.getLongitude();
+                                }
                             }
                         }
                     }
+
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,19 +134,6 @@ public class GPSTracker extends Service implements LocationListener {
      * Calling this function will stop using GPS in your app
      * */
     public void stopUsingGPS() {
-        if (locationManager != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                Log.i("tag","DO SOMETHING");
-            }
-            locationManager.removeUpdates(GPSTracker.this);
-        }
     }
 
     /**
@@ -212,22 +205,28 @@ public class GPSTracker extends Service implements LocationListener {
         return null;
     }
 
-    @Override
-    public void onLocationChanged(Location currentLocation) {
-        this.location = currentLocation;
-        getLatitude();
-        getLongitude();
+    private final LocationListener mLocationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+            }
+        }
 
-    }
-    @Override
-    public void onProviderDisabled(String provider) {
-    }
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
 
-    @Override
-    public void onProviderEnabled(String provider) {
-    }
+        }
 
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
 }
