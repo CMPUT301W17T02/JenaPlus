@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/message"
         android:paddingLeft="10dp"
-        android:hint="message"/>
+        />
 
 
 </LinearLayout>
