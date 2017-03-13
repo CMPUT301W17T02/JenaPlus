@@ -67,7 +67,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     String colorString;
 
     private Button addButton;
-    private Button getLocation;
     private EditText message;
     private GridView gridview;
     private ImageView image;
@@ -92,18 +91,22 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         setContentView(R.layout.add_mood_interface);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+
+        //MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
+        //moodPlus.addView(this);
+
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        //TextView test = (TextView) findViewById(R.id.addtext);
+        TextView test = (TextView) findViewById(R.id.addtext);
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
-        /*
+
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: "+ name + ", id: "+id;
+        String who = "UserName: "+ name;
         test.setText(who);
-         */
+
         /*------------------------------------------------*/
 
         message = (EditText) findViewById(R.id.message);
@@ -133,7 +136,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
-                                System.out.println("do camera");
                                 photo = "photoPicked";
                                 //cameraIntent();
                                 galleryIntent();
@@ -165,16 +167,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 break;
 
                             case R.id.action_navigation:
+                                //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
+                                //startActivity(intent);
                                 LatLng latlng = getLocation();
                                 addLocation = true;
                                 location = latlng;
                                 Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-
-                                /*Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
-                                System.out.println("do navigation");
-                                Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
-                                startActivity(intent);
-                                addLocation = true;*/
 
                                 break;
                         }

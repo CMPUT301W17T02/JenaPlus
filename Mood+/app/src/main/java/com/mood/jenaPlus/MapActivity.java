@@ -67,10 +67,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap = googleMap;
 
 
-        LatLng home = new LatLng(53.519804, -113.518012);
+        /*LatLng home = new LatLng(53.519804, -113.518012);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 11.0f));
         mMap.addMarker(new MarkerOptions().position(home)
-                .title("Current Location"));
+                .title("Current Location")); */
 
         // Add Location
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -141,7 +141,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             lng = mLastLocation.getLongitude();
 
             LatLng loc = new LatLng(lat, lng);
-            mMap.addMarker(new MarkerOptions().position(loc).title("New Marker"));
+            mMap.addMarker(new MarkerOptions().position(loc).title("Current Position"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(loc));
         }
 
