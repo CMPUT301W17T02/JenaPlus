@@ -28,7 +28,7 @@
             android:layout_alignParentTop="true"
             android:layout_gravity="center"
             android:textSize="10sp"
-            android:text="Select a Mood" />
+            android:text="Username: " />
 
         <GridView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/gridView"

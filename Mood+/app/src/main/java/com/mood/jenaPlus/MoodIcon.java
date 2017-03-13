@@ -1,6 +1,8 @@
 package com.mood.jenaPlus;
 
 /**
+ * This class is used for getting the correct png icon and the correct color associated\n
+ * with the selected mood.
  * Created by Carlo on 2017-02-25.
  */
 public class MoodIcon  {

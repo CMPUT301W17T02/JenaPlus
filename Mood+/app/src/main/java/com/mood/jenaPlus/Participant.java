@@ -9,7 +9,11 @@ import java.util.ArrayList;
 import io.searchbox.annotations.JestId;
 
 /**
- * Created by ceciliaxiang on 2017-02-25.
+ * This is the main participant class which contains a Jest Id for elastic search,
+ * a moodlist that contains their own list of moods, a following moodlist, and 2 lists for
+ * who they follow and who is following them.
+ * @author Cecelia
+ * @author Carlo
  */
 public class Participant extends User {
 
