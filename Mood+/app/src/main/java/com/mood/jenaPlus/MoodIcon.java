@@ -3,12 +3,17 @@ package com.mood.jenaPlus;
 /**
  * Created by Carlo on 2017-02-25.
  */
-
 public class MoodIcon  {
 
     private String moodString;
     private String hexColor;
 
+    /**
+     * Gets color.
+     *
+     * @param icon the icon
+     * @return the color
+     */
     public String getColor(Integer icon) {
         switch (icon) {
             case 0: this.hexColor = "#96F57113";
@@ -33,6 +38,12 @@ public class MoodIcon  {
         return hexColor;
     }
 
+    /**
+     * Gets mood.
+     *
+     * @param iconNum the icon num
+     * @return the mood
+     */
     public String getMood(Integer iconNum) {
         switch (iconNum) {
             case 0: this.moodString = "surprised";
