@@ -2,6 +2,8 @@ package com.mood.jenaPlus;
 
 import android.app.Activity;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import com.robotium.solo.Solo;
 
@@ -24,14 +26,6 @@ public class MoodPlusActivityTest extends ActivityInstrumentationTestCase2{
     public void setUp() throws Exception{
         solo = new Solo(getInstrumentation(),getActivity());
     }
-
-    public void testParticipant() {
-        solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
-
-
-
-    }
-
 
 }
 
