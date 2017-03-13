@@ -160,13 +160,6 @@ public class GPSTracker extends Service {
     }
 
     /**
-     * Stop using GPS listener
-     * Calling this function will stop using GPS in your app
-     */
-    public void stopUsingGPS() {
-    }
-
-    /**
      * Function to get latitude
      *
      * @return the double
