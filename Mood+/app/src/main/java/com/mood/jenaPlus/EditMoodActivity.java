@@ -74,7 +74,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected TextView situation;
     protected TextView date;
     protected EditText message;
-    private EditText editDate;
+
 
 
     private Calendar dateEditor = Calendar.getInstance();
@@ -99,8 +99,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
         save = (Button) findViewById(R.id.AddButton);
 
-        //final Date date = mood.getDate();
-        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         aId = mood.getId();
         icon = (ImageView) findViewById(R.id.cur_mood);
@@ -129,7 +128,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         aLocation = mood.getLocation();
 
 
-        editDate.setOnClickListener(new View.OnClickListener() {
+        date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(EditMoodActivity.this, myDateListener,
@@ -209,7 +208,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                     editedMood.setAddLocation(addLocation);
                     editedMood.setLocation(aLocation);
                     editedMood.setId(aId);
-                    editedMood.setDate(mood.getDate());
+                    editedMood.setDate(dateEditor.getTime());
                     editedMood.setSocial(socialSituation);
                     editedMood.setPhoto(aPhoto);
                     editedMood.setColor(aColor);
@@ -229,7 +228,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
             dateEditor.set(Calendar.YEAR, year);
             dateEditor.set(Calendar.MONTH, monthOfYear);
             dateEditor.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            editDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+            date.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
         }
     };
 
