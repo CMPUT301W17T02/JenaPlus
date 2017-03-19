@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-/**
+/** Taken from https://developer.android.com/guide/topics/ui/layout/gridview.html
  * Created by carrotji on 2017-03-06.
  */
 
@@ -38,7 +38,7 @@ public class MoodIconAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(100, 100));
+            imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {

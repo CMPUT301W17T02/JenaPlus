@@ -3,7 +3,10 @@ package com.mood.jenaPlus;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
@@ -13,7 +16,7 @@ import java.lang.reflect.Field;
 /**
  * Created by carrotji on 2017-03-06.
  */
-public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
+public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     /**
      * The A id.
@@ -68,7 +71,9 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.view_interface);
+        setContentView(R.layout.activity_view_interface);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         MoodPlus mp = MoodPlusApplication.getMoodPlus();
         mp.addView(this);
@@ -130,4 +135,5 @@ public class ViewMoodActivity extends Activity implements MPView<MoodPlus> {
     public void update(MoodPlus moodPlus){
         // TODO implements update method
     }
+    
 }

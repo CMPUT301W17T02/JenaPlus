@@ -42,6 +42,7 @@
         <activity
             android:name=".ViewMoodActivity"
             android:label="Mood+"
+            android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MoodPlusActivity" />
         <activity
             android:name=".AddMoodActivity"

@@ -5,16 +5,16 @@
         android:id="@+id/action_camera"
         android:enabled="true"
         android:icon="@drawable/ic_menu_camera"
-        android:title="camera"/>
+        android:title="Camera"/>
     <item
         android:id="@+id/socialPopup"
         android:enabled="true"
         android:icon="@drawable/ic_menu_tag"
-        android:title="social situation" />
+        android:title="Social Situation" />
     <item
         android:id="@+id/action_navigation"
         android:enabled="true"
         android:icon="@drawable/ic_navigation"
-        android:title="nagivation" />
+        android:title="Location" />
 
 </menu>
