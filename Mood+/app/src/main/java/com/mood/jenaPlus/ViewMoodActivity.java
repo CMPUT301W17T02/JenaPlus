@@ -38,7 +38,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     /**
      * The A location.
      */
-    protected Location aLocation;
+    protected String aLocation;
     /**
      * The A social.
      */

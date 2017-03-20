@@ -30,7 +30,7 @@ public class Mood implements Serializable{
     private Date date;
     private Boolean addLocation;
     //private LatLng location;
-    private Location newLocation; // GET LOCATION
+    private String newLocation; // GET LOCATION
     private String social;
     private String photo;
     private String color;
@@ -46,7 +46,7 @@ public class Mood implements Serializable{
      * @param photo       Photo taken
      * @param color       Color of the associated mood
      */
-    public Mood(String text, Boolean addLocation, Location newLocation, String id,
+    public Mood(String text, Boolean addLocation, String newLocation, String id,
                 String social, String photo, String color) {
         this.text = text;
         this.addLocation = addLocation;
@@ -144,7 +144,7 @@ public class Mood implements Serializable{
      *
      * @return the location
      */
-    public Location getLocation() {
+    public String getLocation() {
         return newLocation;
     }
 
@@ -153,9 +153,9 @@ public class Mood implements Serializable{
      *
      * @param location the location
      */
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         if (!addLocation && location == null) {
-            this.newLocation = null;
+            this.newLocation = "";
         }
         else {
             this.newLocation = location;

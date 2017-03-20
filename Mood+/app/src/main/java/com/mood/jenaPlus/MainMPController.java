@@ -46,7 +46,7 @@ public class MainMPController {
      * @param photo       the photo
      * @param color       the color
      */
-    public void addMoodParticipant(String text, Boolean addLocation, Location location, String id,
+    public void addMoodParticipant(String text, Boolean addLocation, String location, String id,
                                    String social, String photo, String color) {
         moodPlus.addNewMood(text,addLocation,location,id,social,photo,color);
         moodPlus.notifyViews();

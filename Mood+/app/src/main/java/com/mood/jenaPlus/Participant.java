@@ -91,7 +91,7 @@ public class Participant extends User {
      * @param photo       the photo
      * @param color       the color
      */
-    public void addNewMood(String text, Boolean addLocation, Location location, String id,
+    public void addNewMood(String text, Boolean addLocation, String location, String id,
                            String social, String photo, String color) {
         Mood mood = new Mood(text,addLocation,location,id,social,photo,color);
 
