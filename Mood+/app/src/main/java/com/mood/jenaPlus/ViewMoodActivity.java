@@ -2,6 +2,7 @@ package com.mood.jenaPlus;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,7 +38,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     /**
      * The A location.
      */
-    protected String aLocation;
+    protected Location aLocation;
     /**
      * The A social.
      */
@@ -135,5 +136,5 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     public void update(MoodPlus moodPlus){
         // TODO implements update method
     }
-    
+
 }

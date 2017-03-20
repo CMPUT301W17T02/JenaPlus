@@ -131,7 +131,7 @@ public class MoodListController {
         String text = aMood.getText();
         Date date = aMood.getDate();
         Boolean addLocation = aMood.getAddLocation();
-        String location = aMood.getLocation();
+        Location location = aMood.getLocation();
         String id = aMood.getId();
         String social = aMood.getSocial();
         String photo = aMood.getPhoto();
