@@ -81,9 +81,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Boolean addLocation = false;
     private Location location;
     private String photo = "";
-    private String newLocation = "";
+
+
     private String newLatitude = "";
     private String newLongitude = "";
+
+    private Location newLocation;
     private Boolean moodChosen = false;
 
     private static final int CAMERA_REQUEST = 1888;
@@ -304,10 +307,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             newLatitude = Double.toString(location.getLatitude());
             newLongitude = Double.toString(location.getLongitude());
 
-            newLocation = newLatitude + ","+ newLongitude;
             Log.i("Location",""+newLocation);
+
+            newLocation = location;
+
         } catch (NullPointerException e) {
-            newLocation = "";
+            newLocation = null;
         }
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
