@@ -79,9 +79,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     Context context = this;
 
     private Boolean addLocation = false;
-    private LatLng location;
+    private Location location;
     private String photo = "";
     private String newLocation = "";
+    private String newLatitude = "";
+    private String newLongitude = "";
     private Boolean moodChosen = false;
 
     private static final int CAMERA_REQUEST = 1888;
@@ -166,10 +168,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                             case R.id.action_navigation:
                                 //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
                                 //startActivity(intent);
-                                LatLng latlng = getLocation();
+                                location = getLocation();
                                 addLocation = true;
-                                location = latlng;
-                                Toast.makeText(AddMoodActivity.this, ""+latlng ,Toast.LENGTH_SHORT).show();
+
+                                Toast.makeText(AddMoodActivity.this, "Location Added: "+location.getLatitude()
+                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
 
                                 break;
                         }
@@ -185,7 +188,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         });
     }
 
-    public LatLng getLocation() {
+    public Location getLocation() {
+
+        Location currentLocation = new Location("");
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -201,7 +206,10 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 double latitude = gps.getLatitude();
                 double longitude = gps.getLongitude();
 
-                return new LatLng(latitude, longitude);
+                currentLocation.setLatitude(latitude);
+                currentLocation.setLongitude(longitude);
+
+                return currentLocation;
 
             } else {
                 // Can't get location.
@@ -293,7 +301,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     public void addMood() {
         try {
-            newLocation = Double.toString(location.latitude);
+            newLatitude = Double.toString(location.getLatitude());
+            newLongitude = Double.toString(location.getLongitude());
+
+            newLocation = newLatitude + ","+ newLongitude;
+            Log.i("Location",""+newLocation);
         } catch (NullPointerException e) {
             newLocation = "";
         }
