@@ -85,19 +85,32 @@ public class Participant extends User {
      *
      * @param text        the text
      * @param addLocation the add location
-     * @param location    the location
      * @param id          the id
      * @param social      the social
      * @param photo       the photo
      * @param color       the color
      */
-    public void addNewMood(String text, Boolean addLocation, String location, String id,
+    public void addNewMood1(String text, Boolean addLocation, Double latitude, Double longitude, String id,
                            String social, String photo, String color) {
-        Mood mood = new Mood(text,addLocation,location,id,social,photo,color);
+        Mood mood = new Mood(text,addLocation,latitude,longitude,id,social,photo,color);
 
         mood.setText(text);
         mood.setAddLocation(addLocation);
-        mood.setLocation(location);
+        mood.setLatitude(latitude);
+        mood.setLongitude(longitude);
+        mood.setId(id);
+        mood.setSocial(social);
+        mood.setPhoto(photo);
+        mood.setColor(color);
+
+        userMoodList.addUserMood(mood);
+    }
+    public void addNewMood2(String text, Boolean addLocation, String id,
+                            String social, String photo, String color) {
+        Mood mood = new Mood(text,addLocation,id,social,photo,color);
+
+        mood.setText(text);
+        mood.setAddLocation(addLocation);
         mood.setId(id);
         mood.setSocial(social);
         mood.setPhoto(photo);

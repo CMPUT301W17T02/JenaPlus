@@ -29,8 +29,9 @@ public class Mood implements Serializable{
     private String text;
     private Date date;
     private Boolean addLocation;
-    //private LatLng location;
-    private String newLocation; // GET LOCATION
+    private Double latitude;
+    private Double longitude;
+    //private NewLocation newLocation; // GET LOCATION
     private String social;
     private String photo;
     private String color;
@@ -40,17 +41,31 @@ public class Mood implements Serializable{
      *
      * @param text        The trigger which will be < = 20 characters/<4 words
      * @param addLocation Boolean if a location is selected
-     * @param newLocation    Location
      * @param id          The mood icon ID
      * @param social      The social situation of participant
      * @param photo       Photo taken
      * @param color       Color of the associated mood
      */
-    public Mood(String text, Boolean addLocation, String newLocation, String id,
+
+    public Mood(String text, Boolean addLocation, Double Latitude, Double Longitude, String id,
                 String social, String photo, String color) {
         this.text = text;
         this.addLocation = addLocation;
-        this.newLocation = newLocation;
+        this.latitude = Latitude;
+        this.longitude = Longitude;
+        this.id = id;
+        this.social = social;
+        this.photo = photo;
+        this.color = color;
+        this.date = new Date();
+
+        //this.save();    // saves to elastic search server
+    }
+
+    public Mood(String text, Boolean addLocation, String id,
+                String social, String photo, String color) {
+        this.text = text;
+        this.addLocation = addLocation;
         this.id = id;
         this.social = social;
         this.photo = photo;
@@ -144,22 +159,41 @@ public class Mood implements Serializable{
      *
      * @return the location
      */
-    public String getLocation() {
+
+   /* public NewLocation getLocation() {
+
         return newLocation;
-    }
+    }*/
 
     /**
      * Sets location.
      *
-     * @param location the location
      */
-    public void setLocation(String location) {
+
+    /*public void setLocation(NewLocation location) {
+
         if (!addLocation && location == null) {
             this.newLocation = "";
         }
         else {
             this.newLocation = location;
         }
+    }*/
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLatitude(Double lat) {
+        this.latitude = lat;
+    }
+
+    public void setLongitude(Double lon) {
+        this.longitude = lon;
     }
 
     /**

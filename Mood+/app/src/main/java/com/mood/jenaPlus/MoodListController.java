@@ -131,12 +131,13 @@ public class MoodListController {
         String text = aMood.getText();
         Date date = aMood.getDate();
         Boolean addLocation = aMood.getAddLocation();
-        Location location = aMood.getLocation();
+        Double latitude = aMood.getLatitude();
+        Double longitude = aMood.getLongitude();
         String id = aMood.getId();
         String social = aMood.getSocial();
         String photo = aMood.getPhoto();
         String color = aMood.getColor();
-        moodPlus.participant.addNewMood(text,addLocation,location,id,social,photo,color);
+        moodPlus.participant.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color);
     }
 
     public ArrayList<Mood> getUserMoods() {
