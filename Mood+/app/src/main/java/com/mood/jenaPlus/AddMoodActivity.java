@@ -81,10 +81,13 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Boolean addLocation = false;
     private Location location;
     private String photo = "";
-    private Location newLocation;
+
     private Boolean moodChosen = false;
 
     private static final int CAMERA_REQUEST = 1888;
+
+    private Double latitude;
+    private Double longitude;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -187,7 +190,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     public Location getLocation() {
 
-        Location currentLocation = new Location("");
+        Location currentLocation = new Location("dummyprovider");
 
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -297,17 +300,19 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
     public void addMood() {
-        try {
-            newLocation = location;
-        } catch (NullPointerException e) {
-            newLocation = null;
-        }
+
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (trigCheck && moodChosen) {
+        if (trigCheck && moodChosen && addLocation) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant(trigger,addLocation,newLocation,idString,socialSituation,photo,colorString);
+            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,photo,colorString);
+            finish();
+        } else if (trigCheck && moodChosen){
+            MainMPController mpController = MoodPlusApplication.getMainMPController();
+            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,photo,colorString);
             finish();
         }
 

@@ -38,7 +38,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     /**
      * The A location.
      */
-    protected Location aLocation;
+    //protected NewLocation aLocation;
     /**
      * The A social.
      */
@@ -84,7 +84,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         aText = mood.getText();
         aDate = mood.getDate().toString();
         //addLocation = mood.getAddLocation();
-        aLocation = mood.getLocation();
+        //aLocation = mood.getLocation();
         aSocial = mood.getSocial();
         aPhoto = mood.getPhoto();
         aColor = mood.getColor();

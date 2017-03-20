@@ -69,7 +69,8 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected String aText;
     protected String aDate;
     protected Boolean addLocation;
-    protected Location aLocation;
+    protected Double aLatitude;
+    protected Double aLongitude;
     protected String aSocial;
     protected String aPhoto;
     protected String aColor;
@@ -129,7 +130,9 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         view.setBackgroundColor(Color.parseColor(aColor));
 
         addLocation = mood.getAddLocation();
-        aLocation = mood.getLocation();
+        aLatitude = mood.getLatitude();
+        aLongitude = mood.getLongitude();
+
 
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -210,7 +213,8 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
                     editedMood.setText(message.getText().toString());
                     editedMood.setAddLocation(addLocation);
-                    editedMood.setLocation(aLocation);
+                    editedMood.setLatitude(aLatitude);
+                    editedMood.setLongitude(aLongitude);
                     editedMood.setId(aId);
                     editedMood.setDate(dateEditor.getTime());
                     editedMood.setSocial(socialSituation);
