@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
@@ -83,7 +84,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      * The Location.
      */
     protected TextView location;
-    protected Button testLo;
+    protected ImageButton locationButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -126,21 +127,26 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         message = (TextView) findViewById(R.id.message);
         message.setText(aText);
 
+
         location = (TextView) findViewById(R.id.location);
         aLocation = ""+aLatitude+","+aLongitude;
+        locationButton = (ImageButton) findViewById(R.id.test_location);
+
         if(addLocation){
             location.setText(aLocation);
+            locationButton.setVisibility(View.VISIBLE); //To set visible
         }
         else{
             System.out.println("DID NOT CLICK LOCATION");
+
         }
 
 
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.parseColor(aColor));
 
-        testLo = (Button) findViewById(R.id.test_location);
-        testLo.setOnClickListener(new View.OnClickListener() {
+
+        locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(addLocation){

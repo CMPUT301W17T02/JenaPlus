@@ -67,13 +67,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/situation"
-        android:hint="LOCATION"
         android:textColor="@android:color/white"/>
-    <Button
+
+    <ImageButton
         android:id="@+id/test_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/location"
-        android:text="TEST LOCATION"/>
+        android:src="@drawable/ic_location"
+        android:background="@android:color/transparent"
+        android:visibility="invisible"
+        android:layout_below="@+id/location"/>
 
 </RelativeLayout>
