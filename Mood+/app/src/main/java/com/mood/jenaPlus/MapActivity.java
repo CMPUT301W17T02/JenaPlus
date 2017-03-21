@@ -2,6 +2,7 @@ package com.mood.jenaPlus;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -146,16 +147,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest,  this);
         }
 
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+        /*mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
             lat = mLastLocation.getLatitude();
             lng = mLastLocation.getLongitude();
 
             LatLng loc = new LatLng(lat, lng);
-            mMap.addMarker(new MarkerOptions().position(loc).title("Current Position"));
+            mMap.addMarker(new MarkerOptions().position(loc).title("what Position"));
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(loc,14.0f));
-        }
+        }*/
+
+        //LatLng home = new LatLng(53.519804, -113.518012);
+        Intent i = getIntent();
+        LatLng home = i.getParcelableExtra("longLat_dataProvider");
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(home, 11.0f));
+        mMap.addMarker(new MarkerOptions().position(home)
+                .title("HOME"));
 
     }
 
@@ -172,7 +181,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onLocationChanged(Location location) {
 
-        mLastLocation = location;
+    /*    mLastLocation = location;
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
@@ -191,7 +200,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
+        } */
 
     }
 

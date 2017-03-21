@@ -1,13 +1,16 @@
 package com.mood.jenaPlus;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
@@ -36,9 +39,17 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      */
     protected Boolean addLocation;
     /**
-     * The A location.
+     * The A Location.
      */
-    //protected NewLocation aLocation;
+    protected String aLocation;
+    /**
+     * The A Latitude.
+     */
+    protected Double aLatitude;
+    /**
+     * The A Longitude.
+     */
+    protected Double aLongitude;
     /**
      * The A social.
      */
@@ -68,6 +79,12 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      */
     protected TextView message;
 
+    /**
+     * The Location.
+     */
+    protected TextView location;
+    protected Button testLo;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -82,8 +99,9 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         aId = mood.getId();
         aText = mood.getText();
         aDate = mood.getDate().toString();
-        //addLocation = mood.getAddLocation();
-        //aLocation = mood.getLocation();
+        addLocation = mood.getAddLocation();
+        aLatitude = mood.getLatitude();
+        aLongitude = mood.getLongitude();
         aSocial = mood.getSocial();
         aPhoto = mood.getPhoto();
         aColor = mood.getColor();
@@ -108,8 +126,41 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         message = (TextView) findViewById(R.id.message);
         message.setText(aText);
 
+        location = (TextView) findViewById(R.id.location);
+        aLocation = ""+aLatitude+","+aLongitude;
+        if(addLocation){
+            location.setText(aLocation);
+        }
+        else{
+            System.out.println("DID NOT CLICK LOCATION");
+        }
+
+
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.parseColor(aColor));
+
+        testLo = (Button) findViewById(R.id.test_location);
+        testLo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(addLocation){
+                    //Taken from http://stackoverflow.com/questions/30106507/pass-longitude-and-latitude-with-intent-to-another-class
+                    //2017-03-21
+                    LatLng position = new LatLng(aLatitude,aLongitude);
+
+                    Bundle args = new Bundle();
+                    args.putParcelable("longLat_dataProvider",position);
+                    Intent intent = new Intent(ViewMoodActivity.this, MapActivity.class);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                }
+                else{
+                    Log.i("Location","LOCATION NOT ADDED");
+                }
+
+            }
+        });
+
 
     }
 
