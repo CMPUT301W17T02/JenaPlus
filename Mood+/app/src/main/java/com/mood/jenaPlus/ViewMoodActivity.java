@@ -1,18 +1,25 @@
 package com.mood.jenaPlus;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import java.lang.reflect.Field;
@@ -83,8 +90,8 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     /**
      * The Location.
      */
-    protected TextView location;
     protected ImageButton locationButton;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -127,24 +134,19 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         message = (TextView) findViewById(R.id.message);
         message.setText(aText);
 
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(Color.parseColor(aColor));
 
-        location = (TextView) findViewById(R.id.location);
-        aLocation = ""+aLatitude+","+aLongitude;
+
         locationButton = (ImageButton) findViewById(R.id.test_location);
 
         if(addLocation){
-            location.setText(aLocation);
             locationButton.setVisibility(View.VISIBLE); //To set visible
         }
         else{
             System.out.println("DID NOT CLICK LOCATION");
 
         }
-
-
-        View view = this.getWindow().getDecorView();
-        view.setBackgroundColor(Color.parseColor(aColor));
-
 
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
