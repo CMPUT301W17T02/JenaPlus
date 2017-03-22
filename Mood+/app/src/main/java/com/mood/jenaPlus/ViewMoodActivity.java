@@ -1,13 +1,25 @@
 package com.mood.jenaPlus;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import java.lang.reflect.Field;
@@ -35,9 +47,17 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      */
     protected Boolean addLocation;
     /**
-     * The A location.
+     * The A Location.
      */
     protected String aLocation;
+    /**
+     * The A Latitude.
+     */
+    protected Double aLatitude;
+    /**
+     * The A Longitude.
+     */
+    protected Double aLongitude;
     /**
      * The A social.
      */
@@ -50,7 +70,6 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      * The A color.
      */
     protected String aColor;
-
     /**
      * The Icon.
      */
@@ -68,6 +87,12 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      */
     protected TextView message;
 
+    /**
+     * The Location.
+     */
+    protected ImageButton locationButton;
+
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -82,8 +107,9 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         aId = mood.getId();
         aText = mood.getText();
         aDate = mood.getDate().toString();
-        //addLocation = mood.getAddLocation();
-        aLocation = mood.getLocation();
+        addLocation = mood.getAddLocation();
+        aLatitude = mood.getLatitude();
+        aLongitude = mood.getLongitude();
         aSocial = mood.getSocial();
         aPhoto = mood.getPhoto();
         aColor = mood.getColor();
@@ -111,6 +137,39 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.parseColor(aColor));
 
+
+        locationButton = (ImageButton) findViewById(R.id.test_location);
+
+        if(addLocation){
+            locationButton.setVisibility(View.VISIBLE); //To set visible
+        }
+        else{
+            System.out.println("DID NOT CLICK LOCATION");
+
+        }
+
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(addLocation){
+                    //Taken from http://stackoverflow.com/questions/30106507/pass-longitude-and-latitude-with-intent-to-another-class
+                    //2017-03-21
+                    LatLng position = new LatLng(aLatitude,aLongitude);
+
+                    Bundle args = new Bundle();
+                    args.putParcelable("longLat_dataProvider",position);
+                    Intent intent = new Intent(ViewMoodActivity.this, MapActivity.class);
+                    intent.putExtras(args);
+                    startActivity(intent);
+                }
+                else{
+                    Log.i("Location","LOCATION NOT ADDED");
+                }
+
+            }
+        });
+
+
     }
 
     /**
@@ -135,5 +194,5 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     public void update(MoodPlus moodPlus){
         // TODO implements update method
     }
-    
+
 }
