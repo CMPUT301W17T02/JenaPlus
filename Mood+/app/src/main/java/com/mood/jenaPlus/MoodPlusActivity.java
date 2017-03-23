@@ -51,6 +51,8 @@ public class MoodPlusActivity extends AppCompatActivity
     private ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     protected ArrayAdapter<Mood> adapter;
     private UserMoodList myMoodList = new UserMoodList();
+    private FollowingMoodList foMoodList = new FollowingMoodList();
+
     private String searchText = "";
 
     private int longClickedItemIndex;
