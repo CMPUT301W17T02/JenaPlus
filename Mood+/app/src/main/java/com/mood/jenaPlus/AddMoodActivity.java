@@ -246,6 +246,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 Bitmap photo = (Bitmap) extras.get("data");
                 image.setImageBitmap(photo);
 
+                Intent intent = new Intent(AddMoodActivity.this, ViewMoodActivity.class);
+                intent.putExtra("bmp_img", photo);
+
          /*    // Uri selectedImage = data.getData();
 
                 if (getDropboxIMGSize(selectedImage))
