@@ -9,6 +9,7 @@
     tools:context="com.mood.jenaPlus.MoodPlusActivity"
     tools:showIn="@layout/app_bar_mood_plus">
 
+
     <TextView
         android:id="@+id/test_string"
         android:layout_width="wrap_content"
@@ -16,6 +17,23 @@
         android:hint="TEST"
         android:textSize="20dp"
         android:layout_centerHorizontal="true"/>
+    <android.support.design.widget.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/user_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="user" />
+
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/following_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="following" />
+    </android.support.design.widget.TabLayout>
 
     <ListView
         android:layout_width="wrap_content"
