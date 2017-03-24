@@ -6,7 +6,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +28,9 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
     protected ListView participantListView ;
 
     Context context = this;
+
+    protected int longClickedItemIndex;
+    private static final int FOLLOW = 0;
 
 
     @Override
@@ -60,6 +67,16 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
             }
 
 
+        });
+
+        registerForContextMenu(participantListView);
+        participantListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                longClickedItemIndex = position;
+
+                return false;
+            }
         });
 
 
@@ -100,6 +117,20 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu,view,menuInfo);
+        menu.add(Menu.NONE,FOLLOW,menu.NONE,"FOLLOWING");
+    }
+
+    public boolean onContextItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case FOLLOW:
+                break;
+        }
+
+        return super.onContextItemSelected(item);
     }
 
 
