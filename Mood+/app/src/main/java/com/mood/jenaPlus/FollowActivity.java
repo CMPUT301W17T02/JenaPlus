@@ -1,5 +1,8 @@
 package com.mood.jenaPlus;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,51 +19,51 @@ import java.util.Comparator;
 public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     private EditText searchUser;
-    private ArrayList<Participant> participantList1 = new ArrayList<Participant>();
-    private ArrayList<Participant> finalList = new ArrayList<>();
+    private ArrayList<Participant> participantList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
-    protected ListView participantList ;
+    protected ListView participantListView ;
+
+    Context context = this;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
-        participantList = (ListView) findViewById(R.id.listViewSearch);
-
-        final int listSize = participantList1.size();
+        participantListView = (ListView) findViewById(R.id.listViewSearch);
 
         searchUser = (EditText) findViewById(R.id.searchUsers);
         Button button = (Button) findViewById(R.id.SearchButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_OK);
-                ArrayList<Participant> tempArrayList1 = participantList1;
+                //setResult(RESULT_OK);
+                int listSize = participantList.size();
+                ArrayList<Participant> tempArrayList1 = participantList;
                 ArrayList<Participant> tempArrayList2 = new ArrayList<>();
+                String m1 = searchUser.getText().toString();
                 for(int i =0; i<listSize; i++) {
-                    String m1 = searchUser.getText().toString();
                     String m2 = tempArrayList1.get(i).getUserName();
-                    Log.i("print", m2);
                     if (m2.toLowerCase().contains(m1.toLowerCase())) {
                         tempArrayList2.add(tempArrayList1.get(i));
                     }
                 }
-                participantList1.clear();
-                participantList1.addAll(finalList);
-                adapter.notifyDataSetChanged();
 
+                if (tempArrayList2.size() < 1) {
+                    noUserAlert();
+                } else {
+                    participantList.clear();
+                    participantList.addAll(tempArrayList2);
+                    adapter.notifyDataSetChanged();
+                }
 
             }
 
 
         });
 
-        adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, finalList);
-        participantList.setAdapter(adapter);
 
     }
-
 
     @Override
     protected void onStart() {
@@ -72,9 +75,9 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         getUsersTask.execute("");
 
         try {
-            participantList1 = getUsersTask.get();
-            adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList1);
-            participantList.setAdapter(adapter);
+            participantList = getUsersTask.get();
+            adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+            participantListView.setAdapter(adapter);
 
         } catch (Exception e) {
             Log.i("Error", "Failed to get the users out of the async object");
@@ -85,6 +88,21 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
     public void update(MoodPlus model) {
 
     }
+
+    public void noUserAlert() {
+        new AlertDialog.Builder(context)
+                .setTitle("Search Failed")
+                .setMessage("No users found.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+
 
 }
 
