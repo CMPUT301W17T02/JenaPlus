@@ -18,23 +18,23 @@ public class MoodIcon  {
      */
     public String getColor(Integer icon) {
         switch (icon) {
-            case 0: this.hexColor = "#5CF57113";
+            case 0: this.hexColor = "#FFCC80"; //orange
                 break;
-            case 1: this.hexColor = "#6254A62F";
+            case 1: this.hexColor = "#B2FF59"; //green
                 break;
-            case 2: this.hexColor = "#61131313";
+            case 2: this.hexColor = "#A1887F"; //black
                 break;
-            case 3: this.hexColor = "#606A00FF";
+            case 3: this.hexColor = "#EA80FC"; //purple
                 break;
-            case 4: this.hexColor = "#5EFFF649";
+            case 4: this.hexColor = "#FFF59D"; //yellow
                 break;
-            case 5: this.hexColor = "#5CFF0000";
+            case 5: this.hexColor = "#FF8A80"; //red
                 break;
-            case 6: this.hexColor = "#6033B5E5";
+            case 6: this.hexColor = "#8C9EFF"; //blue
                 break;
-            case 7: this.hexColor = "#5CDE30C9";
+            case 7: this.hexColor = "#F8BBD0"; // pink
                 break;
-            default: this.hexColor = "#62277384";
+            default: this.hexColor = "#69F0AE"; // drak blue
                 break;
         }
         return hexColor;
