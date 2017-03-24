@@ -14,8 +14,6 @@
     tools:context="com.mood.jenaPlus.ViewMoodActivity">
 
 
-
-
     <ImageView
         android:id="@+id/cur_mood"
         android:layout_width="wrap_content"
@@ -71,5 +69,12 @@
         android:background="@android:color/transparent"
         android:visibility="invisible"
         android:layout_toRightOf="@id/time"/>
+
+    <ImageView
+        android:id="@+id/camera_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
