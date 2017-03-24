@@ -156,6 +156,8 @@ public class MoodPlusActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_following) {
+            Intent intent = new Intent(MoodPlusActivity.this, FollowActivity.class);
+            startActivity(intent);
             return true;
         }
 

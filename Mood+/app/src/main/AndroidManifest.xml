@@ -10,7 +10,10 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -43,8 +46,8 @@
         <activity
             android:name=".ViewMoodActivity"
             android:label="Mood+"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MoodPlusActivity" />
+            android:parentActivityName=".MoodPlusActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
@@ -69,6 +72,7 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
+
         <activity android:name=".FilteredDateActivity"></activity>
         <service android:name="GPSTracker"/>
         <provider
@@ -80,6 +84,14 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"></meta-data>
         </provider>
+        <activity android:name=".FilteredDateActivity" />
+
+        <service android:name=".GPSTracker" />
+
+        <activity
+            android:name=".FollowActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
+
     </application>
 
 </manifest>
