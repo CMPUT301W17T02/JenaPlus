@@ -17,19 +17,12 @@ public class FollowList {
         pendingFollowing.add(userName);
     }
 
-    public void addToFollowingList(Participant participant) {
-
-        followingList.add(participant);
-    }
-
     public void followingAccepted(Participant userName) {
-        pendingFollowing.remove(userName);
         followingList.add(userName);
     }
 
     public void followingRejected(Participant userName) {
         pendingFollowing.remove(userName);
-
     }
 
     public void followerRequest(Participant userName) {
@@ -38,13 +31,14 @@ public class FollowList {
 
     public void followerAccepted(Participant userName) {
         pendingFollowers.remove(userName);
-        followerList.add(userName);
+        //followerList.add(userName);
     }
 
     public void followerRejected(Participant userName) {
         pendingFollowers.remove(userName);
 
     }
+
 
     public ArrayList<Participant> getPendingFollowing() {
         return pendingFollowing;

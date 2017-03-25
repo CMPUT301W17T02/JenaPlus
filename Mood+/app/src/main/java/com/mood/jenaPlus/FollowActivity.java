@@ -41,6 +41,7 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
         searchUser = (EditText) findViewById(R.id.searchUsers);
         Button button = (Button) findViewById(R.id.SearchButton);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,7 +75,6 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 longClickedItemIndex = position;
-
                 return false;
             }
         });
@@ -121,12 +121,20 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu,view,menuInfo);
-        menu.add(Menu.NONE,FOLLOW,menu.NONE,"FOLLOWING");
+        menu.add(Menu.NONE,FOLLOW,menu.NONE,"FOLLOW");
     }
+
+
+    /*-------------ALL THE BIG STUFF HAPPENING HERE!-----------------*/
 
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case FOLLOW:
+                Participant participant = (Participant) participantListView.getItemAtPosition(longClickedItemIndex);
+                Log.i("maybe?", participant.getUserName());
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addFollowRequest(participant);
+                mpController.setPendingFollowers(participant);
                 break;
         }
 
