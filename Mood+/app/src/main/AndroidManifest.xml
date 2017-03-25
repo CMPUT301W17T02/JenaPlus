@@ -5,8 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-                     android:maxSdkVersion="18" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -72,9 +73,10 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".FilteredDateActivity" />
 
-        <activity android:name=".FilteredDateActivity"></activity>
-        <service android:name="GPSTracker"/>
+        <service android:name=".GPSTracker" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.example.android.fileprovider"
@@ -82,16 +84,15 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
-        <activity android:name=".FilteredDateActivity" />
 
         <service android:name=".GPSTracker" />
 
         <activity
             android:name=".FollowActivity"
-            android:parentActivityName=".MoodPlusActivity"/>
-
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".FollowerRequestActivity"></activity>
     </application>
 
 </manifest>

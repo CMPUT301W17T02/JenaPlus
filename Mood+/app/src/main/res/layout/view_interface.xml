@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:textSize="15sp"
         android:hint="@string/time"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:paddingTop="15dp"/>
@@ -42,7 +42,7 @@
         android:text="Situation"
         android:maxLength="20"
         android:layout_below="@+id/time"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:paddingBottom="15dp"
         android:paddingTop="10dp"
         android:layout_centerHorizontal="true"/>
@@ -57,7 +57,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/cur_mood"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:layout_marginBottom="20dp"/>
 
 
