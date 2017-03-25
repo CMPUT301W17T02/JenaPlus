@@ -5,11 +5,16 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-feature android:name="android.hardware.camera" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -42,8 +47,8 @@
         <activity
             android:name=".ViewMoodActivity"
             android:label="Mood+"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".MoodPlusActivity" />
+            android:parentActivityName=".MoodPlusActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
@@ -68,8 +73,26 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilteredDateActivity"></activity>
-        <service android:name="GPSTracker"/>
+        <activity android:name=".FilteredDateActivity" />
+
+        <service android:name=".GPSTracker" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.android.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <service android:name=".GPSTracker" />
+
+        <activity
+            android:name=".FollowActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".FollowerRequestActivity"></activity>
     </application>
 
 </manifest>

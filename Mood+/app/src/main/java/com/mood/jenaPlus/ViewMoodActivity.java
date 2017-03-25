@@ -3,6 +3,7 @@ package com.mood.jenaPlus;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
@@ -92,6 +93,8 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      */
     protected ImageButton locationButton;
 
+    protected ImageView cameraImage;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -137,6 +140,9 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(Color.parseColor(aColor));
 
+        cameraImage = (ImageView) findViewById(R.id.camera_image);
+        //Bitmap mBitmap = getIntent().getParcelableExtra("bmp_img");
+        //cameraImage.setImageBitmap(mBitmap);
 
         locationButton = (ImageButton) findViewById(R.id.test_location);
 
@@ -179,7 +185,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
      * @param c            the c
      * @return the id
      */
-// Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
+    // Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
     // 12 Mar 2017 12:42
     public static int getId(String resourceName, Class<?> c) {
         try {
