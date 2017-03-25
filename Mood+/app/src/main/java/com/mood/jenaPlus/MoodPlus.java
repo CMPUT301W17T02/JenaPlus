@@ -1,6 +1,7 @@
 package com.mood.jenaPlus;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -116,6 +117,31 @@ public class MoodPlus extends MPModel<MPView> {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
         eController.updateUser(participant);
     }
+
+    public void addFollowRequest(Participant aParticipant) {
+        participant.getFollowList().followingRequest(aParticipant);
+        updateParticipant();
+        notifyViews();
+    }
+
+    public void updateParticipant2(Participant aParticipant) {
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        eController.updateUser(aParticipant);
+    }
+
+    public void setPendingFollowers(Participant aParticipant) {
+
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant.getUserName());
+        Log.i("printing", otherParticipant.getUserName());
+        otherParticipant.getFollowList().followerRequest(participant);
+        updateParticipant2(otherParticipant);
+
+        notifyViews();
+    }
+
+
+
 
 
     /**

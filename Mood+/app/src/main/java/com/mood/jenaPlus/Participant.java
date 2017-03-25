@@ -19,6 +19,7 @@ public class Participant extends User {
 
     private UserMoodList userMoodList = new UserMoodList();
     private MoodList followingMoodList = new MoodList();
+
     //private FollowList followingParticipants = new FollowList();
     //private FollowList followersParticipants = new FollowList();
     private FollowList followList = new FollowList();
@@ -56,6 +57,18 @@ public class Participant extends User {
             return false;
         }
     }
+
+
+    public FollowList getFollowList() {
+        return followList;
+    }
+
+    public void setFollowList(FollowList followList) {
+        this.followList = followList;
+    }
+
+
+
 
     /**
      * Instantiates a new Participant.
