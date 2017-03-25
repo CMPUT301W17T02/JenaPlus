@@ -78,6 +78,15 @@ public class MainMPController {
         moodPlus.notifyViews();
     }
 
+    public void acceptRequest(Participant aParticipant) {
+        moodPlus.acceptRequest(aParticipant);
+        moodPlus.notifyViews();
+    }
+
+    public void rejectRequest(Participant aParticipant) {
+        moodPlus.rejectRequest(aParticipant);
+        moodPlus.notifyViews();
+    }
 
 
 

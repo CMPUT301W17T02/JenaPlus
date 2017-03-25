@@ -136,9 +136,34 @@ public class MoodPlus extends MPModel<MPView> {
         Log.i("printing", otherParticipant.getUserName());
         otherParticipant.getFollowList().followerRequest(participant);
         updateParticipant2(otherParticipant);
-
         notifyViews();
     }
+
+    public void acceptRequest(Participant aParticipant) {
+        participant.getFollowList().followerAccepted(aParticipant);
+        updateParticipant();
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant.getUserName());
+        Log.i("printing", otherParticipant.getUserName());
+        otherParticipant.getFollowList().followingRejected(participant);
+        otherParticipant.getFollowList().followingAccepted(participant);
+        updateParticipant2(otherParticipant);
+        notifyViews();
+    }
+
+    public void rejectRequest(Participant aParticipant) {
+        participant.getFollowList().followingRejected(aParticipant);
+        updateParticipant();
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant.getUserName());
+        Log.i("printing", otherParticipant.getUserName());
+        otherParticipant.getFollowList().followingRejected(participant);
+        updateParticipant2(otherParticipant);
+        notifyViews();
+    }
+
+
+
 
 
 
