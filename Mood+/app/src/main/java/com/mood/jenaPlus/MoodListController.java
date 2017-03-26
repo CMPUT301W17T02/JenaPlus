@@ -137,7 +137,8 @@ public class MoodListController {
         String social = aMood.getSocial();
         String photo = aMood.getPhoto();
         String color = aMood.getColor();
-        moodPlus.participant.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color);
+        String userName = aMood.getUserName();
+        moodPlus.participant.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color,userName);
     }
 
     public ArrayList<Mood> getUserMoods() {

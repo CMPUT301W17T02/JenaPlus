@@ -86,8 +86,8 @@ public class Participant extends User {
      * @param color       the color
      */
     public void addNewMood1(String text, Boolean addLocation, Double latitude, Double longitude, String id,
-                           String social, String photo, String color) {
-        Mood mood = new Mood(text,addLocation,latitude,longitude,id,social,photo,color);
+                           String social, String photo, String color,String userName) {
+        Mood mood = new Mood(text,addLocation,latitude,longitude,id,social,photo,color,userName);
 
         mood.setText(text);
         mood.setAddLocation(addLocation);
@@ -101,8 +101,8 @@ public class Participant extends User {
         userMoodList.addUserMood(mood);
     }
     public void addNewMood2(String text, Boolean addLocation, String id,
-                            String social, String photo, String color) {
-        Mood mood = new Mood(text,addLocation,id,social,photo,color);
+                            String social, String photo, String color, String userName) {
+        Mood mood = new Mood(text,addLocation,id,social,photo,color,userName);
 
         mood.setText(text);
         mood.setAddLocation(addLocation);

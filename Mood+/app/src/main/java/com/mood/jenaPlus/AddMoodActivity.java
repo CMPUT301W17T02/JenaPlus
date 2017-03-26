@@ -89,6 +89,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Double latitude;
     private Double longitude;
 
+    private String userName;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
         String name = participant.getUserName();
+        userName = name;
         String id = participant.getId();
         String who = "UserName: "+ name;
         test.setText(who);
@@ -363,11 +366,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,photo,colorString);
+            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,photo,colorString,userName);
             finish();
         } else if (trigCheck && moodChosen){
             MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,photo,colorString);
+            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,photo,colorString,userName);
             finish();
         }
 

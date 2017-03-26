@@ -47,14 +47,14 @@ public class MainMPController {
      */
 
     public void addMoodParticipant1(String text, Boolean addLocation, Double latitude,Double longitude, String id,
-                                   String social, String photo, String color) {
-        moodPlus.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color);
+                                   String social, String photo, String color, String userName) {
+        moodPlus.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color,userName);
         moodPlus.notifyViews();
     }
 
     public void addMoodParticipant2(String text, Boolean addLocation, String id,
-                                    String social, String photo, String color) {
-        moodPlus.addNewMood2(text,addLocation,id,social,photo,color);
+                                    String social, String photo, String color, String userName) {
+        moodPlus.addNewMood2(text,addLocation,id,social,photo,color,userName);
         moodPlus.notifyViews();
     }
 

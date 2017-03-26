@@ -30,17 +30,17 @@ public class MoodPlus extends MPModel<MPView> {
     }
 
     public void addNewMood1(String text, Boolean addLocation, Double latitude, Double longitude, String id,
-                           String social, String photo, String color) {
+                           String social, String photo, String color, String userName) {
 
-        participant.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color);
+        participant.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color,userName);
         updateParticipant();
         notifyViews();
     }
 
     public void addNewMood2(String text, Boolean addLocation, String id,
-                            String social, String photo, String color) {
+                            String social, String photo, String color, String userName) {
 
-        participant.addNewMood2(text,addLocation,id,social,photo,color);
+        participant.addNewMood2(text,addLocation,id,social,photo,color,userName);
         updateParticipant();
         notifyViews();
     }
