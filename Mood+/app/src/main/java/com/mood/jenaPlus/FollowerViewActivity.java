@@ -72,6 +72,7 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
     @Override
     public void onStart() {
         super.onStart();
+        moodArrayList.clear();
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
         mpController = MoodPlusApplication.getMainMPController();
@@ -126,6 +127,11 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
     @Override
     public void update(MoodPlus moodPlus) {
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
     }
 
 }
