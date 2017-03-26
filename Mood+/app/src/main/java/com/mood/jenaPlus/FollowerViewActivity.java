@@ -22,14 +22,15 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
 
+    protected MainMPController mpController;
+
     Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower_view);
-        
-        TextView test = (TextView) findViewById(R.id.test_string);
+
         moodListView = (ListView) findViewById(R.id.listView);
 
 
@@ -41,7 +42,7 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Username: " + name ;
-        test.setText(who);
+        //test.setText(who);
 
         /*------------------------------------------------*/
 
@@ -62,16 +63,28 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
     @Override
     protected void onStart() {
         super.onStart();
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
+        mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-
-        myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getFilteredDate();
-
-        if (moodArrayList.size() <1) {
+        ArrayList<String> participantListStr = participant.getFollowingList();
+        if (participantListStr.size() < 1){
             noMoods();
         }
+        ArrayList<Participant> tempArrayParticipant = new ArrayList<>();
+        ArrayList<Mood> tempArrayMood = new ArrayList<>();
+        for (int i = 0; i<participantListStr.size(); i++) {
+            Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
+            tempArrayParticipant.add(tempParticipant);
+        }
+        for (int i = 0; i<participantListStr.size(); i++) {
+            UserMoodList partMoods = tempArrayParticipant.get(i).getUserMoodList();
+            for (int j = 0; j<partMoods.getSize(); i++) {
+                tempArrayMood.add(partMoods.getUserMood(j));
+            }
+        }
+
+        moodArrayList = tempArrayMood;
 
         adapter = new MoodFollowerListAdapter(FollowerViewActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);

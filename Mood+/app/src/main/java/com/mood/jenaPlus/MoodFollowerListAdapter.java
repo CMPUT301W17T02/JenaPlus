@@ -40,7 +40,7 @@ public class MoodFollowerListAdapter extends ArrayAdapter<Mood> {
         Mood moodList = getItem(position);
 
         if (view == null)
-            view = LayoutInflater.from(getContext()).inflate(R.layout.mood_plus_listview,parent,false);
+            view = LayoutInflater.from(getContext()).inflate(R.layout.mood_plus_followerlistview,parent,false);
 
         TextView dateText = (TextView) view.findViewById(R.id.date);
         TextView messageText = (TextView) view.findViewById(R.id.message);
