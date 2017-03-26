@@ -140,9 +140,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 photo = "photoPicked";
-                                //cameraIntent();
+                                cameraIntent();
                                 //galleryIntent();
-                                dispatchTakePictureIntent();
 
                                 break;
                             case R.id.socialPopup:
@@ -193,48 +192,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         });
     }
 
-    public Location getLocation() {
-
-        Location currentLocation = new Location("dummyprovider");
-
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-
-        } else {
-            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
-            GPSTracker gps = new GPSTracker(context, AddMoodActivity.this);
-
-            // Check if GPS enabled
-            if (gps.canGetLocation()) {
-
-                double latitude = gps.getLatitude();
-                double longitude = gps.getLongitude();
-
-                currentLocation.setLatitude(latitude);
-                currentLocation.setLongitude(longitude);
-
-                return currentLocation;
-
-            } else {
-                // Can't get location.
-                // GPS or network is not enabled.
-                // Ask user to enable GPS/network in settings.
-                gps.showSettingsAlert();
-            }
-        }
-        return null;
+    private void cameraIntent(){
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, 1234);
     }
 
-
-
-    private void galleryIntent(){
-        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
-        // 2017-03-10 5:32
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
-    }
 
 
     String mCurrentPhotoPath;
@@ -281,23 +243,15 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         }
     }
 
-  /*  private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
-    } */
-
     private void handleBigCameraPhoto() {
 
         if (mCurrentPhotoPath != null) {
             setPic();
-            //galleryAddPic();
             mCurrentPhotoPath = null;
         }
 
     }
+
 
     private void setPic() {
         // Get the dimensions of the View
@@ -323,15 +277,16 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         image.setImageBitmap(bitmap);
     }
 
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode,data);
         if(requestCode == 1234){
             if(resultCode == Activity.RESULT_OK){
-                handleBigCameraPhoto();
-                //Bundle extras = data.getExtras();
-                //Bitmap photo = (Bitmap) extras.get("data");
-                //image.setImageBitmap(photo);
+                //handleBigCameraPhoto();
+                Bundle extras = data.getExtras();
+                Bitmap photo = (Bitmap) extras.get("data");
+                image.setImageBitmap(photo);
 
                 //Intent intent = new Intent(AddMoodActivity.this, ViewMoodActivity.class);
                 //intent.putExtra("bmp_img", photo);
@@ -343,19 +298,52 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         }
     }
 
+    public Location getLocation() {
+
+        Location currentLocation = new Location("dummyprovider");
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
+            GPSTracker gps = new GPSTracker(context, AddMoodActivity.this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+                currentLocation.setLatitude(latitude);
+                currentLocation.setLongitude(longitude);
+
+                return currentLocation;
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
+        }
+        return null;
+    }
 
     public int getID() {
         return idNum;
     }
+
+
     public int getColorNum() { return colorNum; }
     public EditText getMessage() { return message; }
     public String getSocialSituation() { return socialSituation; }
-
-
     public void update(MoodPlus moodPlus){
         // TODO implements update method
 
     }
+
 
     public void addMood() {
 
@@ -482,6 +470,14 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 return;
             }
         }
+    }
+
+    private void galleryIntent(){
+        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+        // 2017-03-10 5:32
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
     }
 }
 
