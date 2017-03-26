@@ -87,7 +87,7 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
                 .setMessage("You are currently not following anyone.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
