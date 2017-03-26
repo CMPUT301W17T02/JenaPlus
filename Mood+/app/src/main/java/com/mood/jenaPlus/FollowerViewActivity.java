@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
 
@@ -88,6 +90,8 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
         }
 
         adapter = new MoodFollowerListAdapter(getActivity(),moodArrayList);
+        getUserMoodOrderedList();
+
         moodListView.setAdapter(adapter);
 
     }
@@ -103,6 +107,18 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public ArrayList<Mood> getUserMoodOrderedList() {
+
+        Collections.sort(moodArrayList, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return this.moodArrayList;
     }
 
 

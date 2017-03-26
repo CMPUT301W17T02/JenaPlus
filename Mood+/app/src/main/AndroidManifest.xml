@@ -96,8 +96,12 @@
             android:name=".FollowerRequestActivity"
             android:parentActivityName=".MoodPlusActivity" />
         <activity android:name=".FollowerViewActivity" />
+<<<<<<< HEAD
         <activity android:name=".MainActivity" />
         <activity android:name=".Fragment1"></activity>
+=======
+        <activity android:name=".FollowingListActivity"></activity>
+>>>>>>> dac23bc1718f17dfc2b36e8b89cae4a66f30b9d6
     </application>
 
 </manifest>

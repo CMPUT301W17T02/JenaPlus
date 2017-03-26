@@ -88,6 +88,11 @@ public class MainMPController {
         moodPlus.notifyViews();
     }
 
+    public void unfollowParticipant(String aParticipant){
+        moodPlus.unfollowParticipant(aParticipant);
+        moodPlus.notifyViews();
+    }
+
 
 
 
