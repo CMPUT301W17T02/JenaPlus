@@ -43,6 +43,10 @@ public class UserMoodList {
         UserMoodList.add(mood);
     }
 
+    public int getSize() {
+        return UserMoodList.size();
+    }
+
     /**
      * Delete user mood.
      *

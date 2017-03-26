@@ -47,14 +47,14 @@ public class MainMPController {
      */
 
     public void addMoodParticipant1(String text, Boolean addLocation, Double latitude,Double longitude, String id,
-                                   String social, String photo, String color) {
-        moodPlus.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color);
+                                   String social, String photo, String color, String userName) {
+        moodPlus.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color,userName);
         moodPlus.notifyViews();
     }
 
     public void addMoodParticipant2(String text, Boolean addLocation, String id,
-                                    String social, String photo, String color) {
-        moodPlus.addNewMood2(text,addLocation,id,social,photo,color);
+                                    String social, String photo, String color, String userName) {
+        moodPlus.addNewMood2(text,addLocation,id,social,photo,color,userName);
         moodPlus.notifyViews();
     }
 
@@ -68,22 +68,22 @@ public class MainMPController {
         moodPlus.notifyViews();
     }
 
-    public void addFollowRequest(Participant participant) {
+    public void addFollowRequest(String participant) {
         moodPlus.addFollowRequest(participant);
         moodPlus.notifyViews();
     }
 
-    public void setPendingFollowers(Participant aParticipant) {
+    public void setPendingFollowers(String aParticipant) {
         moodPlus.setPendingFollowers(aParticipant);
         moodPlus.notifyViews();
     }
 
-    public void acceptRequest(Participant aParticipant) {
+    public void acceptRequest(String aParticipant) {
         moodPlus.acceptRequest(aParticipant);
         moodPlus.notifyViews();
     }
 
-    public void rejectRequest(Participant aParticipant) {
+    public void rejectRequest(String aParticipant) {
         moodPlus.rejectRequest(aParticipant);
         moodPlus.notifyViews();
     }

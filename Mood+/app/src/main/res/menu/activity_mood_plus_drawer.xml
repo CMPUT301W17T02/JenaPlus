@@ -10,7 +10,7 @@
         <item
             android:id="@+id/request"
             android:icon="@drawable/ic_request"
-            android:title="Request" />
+            android:title="Follower Requests" />
 
     </group>
 

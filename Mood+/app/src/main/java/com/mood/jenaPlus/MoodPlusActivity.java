@@ -109,6 +109,8 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
+        /*----------------------ADD MOOD BUTTON-----------------------*/
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +123,22 @@ public class MoodPlusActivity extends AppCompatActivity
             }
         });
 
+        /*-----------------FOLLOWING LIST BUTTON--------------------------*/
+
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MoodPlusActivity.this, FollowerViewActivity.class);
+                startActivity(intent);
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -129,6 +147,12 @@ public class MoodPlusActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        TextView textName = (TextView)header.findViewById(R.id.username);
+        textName.setText(name);
+
+
 
     }
 

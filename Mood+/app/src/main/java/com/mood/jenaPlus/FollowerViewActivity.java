@@ -15,28 +15,24 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class FilteredMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
+public class FollowerViewActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-    String moodString = "";
+
+    protected MainMPController mpController;
 
     Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_filtered_mood);
+        setContentView(R.layout.activity_follower_view);
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
-        /*------------- LOADING THE MOOD  -------------*/
-
-        Bundle bundle = getIntent().getExtras();
-        moodString = bundle.getString("moodString");
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
@@ -45,7 +41,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Name: " + name + "\nMood: " + moodString;
+        String who = "Username: " + name ;
         test.setText(who);
 
         /*------------------------------------------------*/
@@ -55,7 +51,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FilteredMoodActivity.this, ViewMoodActivity.class);
+                Intent intent = new Intent(FollowerViewActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
@@ -67,20 +63,25 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     @Override
     protected void onStart() {
         super.onStart();
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
+        mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-
-        Bundle bundle = getIntent().getExtras();
-        moodString = bundle.getString("moodString");
-
-        myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getFilteredMood(moodString);
-
-        if (moodArrayList.size() <1) {
+        ArrayList<String> participantListStr = participant.getFollowingList();
+        if (participantListStr.size() < 1){
             noMoods();
         }
-        adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
+        //ArrayList<Participant> tempArrayParticipant = new ArrayList<>();
+        //ArrayList<Mood> tempArrayMood = new ArrayList<>();
+        for (int i = 0; i<participantListStr.size(); i++) {
+            Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
+            ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
+            for (Mood m : partMoods) {
+                moodArrayList.add(m);
+            }
+        }
+
+        adapter = new MoodFollowerListAdapter(FollowerViewActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
     }
@@ -88,7 +89,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No " +moodString+" moods were found.")
+                .setMessage("All of your followers do not have any available moods.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -98,8 +99,11 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
                 .show();
     }
 
+
+
     @Override
     public void update(MoodPlus moodPlus) {
 
     }
+
 }

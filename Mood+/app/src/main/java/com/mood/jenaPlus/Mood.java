@@ -26,12 +26,12 @@ import java.util.Date;
 
 public class Mood implements Serializable{
     private String id;
+    private String userName;
     private String text;
     private Date date;
     private Boolean addLocation;
     private Double latitude;
     private Double longitude;
-    //private NewLocation newLocation; // GET LOCATION
     private String social;
     private String photo;
     private String color;
@@ -48,7 +48,7 @@ public class Mood implements Serializable{
      */
 
     public Mood(String text, Boolean addLocation, Double Latitude, Double Longitude, String id,
-                String social, String photo, String color) {
+                String social, String photo, String color, String userName) {
         this.text = text;
         this.addLocation = addLocation;
         this.latitude = Latitude;
@@ -58,12 +58,14 @@ public class Mood implements Serializable{
         this.photo = photo;
         this.color = color;
         this.date = new Date();
+        this.userName = userName;
+
 
         //this.save();    // saves to elastic search server
     }
 
     public Mood(String text, Boolean addLocation, String id,
-                String social, String photo, String color) {
+                String social, String photo, String color, String userName) {
         this.text = text;
         this.addLocation = addLocation;
         this.id = id;
@@ -71,6 +73,7 @@ public class Mood implements Serializable{
         this.photo = photo;
         this.color = color;
         this.date = new Date();
+        this.userName = userName;
 
         //this.save();    // saves to elastic search server
     }
@@ -297,6 +300,17 @@ public class Mood implements Serializable{
         this.addLocation = addLocation;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+
+
     /**
      * New string string.
      *
@@ -315,21 +329,6 @@ public class Mood implements Serializable{
         return newString();
     }
 
-
-    // Taken from http://stackoverflow.com/questions/14220554/how-to-serialize-a-third-party-non-serializable-final-class-e-g-googles-latln
-    // 13 March 2017 10:22
-    /*
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject();
-        out.writeDouble(location.latitude);
-        out.writeDouble(location.longitude);
-    }
-
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-
-        in.defaultReadObject();
-        location = new LatLng(in.readDouble(), in.readDouble());
-    }*/
 
 }
 

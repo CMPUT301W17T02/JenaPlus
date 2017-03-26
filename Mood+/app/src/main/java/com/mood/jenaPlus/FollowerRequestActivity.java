@@ -52,12 +52,20 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
         super.onStart();
 
         try {
+            ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
             mpController = MoodPlusApplication.getMainMPController();
             Participant participant = mpController.getParticipant();
-            participantList = participant.getFollowList().getPendingFollowers();
-            if (participantList.size() < 1){
+            participantListStr = participant.getPendingFollowers();
+            if (participantListStr.size() < 1){
                 noFollowerRequests();
             }
+            ArrayList<Participant> tempArray = new ArrayList<>();
+            for (int i = 0; i<participantListStr.size(); i++) {
+                Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
+                tempArray.add(tempParticipant);
+            }
+
+            participantList = tempArray;
             adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
 
@@ -95,10 +103,10 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         switch (item.getItemId()){
             case ACCEPT:
-                mpController.acceptRequest(participant);
+                mpController.acceptRequest(participant.getUserName());
                 break;
             case REJECT:
-                mpController.rejectRequest(participant);
+                mpController.rejectRequest(participant.getUserName());
                 break;
         }
 
