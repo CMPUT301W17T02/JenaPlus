@@ -17,17 +17,8 @@ import java.util.ArrayList;
 
 public class MoodFollowerListAdapter extends ArrayAdapter<Mood> {
 
-    /**
-     * The Context.
-     */
     Context context;
 
-    /**
-     * Instantiates a new Mood list adapter.
-     *
-     * @param context  the context
-     * @param moodList the mood list
-     */
     public MoodFollowerListAdapter(Context context, ArrayList<Mood> moodList){
         super(context,0,moodList);
         this.context = context;
