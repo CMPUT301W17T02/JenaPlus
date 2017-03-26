@@ -8,55 +8,55 @@ import java.util.ArrayList;
  */
 
 public class FollowList {
-    private ArrayList<Participant> pendingFollowing = new ArrayList<Participant>();
-    private ArrayList<Participant> followingList = new ArrayList<Participant>();
-    private ArrayList<Participant> pendingFollowers = new ArrayList<Participant>();
-    private ArrayList<Participant> followerList = new ArrayList<Participant>();
+    private ArrayList<String> pendingFollowing = new ArrayList<String>();
+    private ArrayList<String> followingList = new ArrayList<>();
+    private ArrayList<String> pendingFollowers = new ArrayList<>();
+    private ArrayList<String> followerList = new ArrayList<>();
 
-    public void followingRequest(Participant userName) {
+    public void followingRequest(String userName) {
         pendingFollowing.add(userName);
     }
 
-    public void followingAccepted(Participant userName) {
+    public void followingAccepted(String userName) {
         followingList.add(userName);
     }
 
-    public void followingRejected(Participant userName) {
+    public void followingRejected(String userName) {
         pendingFollowing.remove(userName);
     }
 
-    public void followerRequest(Participant userName) {
+    public void followerRequest(String userName) {
         pendingFollowers.add(userName);
     }
 
-    public void followerAccepted(Participant userName) {
+    public void followerAccepted(String userName) {
         pendingFollowers.remove(userName);
         //followerList.add(userName);
     }
 
-    public void followerRejected(Participant userName) {
+    public void followerRejected(String userName) {
         pendingFollowers.remove(userName);
 
     }
 
 
-    public ArrayList<Participant> getPendingFollowing() {
+    public ArrayList<String> getPendingFollowing() {
         return pendingFollowing;
     }
 
-    public ArrayList<Participant> getFollowingList() {
+    public ArrayList<String> getFollowingList() {
         return followingList;
     }
 
-    public ArrayList<Participant> getPendingFollowers() {
+    public ArrayList<String> getPendingFollowers() {
         return pendingFollowers;
     }
 
-    public ArrayList<Participant> getFollowerList() {
+    public ArrayList<String> getFollowerList() {
         return followerList;
     }
 
-    public Participant getFollowingParticipant(int index) {
+    public String getFollowingParticipant(int index) {
         return followingList.get(index);
     }
 

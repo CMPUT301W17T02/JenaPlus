@@ -7,67 +7,27 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-/**
- * Created by carrotji on 2017-02-25.
- */
 public class MoodPlus extends MPModel<MPView> {
 
-    /**
-     * The Participant.
-     */
     public Participant participant; // The participant who logs in
 
-    /**
-     * The User moods.
-     */
     protected UserMoodList userMoods; // ArrayList of user moods
 
-    /**
-     * Gets user moods.
-     *
-     * @return the user moods
-     */
     public UserMoodList getUserMoods() {
         return userMoods;
     }
 
-    /**
-     * Sets moods.
-     *
-     * @param newMoods the new moods
-     */
     public void setMoods(UserMoodList newMoods) {
         this.userMoods = newMoods;
     }
 
-    /**
-     * Gets participant.
-     *
-     * @return the participant
-     */
     public Participant getParticipant() {
         return participant;
     }
 
-    /**
-     * Sets participant.
-     *
-     * @param aParticipant the a participant
-     */
     public void setParticipant(Participant aParticipant) {
         this.participant = aParticipant;
     }
-
-    /**
-     * Add new mood.
-     *
-     * @param text        the text
-     * @param addLocation the add location
-     * @param id          the id
-     * @param social      the social
-     * @param photo       the photo
-     * @param color       the color
-     */
 
     public void addNewMood1(String text, Boolean addLocation, Double latitude, Double longitude, String id,
                            String social, String photo, String color) {
@@ -88,38 +48,25 @@ public class MoodPlus extends MPModel<MPView> {
     }
 
 
-    /**
-     * Delete mood.
-     *
-     * @param mood the mood
-     */
     public void deleteMood(Mood mood) {
 		participant.getUserMoodList().deleteUserMood(mood);
 		updateParticipant();
 		notifyViews();
 	}
 
-    /**
-     * Gets participant elastic.
-     *
-     * @param aName the a name
-     */
     public void getParticipantElastic(String aName) {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
         participant = eController.getUsingParticipant(aName);
         notifyViews();
     }
 
-    /**
-     * Update participant.
-     */
     public void updateParticipant() {
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
         eController.updateUser(participant);
     }
 
-    public void addFollowRequest(Participant aParticipant) {
-        participant.getFollowList().followingRequest(aParticipant);
+    public void addFollowRequest(String aParticipant) {
+        participant.addPendingFollowing(aParticipant);
         updateParticipant();
         notifyViews();
     }
@@ -129,35 +76,36 @@ public class MoodPlus extends MPModel<MPView> {
         eController.updateUser(aParticipant);
     }
 
-    public void setPendingFollowers(Participant aParticipant) {
+    public void setPendingFollowers(String aParticipant) {
 
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
-        Participant otherParticipant = eController.getUsingParticipant(aParticipant.getUserName());
-        Log.i("printing", otherParticipant.getUserName());
-        otherParticipant.getFollowList().followerRequest(participant);
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant);
+        Log.i("otherpartSETPENDING", otherParticipant.getUserName());
+        otherParticipant.addPendingFollowers(participant.getUserName());
         updateParticipant2(otherParticipant);
         notifyViews();
     }
 
-    public void acceptRequest(Participant aParticipant) {
-        participant.getFollowList().followerAccepted(aParticipant);
+    public void acceptRequest(String aParticipant) {
+
+        participant.acceptFollower(aParticipant);
+        updateParticipant();
+
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant);
+        Log.i("otherParticipant", otherParticipant.getUserName());
+        otherParticipant.acceptedFollowing(participant.getUserName());
+        updateParticipant2(otherParticipant);
+        notifyViews();
+    }
+
+    public void rejectRequest(String aParticipant) {
+        participant.removePendingFollowers(aParticipant);
         updateParticipant();
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
-        Participant otherParticipant = eController.getUsingParticipant(aParticipant.getUserName());
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant);
         Log.i("printing", otherParticipant.getUserName());
-        otherParticipant.getFollowList().followingRejected(participant);
-        otherParticipant.getFollowList().followingAccepted(participant);
-        updateParticipant2(otherParticipant);
-        notifyViews();
-    }
-
-    public void rejectRequest(Participant aParticipant) {
-        participant.getFollowList().followingRejected(aParticipant);
-        updateParticipant();
-        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
-        Participant otherParticipant = eController.getUsingParticipant(aParticipant.getUserName());
-        Log.i("printing", otherParticipant.getUserName());
-        otherParticipant.getFollowList().followingRejected(participant);
+        otherParticipant.removePendingFollowing(participant.getUserName());
         updateParticipant2(otherParticipant);
         notifyViews();
     }
@@ -169,9 +117,6 @@ public class MoodPlus extends MPModel<MPView> {
 
 
 
-    /**
-     * Instantiates a new Mood plus.
-     */
     MoodPlus(){
         super();
     }

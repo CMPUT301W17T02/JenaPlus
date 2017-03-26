@@ -131,10 +131,10 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         switch (item.getItemId()){
             case FOLLOW:
                 Participant participant = (Participant) participantListView.getItemAtPosition(longClickedItemIndex);
-                Log.i("maybe?", participant.getUserName());
+                Log.i("fromfollowactivity", participant.getUserName());
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addFollowRequest(participant);
-                mpController.setPendingFollowers(participant);
+                mpController.addFollowRequest(participant.getUserName());
+                mpController.setPendingFollowers(participant.getUserName());
                 break;
         }
 
