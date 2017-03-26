@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -78,27 +84,7 @@ public class MoodPlusActivity extends AppCompatActivity
         moodListView = (ListView) findViewById(R.id.listView);
 
         setSupportActionBar(toolbar);
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                new BottomNavigationView.OnNavigationItemSelectedListener(){
-                    @Override
-                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.your_mood:
-
-                                break;
-                            case R.id.following_mood:
-                                Intent intent = new Intent(MoodPlusActivity.this, FollowActivity.class);
-                                startActivity(intent);
-                                break;
-
-
-                        }
-                        return true;
-                    }
-                }
-        );
 
         /* LOADING THE LOGGED IN PARTICIPANT */
 
@@ -153,7 +139,7 @@ public class MoodPlusActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MoodPlusActivity.this, FollowerViewActivity.class);
+                Intent intent = new Intent(MoodPlusActivity.this, MainActivity.class);
                 startActivity(intent);
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
@@ -375,5 +361,6 @@ public class MoodPlusActivity extends AppCompatActivity
         Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
         startActivity(intent);
     }
+
 
 }
