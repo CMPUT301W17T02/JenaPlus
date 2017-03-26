@@ -121,7 +121,7 @@ public class MoodPlusActivity extends AppCompatActivity
         String id = participant.getId();
 
 
-        moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+  /*      moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
@@ -141,7 +141,7 @@ public class MoodPlusActivity extends AppCompatActivity
                 return false;
 
             }
-        });
+        });*/
 
         /*----------------------ADD MOOD BUTTON-----------------------*/
 
@@ -158,7 +158,7 @@ public class MoodPlusActivity extends AppCompatActivity
         });
 
         /*-----------------FOLLOWING LIST BUTTON--------------------------*/
-
+/*
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,10 +167,10 @@ public class MoodPlusActivity extends AppCompatActivity
                 Intent intent = new Intent(MoodPlusActivity.this, MainActivity.class);
                 //Intent intent = new Intent(MoodPlusActivity.this, FollowerViewActivity.class);
                 startActivity(intent);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
-        });
+        });*/
 
 
 
@@ -280,6 +280,7 @@ public class MoodPlusActivity extends AppCompatActivity
         moodListView.setAdapter(adapter);
     }
 
+    /*
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         menu.add(Menu.NONE, EDIT_PERSON_RESULT_CODE, menu.NONE, "Edit");
@@ -330,7 +331,7 @@ public class MoodPlusActivity extends AppCompatActivity
 
         }
         return super.onContextItemSelected(item);
-    }
+    }*/
 
     @Override
     public void update(MoodPlus moodPlus){
@@ -389,6 +390,7 @@ public class MoodPlusActivity extends AppCompatActivity
     }
 
     private class CustomAdapter extends FragmentPagerAdapter {
+        //taken from https://github.com/miskoajkula/viewpager-tablayout/tree/master/app/src/main/java/my/test/myapplication
 
         private String fragments [] = {"YOU","FOLLOWING"};
 
