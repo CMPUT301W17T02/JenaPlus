@@ -45,10 +45,12 @@ public class MoodFollowerListAdapter extends ArrayAdapter<Mood> {
         TextView dateText = (TextView) view.findViewById(R.id.date);
         TextView messageText = (TextView) view.findViewById(R.id.message);
         ImageView moodIconImage = (ImageView) view.findViewById(R.id.moodIcon);
+        TextView nameText = (TextView) view.findViewById(R.id.followerName);
         //TextView moodIconText = (TextView) view.findViewById(R.id.moodIconString);
 
         String aId = moodList.getId();
         String color = moodList.getColor();
+        String userName = moodList.getUserName();
 
         view.setBackgroundColor(Color.parseColor(color));
 
@@ -57,7 +59,7 @@ public class MoodFollowerListAdapter extends ArrayAdapter<Mood> {
 
         dateText.setText(moodList.getDateString());
         messageText.setText(moodList.getText());
-        //moodIconText.setText(moodList.getId());
+        nameText.setText(userName);
         moodIconImage.setImageResource(recId);
 
         return view;
