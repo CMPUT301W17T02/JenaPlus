@@ -1,6 +1,9 @@
 package com.mood.jenaPlus;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +24,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     ArrayList<Mood> filteredArrayList = new ArrayList<>();
     String keyword = "";
 
+    Context context = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -75,10 +79,27 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredMoodText(keyword);
 
+        if (moodArrayList.size() < 1) {
+            noMoods();
+        }
+
         //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         adapter = new MoodListAdapter(FilteredTextActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
+    }
+
+    public void noMoods() {
+        new AlertDialog.Builder(context)
+                .setTitle("No Moods")
+                .setMessage("No moods with keyword \'" + keyword +"\' were found.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override
@@ -86,23 +107,4 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
 
     }
 
-    public void getNewList() {
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-        myMoodList = participant.getUserMoodList();
-        int listSize = moodArrayList.size();
-
-        for (int i = 0; i<listSize; i++){
-            String m1 = keyword;
-            String m2 = myMoodList.getUserMood(i).getText();
-            if (m2.toLowerCase().contains(m1.toLowerCase())) {
-                filteredArrayList.add(myMoodList.getUserMood(i));
-            }
-        }
-
-        moodArrayList.clear();
-        moodArrayList.addAll(filteredArrayList);
-        adapter.notifyDataSetChanged();
-    }
 }

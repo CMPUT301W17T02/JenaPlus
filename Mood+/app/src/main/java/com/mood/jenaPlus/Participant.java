@@ -29,7 +29,6 @@ public class Participant extends User {
     private ArrayList<String> followerList = new ArrayList<>();
 
 
-
     /**
      * Get id string.
      *
@@ -48,11 +47,6 @@ public class Participant extends User {
         this.id = id;
     }
 
-
-    /*public void addFollowingParticipant(Participant participant) {
-        followingParticipants.addToFollowingList(participant);
-    }*/
-
     public boolean hasUserName(String newName) {
         if (newName.equals(this.userName)) {
             return true;
@@ -60,18 +54,6 @@ public class Participant extends User {
             return false;
         }
     }
-
-
-//    public FollowList getFollowList() {
-//        return followList;
-//    }
-//
-//    public void setFollowList(FollowList followList) {
-//        this.followList = followList;
-//    }
-
-
-
 
     /**
      * Instantiates a new Participant.

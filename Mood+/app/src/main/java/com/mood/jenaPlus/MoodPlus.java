@@ -33,7 +33,6 @@ public class MoodPlus extends MPModel<MPView> {
                            String social, String photo, String color) {
 
         participant.addNewMood1(text,addLocation,latitude,longitude,id,social,photo,color);
-        //userMoods.addUserMood(aMood);
         updateParticipant();
         notifyViews();
     }
@@ -42,7 +41,6 @@ public class MoodPlus extends MPModel<MPView> {
                             String social, String photo, String color) {
 
         participant.addNewMood2(text,addLocation,id,social,photo,color);
-        //userMoods.addUserMood(aMood);
         updateParticipant();
         notifyViews();
     }
@@ -102,6 +100,7 @@ public class MoodPlus extends MPModel<MPView> {
     public void rejectRequest(String aParticipant) {
         participant.removePendingFollowers(aParticipant);
         updateParticipant();
+
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
         Participant otherParticipant = eController.getUsingParticipant(aParticipant);
         Log.i("printing", otherParticipant.getUserName());
@@ -109,13 +108,6 @@ public class MoodPlus extends MPModel<MPView> {
         updateParticipant2(otherParticipant);
         notifyViews();
     }
-
-
-
-
-
-
-
 
     MoodPlus(){
         super();
