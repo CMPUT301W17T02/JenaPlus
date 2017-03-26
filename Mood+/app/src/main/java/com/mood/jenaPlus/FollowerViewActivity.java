@@ -31,7 +31,7 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower_view);
-
+        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
 
@@ -43,7 +43,7 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Username: " + name ;
-        //test.setText(who);
+        test.setText(who);
 
         /*------------------------------------------------*/
 
@@ -72,20 +72,15 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
         if (participantListStr.size() < 1){
             noMoods();
         }
-        ArrayList<Participant> tempArrayParticipant = new ArrayList<>();
-        ArrayList<Mood> tempArrayMood = new ArrayList<>();
+        //ArrayList<Participant> tempArrayParticipant = new ArrayList<>();
+        //ArrayList<Mood> tempArrayMood = new ArrayList<>();
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
-            tempArrayParticipant.add(tempParticipant);
-        }
-        for (int i = 0; i<participantListStr.size(); i++) {
-            UserMoodList partMoods = tempArrayParticipant.get(i).getUserMoodList();
-            for (int j = 0; j<partMoods.getSize(); i++) {
-                tempArrayMood.add(partMoods.getUserMood(j));
+            ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
+            for (Mood m : partMoods) {
+                moodArrayList.add(m);
             }
         }
-
-        moodArrayList = tempArrayMood;
 
         adapter = new MoodFollowerListAdapter(FollowerViewActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
