@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class FollowerViewActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
@@ -71,8 +73,7 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
         if (participantListStr.size() < 1){
             noMoods();
         }
-        //ArrayList<Participant> tempArrayParticipant = new ArrayList<>();
-        //ArrayList<Mood> tempArrayMood = new ArrayList<>();
+
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
             ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
@@ -80,6 +81,8 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
                 moodArrayList.add(m);
             }
         }
+
+        getUserMoodOrderedList();
 
         adapter = new MoodFollowerListAdapter(FollowerViewActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
@@ -97,6 +100,18 @@ public class FollowerViewActivity extends AppCompatActivity implements MPView<Mo
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    public ArrayList<Mood> getUserMoodOrderedList() {
+
+        Collections.sort(moodArrayList, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return this.moodArrayList;
     }
 
 
