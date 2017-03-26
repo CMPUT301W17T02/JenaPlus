@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -18,24 +16,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
 
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -271,18 +264,18 @@ public class MoodPlusActivity extends AppCompatActivity
         return true;
     }
 
-  /*  @Override
+    @Override
     protected void onStart(){
         super.onStart();
 
-        mpController = MoodPlusApplication.getMainMPController();
+        /*mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getUserMoodOrderedList();
 
         adapter = new MoodListAdapter(MoodPlusActivity.this,moodArrayList);
-        moodListView.setAdapter(adapter);
-    }*/
+        moodListView.setAdapter(adapter);*/
+    }
 
     /*
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -406,7 +399,7 @@ public class MoodPlusActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new Fragment1();
+                    return new MoodListViewActivity();
                 case 1:
                     return new FollowerViewActivity();
                 default:

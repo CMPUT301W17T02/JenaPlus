@@ -129,4 +129,9 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
 }

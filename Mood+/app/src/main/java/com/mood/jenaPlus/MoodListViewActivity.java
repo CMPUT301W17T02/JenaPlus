@@ -35,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by carrotji on 2017-03-25.
  */
 
-public class Fragment1 extends Fragment implements MPView<MoodPlus> {
+public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
     private AlertDialog.Builder deleteAlertBuilder;
