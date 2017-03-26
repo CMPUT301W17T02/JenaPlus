@@ -3,6 +3,8 @@ package com.mood.jenaPlus;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -24,6 +27,7 @@ import android.widget.ListView;
 
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -73,8 +77,28 @@ public class MoodPlusActivity extends AppCompatActivity
 
         moodListView = (ListView) findViewById(R.id.listView);
 
-        TextView test = (TextView) findViewById(R.id.test_string);
         setSupportActionBar(toolbar);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener(){
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.your_mood:
+
+                                break;
+                            case R.id.following_mood:
+                                Intent intent = new Intent(MoodPlusActivity.this, FollowActivity.class);
+                                startActivity(intent);
+                                break;
+
+
+                        }
+                        return true;
+                    }
+                }
+        );
 
         /* LOADING THE LOGGED IN PARTICIPANT */
 
@@ -84,8 +108,7 @@ public class MoodPlusActivity extends AppCompatActivity
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Username: "+ name ;
-        test.setText(who);
+
 
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -224,7 +247,6 @@ public class MoodPlusActivity extends AppCompatActivity
         moodArrayList = myMoodList.getUserMoodOrderedList();
 
         adapter = new MoodListAdapter(MoodPlusActivity.this,moodArrayList);
-        //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         moodListView.setAdapter(adapter);
     }
 
