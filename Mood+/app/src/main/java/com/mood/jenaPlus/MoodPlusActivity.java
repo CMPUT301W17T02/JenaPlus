@@ -267,7 +267,7 @@ public class MoodPlusActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
+  /*  @Override
     protected void onStart(){
         super.onStart();
 
@@ -278,7 +278,7 @@ public class MoodPlusActivity extends AppCompatActivity
 
         adapter = new MoodListAdapter(MoodPlusActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
-    }
+    }*/
 
     /*
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
@@ -402,9 +402,9 @@ public class MoodPlusActivity extends AppCompatActivity
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new Fragment2();
-                case 1:
                     return new Fragment1();
+                case 1:
+                    return new FollowerViewActivity();
                 default:
                     return null;
             }

@@ -1,61 +1,84 @@
 package com.mood.jenaPlus;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Fragment1 extends Fragment implements MPView<MoodPlus>{
+import static android.app.Activity.RESULT_OK;
 
+/**
+ * Created by carrotji on 2017-03-25.
+ */
+
+public class Fragment1 extends Fragment implements MPView<MoodPlus> {
+    private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
-    ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
-    private ArrayAdapter<Mood> adapter;
+    private AlertDialog.Builder deleteAlertBuilder;
 
+    private ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+    protected ArrayAdapter<Mood> adapter;
+    private UserMoodList myMoodList = new UserMoodList();
+    private FollowingMoodList foMoodList = new FollowingMoodList();
+
+    private String searchText = "";
+
+    private int longClickedItemIndex;
+    private static final int VIEW_PERSON_RESULT_CODE = 0;
+    private static final int DELETE_PERSON_RESULT_CODE = 1;
+    private static final int EDIT_PERSON_RESULT_CODE = 2;
     protected MainMPController mpController;
-    Context context;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        context = container.getContext();
-        return  inflater.inflate(R.layout.activity_follower_view,container,false);
+        return  inflater.inflate(R.layout.activity_fragment2,container,false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
 
-        TextView test = (TextView) getView().findViewById(R.id.test_string);
         moodListView = (ListView) getView().findViewById(R.id.listView);
 
+        //getActivity().setSupportActionBar(toolbar);
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
+
+        /* LOADING THE LOGGED IN PARTICIPANT */
+
+        final MainMPController mpController = MoodPlusApplication.getMainMPController();
+
         Participant participant = mpController.getParticipant();
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Username: " + name ;
-        test.setText(who);
 
 
-
-        moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,53 +88,108 @@ public class Fragment1 extends Fragment implements MPView<MoodPlus>{
                 startActivity(intent);
             }
         });
+
+
+        registerForContextMenu(moodListView);
+        moodListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, final View view, final int position, long id) {
+
+                longClickedItemIndex = position;
+                return false;
+
+            }
+        });
+
+
     }
+
     @Override
-    public void onStart() {
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_following) {
+            Intent intent = new Intent(getActivity(), FollowActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart(){
         super.onStart();
-        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-        ArrayList<String> participantListStr = participant.getFollowingList();
-        if (participantListStr.size() < 1){
-            noMoods();
-        }
+        myMoodList = participant.getUserMoodList();
+        moodArrayList = myMoodList.getUserMoodOrderedList();
 
-        for (int i = 0; i<participantListStr.size(); i++) {
-            Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
-            ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
-            for (Mood m : partMoods) {
-                moodArrayList.add(m);
-            }
-        }
-
-        adapter = new MoodFollowerListAdapter(getActivity(),moodArrayList);
+        adapter = new MoodListAdapter(getActivity(),moodArrayList);
         moodListView.setAdapter(adapter);
-
     }
 
-    public void noMoods() {
-        new AlertDialog.Builder(context)
-                .setTitle("No Moods")
-                .setMessage("All of your followers do not have any available moods.")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getActivity().finish();
+    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, view, menuInfo);
+        menu.add(Menu.NONE, EDIT_PERSON_RESULT_CODE, menu.NONE, "Edit");
+        menu.add(Menu.NONE, DELETE_PERSON_RESULT_CODE, menu.NONE, "Delete");
+    }
+
+    //Go to edit mood activity if long clicked item
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case EDIT_PERSON_RESULT_CODE:
+
+                Intent intent = new Intent(getActivity(), EditMoodActivity.class);
+
+                intent.putExtra("editMood", (Serializable) moodListView.getItemAtPosition(longClickedItemIndex));
+                intent.putExtra("pos", longClickedItemIndex);
+                startActivity(intent);
+                break;
+
+
+            case DELETE_PERSON_RESULT_CODE:
+                deleteAlertBuilder = new AlertDialog.Builder(getActivity());
+                getActivity().setResult(RESULT_OK);
+
+                deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event?");
+
+                // user selects "Yes" and the Mood Event long clicked will be deleted.
+                deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        mpController.deleteMoodParticipant(moodArrayList.get(longClickedItemIndex));
+                        adapter.notifyDataSetChanged();
                     }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+                });
+
+                // user selects "No" and the Mood Even long clicked will NOT be deleted.
+                deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                AlertDialog alertDialog = deleteAlertBuilder.create();
+                alertDialog.show();
+
+                return false;
+
+
+        }
+        return super.onContextItemSelected(item);
     }
-
-
 
     @Override
-    public void update(MoodPlus moodPlus) {
+    public void update(MoodPlus moodPlus){
 
     }
-
-
 
 
 }
