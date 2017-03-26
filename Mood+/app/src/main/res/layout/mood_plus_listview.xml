@@ -22,12 +22,7 @@
         android:layout_height= "95dp"
         android:layout_gravity="center_horizontal"
         android:id="@+id/moodIcon"/>
-    <!--TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/moodIconString"
-        android:layout_gravity="center_horizontal"
-        android:hint="my mood"/-->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -109,6 +109,19 @@ public class MoodPlus extends MPModel<MPView> {
         notifyViews();
     }
 
+    public void unfollowParticipant(String aParticipant) {
+        participant.removeFollowingList(aParticipant);
+        updateParticipant();
+
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        Participant otherParticipant = eController.getUsingParticipant(aParticipant);
+        otherParticipant.removeFollowerList(participant.getUserName());
+        updateParticipant2(otherParticipant);
+        notifyViews();
+    }
+
+
+
     MoodPlus(){
         super();
     }
