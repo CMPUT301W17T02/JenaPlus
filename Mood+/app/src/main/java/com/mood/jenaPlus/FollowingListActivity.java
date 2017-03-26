@@ -59,6 +59,7 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
         super.onStart();
 
         try {
+            participantList.clear();
             ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
             mpController = MoodPlusApplication.getMainMPController();
             Participant participant = mpController.getParticipant();
@@ -80,6 +81,16 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
             Log.i("Error", "Failed to get the users out of the async object");
         }
     }
+
+    @Override
+    protected void onStop() {
+        participantList.clear();
+
+    }
+
+
+
+
 
     public void noFollowerRequests() {
         new AlertDialog.Builder(context)
