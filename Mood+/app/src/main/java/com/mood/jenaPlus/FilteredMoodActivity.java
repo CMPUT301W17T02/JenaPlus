@@ -21,7 +21,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-    ArrayList<Mood> filteredArrayList = new ArrayList<>();
     String moodString = "";
 
     Context context = this;
