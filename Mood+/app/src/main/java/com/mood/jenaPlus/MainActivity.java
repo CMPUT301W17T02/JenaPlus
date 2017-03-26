@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new FollowerViewActivity();
+                    return new Fragment1();
                 case 1:
-                    return new FollowerViewActivity();
+                    return new Fragment1();
                 default:
                     return null;
             }
