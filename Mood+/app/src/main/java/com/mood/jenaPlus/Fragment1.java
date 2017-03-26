@@ -41,7 +41,7 @@ public class Fragment1 extends Fragment implements MPView<MoodPlus>{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*TextView test = (TextView) getView().findViewById(R.id.test_string);
+        TextView test = (TextView) getView().findViewById(R.id.test_string);
         moodListView = (ListView) getView().findViewById(R.id.listView);
 
 
@@ -64,12 +64,12 @@ public class Fragment1 extends Fragment implements MPView<MoodPlus>{
                 intent.putExtra("pos", position);
                 startActivity(intent);
             }
-        });*/
+        });
     }
     @Override
     public void onStart() {
         super.onStart();
-        /*ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
@@ -87,7 +87,7 @@ public class Fragment1 extends Fragment implements MPView<MoodPlus>{
         }
 
         adapter = new MoodFollowerListAdapter(getActivity(),moodArrayList);
-        moodListView.setAdapter(adapter);*/
+        moodListView.setAdapter(adapter);
 
     }
 

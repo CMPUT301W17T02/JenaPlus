@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new Fragment1();
+                    return new Fragment2();
                 case 1:
                     return new Fragment1();
                 default:

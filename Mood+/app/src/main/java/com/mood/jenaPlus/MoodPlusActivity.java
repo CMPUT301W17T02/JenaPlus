@@ -139,8 +139,8 @@ public class MoodPlusActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                //Intent intent = new Intent(MoodPlusActivity.this, MainActivity.class);
-                Intent intent = new Intent(MoodPlusActivity.this, FollowerViewActivity.class);
+                Intent intent = new Intent(MoodPlusActivity.this, MainActivity.class);
+                //Intent intent = new Intent(MoodPlusActivity.this, FollowerViewActivity.class);
                 startActivity(intent);
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
