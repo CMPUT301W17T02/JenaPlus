@@ -155,9 +155,9 @@ public class ElasticsearchMPController {
                 // where is client?
                 DocumentResult result = client.execute(index);
                 if (result.isSucceeded()) {
-                    Log.i("Works","Possibly works?");
+                    Log.i("Success","Participant SUCCESSFULLY updated");
                 } else {
-                    Log.i("Error", "Elasticsearch was not able to update");
+                    Log.e("Error", "Elasticsearch was not able to update yarrrr");
                 }
             } catch (Exception e) {
                 Log.i("Error", "The application failed to build and send the users");

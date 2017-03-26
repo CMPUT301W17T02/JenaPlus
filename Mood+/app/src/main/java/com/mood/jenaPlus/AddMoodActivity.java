@@ -17,6 +17,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -50,6 +52,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -74,7 +78,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private EditText message;
     private GridView gridview;
     private ImageView image;
-    final static int MAX_SIZE = 65536;
 
     Context context = this;
 
@@ -82,8 +85,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Location location;
     private String photo = "";
     private Boolean moodChosen = false;
-
-    private static final int CAMERA_REQUEST = 1888;
 
     private Double latitude;
     private Double longitude;
@@ -136,8 +137,9 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 photo = "photoPicked";
-                                cameraIntent();
+                                //cameraIntent();
                                 //galleryIntent();
+                                dispatchTakePictureIntent();
 
                                 break;
                             case R.id.socialPopup:
@@ -231,60 +233,113 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         startActivityForResult(intent, 1);
     }
 
-    private void cameraIntent(){
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, 1);
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String imageFileName = "JPEG_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode,data);
-        if(requestCode == 1){
-            if(resultCode == Activity.RESULT_OK){
-                Bundle extras = data.getExtras();
-                Bitmap photo = (Bitmap) extras.get("data");
-                image.setImageBitmap(photo);
-
-         /*    // Uri selectedImage = data.getData();
-
-                if (getDropboxIMGSize(selectedImage))
-                    //image.setImageURI(selectedImage);
-                else{
-                    AlertDialog alertDialog = new AlertDialog.Builder(AddMoodActivity.this).create();
-                    alertDialog.setTitle("Adding Image");
-                    alertDialog.setMessage("Image is too large");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
-                }*/
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                // Error occurred while creating the File
+                e.printStackTrace();
+                photoFile = null;
+                mCurrentPhotoPath = null;
+                Log.i("ERROR creating a file","Error occurred while creating the File");
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 1234);
             }
         }
     }
 
-    private boolean getDropboxIMGSize(Uri uri){
-        // Taken from http://stackoverflow.com/questions/16440863/can-i-get-image-file-width-and-height-from-uri-in-android
-        // 2017-03-11 8:30
-        boolean size = false;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(new File(uri.getPath()).getAbsolutePath(), options);
-        int imageHeight = options.outHeight;
-        int imageWidth = options.outWidth;
+  /*  private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    } */
 
-        int totalPixels;
-        totalPixels = imageHeight*imageWidth;
-        if (totalPixels < MAX_SIZE/3){
-            size = true;
+    private void handleBigCameraPhoto() {
+
+        if (mCurrentPhotoPath != null) {
+            setPic();
+            //galleryAddPic();
+            mCurrentPhotoPath = null;
         }
 
-        return size;
-
     }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = image.getWidth();
+        int targetH = image.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        image.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode,data);
+        if(requestCode == 1234){
+            if(resultCode == Activity.RESULT_OK){
+                handleBigCameraPhoto();
+                //Bundle extras = data.getExtras();
+                //Bitmap photo = (Bitmap) extras.get("data");
+                //image.setImageBitmap(photo);
+
+                //Intent intent = new Intent(AddMoodActivity.this, ViewMoodActivity.class);
+                //intent.putExtra("bmp_img", photo);
+
+                // Uri selectedImage = data.getData();
+                // image.setImageURI(selectedImage);
+
+            }
+        }
+    }
+
 
     public int getID() {
         return idNum;

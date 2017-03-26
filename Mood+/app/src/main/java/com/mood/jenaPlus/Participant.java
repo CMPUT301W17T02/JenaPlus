@@ -17,13 +17,17 @@ import io.searchbox.annotations.JestId;
  */
 public class Participant extends User {
 
-    private UserMoodList userMoodList = new UserMoodList();
-    private MoodList followingMoodList = new MoodList();
-    private FollowList followingParticipants = new FollowList();
-    private FollowList followersParticipants = new FollowList();
-
     @JestId
     private String id;
+
+    private UserMoodList userMoodList = new UserMoodList();
+    private MoodList followingMoodList = new MoodList();
+
+    private ArrayList<String> pendingFollowing = new ArrayList<String>();
+    private ArrayList<String> followingList = new ArrayList<>();
+    private ArrayList<String> pendingFollowers = new ArrayList<>();
+    private ArrayList<String> followerList = new ArrayList<>();
+
 
     /**
      * Get id string.
@@ -41,15 +45,6 @@ public class Participant extends User {
      */
     public void setId(String id){
         this.id = id;
-    }
-
-    /**
-     * Add following participant.
-     *
-     * @param participant the participant
-     */
-    public void addFollowingParticipant(Participant participant) {
-        followingParticipants.addToFollowingList(participant);
     }
 
     public boolean hasUserName(String newName) {
@@ -155,131 +150,63 @@ public class Participant extends User {
         this.followingMoodList = followingMoodList;
     }
 
-    /**
-     * Following participants accepted.
-     *
-     * @param userName the user name
-     */
-    public void followingParticipantsAccepted(Participant userName) {
-        followingParticipants.followingAccepted(userName);
+    /* ----------------------FOLLOWER/FOLLOWING LISTS ---------------------------*/
+
+    public ArrayList<String> getPendingFollowing() {
+        return pendingFollowing;
     }
 
-    /**
-     * Following participants rejected.
-     *
-     * @param userName the user name
-     */
-    public void followingParticipantsRejected(Participant userName) {
-        followingParticipants.followingRejected(userName);
+    public void setPendingFollowing(ArrayList<String> pendingFollowing) {
+        this.pendingFollowing = pendingFollowing;
     }
 
-    /**
-     * Following participants request.
-     *
-     * @param userName the user name
-     */
-    public void followingParticipantsRequest(Participant userName){
-        followingParticipants.followingRequest(userName);
+    public ArrayList<String> getFollowingList() {
+        return followingList;
     }
 
-    /**
-     * Follower participants accepted.
-     *
-     * @param userName the user name
-     */
-    public void followerParticipantsAccepted(Participant userName) {
-        followersParticipants.followerAccepted(userName);
+    public void setFollowingList(ArrayList<String> followingList) {
+        this.followingList = followingList;
     }
 
-    /**
-     * Follower participants rejected.
-     *
-     * @param userName the user name
-     */
-    public void followerParticipantsRejected(Participant userName) {
-        followersParticipants.followerRejected(userName);
+    public ArrayList<String> getPendingFollowers() {
+        return pendingFollowers;
     }
 
-    /**
-     * Follower participants request.
-     *
-     * @param userName the user name
-     */
-    public void followerParticipantsRequest(Participant userName){
-        followersParticipants.followerRequest(userName);
+    public void setPendingFollowers(ArrayList<String> pendingFollowers) {
+        this.pendingFollowers = pendingFollowers;
     }
 
-    /**
-     * Get pending followers array list.
-     *
-     * @return the array list
-     */
-    public ArrayList<Participant> getPendingFollowers(){
-        return followersParticipants.getPendingFollowers();
+    public ArrayList<String> getFollowerList() {
+        return followerList;
     }
 
-    /**
-     * Get followers array list.
-     *
-     * @return the array list
-     */
-    public ArrayList<Participant> getFollowers(){
-        return followersParticipants.getFollowerList();
+    public void setFollowerList(ArrayList<String> followerList) {
+        this.followerList = followerList;
     }
 
-    /**
-     * Get following array list.
-     *
-     * @return the array list
-     */
-    public ArrayList<Participant> getFollowing(){
-        return followingParticipants.getFollowingList();
+    public void addPendingFollowing(String p) {
+        pendingFollowing.add(p);
+    }
+    public void addPendingFollowers(String p) { pendingFollowers.add(p); }
+    public void addFollowingList(String p) { followingList.add(p); }
+    public void addFollowerList(String p) { followerList.add(p); }
+    public void removePendingFollowing(String p) { pendingFollowing.remove(p); }
+    public void removePendingFollowers(String p) { pendingFollowers.remove(p); }
+    public void removeFollowingList(String p) { followingList.remove(p); }
+    public void removeFollowerList(String p) { followerList.remove(p); }
+    public void acceptFollower(String p) {
+        removePendingFollowers(p);
+        addFollowerList(p);
+    }
+    public void acceptedFollowing(String p) {
+        removePendingFollowing(p);
+        addFollowingList(p);
     }
 
-    /**
-     * Get pending following array list.
-     *
-     * @return the array list
-     */
-    public ArrayList<Participant> getPendingFollowing(){
-        return followingParticipants.getPendingFollowing();
-    }
+    /* ----------------------FOLLOWER/FOLLOWING LISTS ---------------------------*/
 
-    /**
-     * Gets followers participants.
-     *
-     * @return the followers participants
-     */
-    public FollowList getFollowersParticipants() {
-        return followersParticipants;
-    }
 
-    /**
-     * Sets followers participants.
-     *
-     * @param followersParticipants the followers participants
-     */
-    public void setFollowersParticipants(FollowList followersParticipants) {
-        this.followersParticipants = followersParticipants;
-    }
 
-    /**
-     * Gets following participants.
-     *
-     * @return the following participants
-     */
-    public FollowList getFollowingParticipants() {
-        return followingParticipants;
-    }
-
-    /**
-     * Sets following participants.
-     *
-     * @param followingParticipants the following participants
-     */
-    public void setFollowingParticipants(FollowList followingParticipants) {
-        this.followingParticipants = followingParticipants;
-    }
 
     @Override public String toString() {
         return userName;

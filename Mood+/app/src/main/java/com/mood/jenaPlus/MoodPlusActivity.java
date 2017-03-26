@@ -130,6 +130,12 @@ public class MoodPlusActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+        TextView textName = (TextView)header.findViewById(R.id.username);
+        textName.setText(name);
+
+
+
     }
 
     @Override
@@ -158,6 +164,8 @@ public class MoodPlusActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_following) {
+            Intent intent = new Intent(MoodPlusActivity.this, FollowActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -174,7 +182,8 @@ public class MoodPlusActivity extends AppCompatActivity
             Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
             startActivity(intent);
         } else if (id == R.id.request) {
-
+            Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
+            startActivity(requestIntent);
         } else if (id == R.id.menuSortText){
             getTextActivity();
         } else if (id == R.id.menuSortRecent) {

@@ -1,6 +1,9 @@
 package com.mood.jenaPlus;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,8 +21,9 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-    ArrayList<Mood> filteredArrayList = new ArrayList<>();
     String moodString = "";
+
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +77,25 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredMood(moodString);
 
-       //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
+        if (moodArrayList.size() <1) {
+            noMoods();
+        }
         adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
+    }
+
+    public void noMoods() {
+        new AlertDialog.Builder(context)
+                .setTitle("No Moods")
+                .setMessage("No " +moodString+" moods were found.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override
