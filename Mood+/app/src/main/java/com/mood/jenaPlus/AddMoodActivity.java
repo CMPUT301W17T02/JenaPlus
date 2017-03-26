@@ -29,6 +29,7 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,6 +49,7 @@ import org.w3c.dom.Text;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -83,7 +85,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private Boolean addLocation = false;
     private Location location;
-    private String photo = "";
+    private Boolean addPhoto = false;
+    private String imageString = "";
     private Boolean moodChosen = false;
 
     private Double latitude;
@@ -139,7 +142,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
-                                photo = "photoPicked";
                                 cameraIntent();
                                 //galleryIntent();
 
@@ -198,51 +200,37 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     }
 
 
+    public boolean saveImageToInternalStorage(Bitmap image) {
+        //Taken from: http://www.e-nature.ch/tech/saving-loading-bitmaps-to-the-android-device-storage-internal-external/
+        //2017-03-26
+        try {
+            // Use the compress method on the Bitmap object to write image to
+            // the OutputStream
+            FileOutputStream fos = context.openFileOutput("desiredFilename.png", Context.MODE_PRIVATE);
 
-    String mCurrentPhotoPath;
+            // Writing the bitmap to the output stream
+            image.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            fos.close();
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String imageFileName = "JPEG_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException e) {
-                // Error occurred while creating the File
-                e.printStackTrace();
-                photoFile = null;
-                mCurrentPhotoPath = null;
-                Log.i("ERROR creating a file","Error occurred while creating the File");
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, 1234);
-            }
+            return true;
+        } catch (Exception e) {
+            Log.e("saveToInternalStorage()", e.getMessage());
+            return false;
         }
     }
 
+    public String BitMapToString(Bitmap bitmap){
+        //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+        //2017-03-26
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+
+    String mCurrentPhotoPath;
     private void handleBigCameraPhoto() {
 
         if (mCurrentPhotoPath != null) {
@@ -251,7 +239,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         }
 
     }
-
 
     private void setPic() {
         // Get the dimensions of the View
@@ -287,6 +274,11 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 Bundle extras = data.getExtras();
                 Bitmap photo = (Bitmap) extras.get("data");
                 image.setImageBitmap(photo);
+                saveImageToInternalStorage(photo);
+                imageString = BitMapToString(photo);
+                addPhoto = true;
+                Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
+
 
                 //Intent intent = new Intent(AddMoodActivity.this, ViewMoodActivity.class);
                 //intent.putExtra("bmp_img", photo);
@@ -350,15 +342,15 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (trigCheck && moodChosen && addLocation) {
+        if (trigCheck && moodChosen && addLocation && addPhoto) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,photo,colorString,userName);
+            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,imageString,colorString,userName);
             finish();
         } else if (trigCheck && moodChosen){
             MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,photo,colorString,userName);
+            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,imageString,colorString,userName);
             finish();
         }
 

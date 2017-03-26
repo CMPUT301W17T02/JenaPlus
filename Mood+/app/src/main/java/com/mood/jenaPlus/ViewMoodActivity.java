@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,6 +12,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +26,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import java.lang.reflect.Field;
+
+import static android.R.attr.data;
 
 
 /**
@@ -141,8 +145,8 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         view.setBackgroundColor(Color.parseColor(aColor));
 
         cameraImage = (ImageView) findViewById(R.id.camera_image);
-        //Bitmap mBitmap = getIntent().getParcelableExtra("bmp_img");
-        //cameraImage.setImageBitmap(mBitmap);
+        Bitmap photo = StringToBitMap(aPhoto);
+        cameraImage.setImageBitmap(photo);
 
         locationButton = (ImageButton) findViewById(R.id.test_location);
 
@@ -176,6 +180,19 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
         });
 
 
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+        //2017-03-26
+        try {
+            byte [] encodeByte=Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
     /**
