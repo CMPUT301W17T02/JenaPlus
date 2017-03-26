@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class CustomAdapter extends FragmentPagerAdapter {
 
-        private String fragments [] = {"Fragment 1","Fragment 2"};
+        private String fragments [] = {"YOU","FOLLOWING"};
 
         public CustomAdapter(FragmentManager supportFragmentManager, Context applicationContext) {
             super(supportFragmentManager);
