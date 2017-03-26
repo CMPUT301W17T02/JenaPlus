@@ -20,6 +20,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -73,12 +75,16 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected Double aLongitude;
     protected String aSocial;
     protected String aPhoto;
+    private Boolean updatePhoto = false;
+    private String imageString = "";
     protected String aColor;
 
     protected ImageView icon;
     protected TextView situation;
     protected TextView date;
     protected EditText message;
+
+    protected ImageView cameraImage;
 
 
 
@@ -134,6 +140,9 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         aLongitude = mood.getLongitude();
 
 
+        cameraImage = (ImageView) findViewById(R.id.selected_image);
+        Bitmap photo = ViewMoodActivity.StringToBitMap(aPhoto);
+        cameraImage.setImageBitmap(photo);
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +168,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 System.out.println("do camera");
-                                galleryIntent();
+                                cameraIntent();
                                 break;
                             case R.id.socialPopup:
                                 // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
@@ -203,6 +212,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
                 if (!trigCheck) {
                     trigMessage();
+
                 }
 
                 else {
@@ -218,7 +228,11 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                     editedMood.setId(aId);
                     editedMood.setDate(dateEditor.getTime());
                     editedMood.setSocial(socialSituation);
-                    editedMood.setPhoto(aPhoto);
+                    if(updatePhoto){
+                        editedMood.setPhoto(imageString);
+                    }else{
+                        editedMood.setPhoto(aPhoto);
+                    }
                     editedMood.setColor(aColor);
 
                     moodPlus.updateParticipant();
@@ -240,21 +254,23 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         }
     };
 
-    private void galleryIntent(){
-        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
-        // 2017-03-10 5:32
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
+    private void cameraIntent(){
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, 1234);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode,data);
-        if(requestCode == 1){
+        if(requestCode == 1234){
             if(resultCode == Activity.RESULT_OK){
-                Uri selectedImage = data.getData();
-                selected_image.setImageURI(selectedImage);
+                Bundle extras = data.getExtras();
+                Bitmap photo = (Bitmap) extras.get("data");
+                selected_image.setImageBitmap(photo);
+                imageString = AddMoodActivity.BitMapToString(photo);
+                updatePhoto = true;
+                Toast.makeText(EditMoodActivity.this, "Image Updated",Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -219,7 +219,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         }
     }
 
-    public String BitMapToString(Bitmap bitmap){
+    public static String BitMapToString(Bitmap bitmap){
         //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
         //2017-03-26
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
