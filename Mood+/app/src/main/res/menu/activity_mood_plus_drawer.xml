@@ -8,9 +8,14 @@
             android:icon="@drawable/ic_near_me"
             android:title="Near Me" />
         <item
+            android:id="@+id/followingDrawer"
+            android:icon="@drawable/ic_request"
+            android:title="Following" />
+        <item
             android:id="@+id/request"
             android:icon="@drawable/ic_request"
-            android:title="Request" />
+            android:title="Follower Requests" />
+
 
     </group>
 

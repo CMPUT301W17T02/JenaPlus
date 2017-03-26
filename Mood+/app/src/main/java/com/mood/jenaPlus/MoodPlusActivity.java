@@ -1,11 +1,17 @@
 package com.mood.jenaPlus;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
@@ -13,11 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -25,7 +29,6 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -64,6 +67,8 @@ public class MoodPlusActivity extends AppCompatActivity
     public ListView getMoodListView(){
         return moodListView;
     }
+    TabLayout tabLayout;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +78,31 @@ public class MoodPlusActivity extends AppCompatActivity
 
         moodListView = (ListView) findViewById(R.id.listView);
 
-        TextView test = (TextView) findViewById(R.id.test_string);
         setSupportActionBar(toolbar);
+
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
+
+        tabLayout = (TabLayout) findViewById(R.id.menu_tab);
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+        });
+
 
         /* LOADING THE LOGGED IN PARTICIPANT */
 
@@ -84,10 +112,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Username: "+ name ;
-        test.setText(who);
 
-        moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+  /*      moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(MoodPlusActivity.this, ViewMoodActivity.class);
@@ -107,7 +134,9 @@ public class MoodPlusActivity extends AppCompatActivity
                 return false;
 
             }
-        });
+        });*/
+
+        /*----------------------ADD MOOD BUTTON-----------------------*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +149,23 @@ public class MoodPlusActivity extends AppCompatActivity
                         .setAction("Action", null).show();*/
             }
         });
+
+        /*-----------------FOLLOWING LIST BUTTON--------------------------*/
+/*
+        FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fab2);
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MoodPlusActivity.this, MainActivity.class);
+                //Intent intent = new Intent(MoodPlusActivity.this, FollowerViewActivity.class);
+                startActivity(intent);
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -181,7 +227,11 @@ public class MoodPlusActivity extends AppCompatActivity
         if (id == R.id.nearMe) {
             Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
             startActivity(intent);
-        } else if (id == R.id.request) {
+        } else if(id ==R.id.followingDrawer){
+            Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.request) {
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
         } else if (id == R.id.menuSortText){
@@ -218,16 +268,16 @@ public class MoodPlusActivity extends AppCompatActivity
     protected void onStart(){
         super.onStart();
 
-        mpController = MoodPlusApplication.getMainMPController();
+        /*mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getUserMoodOrderedList();
 
         adapter = new MoodListAdapter(MoodPlusActivity.this,moodArrayList);
-        //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
-        moodListView.setAdapter(adapter);
+        moodListView.setAdapter(adapter);*/
     }
 
+    /*
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, view, menuInfo);
         menu.add(Menu.NONE, EDIT_PERSON_RESULT_CODE, menu.NONE, "Edit");
@@ -278,7 +328,7 @@ public class MoodPlusActivity extends AppCompatActivity
 
         }
         return super.onContextItemSelected(item);
-    }
+    }*/
 
     @Override
     public void update(MoodPlus moodPlus){
@@ -335,5 +385,38 @@ public class MoodPlusActivity extends AppCompatActivity
         Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
         startActivity(intent);
     }
+
+    private class CustomAdapter extends FragmentPagerAdapter {
+        //taken from https://github.com/miskoajkula/viewpager-tablayout/tree/master/app/src/main/java/my/test/myapplication
+
+        private String fragments [] = {"YOU","FOLLOWING"};
+
+        public CustomAdapter(FragmentManager supportFragmentManager, Context applicationContext) {
+            super(supportFragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                    return new MoodListViewActivity();
+                case 1:
+                    return new FollowerViewActivity();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragments[position];
+        }
+    }
+
 
 }

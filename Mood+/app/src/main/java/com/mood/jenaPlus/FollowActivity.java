@@ -17,8 +17,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+
+/**
+ * This activity is used when a participant wants to follow another participant.
+ * From clicking the top right button on the main activity.
+ **/
 
 public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
@@ -31,6 +37,8 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
     protected int longClickedItemIndex;
     private static final int FOLLOW = 0;
+
+    protected MainMPController mpController;
 
 
     @Override
@@ -93,6 +101,10 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
         try {
             participantList = getUsersTask.get();
+            mpController = MoodPlusApplication.getMainMPController();
+            Participant participant = mpController.getParticipant();
+            Log.i("want to remove", participant.getUserName());
+            participantList.remove(participant);
             adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
 
@@ -119,6 +131,45 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
                 .show();
     }
 
+    public void alreadyFollowing(String s) {
+        new AlertDialog.Builder(context)
+                .setTitle("Already Following")
+                .setMessage("You are already following "+s)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    public void pendingFollowing(String s) {
+        new AlertDialog.Builder(context)
+                .setTitle("Already Requesting")
+                .setMessage("You are already requesting to follow "+s)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    public void ownFollow() {
+        new AlertDialog.Builder(context)
+                .setTitle("Follow yourself")
+                .setMessage("Sorry, you cannot follow yourself")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu,view,menuInfo);
         menu.add(Menu.NONE,FOLLOW,menu.NONE,"FOLLOW");
@@ -130,12 +181,45 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case FOLLOW:
+                mpController = MoodPlusApplication.getMainMPController();
+                Participant mainParticipant = mpController.getParticipant();
                 Participant participant = (Participant) participantListView.getItemAtPosition(longClickedItemIndex);
-                Log.i("fromfollowactivity", participant.getUserName());
-                MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addFollowRequest(participant.getUserName());
-                mpController.setPendingFollowers(participant.getUserName());
-                break;
+                Boolean seen = false;
+                Boolean seen2 = false;
+                ArrayList<String> users = mainParticipant.getFollowingList();
+                for(String s: users) {
+                    if (s.equals(participant.getUserName())) {
+                        seen = true;
+                        break;
+                    }
+                }
+                ArrayList<String> users2 = mainParticipant.getPendingFollowing();
+                for(String s: users2) {
+                    if (s.equals(participant.getUserName())) {
+                        seen2 = true;
+                        break;
+                    }
+                }
+
+                if(seen) {
+                    alreadyFollowing(participant.getUserName());
+                    break;
+                }
+                if(seen2) {
+                    pendingFollowing(participant.getUserName());
+                    break;
+                }
+                if(mainParticipant.getUserName().equals(participant.getUserName())) {
+                    ownFollow();
+                    break;
+                }
+                else {
+                    Log.i("fromfollowactivity", participant.getUserName());
+                    MainMPController mpController = MoodPlusApplication.getMainMPController();
+                    mpController.addFollowRequest(participant.getUserName());
+                    mpController.setPendingFollowers(participant.getUserName());
+                    break;
+                }
         }
 
         return super.onContextItemSelected(item);
