@@ -1,15 +1,20 @@
 package com.mood.jenaPlus;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -28,6 +33,8 @@ import android.widget.ListView;
 
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -69,6 +76,12 @@ public class MoodPlusActivity extends AppCompatActivity
     }
     TabLayout tabLayout;
     ViewPager viewPager;
+
+    Context context = this;
+
+    private Double latitude;
+    private Double longitude;
+    private Location location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,7 +238,13 @@ public class MoodPlusActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
+            location = getLocation();
+            LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
+
+            Bundle args = new Bundle();
+            args.putParcelable("longLat_dataProvider",position);
             Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
+            intent.putExtras(args);
             startActivity(intent);
         } else if(id ==R.id.followingDrawer){
             Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);
@@ -333,6 +352,39 @@ public class MoodPlusActivity extends AppCompatActivity
     @Override
     public void update(MoodPlus moodPlus){
 
+    }
+
+    public Location getLocation() {
+
+        Location currentLocation = new Location("dummyprovider");
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MoodPlusActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
+            GPSTracker gps = new GPSTracker(context, MoodPlusActivity.this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                latitude = gps.getLatitude();
+                longitude = gps.getLongitude();
+
+                currentLocation.setLatitude(latitude);
+                currentLocation.setLongitude(longitude);
+
+                return currentLocation;
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
+        }
+        return null;
     }
 
     public void getTextActivity() {
