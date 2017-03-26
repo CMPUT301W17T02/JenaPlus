@@ -68,6 +68,25 @@ public class MainMPController {
         moodPlus.notifyViews();
     }
 
+    public void addFollowRequest(String participant) {
+        moodPlus.addFollowRequest(participant);
+        moodPlus.notifyViews();
+    }
+
+    public void setPendingFollowers(String aParticipant) {
+        moodPlus.setPendingFollowers(aParticipant);
+        moodPlus.notifyViews();
+    }
+
+    public void acceptRequest(String aParticipant) {
+        moodPlus.acceptRequest(aParticipant);
+        moodPlus.notifyViews();
+    }
+
+    public void rejectRequest(String aParticipant) {
+        moodPlus.rejectRequest(aParticipant);
+        moodPlus.notifyViews();
+    }
 
 
 

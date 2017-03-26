@@ -130,6 +130,12 @@ public class MoodPlusActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View header = navigationView.getHeaderView(0);
+        TextView textName = (TextView)header.findViewById(R.id.username);
+        textName.setText(name);
+
+
+
     }
 
     @Override
