@@ -74,6 +74,8 @@ public class MoodPlusActivity extends AppCompatActivity
     public ListView getMoodListView(){
         return moodListView;
     }
+    TabLayout tabLayout;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +86,29 @@ public class MoodPlusActivity extends AppCompatActivity
         moodListView = (ListView) findViewById(R.id.listView);
 
         setSupportActionBar(toolbar);
+
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
+
+        tabLayout = (TabLayout) findViewById(R.id.menu_tab);
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+        });
 
 
         /* LOADING THE LOGGED IN PARTICIPANT */
@@ -361,6 +386,37 @@ public class MoodPlusActivity extends AppCompatActivity
     public void getDateFiltered() {
         Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
         startActivity(intent);
+    }
+
+    private class CustomAdapter extends FragmentPagerAdapter {
+
+        private String fragments [] = {"YOU","FOLLOWING"};
+
+        public CustomAdapter(FragmentManager supportFragmentManager, Context applicationContext) {
+            super(supportFragmentManager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position){
+                case 0:
+                    return new Fragment2();
+                case 1:
+                    return new Fragment1();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.length;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragments[position];
+        }
     }
 
 
