@@ -182,7 +182,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
 
     }
 
-    public Bitmap StringToBitMap(String encodedString){
+    public static Bitmap StringToBitMap(String encodedString){
         //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
         //2017-03-26
         try {
