@@ -85,7 +85,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private Boolean addLocation = false;
     private Location location;
-    private Boolean addPhoto = false;
     private String imageString = "";
     private Boolean moodChosen = false;
 
@@ -276,7 +275,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 image.setImageBitmap(photo);
                 saveImageToInternalStorage(photo);
                 imageString = BitMapToString(photo);
-                addPhoto = true;
                 Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
 
 
