@@ -57,19 +57,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
-	private AlertDialog.Builder deleteAlertBuilder;
-
-    private ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    protected ArrayAdapter<Mood> adapter;
-    private UserMoodList myMoodList = new UserMoodList();
-    private FollowingMoodList foMoodList = new FollowingMoodList();
 
     private String searchText = "";
 
-    private int longClickedItemIndex;
-    private static final int VIEW_PERSON_RESULT_CODE = 0;
-    private static final int DELETE_PERSON_RESULT_CODE = 1;
-    private static final int EDIT_PERSON_RESULT_CODE = 2;
     protected MainMPController mpController;
 
     public ListView getMoodListView(){
@@ -304,20 +294,6 @@ public class MoodPlusActivity extends AppCompatActivity
 
     }
 
-    public void getMoodFiltered(String mood) {
-        Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("moodString",mood);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-
-    public void getDateFiltered() {
-        Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
-        startActivity(intent);
-    }
-
     private class CustomAdapter extends FragmentPagerAdapter {
         //taken from https://github.com/miskoajkula/viewpager-tablayout/tree/master/app/src/main/java/my/test/myapplication
 
@@ -477,6 +453,21 @@ public class MoodPlusActivity extends AppCompatActivity
 
         builder.show();
 
+    }
+
+
+    public void getMoodFiltered(String mood) {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("moodString",mood);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
+    public void getDateFiltered() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
+        startActivity(intent);
     }
 
 

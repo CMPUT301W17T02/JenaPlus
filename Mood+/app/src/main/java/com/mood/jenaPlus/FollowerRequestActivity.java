@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
     private ArrayList<String> participantListStr;
     private ArrayAdapter<Participant> adapter;
     protected ListView participantListView;
+
+    protected ImageButton acceptButton;
+    protected ImageButton declineButton;
 
     Context context = this;
 
@@ -45,6 +50,7 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
             }
         });
 
+
     }
 
     @Override
@@ -66,14 +72,14 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
             }
 
             participantList = tempArray;
-            adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+            adapter = new FollowerRequestAdapter(this,participantList);
+            //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
 
         } catch (Exception e) {
             Log.i("Error", "Failed to get the users out of the async object");
         }
     }
-
 
 
     public void noFollowerRequests() {
