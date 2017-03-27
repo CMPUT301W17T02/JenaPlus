@@ -323,26 +323,19 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         return null;
     }
 
-    public int getID() {
-        return idNum;
-    }
-
-
-    public int getColorNum() { return colorNum; }
     public EditText getMessage() { return message; }
-    public String getSocialSituation() { return socialSituation; }
+
     public void update(MoodPlus moodPlus){
         // TODO implements update method
 
     }
-
 
     public void addMood() {
 
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (trigCheck && moodChosen && addLocation && addPhoto) {
+        if (trigCheck && moodChosen && addLocation) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             MainMPController mpController = MoodPlusApplication.getMainMPController();

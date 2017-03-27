@@ -79,7 +79,7 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
         if (participantListStr.size() < 1){
-            noMoods();
+            //noMoods();
         }
 
         for (int i = 0; i<participantListStr.size(); i++) {
@@ -103,7 +103,6 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
                 .setMessage("All of your followers do not have any available moods.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        getActivity().finish();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
