@@ -2,8 +2,6 @@ package com.mood.jenaPlus;
 
 import android.app.Activity;
 
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-
 /**
  * Created by ceciliaxiang on 2017-03-26.
  */
@@ -11,27 +9,27 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class NetworkStatusCroutonDisplayer implements NetworkStatusDisplayer {
 
-    private final JenaCrouton JenaCrouton;
+    private final NovodaCrouton NovodaCrouton;
 
     public NetworkStatusCroutonDisplayer(Activity activity) {
-        this.JenaCrouton = new JenaCrouton(activity);
+        this.NovodaCrouton = new NovodaCrouton(activity);
     }
 
     @Override
     public void displayConnected() {
-        JenaCrouton.show(CroutonStyles.CONNECTED);
+        NovodaCrouton.show(CroutonStyles.CONNECTED);
     }
 
     @Override
     public void displayDisconnected() {
-        if (!JenaCrouton.isShown()) {
-            JenaCrouton.show(CroutonStyles.DISCONNECTED);
+        if (!NovodaCrouton.isShown()) {
+            NovodaCrouton.show(CroutonStyles.DISCONNECTED);
         }
     }
 
     @Override
     public void reset() {
-        JenaCrouton.close();
+        NovodaCrouton.close();
     }
 
 }

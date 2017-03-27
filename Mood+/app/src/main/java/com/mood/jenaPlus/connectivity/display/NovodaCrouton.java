@@ -12,13 +12,13 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  * Created by ceciliaxiang on 2017-03-26.
  */
 
-public class JenaCrouton {
+public class NovodaCrouton {
 
     private final Activity activity;
 
     private Crouton currentCrouton;
 
-    public JenaCrouton(Activity activity) {
+    public NovodaCrouton(Activity activity) {
         this.activity = activity;
     }
 

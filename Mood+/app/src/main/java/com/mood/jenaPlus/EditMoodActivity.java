@@ -49,10 +49,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinsBeard;
 import com.novoda.merlin.NetworkStatus;
-import com.mood.jenaPlus.NetworkStatusCroutonDisplayer;
-import com.mood.jenaPlus.NetworkStatusDisplayer;
-import com.mood.jenaPlus.MerlinActivity;
 import com.novoda.merlin.registerable.bind.Bindable;
 import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
@@ -66,7 +64,7 @@ import com.novoda.merlin.registerable.disconnection.Disconnectable;
  * @author Cecelia
  */
 
-public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
+public class EditMoodActivity extends com.mood.jenaPlus.MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
 
     private Button socialPopup;
@@ -99,7 +97,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
     protected ImageView cameraImage;
 
-    private NetworkStatusDisplayer networkStatusDisplayer;
+    private com.mood.jenaPlus.NetworkStatusDisplayer networkStatusDisplayer;
+    private MerlinsBeard merlinsBeard;
 
 
 
@@ -119,12 +118,13 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         moodPlus.addView(this);
 
 
-        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
-
         final Mood mood = (Mood)getIntent().getSerializableExtra("editMood");
 
         Bundle bundle = getIntent().getExtras();
         final int position = bundle.getInt("pos");
+
+        networkStatusDisplayer = new com.mood.jenaPlus.NetworkStatusCroutonDisplayer(this);
+        merlinsBeard = MerlinsBeard.from(this);
 
         save = (Button) findViewById(R.id.AddButton);
 
