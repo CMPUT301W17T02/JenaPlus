@@ -23,39 +23,11 @@
         <menu>
 
             <item
-                android:id="@+id/menuSortRecent"
-                android:title="Filter By Most Recent" />
+                android:id="@+id/menuMyOwnMoodFilter"
+                android:title="Filter My Own Moods" />
             <item
-                android:id="@+id/menuSortText"
-                android:title="Filter By Text" />
-            <item
-                android:id="@+id/menuMoodSurprise"
-                android:title="Filter by Surprised Moods" />
-            <item
-                android:id="@+id/menuMoodDisgust"
-                android:title="Filter by Disgusted Moods" />
-            <item
-                android:id="@+id/menuMoodFear"
-                android:title="Filter by Fearful Moods" />
-            <item
-                android:id="@+id/menuMoodConfused"
-                android:title="Filter by Confused Moods" />
-            <item
-                android:id="@+id/menuMoodHappy"
-                android:title="Filter by Happy Moods" />
-            <item
-                android:id="@+id/menuMoodAngry"
-                android:title="Filter by Angry Moods" />
-            <item
-                android:id="@+id/menuMoodSad"
-                android:title="Filter by Sad Moods" />
-            <item
-                android:id="@+id/menuMoodShame"
-                android:title="Filter by Shameful Moods" />
-            <item
-                android:id="@+id/menuMoodAnnoyed"
-                android:title="Filter by Annoyed Moods" />
-
+                android:id="@+id/menuMyFollowingFilter"
+                android:title="Filter Your Following Moods" />
 
         </menu>
     </item>
