@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -47,13 +48,25 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
+import com.mood.jenaPlus.NetworkStatusCroutonDisplayer;
+import com.mood.jenaPlus.NetworkStatusDisplayer;
+import com.mood.jenaPlus.MerlinActivity;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
+
+
+
+
 /**
  * This is the main activity to edit an existing mood.
  *
  * @author Cecelia
  */
 
-public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
+public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
 
     private Button socialPopup;
@@ -86,6 +99,8 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     protected ImageView cameraImage;
 
+    private NetworkStatusDisplayer networkStatusDisplayer;
+
 
 
     private Calendar dateEditor = Calendar.getInstance();
@@ -102,6 +117,9 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
         final MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
         moodPlus.addView(this);
+
+
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
 
         final Mood mood = (Mood)getIntent().getSerializableExtra("editMood");
 
@@ -242,7 +260,9 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
             }
         });
 
+
     }
+
 
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -335,5 +355,48 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     public void update(MoodPlus moodPlus){
         // TODO implements update method
     }
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        networkStatusDisplayer.displayConnected();
+    }
+
+    @Override
+    public void onDisconnect() {
+        networkStatusDisplayer.displayDisconnected();
+        //updateOfflineRequest();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
+    }
+
 
 }

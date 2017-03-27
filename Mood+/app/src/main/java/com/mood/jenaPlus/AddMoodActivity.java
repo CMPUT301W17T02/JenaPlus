@@ -57,6 +57,14 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
+import com.mood.jenaPlus.NetworkStatusCroutonDisplayer;
+import com.mood.jenaPlus.NetworkStatusDisplayer;
+import com.mood.jenaPlus.MerlinActivity;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 /**
  * This is the main activity to add a mood.
@@ -66,7 +74,7 @@ import java.util.Date;
  *
  */
 
-public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
+public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
     private static final String TAG = "ERROR";
     int idNum;
@@ -94,6 +102,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private String userName;
 
+    private NetworkStatusDisplayer networkStatusDisplayer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +114,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         Participant participant = mpController.getParticipant();
 
         TextView test = (TextView) findViewById(R.id.addtext);
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
@@ -471,5 +482,47 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         intent.setType("image/*");
         startActivityForResult(intent, 1);
     }
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        networkStatusDisplayer.displayConnected();
+    }
+
+    @Override
+    public void onDisconnect() {
+        networkStatusDisplayer.displayDisconnected();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
+    }
+
 }
 
