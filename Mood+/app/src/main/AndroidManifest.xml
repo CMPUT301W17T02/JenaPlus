@@ -95,8 +95,8 @@
         <activity
             android:name=".FollowerRequestActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FollowingListActivity"></activity>
-
+        <activity android:name=".FollowingListActivity" />
+        <activity android:name=".FilterFollowDateActivity"></activity>
     </application>
 
 </manifest>
