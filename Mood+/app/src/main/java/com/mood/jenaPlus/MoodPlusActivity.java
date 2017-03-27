@@ -33,6 +33,7 @@ import android.widget.ListView;
 
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -253,30 +254,11 @@ public class MoodPlusActivity extends AppCompatActivity
         else if (id == R.id.request) {
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
-        } else if (id == R.id.menuSortText){
-            getTextActivity();
-        } else if (id == R.id.menuSortRecent) {
-            getDateFiltered();
-        } else if (id == R.id.menuMoodSurprise){
-            getMoodFiltered("surprised");
-        } else if (id == R.id.menuMoodDisgust) {
-            getMoodFiltered("disgust");
-        } else if (id == R.id.menuMoodFear) {
-            getMoodFiltered("fear");
-        } else if (id == R.id.menuMoodConfused){
-            getMoodFiltered("confused");
-        } else if (id == R.id.menuMoodHappy) {
-            getMoodFiltered("happy");
-        } else if (id == R.id.menuMoodAngry) {
-            getMoodFiltered("angry");
-        } else if (id == R.id.menuMoodSad) {
-            getMoodFiltered("sad");
-        } else if (id == R.id.menuMoodShame) {
-            getMoodFiltered("shame");
-        } else if (id == R.id.menuMoodAnnoyed){
-            getMoodFiltered("annoyed");
-        }
+        } else if (id == R.id.menuMyOwnMoodFilter){
+            myOwnFiltersDialog();
+        } else if(id == R.id.menuMyFollowingFilter){
 
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -470,5 +452,71 @@ public class MoodPlusActivity extends AppCompatActivity
         }
     }
 
+
+    public void myOwnFiltersDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Filter your own moods")
+                .setItems(new CharSequence[]
+                                {"Filter By Most Recent", "Filter By Text", "Filter By Surprised Moods",
+                                        "Filter By Disgusted Moods", "Filter By Fearful Moods",
+                                "Filter By Confused Moods", "Filter By Happy Moods", "Filter By Angry Moods",
+                                "Filter By Sad Moods", "Filter By Shameful Moods", "Filter By Annoyed Moods"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which) {
+                                    case 0:
+                                        getDateFiltered();
+                                        Toast.makeText(context, "Filter By Most Recent", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 1:
+                                        getTextActivity();
+                                        Toast.makeText(context, "Filter By Text", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 2:
+                                        getMoodFiltered("surprised");
+                                        Toast.makeText(context, "Filter By Surprised Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 3:
+                                        getMoodFiltered("disgust");
+                                        Toast.makeText(context, "Filter By Disgusted Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 4:
+                                        getMoodFiltered("fear");
+                                        Toast.makeText(context, "Filter By Fearful Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 5:
+                                        getMoodFiltered("confused");
+                                        Toast.makeText(context, "Filter By Confused Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 6:
+                                        getMoodFiltered("happy");
+                                        Toast.makeText(context, "Filter By Happy Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 7:
+                                        getMoodFiltered("angry");
+                                        Toast.makeText(context, "Filter By Angry Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 8:
+                                        getMoodFiltered("sad");
+                                        Toast.makeText(context, "Filter By Sad Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 9:
+                                        getMoodFiltered("shame");
+                                        Toast.makeText(context, "Filter By Shameful Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 10:
+                                        getMoodFiltered("annoyed");
+                                        Toast.makeText(context, "Filter By Annoyed Moods", Toast.LENGTH_SHORT).show();
+                                        break;
+
+                                }
+                            }
+                        })
+
+                .setIcon(android.R.drawable.ic_menu_search)
+                .show();
+    }
 
 }
