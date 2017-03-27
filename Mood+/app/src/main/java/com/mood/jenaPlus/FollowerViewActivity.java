@@ -73,9 +73,7 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
             ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
-            for (Mood m : partMoods) {
-                moodArrayList.add(m);
-            }
+            moodArrayList.add(partMoods.get(partMoods.size()-1));
         }
 
         adapter = new MoodFollowerListAdapter(getActivity(),moodArrayList);

@@ -48,7 +48,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         String name = participant.getUserName();
         String id = participant.getId();
         String who = "Name: "+ name + "\nkeyword: " + keyword;
-        test.setText(who);
+        //test.setText(who);
 
         /*------------------------------------------------*/
 
