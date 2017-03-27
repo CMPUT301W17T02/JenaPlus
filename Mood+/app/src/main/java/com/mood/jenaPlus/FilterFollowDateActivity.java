@@ -18,6 +18,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * This activity is used to view all of the moods of people that the participant
+ * follows. It will only show the moods from the past 7 days.
+ **/
+
 public class FilterFollowDateActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
