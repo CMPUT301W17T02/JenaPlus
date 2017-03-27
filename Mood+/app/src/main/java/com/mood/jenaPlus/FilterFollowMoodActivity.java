@@ -18,6 +18,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * This activity shows only one type of mood that was specified from the option in the main
+ * activity. The moods come from all of the people the participant is following.
+ **/
+
 public class FilterFollowMoodActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
