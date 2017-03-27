@@ -377,47 +377,47 @@ public class MoodPlusActivity extends AppCompatActivity
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 2:
-                                        getMoodFiltered("surprised");
+                                        getMoodFiltered2("surprised");
                                         Toast.makeText(context, "Filter By Surprised Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 3:
-                                        getMoodFiltered("disgust");
+                                        getMoodFiltered2("disgust");
                                         Toast.makeText(context, "Filter By Disgusted Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 4:
-                                        getMoodFiltered("fear");
+                                        getMoodFiltered2("fear");
                                         Toast.makeText(context, "Filter By Fearful Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 5:
-                                        getMoodFiltered("confused");
+                                        getMoodFiltered2("confused");
                                         Toast.makeText(context, "Filter By Confused Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 6:
-                                        getMoodFiltered("happy");
+                                        getMoodFiltered2("happy");
                                         Toast.makeText(context, "Filter By Happy Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 7:
-                                        getMoodFiltered("angry");
+                                        getMoodFiltered2("angry");
                                         Toast.makeText(context, "Filter By Angry Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 8:
-                                        getMoodFiltered("sad");
+                                        getMoodFiltered2("sad");
                                         Toast.makeText(context, "Filter By Sad Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 9:
-                                        getMoodFiltered("shame");
+                                        getMoodFiltered2("shame");
                                         Toast.makeText(context, "Filter By Shameful Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
                                     case 10:
-                                        getMoodFiltered("annoyed");
+                                        getMoodFiltered2("annoyed");
                                         Toast.makeText(context, "Filter By Annoyed Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
@@ -431,7 +431,7 @@ public class MoodPlusActivity extends AppCompatActivity
     }
 
     public void getMoodFiltered2(String mood) {
-        Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
+        Intent intent = new Intent(MoodPlusActivity.this, FilterFollowMoodActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("moodString",mood);
         intent.putExtras(bundle);
