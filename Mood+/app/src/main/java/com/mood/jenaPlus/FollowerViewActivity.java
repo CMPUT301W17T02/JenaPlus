@@ -27,7 +27,6 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
 
     protected MainMPController mpController;
@@ -44,19 +43,11 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        TextView test = (TextView) getView().findViewById(R.id.test_string);
         moodListView = (ListView) getView().findViewById(R.id.listView);
 
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-
-        String name = participant.getUserName();
-        String id = participant.getId();
-        String who = "Username: " + name ;
-        test.setText(who);
-
-
 
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,9 +69,6 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
-        if (participantListStr.size() < 1){
-            //noMoods();
-        }
 
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
