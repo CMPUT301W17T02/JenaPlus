@@ -93,7 +93,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
     private Boolean addLocation = false;
     private Location location;
-    private Boolean addPhoto = false;
     private String imageString = "";
     private Boolean moodChosen = false;
 
@@ -287,7 +286,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 image.setImageBitmap(photo);
                 saveImageToInternalStorage(photo);
                 imageString = BitMapToString(photo);
-                addPhoto = true;
                 Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
 
 
@@ -334,26 +332,19 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         return null;
     }
 
-    public int getID() {
-        return idNum;
-    }
-
-
-    public int getColorNum() { return colorNum; }
     public EditText getMessage() { return message; }
-    public String getSocialSituation() { return socialSituation; }
+
     public void update(MoodPlus moodPlus){
         // TODO implements update method
 
     }
-
 
     public void addMood() {
 
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (trigCheck && moodChosen && addLocation && addPhoto) {
+        if (trigCheck && moodChosen && addLocation) {
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             MainMPController mpController = MoodPlusApplication.getMainMPController();

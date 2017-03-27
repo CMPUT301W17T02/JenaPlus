@@ -2,17 +2,11 @@ package com.mood.jenaPlus;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -22,64 +16,90 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
-public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
+/**
+ * This activity shows only one type of mood that was specified from the option in the main
+ * activity. The moods come from all of the people the participant is following.
+ **/
+
+public class FilterFollowMoodActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
+    String moodString;
+
+    Context context = this;
 
     protected MainMPController mpController;
-    Context context;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        context = container.getContext();
-        return  inflater.inflate(R.layout.activity_follower_view,container,false);
-    }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_filter_follow_mood);
 
-        moodListView = (ListView) getView().findViewById(R.id.listView);
+        moodListView = (ListView) findViewById(R.id.listView);
 
+
+        /*---------- LOADING THE PARTICIPANT-------------*/
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
+
+
+        /*------------------------------------------------*/
+
 
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ViewMoodActivity.class);
+                Intent intent = new Intent(FilterFollowMoodActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
             }
         });
+
     }
+
     @Override
-    public void onStart() {
+    protected void onStart() {
+
         super.onStart();
         moodArrayList.clear();
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+
+        TextView test = (TextView) findViewById(R.id.test_string);
 
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
 
+        Bundle bundle = getIntent().getExtras();
+        moodString = bundle.getString("moodString");
+
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
             ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
             for (Mood m : partMoods) {
-                moodArrayList.add(m);
+                if (m.getId().equals(moodString)) {
+                    moodArrayList.add(m);
+                }
             }
         }
 
-        adapter = new MoodFollowerListAdapter(getActivity(),moodArrayList);
+        if (moodArrayList.size() <1) {
+            noMoods();
+        }
+
+        adapter = new MoodFollowerListAdapter(FilterFollowMoodActivity.this,moodArrayList);
         getUserMoodOrderedList();
+
+        String d = moodString + " moods";
+        test.setText(d);
 
         moodListView.setAdapter(adapter);
 
@@ -88,13 +108,19 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("All of your followers do not have any available moods.")
+                .setMessage("No " +moodString+" moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        finish();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
+    }
+
+    @Override
+    public void update(MoodPlus moodPlus) {
+
     }
 
     public ArrayList<Mood> getUserMoodOrderedList() {
@@ -107,18 +133,6 @@ public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
         });
 
         return this.moodArrayList;
-    }
-
-
-
-    @Override
-    public void update(MoodPlus moodPlus) {
-
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
     }
 
 }
