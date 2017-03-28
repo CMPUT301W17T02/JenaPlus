@@ -1,6 +1,7 @@
 package com.mood.jenaPlus;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,9 @@ public class FollowingListAdapter extends ArrayAdapter<Participant> {
             public void onClick(View v) {
                 Toast.makeText(getContext(),"UNFOLLOW " + participant.getUserName(), Toast.LENGTH_SHORT).show();
                 mpController.unfollowParticipant(participant.getUserName());
+
+                v.setEnabled(false);
+                notifyDataSetChanged();
             }
         });
 

@@ -51,8 +51,6 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
             Participant mainParticipant = mpController.getParticipant();
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"FOLLOWING " + participant.getUserName(), Toast.LENGTH_SHORT).show();
-
                 Boolean seen = false;
                 Boolean seen2 = false;
                 ArrayList<String> users = mainParticipant.getFollowingList();
@@ -72,19 +70,24 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
 
                 if(seen) {
                     alreadyFollowing(participant.getUserName());
+
                 }
-                if(seen2) {
+                else if(seen2) {
                     pendingFollowing(participant.getUserName());
                 }
-                if(mainParticipant.getUserName().equals(participant.getUserName())) {
+                else if(mainParticipant.getUserName().equals(participant.getUserName())) {
                     ownFollow();
                 }
                 else {
+                    Toast.makeText(getContext(),"FOLLOWING " + participant.getUserName(), Toast.LENGTH_SHORT).show();
                     Log.i("fromfollowactivity", participant.getUserName());
                     MainMPController mpController = MoodPlusApplication.getMainMPController();
                     mpController.addFollowRequest(participant.getUserName());
                     mpController.setPendingFollowers(participant.getUserName());
                 }
+
+                v.setEnabled(false);
+                notifyDataSetChanged();
             }
         });
 
