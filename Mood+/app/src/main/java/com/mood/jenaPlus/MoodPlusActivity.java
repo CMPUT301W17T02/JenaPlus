@@ -197,8 +197,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
             Bundle args = new Bundle();
             args.putParcelable("longLat_dataProvider",position);
-            Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
-            intent.putExtras(args);
+            //Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
+            //intent.putExtras(args);
+            Intent intent = new Intent(MoodPlusActivity.this, MarkerActivity.class);
             startActivity(intent);
         } else if(id ==R.id.followingDrawer){
             Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);
