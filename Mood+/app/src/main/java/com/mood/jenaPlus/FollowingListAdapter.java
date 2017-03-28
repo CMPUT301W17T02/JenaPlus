@@ -12,13 +12,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by carrotji on 2017-03-27.
+ * The FollowingListAdapter class created a listView for FollowingListActivity,
+ * this listView containts unfollow button.
  */
 
 public class FollowingListAdapter extends ArrayAdapter<Participant> {
 
     Context context;
-    protected Button followButton;
+    protected Button unFollowButton;
 
     public FollowingListAdapter(Context context, ArrayList<Participant> participantList) {
         super(context, 0, participantList);
@@ -36,12 +37,14 @@ public class FollowingListAdapter extends ArrayAdapter<Participant> {
 
         userName.setText(participant.getUserName());
 
-        followButton = (Button) view.findViewById(R.id.follow);
+        unFollowButton = (Button) view.findViewById(R.id.unfollow);
 
-        followButton.setOnClickListener(new View.OnClickListener() {
+        unFollowButton.setOnClickListener(new View.OnClickListener() {
+            MainMPController mpController = MoodPlusApplication.getMainMPController();
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(),"UNFOLLOW " + participant.getUserName(), Toast.LENGTH_SHORT).show();
+                mpController.unfollowParticipant(participant.getUserName());
             }
         });
 

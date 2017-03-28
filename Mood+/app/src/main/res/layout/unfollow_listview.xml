@@ -17,7 +17,7 @@
     </TextView>
 
     <Button
-        android:id="@+id/follow"
+        android:id="@+id/unfollow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="#4DD0E1"

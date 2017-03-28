@@ -14,7 +14,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Follower Requests ListView Adapter
+ * The FollowerRequestAdapter class created a listView for FollowerRequestActivity,
+ * this listView containts acceptButton and declineButton.
  */
 
 public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
@@ -22,7 +23,6 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
     Context context;
     protected ImageButton acceptButton;
     protected ImageButton declineButton;
-    //Participant participant;
 
 
     public FollowerRequestAdapter(Context context, ArrayList<Participant> participantList){

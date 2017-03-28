@@ -32,7 +32,6 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
     Context context = this;
 
     protected int longClickedItemIndex;
-    private static final int UNFOLLOW = 0;
     protected MainMPController mpController;
 
 
@@ -74,7 +73,6 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
 
             participantList = tempArray;
             adapter = new FollowingListAdapter(this,participantList);
-            //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
 
         } catch (Exception e) {
@@ -93,24 +91,6 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-    }
-
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
-        super.onCreateContextMenu(menu,view,menuInfo);
-        menu.add(Menu.NONE,UNFOLLOW,menu.NONE,"UNFOLLOW");
-    }
-
-    public boolean onContextItemSelected(MenuItem item){
-        Participant participant = (Participant) participantListView.getItemAtPosition(longClickedItemIndex);
-        Log.i("maybe?", participant.getUserName());
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        switch (item.getItemId()){
-            case UNFOLLOW:
-                mpController.unfollowParticipant(participant.getUserName());
-                break;
-        }
-
-        return super.onContextItemSelected(item);
     }
 
     @Override
