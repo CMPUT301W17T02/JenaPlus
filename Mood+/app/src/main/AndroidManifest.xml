@@ -99,7 +99,7 @@
             android:parentActivityName=".MoodPlusActivity"/>
         <activity android:name=".FilterFollowDateActivity" />
         <activity android:name=".FilterFollowMoodActivity" />
-        <activity android:name=".FilterFollowTextActivity"></activity>
+        <activity android:name=".FilterFollowTextActivity" />
     </application>
 
 </manifest>
