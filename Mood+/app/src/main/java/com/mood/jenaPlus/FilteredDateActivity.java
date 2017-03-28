@@ -91,8 +91,6 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
                 .show();
     }
 
-
-
     @Override
     public void update(MoodPlus moodPlus) {
 

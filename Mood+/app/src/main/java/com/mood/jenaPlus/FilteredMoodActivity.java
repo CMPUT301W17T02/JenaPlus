@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class FilteredMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
@@ -30,25 +32,24 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_filtered_mood);
-        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /*------------- LOADING THE MOOD  -------------*/
 
-        Bundle bundle = getIntent().getExtras();
-        moodString = bundle.getString("moodString");
+//        Bundle bundle = getIntent().getExtras();
+//        moodString = bundle.getString("moodString");
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        String name = participant.getUserName();
-        String id = participant.getId();
-        String who = "Name: " + name + "\nMood: " + moodString;
-        test.setText(who);
-
-        /*------------------------------------------------*/
+//        String name = participant.getUserName();
+//        String id = participant.getId();
+//        String who = "Name: " + name + "\nMood: " + moodString;
+//        test.setText(who);
+//
+//        /*------------------------------------------------*/
 
 
         moodListView.setAdapter(adapter);
@@ -74,14 +75,32 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("moodString");
 
+        String dateTest = bundle.getString("filterRecent");
+        Log.i("date",dateTest);
+
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredMood(moodString);
 
         if (moodArrayList.size() <1) {
             noMoods();
         }
+
+        if (dateTest.equals("yes")) {
+            for(Mood m: moodArrayList) {
+                Date tempDate = m.getDate();
+                if(!isWithinRange(tempDate)){
+                    moodArrayList.remove(m);
+                }
+            }
+        }
+
         adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
+
+
+        TextView test = (TextView) findViewById(R.id.test_string);
+        String who = "Mood: " + moodString;
+        //test.setText(who);
 
     }
 
@@ -101,5 +120,11 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     @Override
     public void update(MoodPlus moodPlus) {
 
+    }
+
+    boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 }

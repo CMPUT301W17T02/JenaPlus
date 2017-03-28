@@ -31,7 +31,7 @@ import static android.R.attr.data;
 
 
 /**
- * Created by carrotji on 2017-03-06.
+ * This is for viewing mood events
  */
 public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 

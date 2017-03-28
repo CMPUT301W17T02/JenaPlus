@@ -14,7 +14,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- * Created by carrotji on 2017-03-26.
+ * The FollowerRequestAdapter class created a listView for FollowerRequestActivity,
+ * this listView containts acceptButton and declineButton.
  */
 
 public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
@@ -22,7 +23,6 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
     Context context;
     protected ImageButton acceptButton;
     protected ImageButton declineButton;
-    Participant participant;
 
 
     public FollowerRequestAdapter(Context context, ArrayList<Participant> participantList){
@@ -33,13 +33,12 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
     @Override
     public View getView(int position, View view, ViewGroup parent){
 
-        participant = getItem(position);
+        final Participant participant = getItem(position);
 
         if (view == null)
             view = LayoutInflater.from(getContext()).inflate(R.layout.follower_request_listview,parent,false);
 
         TextView nameText = (TextView) view.findViewById(R.id.username);
-        //TextView moodIconText = (TextView) view.findViewById(R.id.moodIconString);
 
         nameText.setText(participant.getUserName());
 
@@ -50,15 +49,17 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
             MainMPController mpController = MoodPlusApplication.getMainMPController();
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "ACCEPT",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "ACCEPTED " + participant.getUserName(),Toast.LENGTH_SHORT).show();
                 mpController.acceptRequest(participant.getUserName());
             }
         });
 
         declineButton.setOnClickListener(new View.OnClickListener() {
             MainMPController mpController = MoodPlusApplication.getMainMPController();
+
             @Override
             public void onClick(View v) {
+                Toast.makeText(getContext(), "DECLINED " + participant.getUserName(),Toast.LENGTH_SHORT).show();
                 mpController.rejectRequest(participant.getUserName());
             }
         });
