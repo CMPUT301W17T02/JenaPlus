@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -35,6 +36,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.mood.jenaPlus.presentation.base.MerlinActivity;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
 
@@ -51,8 +60,8 @@ import java.util.ArrayList;
  * @version 1.0
  */
 
-public class MoodPlusActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
+public class MoodPlusActivity extends MerlinActivity
+        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
@@ -71,16 +80,34 @@ public class MoodPlusActivity extends AppCompatActivity
     private Double longitude;
     private Location location;
 
+    protected Merlin merlin;
+
+    private MerlinActivity merlinActivity;
+
+    private NetworkStatusDisplayer networkStatusDisplayer;
+
     Boolean searching = false;
     Boolean recent = false;
     Boolean moody = false;
 
     ArrayList options1 = new ArrayList();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_plus);
+
+        Button test = (Button) findViewById(R.id.add);
+        test.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View view) {
+                Intent intent = new Intent(MoodPlusActivity.this, Test.class);
+                startActivity(intent);
+            }
+        });
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         moodListView = (ListView) findViewById(R.id.listView);
@@ -109,6 +136,10 @@ public class MoodPlusActivity extends AppCompatActivity
                 viewPager.setCurrentItem(tab.getPosition());
             }
         });
+
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
+
+
 
 
         /* LOADING THE LOGGED IN PARTICIPANT */
@@ -908,6 +939,49 @@ public class MoodPlusActivity extends AppCompatActivity
 
                 .setIcon(android.R.drawable.ic_menu_search)
                 .show();
+    }
+
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        networkStatusDisplayer.displayConnected();
+    }
+
+    @Override
+    public void onDisconnect() {
+        networkStatusDisplayer.displayDisconnected();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
+
     }
 
     public void getTextActivityWithMood2() {

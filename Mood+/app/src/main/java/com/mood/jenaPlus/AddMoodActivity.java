@@ -59,6 +59,15 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinsBeard;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
+import com.mood.jenaPlus.presentation.base.MerlinActivity;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 
 /**
  * This is the main activity to add a mood.
@@ -68,7 +77,7 @@ import java.util.Date;
  *
  */
 
-public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
+public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
     private static final String TAG = "ERROR";
     int idNum;
@@ -96,6 +105,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private String userName;
     private ImageButton infoButton;
 
+    private NetworkStatusDisplayer networkStatusDisplayer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +117,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         Participant participant = mpController.getParticipant();
 
         TextView test = (TextView) findViewById(R.id.addtext);
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
@@ -215,6 +227,50 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 addMood();
             }
         });
+    }
+
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        Log.i("Debug", "online");
+        networkStatusDisplayer.displayConnected();
+    }
+
+    @Override
+    public void onDisconnect() {
+        Log.i("Debug", "offline");
+        networkStatusDisplayer.displayDisconnected();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
     }
 
     private void cameraIntent(){
@@ -470,6 +526,16 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             }
         }
     }
+
+
+    private void galleryIntent(){
+        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+        // 2017-03-10 5:32
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
+    }
+
 
 }
 
