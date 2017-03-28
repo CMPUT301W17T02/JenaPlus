@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * The FollowAdapter class created a listView for FollowActivity,
@@ -24,6 +25,7 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
 
     Context context;
     protected Button followButton;
+
 
     public FollowAdapter(Context context, ArrayList<Participant> participantList) {
         super(context, 0, participantList);
@@ -127,4 +129,5 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
 }

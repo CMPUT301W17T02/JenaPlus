@@ -17,30 +17,12 @@
         android:clickable="true">
 
     </SearchView>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="Search Users"
-        android:layout_below="@id/search_user"
-        android:ems="10"
-        android:id="@+id/searchUsers" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_below="@id/search_user"
-        android:id="@+id/SearchButton"
-        android:layout_toRightOf="@id/searchUsers"
-        android:text="@string/Search"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listViewSearch"
-        android:layout_below="@+id/searchUsers"
+        android:layout_below="@+id/search_user"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 

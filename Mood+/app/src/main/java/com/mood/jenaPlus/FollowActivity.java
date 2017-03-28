@@ -31,16 +31,12 @@ import java.util.Locale;
 
 public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus>,SearchView.OnQueryTextListener{
 
-    private EditText searchUser;
     SearchView searchUsers;
     private ArrayList<Participant> participantList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
     protected ListView participantListView ;
 
     Context context = this;
-
-    protected int longClickedItemIndex;
-    private static final int FOLLOW = 0;
 
     protected MainMPController mpController;
 
@@ -49,10 +45,8 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follow);
-        participantListView = (ListView) findViewById(R.id.listViewSearch);
 
-        searchUser = (EditText) findViewById(R.id.searchUsers);
-        Button button = (Button) findViewById(R.id.SearchButton);
+        participantListView = (ListView) findViewById(R.id.listViewSearch);
 
         /* ------------ Search View ---------------- */
         searchUsers = (SearchView) findViewById(R.id.search_user);
@@ -60,43 +54,6 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         searchUsers.setIconifiedByDefault(false);
         searchUsers.setOnQueryTextListener(this);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //setResult(RESULT_OK);
-                int listSize = participantList.size();
-                ArrayList<Participant> tempArrayList1 = participantList;
-                ArrayList<Participant> tempArrayList2 = new ArrayList<>();
-                String m1 = searchUser.getText().toString();
-                for(int i =0; i<listSize; i++) {
-                    String m2 = tempArrayList1.get(i).getUserName();
-                    if (m2.toLowerCase().contains(m1.toLowerCase())) {
-                        tempArrayList2.add(tempArrayList1.get(i));
-                    }
-                }
-
-                if (tempArrayList2.size() < 1) {
-                    noUserAlert();
-                } else {
-                    participantList.clear();
-                    participantList.addAll(tempArrayList2);
-                    adapter.notifyDataSetChanged();
-                }
-
-            }
-
-
-        });
-
-        registerForContextMenu(participantListView);
-        participantListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                longClickedItemIndex = position;
-
-                return false;
-            }
-        });
 
     }
 
@@ -145,23 +102,6 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
     }
 
 
-    // Filter Class
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        participantList.clear();
-        if (charText.length() == 0) {
-            participantList.addAll(participantList);
-        } else {
-            for (Participant wp : participantList) {
-                if (wp.getUserName().toLowerCase(Locale.getDefault()).contains(charText)) {
-                    participantList.add(wp);
-                }
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
-
-
     @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
@@ -169,8 +109,23 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        String text = newText;
-        filter(text);
+        int listSize = participantList.size();
+        ArrayList<Participant> tempArrayList1 = participantList;
+        ArrayList<Participant> tempArrayList2 = new ArrayList<>();
+        for(int i =0; i<listSize; i++) {
+            String m2 = tempArrayList1.get(i).getUserName();
+            if (m2.toLowerCase().contains(newText.toLowerCase())) {
+                tempArrayList2.add(tempArrayList1.get(i));
+            }
+        }
+
+        if (tempArrayList2.size() < 1) {
+            noUserAlert();
+        } else {
+            participantList.clear();
+            participantList.addAll(tempArrayList2);
+            adapter.notifyDataSetChanged();
+        }
 
         return false;
     }
