@@ -31,13 +31,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -326,7 +323,7 @@ public class MoodPlusActivity extends AppCompatActivity
                 case 0:
                     return new MoodListViewActivity();
                 case 1:
-                    return new FollowerViewActivity();
+                    return new FollowingViewActivity();
                 default:
                     return null;
             }

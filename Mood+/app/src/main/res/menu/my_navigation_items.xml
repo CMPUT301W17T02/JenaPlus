@@ -14,7 +14,7 @@
     <item
         android:id="@+id/action_navigation"
         android:enabled="true"
-        android:icon="@drawable/ic_navigation"
+        android:icon="@drawable/ic_location"
         android:title="Location" />
 
 </menu>

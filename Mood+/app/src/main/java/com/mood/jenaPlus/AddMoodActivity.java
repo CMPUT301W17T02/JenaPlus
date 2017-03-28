@@ -2,6 +2,7 @@ package com.mood.jenaPlus;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +94,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private Double longitude;
 
     private String userName;
+    private ImageButton infoButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,6 +121,27 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
         image = (ImageView) findViewById(R.id.selected_image);
+
+        infoButton = (ImageButton) findViewById(R.id.info);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.icon_legend);
+
+                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                // if button is clicked, close the custom dialog
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
         gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
@@ -276,13 +300,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 saveImageToInternalStorage(photo);
                 imageString = BitMapToString(photo);
                 Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
-
-
-                //Intent intent = new Intent(AddMoodActivity.this, ViewMoodActivity.class);
-                //intent.putExtra("bmp_img", photo);
-
-                // Uri selectedImage = data.getData();
-                // image.setImageURI(selectedImage);
 
             }
         }
@@ -447,7 +464,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 } else {
 
                     // permission denied, disabled the functionality that depends on this permission.
-
                     Toast.makeText(context, "You need to grant permission", Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -455,12 +471,5 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         }
     }
 
-    private void galleryIntent(){
-        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
-        // 2017-03-10 5:32
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
-    }
 }
 
