@@ -226,40 +226,44 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         );
 
         save.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                trigger = message.getText().toString();
-                Boolean trigCheck = triggerCheck();
+                if (merlinsBeard.isConnected()) {
 
-                if (!trigCheck) {
-                    trigMessage();
+                    trigger = message.getText().toString();
+                    Boolean trigCheck = triggerCheck();
 
-                }
+                    if (!trigCheck) {
+                        trigMessage();
 
-                else {
-                    MainMPController mpController = new MainMPController(moodPlus);
-                    UserMoodList userMoodList = mpController.getParticipant().getUserMoodList();
+                    } else {
+                        MainMPController mpController = new MainMPController(moodPlus);
+                        UserMoodList userMoodList = mpController.getParticipant().getUserMoodList();
 
-                    Mood editedMood = userMoodList.getUserMood(position);
+                        Mood editedMood = userMoodList.getUserMood(position);
 
-                    editedMood.setText(message.getText().toString());
-                    editedMood.setAddLocation(addLocation);
-                    editedMood.setLatitude(aLatitude);
-                    editedMood.setLongitude(aLongitude);
-                    editedMood.setId(aId);
-                    editedMood.setDate(dateEditor.getTime());
-                    editedMood.setSocial(socialSituation);
-                    if(updatePhoto){
-                        editedMood.setPhoto(imageString);
-                    }else{
-                        editedMood.setPhoto(aPhoto);
+                        editedMood.setText(message.getText().toString());
+                        editedMood.setAddLocation(addLocation);
+                        editedMood.setLatitude(aLatitude);
+                        editedMood.setLongitude(aLongitude);
+                        editedMood.setId(aId);
+                        editedMood.setDate(dateEditor.getTime());
+                        editedMood.setSocial(socialSituation);
+                        if (updatePhoto) {
+                            editedMood.setPhoto(imageString);
+                        } else {
+                            editedMood.setPhoto(aPhoto);
+                        }
+                        editedMood.setColor(aColor);
+
+                        moodPlus.updateParticipant();
+                        finish();
                     }
-                    editedMood.setColor(aColor);
 
-                    moodPlus.updateParticipant();
-                    finish();
                 }
-
+                else {
+                    Toast.makeText(EditMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

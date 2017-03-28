@@ -98,16 +98,6 @@ public class MoodPlusActivity extends MerlinActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_plus);
 
-        Button test = (Button) findViewById(R.id.add);
-        test.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent intent = new Intent(MoodPlusActivity.this, Test.class);
-                startActivity(intent);
-            }
-        });
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         moodListView = (ListView) findViewById(R.id.listView);

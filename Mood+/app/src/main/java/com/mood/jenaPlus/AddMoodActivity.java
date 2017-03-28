@@ -107,6 +107,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
     private NetworkStatusDisplayer networkStatusDisplayer;
 
+    private MerlinsBeard merlinsBeard;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +120,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
         TextView test = (TextView) findViewById(R.id.addtext);
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
+        merlinsBeard = MerlinsBeard.from(this);
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
@@ -403,31 +406,35 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
     public void addMood() {
 
-        trigger = message.getText().toString();
-        Boolean trigCheck = triggerCheck();
+        if (merlinsBeard.isConnected()){
 
-        if (trigCheck && moodChosen && addLocation) {
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,imageString,colorString,userName);
-            finish();
-        } else if (trigCheck && moodChosen){
-            MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,imageString,colorString,userName);
-            finish();
+            trigger = message.getText().toString();
+            Boolean trigCheck = triggerCheck();
+
+            if (trigCheck && moodChosen && addLocation) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+                finish();
+            } else if (trigCheck && moodChosen) {
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                finish();
+            } else {
+
+                if (!trigCheck) {
+                    trigMessage();
+                }
+                if (!moodChosen) {
+                    idMessage();
+                }
+            }
         }
 
         else {
-
-            if (!trigCheck) {
-                trigMessage();
-            }
-            if (!moodChosen){
-                idMessage();
-            }
+            Toast.makeText(AddMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public Boolean triggerCheck() {
