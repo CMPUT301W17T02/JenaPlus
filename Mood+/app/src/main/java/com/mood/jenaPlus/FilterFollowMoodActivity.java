@@ -80,6 +80,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("moodString");
+        String dateTest = bundle.getString("filterRecent");
 
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
@@ -93,6 +94,15 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
         if (moodArrayList.size() <1) {
             noMoods();
+        }
+
+        if (dateTest.equals("yes")) {
+            for(Mood m: moodArrayList) {
+                Date tempDate = m.getDate();
+                if(!isWithinRange(tempDate)){
+                    moodArrayList.remove(m);
+                }
+            }
         }
 
         adapter = new MoodFollowerListAdapter(FilterFollowMoodActivity.this,moodArrayList);
@@ -133,6 +143,12 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         });
 
         return this.moodArrayList;
+    }
+
+    boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 
 }
