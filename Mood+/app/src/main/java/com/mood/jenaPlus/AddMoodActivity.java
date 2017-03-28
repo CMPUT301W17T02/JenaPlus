@@ -277,13 +277,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 imageString = BitMapToString(photo);
                 Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
 
-
-                //Intent intent = new Intent(AddMoodActivity.this, ViewMoodActivity.class);
-                //intent.putExtra("bmp_img", photo);
-
-                // Uri selectedImage = data.getData();
-                // image.setImageURI(selectedImage);
-
             }
         }
     }
@@ -447,7 +440,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 } else {
 
                     // permission denied, disabled the functionality that depends on this permission.
-
                     Toast.makeText(context, "You need to grant permission", Toast.LENGTH_SHORT).show();
                 }
                 return;
@@ -455,12 +447,5 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         }
     }
 
-    private void galleryIntent(){
-        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
-        // 2017-03-10 5:32
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
-    }
 }
 

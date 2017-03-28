@@ -23,7 +23,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class FollowerViewActivity extends Fragment implements MPView<MoodPlus>{
+/**
+ * Fragment for mood events of the people you are following
+ */
+
+public class FollowingViewActivity extends Fragment implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();

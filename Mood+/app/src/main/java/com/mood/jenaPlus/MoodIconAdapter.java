@@ -9,7 +9,9 @@ import android.widget.ImageView;
 
 import java.util.ArrayList;
 
-/** Taken from https://developer.android.com/guide/topics/ui/layout/gridview.html
+/**
+ * This is for creating mood icons into a gridview
+ * Taken from https://developer.android.com/guide/topics/ui/layout/gridview.html
  * Created by carrotji on 2017-03-06.
  */
 
