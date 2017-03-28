@@ -291,20 +291,6 @@ public class MoodPlusActivity extends AppCompatActivity
 
     }
 
-    public void getMoodFiltered(String mood) {
-        Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString("moodString",mood);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-
-    public void getDateFiltered() {
-        Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
-        startActivity(intent);
-    }
-
     private class CustomAdapter extends FragmentPagerAdapter {
         //taken from https://github.com/miskoajkula/viewpager-tablayout/tree/master/app/src/main/java/my/test/myapplication
 
@@ -464,6 +450,21 @@ public class MoodPlusActivity extends AppCompatActivity
 
         builder.show();
 
+    }
+
+
+    public void getMoodFiltered(String mood) {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("moodString",mood);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+
+    public void getDateFiltered() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
+        startActivity(intent);
     }
 
 

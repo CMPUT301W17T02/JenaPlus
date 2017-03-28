@@ -30,25 +30,24 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_filtered_mood);
-        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /*------------- LOADING THE MOOD  -------------*/
 
-        Bundle bundle = getIntent().getExtras();
-        moodString = bundle.getString("moodString");
+//        Bundle bundle = getIntent().getExtras();
+//        moodString = bundle.getString("moodString");
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        String name = participant.getUserName();
-        String id = participant.getId();
-        String who = "Name: " + name + "\nMood: " + moodString;
-        test.setText(who);
-
-        /*------------------------------------------------*/
+//        String name = participant.getUserName();
+//        String id = participant.getId();
+//        String who = "Name: " + name + "\nMood: " + moodString;
+//        test.setText(who);
+//
+//        /*------------------------------------------------*/
 
 
         moodListView.setAdapter(adapter);
@@ -82,6 +81,11 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
         }
         adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
+
+
+        TextView test = (TextView) findViewById(R.id.test_string);
+        String who = "Mood: " + moodString;
+        //test.setText(who);
 
     }
 

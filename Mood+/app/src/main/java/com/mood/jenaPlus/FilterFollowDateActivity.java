@@ -27,7 +27,6 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
 
     Context context = this;
