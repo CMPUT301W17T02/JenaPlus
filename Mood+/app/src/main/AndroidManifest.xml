@@ -100,10 +100,6 @@
         <activity android:name=".FilterFollowDateActivity" />
         <activity android:name=".FilterFollowMoodActivity" />
         <activity android:name=".FilterFollowTextActivity" />
-        <activity
-            android:name=".Test"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
