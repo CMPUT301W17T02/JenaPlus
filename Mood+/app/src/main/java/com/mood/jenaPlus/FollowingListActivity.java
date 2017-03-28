@@ -39,7 +39,7 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_follower_request);
+        setContentView(R.layout.activity_following);
 
         participantListView = (ListView) findViewById(R.id.listViewSearch);
 
@@ -73,7 +73,8 @@ public class FollowingListActivity extends AppCompatActivity implements MPView<M
             }
 
             participantList = tempArray;
-            adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+            adapter = new FollowingListAdapter(this,participantList);
+            //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
 
         } catch (Exception e) {

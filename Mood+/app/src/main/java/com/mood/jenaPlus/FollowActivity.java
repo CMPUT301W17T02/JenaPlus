@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.SearchView;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -15,20 +16,23 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Locale;
 
 /**
  * This activity is used when a participant wants to follow another participant.
  * From clicking the top right button on the main activity.
  **/
 
-public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus>{
+public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus>,SearchView.OnQueryTextListener{
 
     private EditText searchUser;
+    SearchView searchUsers;
     private ArrayList<Participant> participantList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
     protected ListView participantListView ;
@@ -49,6 +53,12 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
         searchUser = (EditText) findViewById(R.id.searchUsers);
         Button button = (Button) findViewById(R.id.SearchButton);
+
+        /* ------------ Search View ---------------- */
+        searchUsers = (SearchView) findViewById(R.id.search_user);
+        searchUsers.setQueryHint("Search Users");
+        searchUsers.setIconifiedByDefault(false);
+        searchUsers.setOnQueryTextListener(this);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,10 +93,10 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 longClickedItemIndex = position;
+
                 return false;
             }
         });
-
 
     }
 
@@ -105,8 +115,12 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
             Participant participant = mpController.getParticipant();
             Log.i("want to remove", participant.getUserName());
             participantList.remove(participant);
-            adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
+            adapter = new FollowAdapter(this,participantList);
+            //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
+            for(int i= 0; i < participantList.size(); i++){
+                Log.i("participant",participantList.get(i).getUserName());
+            }
 
         } catch (Exception e) {
             Log.i("Error", "Failed to get the users out of the async object");
@@ -225,8 +239,35 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         return super.onContextItemSelected(item);
     }
 
+    // Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        participantList.clear();
+        if (charText.length() == 0) {
+            participantList.addAll(participantList);
+        } else {
+            for (Participant wp : participantList) {
+                if (wp.getUserName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    participantList.add(wp);
+                }
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+        filter(text);
+
+        return false;
+    }
 }
 
 

@@ -25,14 +25,7 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
     private ArrayAdapter<Participant> adapter;
     protected ListView participantListView;
 
-    protected ImageButton acceptButton;
-    protected ImageButton declineButton;
-
     Context context = this;
-
-    protected int longClickedItemIndex;
-    private static final int ACCEPT = 0;
-    private static final int REJECT = 1;
     protected MainMPController mpController;
 
     @Override
@@ -40,16 +33,6 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_follower_request);
         participantListView = (ListView) findViewById(R.id.listViewSearch);
-
-        registerForContextMenu(participantListView);
-        participantListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                longClickedItemIndex = position;
-                return false;
-            }
-        });
-
 
     }
 
@@ -73,7 +56,6 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
 
             participantList = tempArray;
             adapter = new FollowerRequestAdapter(this,participantList);
-            //adapter = new ArrayAdapter<Participant>(this, R.layout.participant_list, participantList);
             participantListView.setAdapter(adapter);
 
         } catch (Exception e) {
@@ -93,30 +75,6 @@ public class FollowerRequestActivity extends AppCompatActivity implements MPView
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
-    }
-
-
-
-    public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo menuInfo){
-        super.onCreateContextMenu(menu,view,menuInfo);
-        menu.add(Menu.NONE,ACCEPT,menu.NONE,"ACCEPT REQUEST");
-        menu.add(Menu.NONE,REJECT,menu.NONE,"REJECT REQUEST");
-    }
-
-    public boolean onContextItemSelected(MenuItem item){
-        Participant participant = (Participant) participantListView.getItemAtPosition(longClickedItemIndex);
-        Log.i("maybe?", participant.getUserName());
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        switch (item.getItemId()){
-            case ACCEPT:
-                mpController.acceptRequest(participant.getUserName());
-                break;
-            case REJECT:
-                mpController.rejectRequest(participant.getUserName());
-                break;
-        }
-
-        return super.onContextItemSelected(item);
     }
 
     @Override
