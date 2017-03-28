@@ -1,4 +1,4 @@
-package com.mood.jenaPlus;
+package com.mood.jenaPlus.connectivity.display;
 
 /**
  * Created by ceciliaxiang on 2017-03-26.

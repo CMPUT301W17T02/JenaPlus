@@ -20,4 +20,5 @@
     <string name="current_status">Get Current Status</string>
     <string name="toast_connected">Connected</string>
     <string name="toast_disconnected">Disconnected</string>
+    <string name="title_activity_test">Test</string>
 </resources>

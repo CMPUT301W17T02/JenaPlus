@@ -1,8 +1,8 @@
-package com.mood.jenaPlus;
+package com.mood.jenaPlus.connectivity.display;
 import android.app.Activity;
 
 import android.view.View;
-import com.mood.jenaPlus.R;
+
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.LifecycleCallback;

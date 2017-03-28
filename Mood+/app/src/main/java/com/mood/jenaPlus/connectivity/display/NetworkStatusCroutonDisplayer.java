@@ -1,6 +1,8 @@
-package com.mood.jenaPlus;
+package com.mood.jenaPlus.connectivity.display;
 
 import android.app.Activity;
+
+
 
 /**
  * Created by ceciliaxiang on 2017-03-26.
@@ -9,27 +11,27 @@ import android.app.Activity;
 
 public class NetworkStatusCroutonDisplayer implements NetworkStatusDisplayer {
 
-    private final NovodaCrouton NovodaCrouton;
+    private final NovodaCrouton novodaCrouton;
 
     public NetworkStatusCroutonDisplayer(Activity activity) {
-        this.NovodaCrouton = new NovodaCrouton(activity);
+        this.novodaCrouton = new NovodaCrouton(activity);
     }
 
     @Override
     public void displayConnected() {
-        NovodaCrouton.show(CroutonStyles.CONNECTED);
+        novodaCrouton.show(CroutonStyles.CONNECTED);
     }
 
     @Override
     public void displayDisconnected() {
-        if (!NovodaCrouton.isShown()) {
-            NovodaCrouton.show(CroutonStyles.DISCONNECTED);
+        if (!novodaCrouton.isShown()) {
+            novodaCrouton.show(CroutonStyles.DISCONNECTED);
         }
     }
 
     @Override
     public void reset() {
-        NovodaCrouton.close();
+        novodaCrouton.close();
     }
 
 }

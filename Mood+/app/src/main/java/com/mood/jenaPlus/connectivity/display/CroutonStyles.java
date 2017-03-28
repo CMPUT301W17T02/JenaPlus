@@ -1,4 +1,4 @@
-package com.mood.jenaPlus;
+package com.mood.jenaPlus.connectivity.display;
 
 import android.app.Activity;
 import de.keyboardsurfer.android.widget.crouton.Style;
