@@ -284,15 +284,26 @@ public class MoodPlusActivity extends AppCompatActivity
 
                 Intent intent = new Intent(MoodPlusActivity.this, FilteredTextActivity.class);
                 Bundle bundle = new Bundle();
+                if (recent) {
+                    bundle.putString("filterRecent", "yes");
+                } else {
+                    bundle.putString("filterRecent", "no");
+                }
                 bundle.putString("testText",searchText);
+                bundle.putString("moodString","no");
                 intent.putExtras(bundle);
+                searching = recent = moody = false;
+
                 startActivity(intent);
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                searching = recent = moody = false;
                 dialog.cancel();
+
             }
         });
 
@@ -465,14 +476,30 @@ public class MoodPlusActivity extends AppCompatActivity
         Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("moodString",mood);
+        if (recent) {
+            bundle.putString("filterRecent", "yes");
+        } else {
+            bundle.putString("filterRecent", "no");
+        }
         intent.putExtras(bundle);
+        searching = recent = moody = false;
+        moodId = "";
         startActivity(intent);
+
     }
 
 
     public void getDateFiltered() {
         Intent intent = new Intent(MoodPlusActivity.this, FilteredDateActivity.class);
+        Bundle bundle = new Bundle();
+        if (recent) {
+            bundle.putString("filterRecent", "yes");
+        } else {
+            bundle.putString("filterRecent", "no");
+        }
+        intent.putExtras(bundle);
         startActivity(intent);
+        searching = recent = moody = false;
     }
 
     public void testFilters() {
@@ -524,7 +551,6 @@ public class MoodPlusActivity extends AppCompatActivity
                             getDateFiltered();
                         }
 
-                        searching = recent = moody = false;
                     }
 
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -710,16 +736,22 @@ public class MoodPlusActivity extends AppCompatActivity
                 Bundle bundle = new Bundle();
                 bundle.putString("moodString", moodId);
                 bundle.putString("testText",searchText);
-                if (moody) {
+                if (recent) {
                     bundle.putString("filterRecent", "yes");
+                } else {
+                    bundle.putString("filterRecent", "no");
                 }
                 intent.putExtras(bundle);
+                searching = recent = moody = false;
                 startActivity(intent);
+
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                searching = recent = moody = false;
+                moodId = "";
                 dialog.cancel();
             }
         });

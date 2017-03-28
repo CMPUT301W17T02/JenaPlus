@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class FilteredTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
@@ -77,13 +81,38 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         keyword = bundle.getString("testText");
 
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getFilteredMoodText(keyword);
+        ArrayList<Mood> tempArrayList = myMoodList.getFilteredMoodText(keyword);
+        List<Mood> temp = tempArrayList;
+        String dateTest = bundle.getString("filterRecent");
+        String moodId = bundle.getString("moodString");
+
+        if (!moodId.equals("no")){
+            Log.i("moodstring", moodId);
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if(!mood.getId().equals(moodId)){
+                    iterator.remove();
+                }
+            }
+
+        }
+
+        if (dateTest.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                Date tempDate = mood.getDate();
+                if(!isWithinRange(tempDate)){
+                    iterator.remove();
+                }
+            }
+        }
+
+        moodArrayList.addAll(temp);
 
         if (moodArrayList.size() < 1) {
             noMoods();
         }
 
-        //adapter = new ArrayAdapter<Mood>(this, R.layout.mood_plus_listview, moodArrayList);
         adapter = new MoodListAdapter(FilteredTextActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
@@ -92,7 +121,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods with keyword \'" + keyword +"\' were found.")
+                .setMessage("No moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -105,6 +134,12 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     @Override
     public void update(MoodPlus moodPlus){
 
+    }
+
+    boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 
 }
