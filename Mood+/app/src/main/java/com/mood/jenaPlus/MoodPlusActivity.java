@@ -57,11 +57,9 @@ public class MoodPlusActivity extends AppCompatActivity
 
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
-
     private String searchText = "";
-
+    private String moodId = "";
     protected MainMPController mpController;
-
     public ListView getMoodListView(){
         return moodListView;
     }
@@ -73,6 +71,12 @@ public class MoodPlusActivity extends AppCompatActivity
     private Double latitude;
     private Double longitude;
     private Location location;
+
+    Boolean searching = false;
+    Boolean recent = false;
+    Boolean moody = false;
+
+    ArrayList options1 = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,8 +208,11 @@ public class MoodPlusActivity extends AppCompatActivity
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
         } else if (id == R.id.menuMyOwnMoodFilter){
-            myOwnFiltersDialog();
+            testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
+            for (int i = 0; i<options1.size(); i++) {
+                Log.i("options: ", options1.get(i).toString());
+            }
             myFollowingFiltersDialog();
         }
 
@@ -274,7 +281,6 @@ public class MoodPlusActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 searchText = input.getText().toString();
                 Log.i("Error","searchtext is: "+searchText);
-
 
                 Intent intent = new Intent(MoodPlusActivity.this, FilteredTextActivity.class);
                 Bundle bundle = new Bundle();
@@ -455,7 +461,6 @@ public class MoodPlusActivity extends AppCompatActivity
 
     }
 
-
     public void getMoodFiltered(String mood) {
         Intent intent = new Intent(MoodPlusActivity.this, FilteredMoodActivity.class);
         Bundle bundle = new Bundle();
@@ -470,6 +475,72 @@ public class MoodPlusActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    public void testFilters() {
+        final CharSequence[] items = {" Text "," Most Recent "," Mood "};
+        // arraylist to keep the selected items
+        final ArrayList selectedItems=new ArrayList();
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Select the Filters for your moods")
+                .setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
+                        if (isChecked) {
+                            // If the user checked the item, add it to the selected items
+                            selectedItems.add(indexSelected);
+                        } else if (selectedItems.contains(indexSelected)) {
+                            // Else, if the item is already in the array, remove it
+                            selectedItems.remove(Integer.valueOf(indexSelected));
+                        }
+                    }
+                }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Your code when user clicked on OK
+                        //  You can write the code  to save the selected item here
+                        options1 = selectedItems;
+                        for (int i = 0; i <selectedItems.size(); i++) {
+                            if (selectedItems.get(i).equals(0)){
+                                searching = true;
+                            }
+                            if(selectedItems.get(i).equals(1)) {
+                                recent = true;
+                            }
+                            if (selectedItems.get(i).equals(2)) {
+                                moody = true;
+                            }
+                        }
+
+                        if (searching && moody) {
+                            filterMoodText();
+                        }
+                        else if (searching) {
+                            getTextActivity();
+                        }
+                        else if (moody) {
+                            myOwnFiltersDialog();
+                        }
+                        else if (recent) {
+                            getDateFiltered();
+                        }
+
+                        searching = recent = moody = false;
+                    }
+
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        searching = recent = moody = false;
+                    }
+                }).create();
+        dialog.show();
+    }
+
+
+    public void filterMoodText() {
+        getMoodDialog2();
+    }
+
 
     public void myOwnFiltersDialog() {
         // Taken from http://stackoverflow.com/questions/30345243/android-dialog-with-multiple-button-how-to-implement-switch-case
@@ -477,7 +548,7 @@ public class MoodPlusActivity extends AppCompatActivity
         new AlertDialog.Builder(context)
                 .setTitle("Filter your own moods")
                 .setItems(new CharSequence[]
-                                {"Filter By Most Recent", "Filter By Text", "Filter By Surprised Moods",
+                                {"Filter By Surprised Moods",
                                         "Filter By Disgusted Moods", "Filter By Fearful Moods",
                                         "Filter By Confused Moods", "Filter By Happy Moods", "Filter By Angry Moods",
                                         "Filter By Sad Moods", "Filter By Shameful Moods", "Filter By Annoyed Moods"},
@@ -487,56 +558,46 @@ public class MoodPlusActivity extends AppCompatActivity
                                 // of the selected item
                                 switch (which) {
                                     case 0:
-                                        getDateFiltered();
-                                        Toast.makeText(context, "Filter By Most Recent",
-                                                Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 1:
-                                        getTextActivity();
-                                        Toast.makeText(context, "Filter By Text",
-                                                Toast.LENGTH_SHORT).show();
-                                        break;
-                                    case 2:
                                         getMoodFiltered("surprised");
                                         Toast.makeText(context, "Filter By Surprised Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 3:
+                                    case 1:
                                         getMoodFiltered("disgust");
                                         Toast.makeText(context, "Filter By Disgusted Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 4:
+                                    case 2:
                                         getMoodFiltered("fear");
                                         Toast.makeText(context, "Filter By Fearful Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 5:
+                                    case 3:
                                         getMoodFiltered("confused");
                                         Toast.makeText(context, "Filter By Confused Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 6:
+                                    case 4:
                                         getMoodFiltered("happy");
                                         Toast.makeText(context, "Filter By Happy Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 7:
+                                    case 5:
                                         getMoodFiltered("angry");
                                         Toast.makeText(context, "Filter By Angry Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 8:
+                                    case 6:
                                         getMoodFiltered("sad");
                                         Toast.makeText(context, "Filter By Sad Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 9:
+                                    case 7:
                                         getMoodFiltered("shame");
                                         Toast.makeText(context, "Filter By Shameful Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
-                                    case 10:
+                                    case 8:
                                         getMoodFiltered("annoyed");
                                         Toast.makeText(context, "Filter By Annoyed Moods",
                                                 Toast.LENGTH_SHORT).show();
@@ -548,6 +609,123 @@ public class MoodPlusActivity extends AppCompatActivity
 
                 .setIcon(android.R.drawable.ic_menu_search)
                 .show();
+
+
+    }
+
+    public void getMoodDialog2() {
+        // Taken from http://stackoverflow.com/questions/30345243/android-dialog-with-multiple-button-how-to-implement-switch-case
+        // 2017-03-26 Rajan Bhavsar
+        new AlertDialog.Builder(context)
+                .setTitle("Choose a mood to filter")
+                .setItems(new CharSequence[]
+                                {"Filter By Surprised Moods",
+                                        "Filter By Disgusted Moods", "Filter By Fearful Moods",
+                                        "Filter By Confused Moods", "Filter By Happy Moods", "Filter By Angry Moods",
+                                        "Filter By Sad Moods", "Filter By Shameful Moods", "Filter By Annoyed Moods"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // The 'which' argument contains the index position
+                                // of the selected item
+                                switch (which) {
+                                    case 0:
+                                        moodId = "surprised";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Surprised Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 1:
+                                        moodId ="disgust";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Disgusted Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 2:
+                                        moodId ="fear";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Fearful Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 3:
+                                        moodId ="confused";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Confused Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 4:
+                                        moodId ="happy";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Happy Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 5:
+                                        moodId ="angry";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Angry Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 6:
+                                        moodId ="sad";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Sad Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 7:
+                                        moodId ="shame";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Shameful Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 8:
+                                        moodId ="annoyed";
+                                        getTextActivityWithMood();
+                                        Toast.makeText(context, "Filter By Annoyed Moods",
+                                                Toast.LENGTH_SHORT).show();
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(android.R.drawable.ic_menu_search)
+                .show();
+    }
+
+    public void getTextActivityWithMood() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter Keyword");
+
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                searchText = input.getText().toString();
+                Log.i("Error","searchtext is: "+searchText);
+
+                Intent intent = new Intent(MoodPlusActivity.this, FilteredTextActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("moodString", moodId);
+                bundle.putString("testText",searchText);
+                if (moody) {
+                    bundle.putString("filterRecent", "yes");
+                }
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+
     }
 
 }
