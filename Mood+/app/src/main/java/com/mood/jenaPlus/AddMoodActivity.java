@@ -54,6 +54,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
@@ -95,6 +96,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
 
     private String userName;
     private ImageButton infoButton;
+    final int maxBytes =  65536;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,7 +132,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 final Dialog dialog = new Dialog(context);
                 dialog.setContentView(R.layout.icon_legend);
 
-                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.dialogButtonOK);
                 // if button is clicked, close the custom dialog
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -246,7 +248,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
         //2017-03-26
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,50, baos);
         byte [] b=baos.toByteArray();
         String temp=Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
@@ -272,6 +274,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
 
@@ -299,6 +302,16 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 image.setImageBitmap(photo);
                 saveImageToInternalStorage(photo);
                 imageString = BitMapToString(photo);
+
+                Double result = 4*Math.ceil((imageString.length()/3));
+                Log.i("BYTES",""+result);
+                if(result > maxBytes){
+                    Log.i("BYTES","IMAGE IS TOO BIG");
+                }else{
+                    Log.i("BYTES","ADD IMAGE");
+                }
+
+
                 Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
 
             }

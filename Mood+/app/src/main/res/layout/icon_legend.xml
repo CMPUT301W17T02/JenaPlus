@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -16,43 +17,28 @@
             android:padding="5dp" />
         <ImageView
             android:id="@+id/image1"
-            android:layout_below="@id/image"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/disgust"
             android:padding="5dp" />
         <ImageView
             android:id="@+id/image2"
-            android:layout_below="@id/image1"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/fear"
             android:padding="5dp" />
         <ImageView
             android:id="@+id/image3"
-            android:layout_below="@id/image2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/confused"
             android:padding="5dp" />
         <ImageView
             android:id="@+id/image4"
-            android:layout_below="@id/image3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/happy"
             android:padding="5dp" />
-
-
-        <Button
-            android:id="@+id/dialogButtonOK"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Ok "
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_below="@+id/image8"
-            />
 
     </LinearLayout>
 
@@ -65,14 +51,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Surpised"
+            android:text="Surprised"
             android:layout_margin="15dp"
             android:textSize="15sp"
             android:textColor="@color/black"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Disugust"
+            android:text="Disgust"
             android:layout_margin="15dp"
             android:textSize="15sp"
             android:textColor="@color/black"/>
@@ -107,28 +93,24 @@
 
         <ImageView
             android:id="@+id/image5"
-            android:layout_below="@id/image4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/angry"
             android:padding="5dp"/>
         <ImageView
             android:id="@+id/image6"
-            android:layout_below="@id/image5"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/sad"
             android:padding="5dp" />
         <ImageView
             android:id="@+id/image7"
-            android:layout_below="@id/image6"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/shame"
             android:padding="5dp" />
         <ImageView
             android:id="@+id/image8"
-            android:layout_below="@id/image7"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/annoyed"
@@ -173,10 +155,17 @@
             android:textSize="15sp"
             android:textColor="@color/black"/>
 
+        <ImageButton
+            android:id="@+id/dialogButtonOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_yes"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="#4DD0E1"
+            android:layout_marginTop="5dp"
+            />
+
 
     </LinearLayout>
-
-
-
 
 </LinearLayout>
