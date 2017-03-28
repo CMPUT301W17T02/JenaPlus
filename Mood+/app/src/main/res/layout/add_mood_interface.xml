@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:id="@+id/adding">
 
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_info"
+        android:backgroundTint="@android:color/transparent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,14 +58,6 @@
             android:paddingBottom="10dp"
             android:gravity="center" />
 
-        <!--TextView
-            android:id="@+id/howFeel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="20sp"
-            android:textColor="#01579B"
-            android:text="How are you feeling?" /-->
 
         <EditText
             android:id="@+id/message"

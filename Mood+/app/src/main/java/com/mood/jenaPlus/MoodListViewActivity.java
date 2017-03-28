@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import static android.app.Activity.RESULT_OK;
 
 /**
+ * Main Fragment for the user mood events activity
  * Created by carrotji on 2017-03-25.
  */
 

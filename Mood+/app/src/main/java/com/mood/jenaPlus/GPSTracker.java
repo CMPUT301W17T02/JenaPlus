@@ -21,7 +21,7 @@ import android.util.Log;
 import android.location.LocationListener;
 
 /**
- * Created by carrotji on 2017-03-12.
+ * GPSTracker class is used to get the current position location
  * Taken from http://stackoverflow.com/questions/36915290/getting-latitude-and-longitude-0-0-in-android-m
  * 2017-03-12
  */
