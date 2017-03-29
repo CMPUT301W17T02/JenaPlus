@@ -40,7 +40,6 @@
         android:layout_width="wrap_content"
         android:textSize="15sp"
         android:text="Situation"
-        android:maxLength="20"
         android:layout_below="@+id/time"
         android:textColor="@android:color/black"
         android:paddingBottom="15dp"
