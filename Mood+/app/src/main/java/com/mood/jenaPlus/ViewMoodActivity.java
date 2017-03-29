@@ -160,7 +160,6 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
                     Intent intent = new Intent(ViewMoodActivity.this, MapActivity.class);
                     intent.putExtras(args);
                     intent.putExtra("participant_moodProvider",tempLocation);
-                    //intent.putParcelableArrayListExtra("following_latLongProvider", tempLocation);
                     startActivity(intent);
                 }
                 else{
