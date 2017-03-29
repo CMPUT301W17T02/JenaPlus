@@ -70,6 +70,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
         super.onStart();
         moodArrayList.clear();
+        /* ----- REPLACE BY RECENT MOOD LIST METHOD ------ */
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
         mpController = MoodPlusApplication.getMainMPController();
@@ -87,6 +88,8 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
             }
         }
 
+        /* ----- REPLACE BY RECENT MOOD LIST METHOD ------ */
+
         if (moodArrayList.size() <1) {
             noMoods();
         }
@@ -97,6 +100,29 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         moodListView.setAdapter(adapter);
 
     }
+    public ArrayList<Mood> recentMoodList()    {
+        ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+
+        mpController = MoodPlusApplication.getMainMPController();
+        Participant participant = mpController.getParticipant();
+        ArrayList<String> participantListStr = participant.getFollowingList();
+
+        for (int i = 0; i<participantListStr.size(); i++) {
+            Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
+            ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
+            for (Mood m : partMoods) {
+                Date tempDate = m.getDate();
+                if (isWithinRange(tempDate)) {
+                    moodArrayList.add(m);
+                }
+            }
+        }
+
+
+        return(moodArrayList);
+    }
+
 
     public void noMoods() {
         new AlertDialog.Builder(context)

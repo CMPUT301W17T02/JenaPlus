@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -44,7 +45,7 @@ public class MarkerActivity extends FragmentActivity implements
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        Intent intent = getIntent();
+        /*Intent intent = getIntent();
         arrayLocation = intent.getParcelableArrayListExtra("longLat_dataProvider");
 
         // Add some markers to the map, and add a data object to each marker.
@@ -52,13 +53,14 @@ public class MarkerActivity extends FragmentActivity implements
             Log.i("LOCATIONNNNNN","Contents of arrayLocation: " + location);
             testMarker = mMap.addMarker(new MarkerOptions().position(location).title("TESTING"));
             testMarker.setTag(0);
-        }
+        }*/
 
-        // Add some markers to the map, and add a data object to each marker.
-     /*   mPerth = mMap.addMarker(new MarkerOptions()
-                .position(PERTH)
-                .title("Perth"));
-        mPerth.setTag(0);*/
+        Intent i = getIntent();
+        LatLng currentPosition = i.getParcelableExtra("longLat_dataProvider");
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 11.0f));
+        mMap.addMarker(new MarkerOptions().position(currentPosition)
+                .title("Current Position"));
 
         // Set a listener for marker click.
         mMap.setOnMarkerClickListener(this);
