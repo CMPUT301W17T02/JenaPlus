@@ -33,7 +33,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_filtered_mood);
+        setContentView(R.layout.activity_filter);
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 

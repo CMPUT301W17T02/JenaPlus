@@ -27,7 +27,7 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filtered_date);
+        setContentView(R.layout.activity_filter);
 
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);

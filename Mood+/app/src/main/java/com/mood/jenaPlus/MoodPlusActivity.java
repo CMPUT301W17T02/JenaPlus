@@ -78,6 +78,13 @@ public class MoodPlusActivity extends AppCompatActivity
 
     ArrayList options1 = new ArrayList();
 
+    ArrayList<LatLng> latlngs = new ArrayList<>();
+
+    LatLng PERTH = new LatLng(-31.952854, 115.857342);
+    LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
+    LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
+    LatLng ENGLAND = new LatLng(52.3555, 1.1743);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,6 +157,11 @@ public class MoodPlusActivity extends AppCompatActivity
         TextView textName = (TextView)header.findViewById(R.id.username);
         textName.setText(name);
 
+        latlngs.add(PERTH);
+        latlngs.add(SYDNEY);
+        latlngs.add(BRISBANE);
+        latlngs.add(ENGLAND);
+
     }
 
     @Override
@@ -196,10 +208,13 @@ public class MoodPlusActivity extends AppCompatActivity
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
 
-            Bundle args = new Bundle();
-            args.putParcelable("longLat_dataProvider",position);
-            Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
-            intent.putExtras(args);
+            //Bundle args = new Bundle();
+            //args.putParcelable("longLat_dataProvider",position);
+            //Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
+            //intent.putExtras(args);
+
+            Intent intent = new Intent(MoodPlusActivity.this, MarkerActivity.class);
+            intent.putParcelableArrayListExtra("longLat_dataProvider",latlngs);
             startActivity(intent);
         } else if(id ==R.id.followingDrawer){
             Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);

@@ -36,7 +36,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_date);
+        setContentView(R.layout.activity_filter);
 
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
