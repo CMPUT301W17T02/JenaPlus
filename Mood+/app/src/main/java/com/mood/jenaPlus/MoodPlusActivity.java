@@ -37,7 +37,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -79,7 +80,7 @@ public class MoodPlusActivity extends AppCompatActivity
 
     ArrayList options1 = new ArrayList();
 
-    ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+    ArrayList<Mood> moodArrayList1 = new ArrayList<Mood>();
 
     ArrayList<LatLng> followingLocations = new ArrayList<>();
     LatLng followingLatLng;
@@ -207,39 +208,60 @@ public class MoodPlusActivity extends AppCompatActivity
 
             /*----------------------- PASSING CURRENT LOCATION---------------------*/
 
+            ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+            getUsersTask.execute("");
+            ArrayList<Participant> participantList = new ArrayList<Participant>();
+
+            try {
+                participantList = getUsersTask.get();
+                mpController = MoodPlusApplication.getMainMPController();
+
+            } catch (Exception e) {
+                Log.i("Error", "Failed to get the users out of the async object");
+            }
 
             /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
 
-            FilterFollowDateActivity recent = new FilterFollowDateActivity();
-            moodArrayList = recent.recentMoodList();
-            for (Mood mood: moodArrayList){
-                //Log.i("MOOOOOOODDDDD","Contents of arrayLocation: " +mood+ mood.getAddLocation());
-                if(mood.getAddLocation() == true){
-
-                    Log.i("YOUR LOCATIONNNN!!!","Contents of arrayLocation: " + position);
-                    double distance;
-
-                    // Create new location for following
-                    Location locationB = new Location("point B");
-
-                    locationB.setLatitude(mood.getLatitude());
-                    locationB.setLongitude(mood.getLongitude());
-
-                    // Check for distance between current location and following location
-                    distance = location.distanceTo(locationB);
-                    Log.i("DISTANCEEE!!!","DISTANCE IN METER: " + distance);
-                    if(distance <= 5000){
-                        followingLatLng = new LatLng(mood.getLatitude(),mood.getLongitude());
-                        Log.i("FOLLOWING LOCATION","Contents of arrayLocation: " + followingLatLng);
-                        followingLocations.add(followingLatLng);
+            for(int i=0; i <participantList.size();i++){
+                ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
+                getUserMoodOrderedList(userMoods);
+                try{
+                    if(userMoods.get(0).getAddLocation()){
+                        moodArrayList1.add(userMoods.get(0));
                     }
-
-                    // TODO: WHEN LIST IS EMPTY?
-
+                }catch (Exception e){
+                    Log.i("Error","Some participants has no mood");
                 }
+
+
             }
 
-            Log.i("LOCATIONNNN!!!","Contents of arrayLocation: "+ followingLocations);
+            /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
+
+
+            for (Mood mood: moodArrayList1){
+                Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + moodArrayList1 + mood.getUserName() );
+                double distance;
+
+                // Create new location for following
+                Location locationB = new Location("point B");
+
+                locationB.setLatitude(mood.getLatitude());
+                locationB.setLongitude(mood.getLongitude());
+
+                // Check for distance between current location and following location
+                distance = location.distanceTo(locationB);
+                //Log.i("DISTANCEEE!!!","DISTANCE IN METER: " + distance);
+                if(distance <= 5000) {
+                    followingLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
+                    //Log.i("FOLLOWING LOCATION", "Contents of arrayLocation: " + followingLatLng);
+                    followingLocations.add(followingLatLng);
+                }
+
+                    // TODO: WHEN LIST IS EMPTY?
+            }
+
+            //Log.i("LOCATIONNNN!!!","Contents of arrayLocation: "+ followingLocations);
             /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
 
 
@@ -274,6 +296,17 @@ public class MoodPlusActivity extends AppCompatActivity
         return true;
     }
 
+    public ArrayList<Mood> getUserMoodOrderedList(ArrayList<Mood> moodArray) {
+
+        Collections.sort(moodArray, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return moodArray;
+    }
     @Override
     protected void onStart(){
         super.onStart();

@@ -159,4 +159,5 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
         return !(testDate.before(startDate) || testDate.after(endDate));
     }
+
 }
