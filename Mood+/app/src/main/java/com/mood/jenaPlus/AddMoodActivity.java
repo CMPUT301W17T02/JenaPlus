@@ -118,6 +118,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private static final String ADD = "add.sav";
 
     private OfflineDataController offlineDataController;
+    private UserMoodList userMoodList;
 
 
     @Override
@@ -134,6 +135,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         merlinsBeard = MerlinsBeard.from(this);
 
         offlineDataController = new OfflineDataController();
+        userMoodList = new UserMoodList();
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
@@ -463,12 +465,12 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
-                UserMoodList userMoodList = new UserMoodList();
-                Mood mood = dummyMood1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
-                userMoodList.addUserMood(mood);
+                //UserMoodList userMoodList = new UserMoodList();
+                //Mood mood = dummyMood1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+                //userMoodList.addUserMood(mood);
 
-                saveInFile(ADD, userMoodList);
-                offlineDataController.passFile(ADD);
+                //saveInFile(ADD, userMoodList);
+                //offlineDataController.passFile(ADD);
 
 
                 //MainMPController mpController = MoodPlusApplication.getMainMPController();
@@ -478,12 +480,12 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 //no location
             } else if (trigCheck && moodChosen) {
 
-                UserMoodList userMoodList = new UserMoodList();
-                Mood mood = dummyMood2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-                userMoodList.addUserMood(mood);
+                //UserMoodList userMoodList = new UserMoodList();
+                //Mood mood = dummyMood2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                //userMoodList.addUserMood(mood);
 
-                saveInFile(ADD, userMoodList);
-                offlineDataController.passFile(ADD);
+                //saveInFile(ADD, userMoodList);
+                //offlineDataController.passFile(ADD);
 
                 //MainMPController mpController = MoodPlusApplication.getMainMPController();
                 //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
@@ -491,9 +493,11 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             } else {
 
                 if (!trigCheck) {
+                    Log.i("Debug","not trig");
                     trigMessage();
                 }
                 if (!moodChosen) {
+                    Log.i("Debug","not mood");
                     idMessage();
                 }
             }

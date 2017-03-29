@@ -16,6 +16,12 @@ public class OfflineDataController {
     }
 
 
+    public void passingList(){
+
+
+    }
+
+
     public void executeOfflineAdd1(){
 
         saveOffline.syncOfflineAdd1();
