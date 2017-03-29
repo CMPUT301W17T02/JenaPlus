@@ -53,8 +53,7 @@
             android:name=".AddMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".EditMoodActivity"
             android:label="@string/title_activity_edit_mood"
@@ -93,12 +92,18 @@
         <activity
             android:name=".FollowingListActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilterFollowDateActivity" />
-        <activity android:name=".FilterFollowMoodActivity" />
-        <activity android:name=".FilterFollowTextActivity" />
-        <activity android:name=".FilteredLocationActivity" />
-        <activity android:name=".FilterFollowLocationActivity"></activity>
-        <activity android:name=".MarkerActivity"></activity>
+        <activity
+            android:name=".FilterFollowDateActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity
+            android:name=".FilterFollowMoodActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity
+            android:name=".FilterFollowTextActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".MarkerActivity" />
+        <activity android:name=".GraphActivity"/>
+        <activity android:name=".FilterFollowLocationActivity"/>
 
     </application>
 

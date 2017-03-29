@@ -1,33 +1,21 @@
 package com.mood.jenaPlus;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.BitmapDrawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 import java.lang.reflect.Field;
-
-import static android.R.attr.data;
+import java.util.ArrayList;
 
 
 /**
@@ -98,6 +86,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     protected ImageButton locationButton;
 
     protected ImageView cameraImage;
+    ArrayList<LatLng> tempLocation = new ArrayList<>();
 
 
     @Override
@@ -170,6 +159,7 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
                     args.putParcelable("longLat_dataProvider",position);
                     Intent intent = new Intent(ViewMoodActivity.this, MapActivity.class);
                     intent.putExtras(args);
+                    intent.putParcelableArrayListExtra("following_latLongProvider", tempLocation);
                     startActivity(intent);
                 }
                 else{

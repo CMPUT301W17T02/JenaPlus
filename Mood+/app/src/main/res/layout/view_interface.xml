@@ -65,6 +65,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_location"
         android:background="@android:color/transparent"
+        android:layout_alignBottom="@id/time"
         android:visibility="invisible"
         android:layout_toRightOf="@id/time"/>
 

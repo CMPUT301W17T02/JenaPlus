@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -78,12 +79,11 @@ public class MoodPlusActivity extends AppCompatActivity
 
     ArrayList options1 = new ArrayList();
 
-    ArrayList<LatLng> latlngs = new ArrayList<>();
+    ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
 
-    LatLng PERTH = new LatLng(-31.952854, 115.857342);
-    LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
-    LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
-    LatLng ENGLAND = new LatLng(52.3555, 1.1743);
+    ArrayList<LatLng> followingLocations = new ArrayList<>();
+    LatLng followingLatLng;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,11 +157,6 @@ public class MoodPlusActivity extends AppCompatActivity
         TextView textName = (TextView)header.findViewById(R.id.username);
         textName.setText(name);
 
-        latlngs.add(PERTH);
-        latlngs.add(SYDNEY);
-        latlngs.add(BRISBANE);
-        latlngs.add(ENGLAND);
-
     }
 
     @Override
@@ -205,17 +200,59 @@ public class MoodPlusActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
+
+            /*----------------------- PASSING CURRENT LOCATION---------------------*/
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
 
-            //Bundle args = new Bundle();
-            //args.putParcelable("longLat_dataProvider",position);
-            //Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
-            //intent.putExtras(args);
+            /*----------------------- PASSING CURRENT LOCATION---------------------*/
 
-            Intent intent = new Intent(MoodPlusActivity.this, MarkerActivity.class);
-            intent.putParcelableArrayListExtra("longLat_dataProvider",latlngs);
+
+            /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
+
+            FilterFollowDateActivity recent = new FilterFollowDateActivity();
+            moodArrayList = recent.recentMoodList();
+            for (Mood mood: moodArrayList){
+                //Log.i("MOOOOOOODDDDD","Contents of arrayLocation: " +mood+ mood.getAddLocation());
+                if(mood.getAddLocation() == true){
+
+                    Log.i("YOUR LOCATIONNNN!!!","Contents of arrayLocation: " + position);
+                    double distance;
+
+                    // Create new location for following
+                    Location locationB = new Location("point B");
+
+                    locationB.setLatitude(mood.getLatitude());
+                    locationB.setLongitude(mood.getLongitude());
+
+                    // Check for distance between current location and following location
+                    distance = location.distanceTo(locationB);
+                    Log.i("DISTANCEEE!!!","DISTANCE IN METER: " + distance);
+                    if(distance <= 5000){
+                        followingLatLng = new LatLng(mood.getLatitude(),mood.getLongitude());
+                        Log.i("FOLLOWING LOCATION","Contents of arrayLocation: " + followingLatLng);
+                        followingLocations.add(followingLatLng);
+                    }
+
+                    // TODO: WHEN LIST IS EMPTY?
+
+                }
+            }
+
+            Log.i("LOCATIONNNN!!!","Contents of arrayLocation: "+ followingLocations);
+            /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
+
+
+            /*--------------- PASSING LIST OF LOCATIONS TO MAP ACTIVITY ----------------*/
+            Bundle args = new Bundle();
+            args.putParcelable("longLat_dataProvider",position);
+            Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
+            intent.putExtras(args);
+            intent.putParcelableArrayListExtra("following_latLongProvider",followingLocations);
+            /*--------------- PASSING LIST OF LOCATIONS ----------------*/
+
             startActivity(intent);
+
         } else if(id ==R.id.followingDrawer){
             Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);
             startActivity(intent);
@@ -223,6 +260,9 @@ public class MoodPlusActivity extends AppCompatActivity
         else if (id == R.id.request) {
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
+        } else if (id == R.id.graph){
+            Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
+            startActivity(graphIntent);
         } else if (id == R.id.menuMyOwnMoodFilter){
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){

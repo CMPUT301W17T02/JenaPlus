@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -53,12 +54,6 @@ public class MarkerActivity extends FragmentActivity implements
             testMarker = mMap.addMarker(new MarkerOptions().position(location).title("TESTING"));
             testMarker.setTag(0);
         }
-
-        // Add some markers to the map, and add a data object to each marker.
-     /*   mPerth = mMap.addMarker(new MarkerOptions()
-                .position(PERTH)
-                .title("Perth"));
-        mPerth.setTag(0);*/
 
         // Set a listener for marker click.
         mMap.setOnMarkerClickListener(this);
