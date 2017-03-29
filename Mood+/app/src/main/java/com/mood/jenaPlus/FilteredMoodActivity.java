@@ -104,15 +104,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
             }
         }
 
-        if (dateTest.equals("yes")) {
-            for(Mood m: moodArrayList) {
-                Date tempDate = m.getDate();
-                if(!isWithinRange(tempDate)){
-                    moodArrayList.remove(m);
-                }
-            }
-        }
-
         moodArrayList.addAll(temp);
 
 

@@ -718,6 +718,9 @@ public class MoodPlusActivity extends AppCompatActivity
                             if (selectedItems.get(i).equals(2)) {
                                 moody = true;
                             }
+                            if (selectedItems.get(i).equals(3)){
+                                locationBool = true;
+                            }
                         }
 
                         if (searching && moody) {
@@ -732,6 +735,9 @@ public class MoodPlusActivity extends AppCompatActivity
                         else if (recent) {
                             getDateFiltered2();
                         }
+                        else if (locationBool) {
+                            getLocationsFiltered2();
+                        }
 
                     }
 
@@ -742,6 +748,20 @@ public class MoodPlusActivity extends AppCompatActivity
                     }
                 }).create();
         dialog.show();
+    }
+
+    public void getLocationsFiltered2() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilterFollowLocationActivity.class);
+        Bundle bundle = new Bundle();
+        if (recent) {
+            bundle.putString("filterRecent", "yes");
+        } else {
+            bundle.putString("filterRecent", "no");
+        }
+        intent.putExtras(bundle);
+        searching = recent = moody = locationBool = false;
+        moodId = "";
+        startActivity(intent);
     }
 
     public void myFollowingFiltersDialog() {
@@ -876,12 +896,11 @@ public class MoodPlusActivity extends AppCompatActivity
                     bundle.putString("filterRecent", "no");
                 }
                 if(locationBool){
-
                     bundle.putString("filterLocation", "yes");
                 } else {
                     bundle.putString("filterLocation", "no");
                 }
-
+                bundle.putString("moodString","fff");
                 intent.putExtras(bundle);
                 searching = recent = moody = locationBool =false;
                 startActivity(intent);

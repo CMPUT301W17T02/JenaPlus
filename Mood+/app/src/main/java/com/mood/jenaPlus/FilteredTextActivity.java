@@ -73,7 +73,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     @Override
     protected void onStart(){
         super.onStart();
-
+        moodArrayList.clear();
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
@@ -95,7 +95,6 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
                     iterator.remove();
                 }
             }
-
         }
 
         if(locationBool.equals("yes")) {

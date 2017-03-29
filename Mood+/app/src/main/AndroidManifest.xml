@@ -101,7 +101,8 @@
         <activity android:name=".FilterFollowDateActivity" />
         <activity android:name=".FilterFollowMoodActivity" />
         <activity android:name=".FilterFollowTextActivity" />
-        <activity android:name=".FilteredLocationActivity"></activity>
+        <activity android:name=".FilteredLocationActivity" />
+        <activity android:name=".FilterFollowLocationActivity"></activity>
     </application>
 
 </manifest>

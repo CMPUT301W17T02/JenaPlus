@@ -80,6 +80,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
         String moodId = bundle.getString("moodString");
+        String locationBool = bundle.getString("filterLocation");
         String s = moodString;
         String dateTest = bundle.getString("filterRecent");
         ArrayList<Mood> first = new ArrayList<>();
@@ -97,7 +98,9 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
         List<Mood> temp = first;
 
-        if (!moodId.equals("no")){
+        if (moodId.equals("surprised") || moodId.equals("disgust") || moodId.equals("fear") ||
+                moodId.equals("confused") || moodId.equals("happy") || moodId.equals("angry") ||
+                moodId.equals("sad") || moodId.equals("shame") || moodId.equals("annoyed")){
             Log.i("moodstring", moodId);
             for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
                 Mood mood = iterator.next();
@@ -106,6 +109,14 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
                 }
             }
 
+        }
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
         }
 
         if (dateTest.equals("yes")) {

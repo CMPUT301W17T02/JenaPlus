@@ -21,12 +21,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * This activity shows only one type of mood that was specified from the option in the main
- * activity. The moods come from all of the people the participant is following.
- **/
-
-public class FilterFollowMoodActivity extends AppCompatActivity implements MPView<MoodPlus>{
+public class FilterFollowLocationActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
@@ -41,7 +36,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_mood);
+        setContentView(R.layout.activity_filter_follow_location);
 
         moodListView = (ListView) findViewById(R.id.listView);
 
@@ -59,7 +54,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FilterFollowMoodActivity.this, ViewMoodActivity.class);
+                Intent intent = new Intent(FilterFollowLocationActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
@@ -83,9 +78,6 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
-        String moodId = bundle.getString("moodString");
-        String locationBool = bundle.getString("filterLocation");
-        String s = moodString;
         String dateTest = bundle.getString("filterRecent");
         ArrayList<Mood> first = new ArrayList<>();
 
@@ -94,33 +86,13 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
             ArrayList<Mood> tempArrayList = tempParticipant.getUserMoodList().getUserMoodList();
 
             for (Mood m : tempArrayList) {
-                if (m.getId().equals(moodId)) {
+                if (m.getAddLocation()) {
                     first.add(m);
                 }
             }
         }
 
         List<Mood> temp = first;
-
-        if (!moodId.equals("no")){
-            Log.i("moodstring", moodId);
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if(!mood.getId().equals(moodId)){
-                    iterator.remove();
-                }
-            }
-
-        }
-
-        if(locationBool.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if (!mood.getAddLocation()) {
-                    iterator.remove();
-                }
-            }
-        }
 
         if (dateTest.equals("yes")) {
             for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
@@ -134,11 +106,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
         moodArrayList.addAll(temp);
 
-        if (moodArrayList.size() <1) {
-            noMoods();
-        }
-
-        adapter = new MoodFollowerListAdapter(FilterFollowMoodActivity.this,moodArrayList);
+        adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
         getUserMoodOrderedList();
 
         String d = moodString + " moods";
@@ -183,5 +151,4 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
         return !(testDate.before(startDate) || testDate.after(endDate));
     }
-
 }
