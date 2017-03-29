@@ -233,7 +233,10 @@ public class MoodPlusActivity extends AppCompatActivity
                     }
                 }
             }
-            Log.i("MOOOOOOODDDDD","Contents of arrayLocation: " + moodArrayList);
+            for (Mood m: moodArrayList){
+                Log.i("MOOOOOOODDDDD","Contents of arrayLocation: " +m+ m.getLatitude() + m.getLongitude());
+            }
+
 
             /*----------------------- PASSING CURRENT LOCATION---------------------*/
 
