@@ -85,6 +85,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         List<Mood> temp = tempArrayList;
         String dateTest = bundle.getString("filterRecent");
         String moodId = bundle.getString("moodString");
+        String locationBool = bundle.getString("filterLocation");
 
         if (!moodId.equals("no")){
             Log.i("moodstring", moodId);
@@ -95,6 +96,15 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
                 }
             }
 
+        }
+
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
         }
 
         if (dateTest.equals("yes")) {

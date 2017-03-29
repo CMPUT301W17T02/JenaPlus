@@ -74,6 +74,7 @@ public class MoodPlusActivity extends AppCompatActivity
     Boolean searching = false;
     Boolean recent = false;
     Boolean moody = false;
+    Boolean locationBool = false;
 
     ArrayList options1 = new ArrayList();
 
@@ -300,7 +301,7 @@ public class MoodPlusActivity extends AppCompatActivity
     /*-------------------------------------OWN FILTER MOODS---------------------------------------*/
 
     public void testFilters() {
-        final CharSequence[] items = {" Text "," Most Recent "," Mood "};
+        final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
 
@@ -333,6 +334,9 @@ public class MoodPlusActivity extends AppCompatActivity
                             if (selectedItems.get(i).equals(2)) {
                                 moody = true;
                             }
+                            if (selectedItems.get(i).equals(3)) {
+                                locationBool = true;
+                            }
                         }
 
                         if (searching && moody) {
@@ -346,6 +350,9 @@ public class MoodPlusActivity extends AppCompatActivity
                         }
                         else if (recent) {
                             getDateFiltered();
+
+                        } else if (locationBool){
+                            getLocationsFiltered();
                         }
 
                     }
@@ -353,10 +360,24 @@ public class MoodPlusActivity extends AppCompatActivity
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        searching = recent = moody = false;
+                        searching = recent = moody = locationBool = false;
                     }
                 }).create();
         dialog.show();
+    }
+
+    public void getLocationsFiltered() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredLocationActivity.class);
+        Bundle bundle = new Bundle();
+        if (recent) {
+            bundle.putString("filterRecent", "yes");
+        } else {
+            bundle.putString("filterRecent", "no");
+        }
+        intent.putExtras(bundle);
+        searching = recent = moody = locationBool = false;
+        moodId = "";
+        startActivity(intent);
     }
 
     public void getMoodFiltered(String mood) {
@@ -368,8 +389,15 @@ public class MoodPlusActivity extends AppCompatActivity
         } else {
             bundle.putString("filterRecent", "no");
         }
+        if(locationBool){
+
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
+
         intent.putExtras(bundle);
-        searching = recent = moody = false;
+        searching = recent = moody = locationBool = false;
         moodId = "";
         startActivity(intent);
 
@@ -384,9 +412,16 @@ public class MoodPlusActivity extends AppCompatActivity
         } else {
             bundle.putString("filterRecent", "no");
         }
+        if(locationBool){
+
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
+
         intent.putExtras(bundle);
         startActivity(intent);
-        searching = recent = moody = false;
+        searching = recent = moody = locationBool = false;
     }
 
 
@@ -572,10 +607,15 @@ public class MoodPlusActivity extends AppCompatActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
                 bundle.putString("testText",searchText);
                 bundle.putString("moodString","no");
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
 
                 startActivity(intent);
 
@@ -619,8 +659,13 @@ public class MoodPlusActivity extends AppCompatActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 startActivity(intent);
 
             }
@@ -628,7 +673,7 @@ public class MoodPlusActivity extends AppCompatActivity
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 moodId = "";
                 dialog.cancel();
             }
@@ -640,7 +685,7 @@ public class MoodPlusActivity extends AppCompatActivity
     /*---------------------------------- FOLLOWING FILTER ----------------------------------------*/
 
     public void testFilters2() {
-        final CharSequence[] items = {" Text "," Most Recent "," Mood "};
+        final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
 
@@ -778,8 +823,13 @@ public class MoodPlusActivity extends AppCompatActivity
         } else {
             bundle.putString("filterRecent", "no");
         }
+        if(locationBool){
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
         intent.putExtras(bundle);
-        searching = recent = moody = false;
+        searching = recent = moody = locationBool = false;
         moodId = "";
         startActivity(intent);
     }
@@ -787,7 +837,15 @@ public class MoodPlusActivity extends AppCompatActivity
 
     public void getDateFiltered2() {
         Intent intent = new Intent(MoodPlusActivity.this, FilterFollowDateActivity.class);
-        searching = recent = moody = false;
+        Bundle bundle = new Bundle();
+        if(locationBool){
+
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
+        intent.putExtras(bundle);
+        searching = recent = moody = locationBool = false;
         startActivity(intent);
     }
 
@@ -817,15 +875,22 @@ public class MoodPlusActivity extends AppCompatActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
+
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool =false;
                 startActivity(intent);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 dialog.cancel();
             }
         });
@@ -935,8 +1000,15 @@ public class MoodPlusActivity extends AppCompatActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
+
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 moodId = "";
                 startActivity(intent);
 
@@ -945,7 +1017,7 @@ public class MoodPlusActivity extends AppCompatActivity
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 moodId = "";
                 dialog.cancel();
             }

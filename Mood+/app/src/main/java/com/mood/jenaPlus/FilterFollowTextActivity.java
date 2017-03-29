@@ -75,6 +75,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
+        ArrayList<Mood> tempList = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
@@ -119,11 +120,6 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
         moodArrayList.addAll(temp);
 
-
-
-
-
-
         if (moodArrayList.size() <1) {
             noMoods();
         }
@@ -141,7 +137,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods with were found.")
+                .setMessage("No moods with keyword \'"+ moodString+"\' were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -156,12 +152,6 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     }
 
-    boolean isWithinRange(Date testDate) {
-        Date endDate = new Date();
-        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
-        return !(testDate.before(startDate) || testDate.after(endDate));
-    }
-
     public ArrayList<Mood> getUserMoodOrderedList() {
 
         Collections.sort(moodArrayList, new Comparator<Mood>() {
@@ -172,5 +162,11 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         });
 
         return this.moodArrayList;
+    }
+
+    boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 }
