@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -90,7 +91,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         // Add some markers to the map, and add a data object to each marker.
         for(LatLng location: arrayLocation) {
             Log.i("LOCATIONNNNNN","Contents of arrayLocation: " + location);
-            followingMarker = mMap.addMarker(new MarkerOptions().position(location).title("TESTING"));
+            followingMarker = mMap.addMarker(new MarkerOptions().position(location)
+                    .title("MOODS").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             followingMarker.setTag(0);
         }
 

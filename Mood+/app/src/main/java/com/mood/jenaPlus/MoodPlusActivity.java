@@ -259,6 +259,9 @@ public class MoodPlusActivity extends AppCompatActivity
         else if (id == R.id.request) {
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
+        } else if (id == R.id.graph){
+            Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
+            startActivity(graphIntent);
         } else if (id == R.id.menuMyOwnMoodFilter){
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
