@@ -57,6 +57,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     ArrayList<LatLng> arrayLocation;
     private Marker followingMarker;
+    ArrayList<Mood> moodList;
+    LatLng allLatLng;
+    ArrayList<LatLng> allLocations = new ArrayList<>();
 
     /**
      *
@@ -86,11 +89,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
 
         Intent intent = getIntent();
-        arrayLocation = intent.getParcelableArrayListExtra("following_latLongProvider");
+        //arrayLocation = intent.getParcelableArrayListExtra("following_latLongProvider");
+
+        moodList = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
+        Log.i("MOOOOOOOOODS","ALL MOODS WITH LOCATION: " + moodList);
+
+        for (Mood mood: moodList){
+            Log.i("LOCATION!!!!!!","Contents of arrayLocation: " + moodList + mood.getLatitude()+mood.getLongitude() );
+            allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
+            allLocations.add(allLatLng);
+        }
 
         // Add some markers to the map, and add a data object to each marker.
-        for(LatLng location: arrayLocation) {
-            Log.i("LOCATIONNNNNN","Contents of arrayLocation: " + location);
+        for(LatLng location: allLocations) {
             followingMarker = mMap.addMarker(new MarkerOptions().position(location)
                     .title("MOODS").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
             followingMarker.setTag(0);

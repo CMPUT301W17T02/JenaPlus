@@ -227,7 +227,27 @@ public class MoodPlusActivity extends AppCompatActivity
                 getUserMoodOrderedList(userMoods);
                 try{
                     if(userMoods.get(0).getAddLocation()){
-                        moodArrayList1.add(userMoods.get(0));
+
+                        double distance;
+                        Log.i("LATITUDEEEEE!!","Contents of arrayLocation: " + userMoods.get(0).getLatitude() );
+
+                        // Create new location for following
+                        Location locationB = new Location("point B");
+
+                        locationB.setLatitude(userMoods.get(0).getLatitude());
+                        locationB.setLongitude(userMoods.get(0).getLongitude());
+
+                        // Check for distance between current location and following location
+                        distance = location.distanceTo(locationB);
+                        //Log.i("DISTANCEEE!!!","DISTANCE IN METER: " + distance);
+                        if(distance <= 5000) {
+                            followingLatLng = new LatLng(userMoods.get(0).getLatitude(), userMoods.get(0).getLongitude());
+                            //Log.i("FOLLOWING LOCATION", "Contents of arrayLocation: " + followingLatLng);
+                            followingLocations.add(followingLatLng);
+                            moodArrayList1.add(userMoods.get(0));
+                        }
+
+                        //moodArrayList1.add(userMoods.get(0));
                     }
                 }catch (Exception e){
                     Log.i("Error","Some participants has no mood");
@@ -240,8 +260,8 @@ public class MoodPlusActivity extends AppCompatActivity
 
 
             for (Mood mood: moodArrayList1){
-                Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + moodArrayList1 + mood.getUserName() );
-                double distance;
+                Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + moodArrayList1 + mood.getUserName() );}
+            /*    double distance;
 
                 // Create new location for following
                 Location locationB = new Location("point B");
@@ -259,7 +279,7 @@ public class MoodPlusActivity extends AppCompatActivity
                 }
 
                     // TODO: WHEN LIST IS EMPTY?
-            }
+            }*/
 
             //Log.i("LOCATIONNNN!!!","Contents of arrayLocation: "+ followingLocations);
             /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
@@ -270,7 +290,8 @@ public class MoodPlusActivity extends AppCompatActivity
             args.putParcelable("longLat_dataProvider",position);
             Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
             intent.putExtras(args);
-            intent.putParcelableArrayListExtra("following_latLongProvider",followingLocations);
+            intent.putExtra("participant_moodProvider",moodArrayList1);
+            //intent.putParcelableArrayListExtra("following_latLongProvider",followingLocations);
             /*--------------- PASSING LIST OF LOCATIONS ----------------*/
 
             startActivity(intent);
