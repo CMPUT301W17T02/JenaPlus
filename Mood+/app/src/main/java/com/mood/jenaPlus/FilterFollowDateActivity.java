@@ -128,7 +128,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         return this.moodArrayList;
     }
 
-    boolean isWithinRange(Date testDate) {
+    static boolean isWithinRange(Date testDate) {
         Date endDate = new Date();
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
         return !(testDate.before(startDate) || testDate.after(endDate));

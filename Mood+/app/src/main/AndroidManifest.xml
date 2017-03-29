@@ -93,9 +93,12 @@
         <activity
             android:name=".FollowingListActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilterFollowDateActivity" />
-        <activity android:name=".FilterFollowMoodActivity" />
-        <activity android:name=".FilterFollowTextActivity" />
+        <activity android:name=".FilterFollowDateActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
+        <activity android:name=".FilterFollowMoodActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
+        <activity android:name=".FilterFollowTextActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
         <activity android:name=".MarkerActivity"></activity>
     </application>
 

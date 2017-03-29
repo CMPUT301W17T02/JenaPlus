@@ -4,10 +4,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nearMe"
-            android:icon="@drawable/ic_near_me"
-            android:title="Near Me" />
-        <item
             android:id="@+id/followingDrawer"
             android:icon="@drawable/ic_request"
             android:title="Following" />
@@ -15,6 +11,10 @@
             android:id="@+id/request"
             android:icon="@drawable/ic_request"
             android:title="Follower Requests" />
+        <item
+            android:id="@+id/nearMe"
+            android:icon="@drawable/ic_near_me"
+            android:title="Near Me" />
 
 
     </group>

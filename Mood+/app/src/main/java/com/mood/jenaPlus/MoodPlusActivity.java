@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -83,6 +84,8 @@ public class MoodPlusActivity extends AppCompatActivity
     LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
     LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
     LatLng ENGLAND = new LatLng(52.3555, 1.1743);
+    ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +207,8 @@ public class MoodPlusActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
+
+            /*----------------------- PASSING CURRENT LOCATION---------------------*/
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
 
@@ -212,8 +217,31 @@ public class MoodPlusActivity extends AppCompatActivity
             //Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
             //intent.putExtras(args);
 
+            ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
+
+            mpController = MoodPlusApplication.getMainMPController();
+            Participant participant = mpController.getParticipant();
+            ArrayList<String> participantListStr = participant.getFollowingList();
+            Log.i("PARTICIPANTTTT","Contents of arrayLocation: " + participantListStr);
+            for (int i = 0; i<participantListStr.size(); i++) {
+                Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
+                ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
+                for (Mood m : partMoods) {
+                    Date tempDate = m.getDate();
+                    if (FilterFollowDateActivity.isWithinRange(tempDate)) {
+                        moodArrayList.add(m);
+                    }
+                }
+            }
+            Log.i("MOOOOOOODDDDD","Contents of arrayLocation: " + moodArrayList);
+
+            /*----------------------- PASSING CURRENT LOCATION---------------------*/
+
+            /*--------------- PASSING LIST OF LOCATIONS ----------------*/
             Intent intent = new Intent(MoodPlusActivity.this, MarkerActivity.class);
             intent.putParcelableArrayListExtra("longLat_dataProvider",latlngs);
+            /*--------------- PASSING LIST OF LOCATIONS ----------------*/
+
             startActivity(intent);
         } else if(id ==R.id.followingDrawer){
             Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);
