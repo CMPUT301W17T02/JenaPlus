@@ -134,7 +134,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
         merlinsBeard = MerlinsBeard.from(this);
 
-        offlineDataController = new OfflineDataController();
         userMoodList = new UserMoodList();
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
@@ -465,12 +464,16 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
-                //UserMoodList userMoodList = new UserMoodList();
-                //Mood mood = dummyMood1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
-                //userMoodList.addUserMood(mood);
+                UserMoodList userMoodList = new UserMoodList();
+                Mood mood = dummyMood1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+                userMoodList.addUserMood(mood);
 
-                //saveInFile(ADD, userMoodList);
+                saveInFile(ADD, userMoodList);
                 //offlineDataController.passFile(ADD);
+
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                offlineController.passFile(ADD);
+
 
 
                 //MainMPController mpController = MoodPlusApplication.getMainMPController();
@@ -480,11 +483,15 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 //no location
             } else if (trigCheck && moodChosen) {
 
-                //UserMoodList userMoodList = new UserMoodList();
-                //Mood mood = dummyMood2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-                //userMoodList.addUserMood(mood);
+                UserMoodList userMoodList = new UserMoodList();
+                Mood mood = dummyMood2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                userMoodList.addUserMood(mood);
 
-                //saveInFile(ADD, userMoodList);
+                saveInFile(ADD, userMoodList);
+                System.out.println(ADD);
+
+                //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                //offlineController.passFile(ADD);
                 //offlineDataController.passFile(ADD);
 
                 //MainMPController mpController = MoodPlusApplication.getMainMPController();

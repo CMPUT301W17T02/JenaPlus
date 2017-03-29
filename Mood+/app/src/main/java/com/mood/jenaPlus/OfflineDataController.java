@@ -8,6 +8,7 @@ public class OfflineDataController {
 
     //singleton
     SaveOffline saveOffline  = new SaveOffline();
+    MoodPlus moodPlus = null;
 
     public void passFile(String filename){
 
@@ -33,6 +34,12 @@ public class OfflineDataController {
         saveOffline.syncOfflineAdd2();
 
     }
+
+    public OfflineDataController(MoodPlus aMoodPlus){
+        this.moodPlus = aMoodPlus;
+
+    }
+
 
 
 
