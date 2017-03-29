@@ -36,7 +36,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_text);
+        setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
 
