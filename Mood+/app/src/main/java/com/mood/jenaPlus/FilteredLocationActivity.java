@@ -32,7 +32,6 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
     Context context = this;
 
     protected Button viewMapButton;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilteredLocationActivity.this, MarkerActivity.class);
-                intent.putExtra("user_moodProvider", locationMoodList);
+                intent.putExtra("user_moodProvider", moodArrayList);
                 startActivity(intent);
             }
         });
@@ -83,7 +82,6 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -98,7 +96,6 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
         Bundle bundle = getIntent().getExtras();
         String dateTest = bundle.getString("filterRecent");
-        //String locationBool = bundle.getString("filterLocation");
         Log.i("date",dateTest);
 
         List<Mood> temp = tempArrayList;
@@ -117,20 +114,13 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         adapter = new MoodListAdapter(FilteredLocationActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
-        // Getting all the moods with locations
-        for (int i=0; i<moodArrayList.size();i++){
-            locationMoodList.add(moodArrayList.get(i));
-        }
-
-        // If there is location in the moodList set button visible
-        if(!locationMoodList.isEmpty()){
-            viewMapButton.setVisibility(View.VISIBLE);
-        }
     }
 
     public void noMoods() {

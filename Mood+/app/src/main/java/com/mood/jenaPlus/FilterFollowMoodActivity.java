@@ -31,15 +31,12 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     String moodString;
 
     Context context = this;
 
     protected Button viewMapButton;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
-
     protected MainMPController mpController;
 
     @Override
@@ -56,7 +53,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilterFollowMoodActivity.this, MarkerActivity.class);
-                intent.putExtra("participant_moodProvider", locationMoodList);
+                intent.putExtra("participant_moodProvider", moodArrayList);
                 startActivity(intent);
             }
         });
@@ -103,7 +100,6 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         moodString = bundle.getString("testText");
         String moodId = bundle.getString("moodString");
         String locationBool = bundle.getString("filterLocation");
-        String s = moodString;
         String dateTest = bundle.getString("filterRecent");
         ArrayList<Mood> first = new ArrayList<>();
 
@@ -138,7 +134,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
                     iterator.remove();
                 }
             }
-            viewMapButton.setVisibility(View.VISIBLE);
+
         }
 
         if (dateTest.equals("yes")) {
@@ -155,6 +151,10 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            if (locationBool.equals("yes")) {
+                viewMapButton.setVisibility(View.VISIBLE);
+            }
         }
 
         adapter = new MoodFollowerListAdapter(FilterFollowMoodActivity.this,moodArrayList);
@@ -164,14 +164,6 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         test.setText(d);
 
         moodListView.setAdapter(adapter);
-
-        // Getting all the moods with locations
-        for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
-            }
-        }
 
     }
 

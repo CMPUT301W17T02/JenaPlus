@@ -819,7 +819,7 @@ public class MoodPlusActivity extends AppCompatActivity
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        searching = recent = moody = false;
+                        searching = recent = moody = locationBool = false;
                     }
                 }).create();
         dialog.show();
