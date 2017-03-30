@@ -77,7 +77,7 @@ public class FollowingViewActivity extends Fragment implements MPView<MoodPlus>{
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
             ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
-            getUserMoodOrderedList(partMoods);
+            getUserMoodOrderedList2(partMoods);
             moodArrayList.add(partMoods.get(0));
         }
 
@@ -119,7 +119,7 @@ public class FollowingViewActivity extends Fragment implements MPView<MoodPlus>{
 
     }
 
-    public ArrayList<Mood> getUserMoodOrderedList(ArrayList<Mood> array) {
+    public ArrayList<Mood> getUserMoodOrderedList2(ArrayList<Mood> array) {
 
         Collections.sort(array, new Comparator<Mood>() {
 

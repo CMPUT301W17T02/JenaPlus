@@ -19,6 +19,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class FilteredLocationActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
@@ -92,40 +94,41 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
         Participant participant = mpController.getParticipant();
 
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getFilteredLocation();
+        ArrayList<Mood> tempArrayList = myMoodList.getFilteredLocation();
 
         Bundle bundle = getIntent().getExtras();
         String dateTest = bundle.getString("filterRecent");
+        String locationBool = bundle.getString("filterLocation");
         Log.i("date",dateTest);
+
+        List<Mood> temp = tempArrayList;
+
+        if(locationBool.equals("yes")) {
+            viewMapButton.setVisibility(View.VISIBLE);
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
+        }
+
+        if (dateTest.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                Date tempDate = mood.getDate();
+                if(!isWithinRange(tempDate)){
+                    iterator.remove();
+                }
+            }
+        }
 
         if (moodArrayList.size() <1) {
             noMoods();
         }
 
-        if (dateTest.equals("yes")) {
-            for(Mood m: moodArrayList) {
-                Date tempDate = m.getDate();
-                if(!isWithinRange(tempDate)){
-                    moodArrayList.remove(m);
-                }
-            }
-        }
-
         adapter = new MoodListAdapter(FilteredLocationActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
-
-        // Getting all the moods with locations
-        for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
-            }
-        }
-
-        // If there is location in the moodList set button visible
-        if(!locationMoodList.isEmpty()){
-            viewMapButton.setVisibility(View.VISIBLE);
-        }
     }
 
     public void noMoods() {

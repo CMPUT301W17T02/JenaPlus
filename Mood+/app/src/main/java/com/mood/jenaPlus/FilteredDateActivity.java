@@ -91,6 +91,7 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredDate();
 
+
         if (moodArrayList.size() <1) {
             noMoods();
         }
