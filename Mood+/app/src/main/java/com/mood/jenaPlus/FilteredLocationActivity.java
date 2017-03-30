@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,13 +29,30 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
     Context context = this;
 
+    protected Button viewMapButton;
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filtered_location);
+        setContentView(R.layout.activity_filter);
 
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilteredLocationActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", locationMoodList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -60,6 +80,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
         });
 
     }
+
 
     @Override
     protected void onStart() {
@@ -91,6 +112,18 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
         adapter = new MoodListAdapter(FilteredLocationActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
+        // Getting all the moods with locations
+        for (int i=0; i<moodArrayList.size();i++){
+            ArrayList<Mood> userMoods = moodArrayList;
+            if(userMoods.get(i).getAddLocation().equals(true)){
+                locationMoodList.add(userMoods.get(i));
+            }
+        }
+
+        // If there is location in the moodList set button visible
+        if(!locationMoodList.isEmpty()){
+            viewMapButton.setVisibility(View.VISIBLE);
+        }
     }
 
     public void noMoods() {
