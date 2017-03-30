@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -39,6 +40,8 @@ import com.google.android.gms.maps.model.LatLng;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -115,6 +118,13 @@ public class MoodPlusActivity extends AppCompatActivity
                 viewPager.setCurrentItem(tab.getPosition());
             }
         });
+
+        /*-------------------- REQUEST LOCATION PERMISSION ------------ */
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+
+        /*------------------------------------------------*/
 
 
         /* LOADING THE LOGGED IN PARTICIPANT */
@@ -198,7 +208,7 @@ public class MoodPlusActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
-
+            
             /*----------------------- PASSING CURRENT LOCATION---------------------*/
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
@@ -1118,6 +1128,38 @@ public class MoodPlusActivity extends AppCompatActivity
         });
 
         builder.show();
+    }
+
+    /**
+     * Check location permission boolean.
+     *
+     * @return the boolean
+     */
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
