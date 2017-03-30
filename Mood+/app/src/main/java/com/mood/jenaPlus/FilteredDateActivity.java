@@ -47,7 +47,7 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
             public void onClick(View v) {
                 Intent intent = new Intent(FilteredDateActivity.this, MarkerActivity.class);
                 //intent.putParcelableArrayListExtra("longLat_dataProvider", locationArrayList);
-                intent.putExtra("participant_moodProvider", locationMoodList);
+                intent.putExtra("user_moodProvider", locationMoodList);
                 startActivity(intent);
             }
         });

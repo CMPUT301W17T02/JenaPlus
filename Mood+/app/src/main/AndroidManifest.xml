@@ -103,8 +103,10 @@
             android:parentActivityName=".MoodPlusActivity" />
         <activity android:name=".MarkerActivity" />
         <activity android:name=".GraphActivity"/>
-        <activity android:name=".FilterFollowLocationActivity"/>
-        <activity android:name=".FilteredLocationActivity"/>
+        <activity android:name=".FilterFollowLocationActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".FilteredLocationActivity"
+            android:parentActivityName=".MoodPlusActivity" />
 
     </application>
 

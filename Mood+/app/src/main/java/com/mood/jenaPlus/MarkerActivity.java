@@ -67,7 +67,7 @@ public class MarkerActivity extends FragmentActivity implements
                 followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
                         .title("Feeling "+ mood.getId())
                         .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 2.0f));
                 followingMarker.setTag(0);
             }
         }
@@ -88,42 +88,12 @@ public class MarkerActivity extends FragmentActivity implements
                         .title(mood.getUserName())
                         .snippet("Feeling "+ mood.getId())
                         .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 2.0f));
                 followingMarker.setTag(0);
             }
 
         }
 
-        // Following Moods with Location
-     /*   for (Mood mood: moodListLocation){
-            //Log.i("LATLNG!!!!!!","Contents of arrayLocation: " + mood.getLatitude()+mood.getLongitude() );
-            Log.i("MOODS ID!!!!!!",mood.getId() + mood.getUserName());
-            allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
-
-            // Creating markers
-            int recId = getResources().getIdentifier(mood.getId(), "drawable", getApplicationContext().getPackageName());
-
-            followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
-                    .title(mood.getUserName())
-                    .snippet("Feeling "+ mood.getId())
-                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
-            followingMarker.setTag(0);
-        }
-
-        // User Moods with Location
-        for (Mood mood: userMoodLocation){
-            allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
-
-            // Creating markers
-            int recId = getResources().getIdentifier(mood.getId(), "drawable", getApplicationContext().getPackageName());
-
-            followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
-                    .title("Feeling "+ mood.getId())
-                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
-            followingMarker.setTag(0);
-        }*/
 
         // Set a listener for marker click.
         mMap.setOnMarkerClickListener(this);
