@@ -35,6 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.gms.maps.model.LatLng;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
@@ -112,6 +113,8 @@ public class MoodPlusActivity extends MerlinActivity
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
+
+        LineChart LineChart = (LineChart) findViewById(R.id.line_chart);
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);

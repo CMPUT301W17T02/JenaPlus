@@ -10,9 +10,9 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mood.jenaPlus.GraphActivity">
 
-    <com.jjoe64.graphview.GraphView
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_chart"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/graph" />
+        android:layout_height="match_parent" />
 
 </RelativeLayout>
