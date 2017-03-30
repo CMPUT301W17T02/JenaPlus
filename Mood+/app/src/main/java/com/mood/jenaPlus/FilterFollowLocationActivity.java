@@ -137,7 +137,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         test.setText(d);
 
         moodListView.setAdapter(adapter);
-
+        
     }
 
     public void noMoods() {

@@ -1,10 +1,12 @@
 package com.mood.jenaPlus;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +19,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -71,6 +75,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     protected String aText;
     protected String aDate;
     protected Boolean addLocation;
+    private Location location;
     protected Double aLatitude;
     protected Double aLongitude;
     protected String aSocial;
@@ -167,7 +172,6 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
-                                System.out.println("do camera");
                                 cameraIntent();
                                 break;
                             case R.id.socialPopup:
@@ -196,7 +200,11 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                                 break;
 
                             case R.id.action_navigation:
-                                System.out.println("do navigation");
+                                location = getLocation();
+                                addLocation = true;
+
+                                Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
+                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return true;
@@ -334,6 +342,39 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     public void update(MoodPlus moodPlus){
         // TODO implements update method
+    }
+
+    public Location getLocation() {
+
+        Location currentLocation = new Location("dummyprovider");
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(EditMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
+            GPSTracker gps = new GPSTracker(context, EditMoodActivity.this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+                currentLocation.setLatitude(latitude);
+                currentLocation.setLongitude(longitude);
+
+                return currentLocation;
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
+        }
+        return null;
     }
 
 }
