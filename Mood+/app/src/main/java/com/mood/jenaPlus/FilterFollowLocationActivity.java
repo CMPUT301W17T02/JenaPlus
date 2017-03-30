@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,12 +28,12 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     String moodString;
 
     Context context = this;
 
+    protected Button viewMapButton;
     protected MainMPController mpController;
 
     @Override
@@ -39,6 +42,20 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterFollowLocationActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", moodArrayList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -79,6 +96,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
         String dateTest = bundle.getString("filterRecent");
+
         ArrayList<Mood> first = new ArrayList<>();
 
         for (int i = 0; i<participantListStr.size(); i++) {
@@ -108,6 +126,8 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);

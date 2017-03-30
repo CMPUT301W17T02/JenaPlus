@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,9 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
     Context context = this;
 
+    protected Button viewMapButton;
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+
     protected MainMPController mpController;
 
     @Override
@@ -44,6 +48,20 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterFollowMoodActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", locationMoodList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -120,6 +138,7 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
                     iterator.remove();
                 }
             }
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         if (dateTest.equals("yes")) {
@@ -145,6 +164,14 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         test.setText(d);
 
         moodListView.setAdapter(adapter);
+
+        // Getting all the moods with locations
+        for (int i=0; i<moodArrayList.size();i++){
+            ArrayList<Mood> userMoods = moodArrayList;
+            if(userMoods.get(i).getAddLocation().equals(true)){
+                locationMoodList.add(userMoods.get(i));
+            }
+        }
 
     }
 

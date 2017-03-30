@@ -32,7 +32,6 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
     Context context = this;
 
     protected Button viewMapButton;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilteredLocationActivity.this, MarkerActivity.class);
-                intent.putExtra("participant_moodProvider", locationMoodList);
+                intent.putExtra("user_moodProvider", moodArrayList);
                 startActivity(intent);
             }
         });
@@ -83,10 +82,11 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
+
+        moodArrayList.clear();
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
@@ -114,10 +114,13 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         adapter = new MoodListAdapter(FilteredLocationActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
+
     }
 
     public void noMoods() {

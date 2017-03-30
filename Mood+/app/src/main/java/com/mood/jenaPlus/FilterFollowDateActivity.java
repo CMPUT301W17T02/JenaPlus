@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,7 +41,6 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
-
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 

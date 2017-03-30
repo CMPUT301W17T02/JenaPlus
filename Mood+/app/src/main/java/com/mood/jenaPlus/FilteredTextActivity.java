@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,6 +30,9 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     String keyword = "";
 
     Context context = this;
+    protected Button viewMapButton;
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -36,6 +40,20 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         setContentView(R.layout.activity_filter);
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilteredTextActivity.this, MarkerActivity.class);
+                intent.putExtra("user_moodProvider", locationMoodList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
         /*------------- LOADING THE KEYWORD  -------------*/
 
@@ -104,6 +122,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
                     iterator.remove();
                 }
             }
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         if (dateTest.equals("yes")) {
@@ -124,6 +143,14 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
 
         adapter = new MoodListAdapter(FilteredTextActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
+
+        // Getting all the moods with locations
+        for (int i=0; i<moodArrayList.size();i++){
+            ArrayList<Mood> userMoods = moodArrayList;
+            if(userMoods.get(i).getAddLocation().equals(true)){
+                locationMoodList.add(userMoods.get(i));
+            }
+        }
 
     }
 
