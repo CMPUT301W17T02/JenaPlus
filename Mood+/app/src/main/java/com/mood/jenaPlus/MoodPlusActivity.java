@@ -427,7 +427,6 @@ public class MoodPlusActivity extends AppCompatActivity
                         }
                         else if (recent) {
                             getDateFiltered();
-
                         }
 
                     }
@@ -807,12 +806,13 @@ public class MoodPlusActivity extends AppCompatActivity
                         else if (moody) {
                             myFollowingFiltersDialog();
                         }
-                        else if (recent) {
-                            getDateFiltered2();
-                        }
                         else if (locationBool) {
                             getLocationsFiltered2();
                         }
+                        else if (recent) {
+                            getDateFiltered2();
+                        }
+
 
                     }
 

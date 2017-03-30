@@ -79,6 +79,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
         String dateTest = bundle.getString("filterRecent");
+        String locationBool = bundle.getString("filterLocation");
         ArrayList<Mood> first = new ArrayList<>();
 
         for (int i = 0; i<participantListStr.size(); i++) {
@@ -99,6 +100,14 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
                 Mood mood = iterator.next();
                 Date tempDate = mood.getDate();
                 if(!isWithinRange(tempDate)){
+                    iterator.remove();
+                }
+            }
+        }
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
                     iterator.remove();
                 }
             }
