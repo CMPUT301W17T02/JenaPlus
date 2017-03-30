@@ -55,7 +55,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
             public void onClick(View v) {
                 Intent intent = new Intent(FilterFollowLocationActivity.this, MarkerActivity.class);
                 intent.putExtra("participant_moodProvider", locationMoodList);
-                intent.putExtra("user_moodProvider", tempLocation);
+                //intent.putExtra("user_moodProvider", tempLocation);
                 startActivity(intent);
             }
         });
