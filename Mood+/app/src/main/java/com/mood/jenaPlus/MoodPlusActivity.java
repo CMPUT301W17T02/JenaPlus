@@ -961,6 +961,8 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
+        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        offlineController.SyncOffline();
     }
 
     @Override
