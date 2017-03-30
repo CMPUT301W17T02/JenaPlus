@@ -280,8 +280,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     public void onConnect() {
         Log.i("Debug", "online");
         //sync, (check if the lists are empty, if not, add/edit/delete ...)
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        offlineController.SyncOffline();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
         networkStatusDisplayer.displayConnected();
     }
 
@@ -454,6 +454,17 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 Participant offlineParticipant = offlineController.getOfflineParticipant();
                 UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
                 offlineMoodList.addUserMood(mood);
+
+                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineMoodList;
+
+                offlineController.saveOfflineList(offlineList, context);
+
                 Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
 
 

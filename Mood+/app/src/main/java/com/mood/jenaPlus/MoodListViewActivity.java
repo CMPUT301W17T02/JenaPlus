@@ -204,6 +204,17 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
                             Participant offlineParticipant = offlineController.getOfflineParticipant();
                             UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
                             offlineMoodList.deleteUserMood(moodArrayList.get(longClickedItemIndex));
+
+                            UserMoodList offlineList = offlineController.loadSavedList(getContext());
+
+                            if (offlineList == null) {
+                                offlineList = new UserMoodList();
+                            }
+
+                            offlineList = offlineMoodList;
+
+                            offlineController.saveOfflineList(offlineList, getContext());
+
                             adapter.notifyDataSetChanged();
 
                         }
@@ -242,8 +253,8 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     @Override
     public void onConnect() {
         Log.i("Debug", "online");
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        offlineController.SyncOffline();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
 
     }
 
