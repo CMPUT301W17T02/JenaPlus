@@ -31,7 +31,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     Context context = this;
 
     protected Button viewMapButton;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +46,12 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilteredMoodActivity.this, MarkerActivity.class);
-                intent.putExtra("user_moodProvider", locationMoodList);
+                intent.putExtra("user_moodProvider", moodArrayList);
                 startActivity(intent);
             }
         });
 
-        /* -------------- VIEW MAP BUTTON ---------------*/
-
-        /*------------- LOADING THE MOOD  -------------*/
-
-//        Bundle bundle = getIntent().getExtras();
-//        moodString = bundle.getString("moodString");
-
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
         MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-//        String name = participant.getUserName();
-//        String id = participant.getId();
-//        String who = "Name: " + name + "\nMood: " + moodString;
-//        test.setText(who);
-//
-//        /*------------------------------------------------*/
-
 
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,8 +93,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
                     iterator.remove();
                 }
             }
-
-            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         if (dateTest.equals("yes")) {
@@ -131,18 +110,14 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            if(locationBool.equals("yes")){
+                viewMapButton.setVisibility(View.VISIBLE);
+            }
         }
 
         adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
-
-        // Getting all the moods with locations
-        for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
-            }
-        }
 
         TextView test = (TextView) findViewById(R.id.test_string);
         String who = "Mood: " + moodString;

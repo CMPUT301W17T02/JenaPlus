@@ -26,12 +26,10 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-    ArrayList<Mood> filteredArrayList = new ArrayList<>();
     String keyword = "";
 
     Context context = this;
     protected Button viewMapButton;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +46,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilteredTextActivity.this, MarkerActivity.class);
-                intent.putExtra("user_moodProvider", locationMoodList);
+                intent.putExtra("user_moodProvider", moodArrayList);
                 startActivity(intent);
             }
         });
@@ -89,7 +87,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         moodArrayList.clear();
         MainMPController mpController = MoodPlusApplication.getMainMPController();
@@ -105,31 +103,30 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         String moodId = bundle.getString("moodString");
         String locationBool = bundle.getString("filterLocation");
 
-        if (!moodId.equals("no")){
+        if (!moodId.equals("no")) {
             Log.i("moodstring", moodId);
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+            for (Iterator<Mood> iterator = temp.iterator(); iterator.hasNext(); ) {
                 Mood mood = iterator.next();
-                if(!mood.getId().equals(moodId)){
+                if (!mood.getId().equals(moodId)) {
                     iterator.remove();
                 }
             }
         }
 
-        if(locationBool.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+        if (locationBool.equals("yes")) {
+            for (Iterator<Mood> iterator = temp.iterator(); iterator.hasNext(); ) {
                 Mood mood = iterator.next();
                 if (!mood.getAddLocation()) {
                     iterator.remove();
                 }
             }
-            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         if (dateTest.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+            for (Iterator<Mood> iterator = temp.iterator(); iterator.hasNext(); ) {
                 Mood mood = iterator.next();
                 Date tempDate = mood.getDate();
-                if(!isWithinRange(tempDate)){
+                if (!isWithinRange(tempDate)) {
                     iterator.remove();
                 }
             }
@@ -139,19 +136,14 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
 
         if (moodArrayList.size() < 1) {
             noMoods();
-        }
-
-        adapter = new MoodListAdapter(FilteredTextActivity.this,moodArrayList);
-        moodListView.setAdapter(adapter);
-
-        // Getting all the moods with locations
-        for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
+        } else {
+            if (locationBool.equals("yes")) {
+                viewMapButton.setVisibility(View.VISIBLE);
             }
         }
 
+        adapter = new MoodListAdapter(FilteredTextActivity.this, moodArrayList);
+        moodListView.setAdapter(adapter);
     }
 
     public void noMoods() {
