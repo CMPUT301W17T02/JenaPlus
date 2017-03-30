@@ -188,18 +188,25 @@ public class MoodPlusActivity extends MerlinActivity
             // Ends current session, has to save offlineList
             super.onBackPressed();
 
-            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-            offlineList = offlineController.loadSavedList(MoodPlusActivity.this);
+            if(!merlinsBeard.isConnected()) {
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                offlineList = offlineController.loadSavedList(MoodPlusActivity.this);
 
-            if (offlineList == null) {
-                offlineList = new UserMoodList();
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineController.getOfflineParticipant().getUserMoodList();
+
+                offlineController.saveOfflineList(offlineList, context);
+
+                Log.d("ENDING SESSION", "ATTEMPTED TO SAVE");
             }
+            else {
+                Toast.makeText(context, "ONLINE; don't need to save to file", Toast.LENGTH_SHORT);
 
-            offlineList = offlineController.getOfflineParticipant().getUserMoodList();
-
-            offlineController.saveOfflineList(offlineList, context);
-
-            Log.d("ENDING SESSION", "ATTEMPTED TO SAVE");
+                Log.d("HAD INTERNET", "NO NEED TO SAVE BC ALREADY SYNCED");
+            }
         }
     }
 
