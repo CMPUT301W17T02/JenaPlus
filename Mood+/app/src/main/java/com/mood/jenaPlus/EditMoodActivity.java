@@ -263,6 +263,28 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                 }
                 else {
                     Toast.makeText(EditMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                    OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                    Participant offlineParticipant = offlineController.getOfflineParticipant();
+                    UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+
+                    Mood editedMood = offlineMoodList.getUserMood(position);
+
+                    editedMood.setText(message.getText().toString());
+                    editedMood.setAddLocation(addLocation);
+                    editedMood.setLatitude(aLatitude);
+                    editedMood.setLongitude(aLongitude);
+                    editedMood.setId(aId);
+                    editedMood.setDate(dateEditor.getTime());
+                    editedMood.setSocial(socialSituation);
+                    if (updatePhoto) {
+                        editedMood.setPhoto(imageString);
+                    } else {
+                        editedMood.setPhoto(aPhoto);
+                    }
+                    editedMood.setColor(aColor);
+                    finish();
+
+
                 }
             }
         });
@@ -391,6 +413,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
+        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        offlineController.SyncOffline();
     }
 
     @Override

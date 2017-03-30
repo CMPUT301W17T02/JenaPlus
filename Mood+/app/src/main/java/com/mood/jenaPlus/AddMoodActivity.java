@@ -117,7 +117,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
     private static final String ADD = "add.sav";
 
-    private OfflineDataController offlineDataController;
     private UserMoodList userMoodList;
 
 
@@ -276,8 +275,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     public void onConnect() {
         Log.i("Debug", "online");
         //sync, (check if the lists are empty, if not, add/edit/delete ...)
-        offlineDataController.executeOfflineAdd1();
-        offlineDataController.executeOfflineAdd2();
+        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        offlineController.SyncOffline();
         networkStatusDisplayer.displayConnected();
     }
 
@@ -461,38 +460,23 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
             //has location
             if (trigCheck && moodChosen && addLocation) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
+                Toast.makeText(AddMoodActivity.this, "no internet no location my man!!!", Toast.LENGTH_SHORT).show();
 
-                UserMoodList userMoodList = new UserMoodList();
-                Mood mood = dummyMood1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
-                userMoodList.addUserMood(mood);
-
-                saveInFile(ADD, userMoodList);
-                //offlineDataController.passFile(ADD);
-
-                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-                offlineController.passFile(ADD);
-
-
-
-                //MainMPController mpController = MoodPlusApplication.getMainMPController();
-                //mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
                 finish();
 
                 //no location
             } else if (trigCheck && moodChosen) {
 
-                UserMoodList userMoodList = new UserMoodList();
-                Mood mood = dummyMood2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-                userMoodList.addUserMood(mood);
+                //UserMoodList userMoodList = new UserMoodList();
+                Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
 
-                saveInFile(ADD, userMoodList);
-                System.out.println(ADD);
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                Participant offlineParticipant = offlineController.getOfflineParticipant();
+                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                offlineMoodList.addUserMood(mood);
+                Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
 
-                //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-                //offlineController.passFile(ADD);
-                //offlineDataController.passFile(ADD);
+
 
                 //MainMPController mpController = MoodPlusApplication.getMainMPController();
                 //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
@@ -641,24 +625,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         }
     }
 
-    private Mood dummyMood1(String trigger, Boolean addLocation, Double latitude, Double longitude, String idString,
-                            String socialSituation, String imageString, String colorString, String userName){
 
-        Mood mood = new Mood(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
-        mood.setText(trigger);
-        mood.setAddLocation(addLocation);
-        mood.setLatitude(latitude);
-        mood.setLongitude(longitude);
-        mood.setId(idString);
-        mood.setSocial(socialSituation);
-        mood.setPhoto(imageString);
-        mood.setColor(colorString);
-
-        return mood;
-    }
-
-
-    private Mood dummyMood2(String trigger, Boolean addLocation, String idString,
+    private Mood dummyMood(String trigger, Boolean addLocation, String idString,
                             String socialSituation, String imageString, String colorString, String userName){
 
         Mood mood = new Mood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);

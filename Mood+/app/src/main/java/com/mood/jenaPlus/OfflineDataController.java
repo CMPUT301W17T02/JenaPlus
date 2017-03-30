@@ -7,41 +7,22 @@ package com.mood.jenaPlus;
 public class OfflineDataController {
 
     //singleton
-    SaveOffline saveOffline  = new SaveOffline();
     MoodPlus moodPlus = null;
+    SaveOffline saveOffline  = new SaveOffline();
 
-    public void passFile(String filename){
-
-        saveOffline.loadFromFile(filename);
-
-    }
-
-
-    public void passingList(){
-
-
-    }
-
-
-    public void executeOfflineAdd1(){
-
-        saveOffline.syncOfflineAdd1();
-
-    }
-
-    public void executeOfflineAdd2(){
-
-        saveOffline.syncOfflineAdd2();
-
-    }
 
     public OfflineDataController(MoodPlus aMoodPlus){
         this.moodPlus = aMoodPlus;
 
     }
 
+    public Participant getOfflineParticipant(){
+        return moodPlus.getParticipant();
+    }
 
-
+    public void SyncOffline(){
+        moodPlus.updateParticipant();
+    }
 
 
 }

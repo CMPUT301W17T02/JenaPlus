@@ -25,6 +25,7 @@ public class MoodPlus extends MPModel<MPView> {
         return participant;
     }
 
+
     public void setParticipant(Participant aParticipant) {
         this.participant = aParticipant;
     }
