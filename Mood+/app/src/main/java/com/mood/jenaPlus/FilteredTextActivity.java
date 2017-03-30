@@ -33,7 +33,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_filtered_mood);
+        setContentView(R.layout.activity_filter);
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
@@ -73,7 +73,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     @Override
     protected void onStart(){
         super.onStart();
-
+        moodArrayList.clear();
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
@@ -85,6 +85,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         List<Mood> temp = tempArrayList;
         String dateTest = bundle.getString("filterRecent");
         String moodId = bundle.getString("moodString");
+        String locationBool = bundle.getString("filterLocation");
 
         if (!moodId.equals("no")){
             Log.i("moodstring", moodId);
@@ -94,7 +95,15 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
                     iterator.remove();
                 }
             }
+        }
 
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
         }
 
         if (dateTest.equals("yes")) {

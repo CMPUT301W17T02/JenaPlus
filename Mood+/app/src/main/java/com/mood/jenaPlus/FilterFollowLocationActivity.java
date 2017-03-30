@@ -10,8 +10,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class FilterFollowTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
+public class FilterFollowLocationActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
@@ -31,6 +34,9 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     Context context = this;
 
+    protected Button viewMapButton;
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+
     protected MainMPController mpController;
 
     @Override
@@ -39,6 +45,20 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterFollowLocationActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", locationMoodList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -54,7 +74,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FilterFollowTextActivity.this, ViewMoodActivity.class);
+                Intent intent = new Intent(FilterFollowLocationActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
@@ -75,14 +95,11 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
-        ArrayList<Mood> tempList = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
-        String moodId = bundle.getString("moodString");
-        String locationBool = bundle.getString("filterLocation");
-        String s = moodString;
         String dateTest = bundle.getString("filterRecent");
+
         ArrayList<Mood> first = new ArrayList<>();
 
         for (int i = 0; i<participantListStr.size(); i++) {
@@ -90,34 +107,13 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
             ArrayList<Mood> tempArrayList = tempParticipant.getUserMoodList().getUserMoodList();
 
             for (Mood m : tempArrayList) {
-                if (m.getText().toLowerCase().contains(s.toLowerCase())) {
+                if (m.getAddLocation()) {
                     first.add(m);
                 }
             }
         }
 
         List<Mood> temp = first;
-
-        if (moodId.equals("surprised") || moodId.equals("disgust") || moodId.equals("fear") ||
-                moodId.equals("confused") || moodId.equals("happy") || moodId.equals("angry") ||
-                moodId.equals("sad") || moodId.equals("shame") || moodId.equals("annoyed")){
-            Log.i("moodstring", moodId);
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if(!mood.getId().equals(moodId)){
-                    iterator.remove();
-                }
-            }
-
-        }
-        if(locationBool.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if (!mood.getAddLocation()) {
-                    iterator.remove();
-                }
-            }
-        }
 
         if (dateTest.equals("yes")) {
             for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
@@ -135,20 +131,33 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
             noMoods();
         }
 
-        adapter = new MoodFollowerListAdapter(FilterFollowTextActivity.this,moodArrayList);
+        adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
         getUserMoodOrderedList();
 
-        String d = "Search keyword: "+moodString;
+        String d = moodString + " moods";
         test.setText(d);
 
         moodListView.setAdapter(adapter);
+
+        // Getting all the moods with locations
+        for (int i=0; i<moodArrayList.size();i++){
+            ArrayList<Mood> userMoods = moodArrayList;
+            if(userMoods.get(i).getAddLocation().equals(true)){
+                locationMoodList.add(userMoods.get(i));
+            }
+        }
+
+        // If there is location in the moodList set button visible
+        if(!locationMoodList.isEmpty()){
+            viewMapButton.setVisibility(View.VISIBLE);
+        }
 
     }
 
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods with keyword \'"+ moodString+"\' were found.")
+                .setMessage("No " +moodString+" moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();

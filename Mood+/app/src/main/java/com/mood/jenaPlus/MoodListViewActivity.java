@@ -242,7 +242,6 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     @Override
     public void onConnect() {
         Log.i("Debug", "online");
-        //sync, (check if the lists are empty, if not, add/edit/delete ...)
         OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
         offlineController.SyncOffline();
 

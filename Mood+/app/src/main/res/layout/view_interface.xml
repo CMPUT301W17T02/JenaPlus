@@ -13,7 +13,6 @@
     tools:showIn="@layout/activity_view_interface"
     tools:context="com.mood.jenaPlus.ViewMoodActivity">
 
-
     <ImageView
         android:id="@+id/cur_mood"
         android:layout_width="wrap_content"
@@ -40,7 +39,6 @@
         android:layout_width="wrap_content"
         android:textSize="15sp"
         android:text="Situation"
-        android:maxLength="20"
         android:layout_below="@+id/time"
         android:textColor="@android:color/black"
         android:paddingBottom="15dp"
@@ -67,6 +65,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_location"
         android:background="@android:color/transparent"
+        android:layout_alignBottom="@id/time"
         android:visibility="invisible"
         android:layout_toRightOf="@id/time"/>
 

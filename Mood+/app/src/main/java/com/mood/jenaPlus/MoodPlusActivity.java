@@ -47,6 +47,8 @@ import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -91,8 +93,10 @@ public class MoodPlusActivity extends MerlinActivity
     Boolean searching = false;
     Boolean recent = false;
     Boolean moody = false;
+    Boolean locationBool = false;
 
     ArrayList options1 = new ArrayList();
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
 
     @Override
@@ -214,14 +218,69 @@ public class MoodPlusActivity extends MerlinActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
+
+            /*----------------------- PASSING CURRENT LOCATION---------------------*/
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
 
+            /*----------------------- PASSING CURRENT LOCATION---------------------*/
+
+            ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+            getUsersTask.execute("");
+            ArrayList<Participant> participantList = new ArrayList<Participant>();
+
+            try {
+                participantList = getUsersTask.get();
+                mpController = MoodPlusApplication.getMainMPController();
+
+            } catch (Exception e) {
+                Log.i("Error", "Failed to get the users out of the async object");
+            }
+
+            /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
+
+            for(int i=0; i <participantList.size();i++){
+                ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
+                getUserMoodOrderedList(userMoods);
+                try{
+                    if(userMoods.get(0).getAddLocation()){
+
+                        double distance;
+
+                        // Create new location for other participants
+                        Location locationB = new Location("point B");
+
+                        locationB.setLatitude(userMoods.get(0).getLatitude());
+                        locationB.setLongitude(userMoods.get(0).getLongitude());
+
+                        // Check for distance between current location and following location
+                        distance = location.distanceTo(locationB);
+                        //Log.i("DISTANCEEE!!!","DISTANCE IN METER: " + distance);
+
+                        if(distance <= 5000) {
+                            locationMoodList.add(userMoods.get(0));
+                        }
+                    }
+                }catch (Exception e){
+                    Log.i("Error","Some participants has no mood");
+                }
+
+            }
+
+            for (Mood mood: locationMoodList){
+                Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + locationMoodList + mood.getUserName() );}
+
+
+            /*--------------- PASSING LIST OF LOCATIONS TO MAP ACTIVITY ----------------*/
             Bundle args = new Bundle();
             args.putParcelable("longLat_dataProvider",position);
             Intent intent = new Intent(MoodPlusActivity.this, MapActivity.class);
             intent.putExtras(args);
+            intent.putExtra("participant_moodProvider", locationMoodList);
+            /*--------------- PASSING LIST OF LOCATIONS ----------------*/
+
             startActivity(intent);
+
         } else if(id ==R.id.followingDrawer){
             Intent intent = new Intent(MoodPlusActivity.this, FollowingListActivity.class);
             startActivity(intent);
@@ -229,6 +288,9 @@ public class MoodPlusActivity extends MerlinActivity
         else if (id == R.id.request) {
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
+        } else if (id == R.id.graph){
+            Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
+            startActivity(graphIntent);
         } else if (id == R.id.menuMyOwnMoodFilter){
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
@@ -240,6 +302,17 @@ public class MoodPlusActivity extends MerlinActivity
         return true;
     }
 
+    public ArrayList<Mood> getUserMoodOrderedList(ArrayList<Mood> moodArray) {
+
+        Collections.sort(moodArray, new Comparator<Mood>() {
+
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return moodArray;
+    }
     @Override
     protected void onStart(){
         super.onStart();
@@ -322,7 +395,7 @@ public class MoodPlusActivity extends MerlinActivity
     /*-------------------------------------OWN FILTER MOODS---------------------------------------*/
 
     public void testFilters() {
-        final CharSequence[] items = {" Text "," Most Recent "," Mood "};
+        final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
 
@@ -355,6 +428,9 @@ public class MoodPlusActivity extends MerlinActivity
                             if (selectedItems.get(i).equals(2)) {
                                 moody = true;
                             }
+                            if (selectedItems.get(i).equals(3)) {
+                                locationBool = true;
+                            }
                         }
 
                         if (searching && moody) {
@@ -366,6 +442,9 @@ public class MoodPlusActivity extends MerlinActivity
                         else if (moody) {
                             myOwnFiltersDialog();
                         }
+                        else if (locationBool){
+                            getLocationsFiltered();
+                        }
                         else if (recent) {
                             getDateFiltered();
                         }
@@ -375,10 +454,24 @@ public class MoodPlusActivity extends MerlinActivity
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        searching = recent = moody = false;
+                        searching = recent = moody = locationBool = false;
                     }
                 }).create();
         dialog.show();
+    }
+
+    public void getLocationsFiltered() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilteredLocationActivity.class);
+        Bundle bundle = new Bundle();
+        if (recent) {
+            bundle.putString("filterRecent", "yes");
+        } else {
+            bundle.putString("filterRecent", "no");
+        }
+        intent.putExtras(bundle);
+        searching = recent = moody = locationBool = false;
+        moodId = "";
+        startActivity(intent);
     }
 
     public void getMoodFiltered(String mood) {
@@ -390,8 +483,15 @@ public class MoodPlusActivity extends MerlinActivity
         } else {
             bundle.putString("filterRecent", "no");
         }
+        if(locationBool){
+
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
+
         intent.putExtras(bundle);
-        searching = recent = moody = false;
+        searching = recent = moody = locationBool = false;
         moodId = "";
         startActivity(intent);
 
@@ -406,9 +506,16 @@ public class MoodPlusActivity extends MerlinActivity
         } else {
             bundle.putString("filterRecent", "no");
         }
+        if(locationBool){
+
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
+
         intent.putExtras(bundle);
         startActivity(intent);
-        searching = recent = moody = false;
+        searching = recent = moody = locationBool = false;
     }
 
 
@@ -594,10 +701,15 @@ public class MoodPlusActivity extends MerlinActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
                 bundle.putString("testText",searchText);
                 bundle.putString("moodString","no");
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
 
                 startActivity(intent);
 
@@ -641,8 +753,13 @@ public class MoodPlusActivity extends MerlinActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 startActivity(intent);
 
             }
@@ -650,7 +767,7 @@ public class MoodPlusActivity extends MerlinActivity
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 moodId = "";
                 dialog.cancel();
             }
@@ -662,7 +779,7 @@ public class MoodPlusActivity extends MerlinActivity
     /*---------------------------------- FOLLOWING FILTER ----------------------------------------*/
 
     public void testFilters2() {
-        final CharSequence[] items = {" Text "," Most Recent "," Mood "};
+        final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
 
@@ -695,6 +812,9 @@ public class MoodPlusActivity extends MerlinActivity
                             if (selectedItems.get(i).equals(2)) {
                                 moody = true;
                             }
+                            if (selectedItems.get(i).equals(3)){
+                                locationBool = true;
+                            }
                         }
 
                         if (searching && moody) {
@@ -706,9 +826,13 @@ public class MoodPlusActivity extends MerlinActivity
                         else if (moody) {
                             myFollowingFiltersDialog();
                         }
+                        else if (locationBool) {
+                            getLocationsFiltered2();
+                        }
                         else if (recent) {
                             getDateFiltered2();
                         }
+
 
                     }
 
@@ -719,6 +843,20 @@ public class MoodPlusActivity extends MerlinActivity
                     }
                 }).create();
         dialog.show();
+    }
+
+    public void getLocationsFiltered2() {
+        Intent intent = new Intent(MoodPlusActivity.this, FilterFollowLocationActivity.class);
+        Bundle bundle = new Bundle();
+        if (recent) {
+            bundle.putString("filterRecent", "yes");
+        } else {
+            bundle.putString("filterRecent", "no");
+        }
+        intent.putExtras(bundle);
+        searching = recent = moody = locationBool = false;
+        moodId = "";
+        startActivity(intent);
     }
 
     public void myFollowingFiltersDialog() {
@@ -800,8 +938,13 @@ public class MoodPlusActivity extends MerlinActivity
         } else {
             bundle.putString("filterRecent", "no");
         }
+        if(locationBool){
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
         intent.putExtras(bundle);
-        searching = recent = moody = false;
+        searching = recent = moody = locationBool = false;
         moodId = "";
         startActivity(intent);
     }
@@ -809,7 +952,15 @@ public class MoodPlusActivity extends MerlinActivity
 
     public void getDateFiltered2() {
         Intent intent = new Intent(MoodPlusActivity.this, FilterFollowDateActivity.class);
-        searching = recent = moody = false;
+        Bundle bundle = new Bundle();
+        if(locationBool){
+
+            bundle.putString("filterLocation", "yes");
+        } else {
+            bundle.putString("filterLocation", "no");
+        }
+        intent.putExtras(bundle);
+        searching = recent = moody = locationBool = false;
         startActivity(intent);
     }
 
@@ -839,15 +990,21 @@ public class MoodPlusActivity extends MerlinActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
+                bundle.putString("moodString","fff");
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool =false;
                 startActivity(intent);
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 dialog.cancel();
             }
         });
@@ -961,6 +1118,8 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
+        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        offlineController.SyncOffline();
     }
 
     @Override
@@ -1000,8 +1159,15 @@ public class MoodPlusActivity extends MerlinActivity
                 } else {
                     bundle.putString("filterRecent", "no");
                 }
+                if(locationBool){
+
+                    bundle.putString("filterLocation", "yes");
+                } else {
+                    bundle.putString("filterLocation", "no");
+                }
+
                 intent.putExtras(bundle);
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 moodId = "";
                 startActivity(intent);
 
@@ -1010,7 +1176,7 @@ public class MoodPlusActivity extends MerlinActivity
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 moodId = "";
                 dialog.cancel();
             }

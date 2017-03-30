@@ -10,35 +10,51 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class FilterFollowTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
+public class FilteredLocationActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-    String moodString;
 
     Context context = this;
 
-    protected MainMPController mpController;
+    protected Button viewMapButton;
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilteredLocationActivity.this, MarkerActivity.class);
+                intent.putExtra("user_moodProvider", locationMoodList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -46,6 +62,10 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
+        String name = participant.getUserName();
+        String id = participant.getId();
+        String who = "Username: " + name ;
+        test.setText(who);
 
         /*------------------------------------------------*/
 
@@ -54,7 +74,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FilterFollowTextActivity.this, ViewMoodActivity.class);
+                Intent intent = new Intent(FilteredLocationActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
@@ -63,61 +83,23 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     }
 
+
     @Override
     protected void onStart() {
-
         super.onStart();
-        moodArrayList.clear();
-        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
-        TextView test = (TextView) findViewById(R.id.test_string);
-
-        mpController = MoodPlusApplication.getMainMPController();
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-        ArrayList<String> participantListStr = participant.getFollowingList();
-        ArrayList<Mood> tempList = new ArrayList<>();
+
+        myMoodList = participant.getUserMoodList();
+        ArrayList<Mood> tempArrayList = myMoodList.getFilteredLocation();
 
         Bundle bundle = getIntent().getExtras();
-        moodString = bundle.getString("testText");
-        String moodId = bundle.getString("moodString");
-        String locationBool = bundle.getString("filterLocation");
-        String s = moodString;
         String dateTest = bundle.getString("filterRecent");
-        ArrayList<Mood> first = new ArrayList<>();
+        //String locationBool = bundle.getString("filterLocation");
+        Log.i("date",dateTest);
 
-        for (int i = 0; i<participantListStr.size(); i++) {
-            Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
-            ArrayList<Mood> tempArrayList = tempParticipant.getUserMoodList().getUserMoodList();
-
-            for (Mood m : tempArrayList) {
-                if (m.getText().toLowerCase().contains(s.toLowerCase())) {
-                    first.add(m);
-                }
-            }
-        }
-
-        List<Mood> temp = first;
-
-        if (moodId.equals("surprised") || moodId.equals("disgust") || moodId.equals("fear") ||
-                moodId.equals("confused") || moodId.equals("happy") || moodId.equals("angry") ||
-                moodId.equals("sad") || moodId.equals("shame") || moodId.equals("annoyed")){
-            Log.i("moodstring", moodId);
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if(!mood.getId().equals(moodId)){
-                    iterator.remove();
-                }
-            }
-
-        }
-        if(locationBool.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if (!mood.getAddLocation()) {
-                    iterator.remove();
-                }
-            }
-        }
+        List<Mood> temp = tempArrayList;
 
         if (dateTest.equals("yes")) {
             for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
@@ -135,20 +117,14 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
             noMoods();
         }
 
-        adapter = new MoodFollowerListAdapter(FilterFollowTextActivity.this,moodArrayList);
-        getUserMoodOrderedList();
-
-        String d = "Search keyword: "+moodString;
-        test.setText(d);
-
+        adapter = new MoodListAdapter(FilteredLocationActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
-
     }
 
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods with keyword \'"+ moodString+"\' were found.")
+                .setMessage("No moods with a location were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -163,21 +139,10 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     }
 
-    public ArrayList<Mood> getUserMoodOrderedList() {
-
-        Collections.sort(moodArrayList, new Comparator<Mood>() {
-
-            public int compare(Mood o1, Mood o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
-
-        return this.moodArrayList;
-    }
-
     boolean isWithinRange(Date testDate) {
         Date endDate = new Date();
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
         return !(testDate.before(startDate) || testDate.after(endDate));
     }
+
 }

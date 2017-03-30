@@ -36,7 +36,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_date);
+        setContentView(R.layout.activity_filter);
 
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
@@ -70,6 +70,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
         super.onStart();
         moodArrayList.clear();
+        /* ----- REPLACE BY RECENT MOOD LIST METHOD ------ */
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
         mpController = MoodPlusApplication.getMainMPController();
@@ -87,6 +88,8 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
             }
         }
 
+        /* ----- REPLACE BY RECENT MOOD LIST METHOD ------ */
+
         if (moodArrayList.size() <1) {
             noMoods();
         }
@@ -97,6 +100,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         moodListView.setAdapter(adapter);
 
     }
+
 
     public void noMoods() {
         new AlertDialog.Builder(context)
@@ -128,9 +132,10 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         return this.moodArrayList;
     }
 
-    boolean isWithinRange(Date testDate) {
+    static boolean isWithinRange(Date testDate) {
         Date endDate = new Date();
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
         return !(testDate.before(startDate) || testDate.after(endDate));
     }
+
 }
