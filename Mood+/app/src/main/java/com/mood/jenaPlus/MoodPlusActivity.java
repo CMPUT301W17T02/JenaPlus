@@ -422,11 +422,12 @@ public class MoodPlusActivity extends AppCompatActivity
                         else if (moody) {
                             myOwnFiltersDialog();
                         }
+                        else if (locationBool){
+                            getLocationsFiltered();
+                        }
                         else if (recent) {
                             getDateFiltered();
 
-                        } else if (locationBool){
-                            getLocationsFiltered();
                         }
 
                     }

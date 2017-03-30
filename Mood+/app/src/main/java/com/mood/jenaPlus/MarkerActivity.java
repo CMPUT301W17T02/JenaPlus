@@ -68,7 +68,7 @@ public class MarkerActivity extends FragmentActivity implements
                     .title(mood.getUserName())
                     .snippet("Feeling "+ mood.getId())
                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
             followingMarker.setTag(0);
 
         }
