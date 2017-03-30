@@ -282,6 +282,17 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                         editedMood.setPhoto(aPhoto);
                     }
                     editedMood.setColor(aColor);
+
+                    UserMoodList offlineList = offlineController.loadSavedList(getBaseContext());
+
+                    if (offlineList == null) {
+                        offlineList = new UserMoodList();
+                    }
+
+                    offlineList = offlineMoodList;
+
+                    offlineController.saveOfflineList(offlineList, context);
+
                     finish();
 
 

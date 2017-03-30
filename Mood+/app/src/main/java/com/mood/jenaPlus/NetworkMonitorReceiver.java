@@ -38,18 +38,17 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
 
 			OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
 
-			UserMoodList tempList = offlineController.loadSavedList(context);
+			//UserMoodList tempList = offlineController.loadSavedList(context);
 
-			if (tempList != null) {
-				offlineController.SyncOfflineList(context);
-				Toast.makeText(context, "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT);
-				Log.d("LAST SESSION", "Syncing");
-			}
-			else {
-				offlineController.SyncOffline();
-				Toast.makeText(context, "Syncing THIS SESSION", Toast.LENGTH_SHORT);
-				Log.d("THIS SESSION", "Syncing");
-			}
+			offlineController.SyncOfflineList(context);
+			Toast.makeText(context, "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT);
+			Log.d("LAST SESSION", "Syncing");
+
+			/*
+			offlineController.SyncOffline();
+			Toast.makeText(context, "Syncing THIS SESSION", Toast.LENGTH_SHORT);
+			Log.d("THIS SESSION", "Syncing");
+			*/
 
 			Log.d("TRIGGERED", "Network Available; SYNC");
 		}
