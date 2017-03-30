@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +36,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
     protected Button viewMapButton;
     ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+    ArrayList<LatLng> tempLocation = new ArrayList<>();
 
     protected MainMPController mpController;
 
@@ -52,6 +55,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
             public void onClick(View v) {
                 Intent intent = new Intent(FilterFollowLocationActivity.this, MarkerActivity.class);
                 intent.putExtra("participant_moodProvider", locationMoodList);
+                intent.putExtra("user_moodProvider", tempLocation);
                 startActivity(intent);
             }
         });
@@ -98,10 +102,6 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         moodString = bundle.getString("testText");
         String dateTest = bundle.getString("filterRecent");
 
-        if (moodArrayList.size() <1) {
-            noMoods();
-        }
-
         ArrayList<Mood> first = new ArrayList<>();
 
         for (int i = 0; i<participantListStr.size(); i++) {
@@ -128,6 +128,10 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         }
 
         moodArrayList.addAll(temp);
+
+        if (moodArrayList.size() <1) {
+            noMoods();
+        }
 
         adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
         getUserMoodOrderedList();

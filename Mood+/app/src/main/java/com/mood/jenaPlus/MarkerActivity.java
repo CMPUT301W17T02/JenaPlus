@@ -32,8 +32,7 @@ public class MarkerActivity extends FragmentActivity implements
     private Marker followingMarker;
     ArrayList<Mood> moodListLocation;
     LatLng allLatLng;
-    ArrayList<Marker> markers;
-    ArrayList<LatLng> arrayLocation;
+    ArrayList<Mood> userMoodLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,14 +50,13 @@ public class MarkerActivity extends FragmentActivity implements
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
-        //Intent intent = getIntent();
-        //arrayLocation = intent.getParcelableArrayListExtra("longLat_dataProvider");
-
         moodListLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
+        userMoodLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("user_moodProvider");
 
+        // Following Moods with Location
         for (Mood mood: moodListLocation){
             //Log.i("LATLNG!!!!!!","Contents of arrayLocation: " + mood.getLatitude()+mood.getLongitude() );
-            //Log.i("MOODS ID!!!!!!",mood.getId() + mood.getUserName());
+            Log.i("MOODS ID!!!!!!",mood.getId() + mood.getUserName());
             allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
 
             // Creating markers
@@ -70,7 +68,20 @@ public class MarkerActivity extends FragmentActivity implements
                     .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
             //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
             followingMarker.setTag(0);
+        }
 
+        // User Moods with Location
+        for (Mood mood: userMoodLocation){
+            allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
+
+            // Creating markers
+            int recId = getResources().getIdentifier(mood.getId(), "drawable", getApplicationContext().getPackageName());
+
+            followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
+                    .title("Feeling "+ mood.getId())
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
+            //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
+            followingMarker.setTag(0);
         }
 
         // Set a listener for marker click.
@@ -89,22 +100,7 @@ public class MarkerActivity extends FragmentActivity implements
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
 
-        // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            Toast.makeText(this,
-                    marker.getTitle() +
-                            " has been clicked " + clickCount + " times.",
-                    Toast.LENGTH_SHORT).show();
-        }
-
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
         return false;
     }
 

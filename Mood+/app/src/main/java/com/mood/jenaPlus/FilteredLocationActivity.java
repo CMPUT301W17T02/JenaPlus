@@ -31,6 +31,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
     protected Button viewMapButton;
     ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+    ArrayList<LatLng> tempLocation = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,8 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilteredLocationActivity.this, MarkerActivity.class);
-                intent.putExtra("participant_moodProvider", locationMoodList);
+                intent.putExtra("participant_moodProvider", tempLocation);
+                intent.putExtra("user_moodProvider", locationMoodList);
                 startActivity(intent);
             }
         });
