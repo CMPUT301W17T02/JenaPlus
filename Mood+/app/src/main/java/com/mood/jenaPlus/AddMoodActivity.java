@@ -201,7 +201,6 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                                 //startActivity(intent);
                                 getLocation();
                                 addLocation = true;
-
                                 break;
                         }
                         return true;
@@ -332,7 +331,12 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
+        if (addLocation && location == null) {
+            getLocation();
+        }
+
         if (trigCheck && moodChosen && addLocation) {
+
             latitude = location.getLatitude();
             longitude = location.getLongitude();
             MainMPController mpController = MoodPlusApplication.getMainMPController();
