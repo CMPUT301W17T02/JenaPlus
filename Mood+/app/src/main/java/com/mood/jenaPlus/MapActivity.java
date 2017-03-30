@@ -3,6 +3,9 @@ package com.mood.jenaPlus;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -55,8 +58,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     private LocationRequest mLocationRequest;
 
-    ArrayList<LatLng> arrayLocation;
     private Marker followingMarker;
+    ArrayList<Mood> moodListLocation;
+    LatLng allLatLng;
+    ArrayList<LatLng> allLocations = new ArrayList<>();
 
     /**
      *
@@ -84,18 +89,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
+        moodListLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
+        Log.i("MOOOOOOOOODS","ALL MOODS WITH LOCATION: " + moodListLocation);
 
-        Intent intent = getIntent();
-        arrayLocation = intent.getParcelableArrayListExtra("following_latLongProvider");
+        for (Mood mood: moodListLocation){
+            Log.i("LATLNG!!!!!!","Contents of arrayLocation: " + mood.getLatitude()+mood.getLongitude() );
+            Log.i("MOODS ID!!!!!!",mood.getId() + mood.getUserName());
+            allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
 
-        // Add some markers to the map, and add a data object to each marker.
-        for(LatLng location: arrayLocation) {
-            Log.i("LOCATIONNNNNN","Contents of arrayLocation: " + location);
-            followingMarker = mMap.addMarker(new MarkerOptions().position(location)
-                    .title("MOODS").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            // Creating markers
+            int recId = getResources().getIdentifier(mood.getId(), "drawable", getApplicationContext().getPackageName());
+
+            followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
+                    .title(mood.getUserName())
+                    .snippet("Feeling "+ mood.getId())
+                    .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
             followingMarker.setTag(0);
-        }
 
+        }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -107,6 +119,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         buildGoogleApiClient();
 
 
+    }
+
+    public Bitmap resizeMapIcons(Integer recId,int width, int height){
+        // Taken from: http://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
+        BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(recId);
+        Bitmap imageBitmap = bitmapdraw.getBitmap();
+        Bitmap smallMarker = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
+
+        return smallMarker;
     }
 
     /**
@@ -141,7 +162,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         Intent i = getIntent();
         LatLng currentPosition = i.getParcelableExtra("longLat_dataProvider");
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 11.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPosition, 15.0f));
         mMap.addMarker(new MarkerOptions().position(currentPosition)
                 .title("Current Position"));
 

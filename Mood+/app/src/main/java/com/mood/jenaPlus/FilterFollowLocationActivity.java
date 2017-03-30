@@ -36,7 +36,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_location);
+        setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
 

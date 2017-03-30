@@ -43,7 +43,7 @@
         android:text="Add New User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:width="160dp"
+        android:width="150dp"
         android:backgroundTint="#E0E0E0"
         android:layout_below="@+id/Login_button"
         android:layout_centerHorizontal="true" />
