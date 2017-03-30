@@ -79,7 +79,6 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
         String dateTest = bundle.getString("filterRecent");
-        String locationBool = bundle.getString("filterLocation");
         ArrayList<Mood> first = new ArrayList<>();
 
         for (int i = 0; i<participantListStr.size(); i++) {
@@ -104,16 +103,12 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
                 }
             }
         }
-        if(locationBool.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if (!mood.getAddLocation()) {
-                    iterator.remove();
-                }
-            }
-        }
 
         moodArrayList.addAll(temp);
+
+        if (moodArrayList.size() <1) {
+            noMoods();
+        }
 
         adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
         getUserMoodOrderedList();
@@ -128,7 +123,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No " +moodString+" moods were found.")
+                .setMessage("No moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();

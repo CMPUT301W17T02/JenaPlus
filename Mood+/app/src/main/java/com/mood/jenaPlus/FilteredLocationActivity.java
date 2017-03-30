@@ -96,20 +96,9 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
         Bundle bundle = getIntent().getExtras();
         String dateTest = bundle.getString("filterRecent");
-        String locationBool = bundle.getString("filterLocation");
         Log.i("date",dateTest);
 
         List<Mood> temp = tempArrayList;
-
-        if(locationBool.equals("yes")) {
-            viewMapButton.setVisibility(View.VISIBLE);
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
-                Mood mood = iterator.next();
-                if (!mood.getAddLocation()) {
-                    iterator.remove();
-                }
-            }
-        }
 
         if (dateTest.equals("yes")) {
             for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
@@ -120,6 +109,8 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
                 }
             }
         }
+
+        moodArrayList.addAll(temp);
 
         if (moodArrayList.size() <1) {
             noMoods();
