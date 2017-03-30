@@ -199,11 +199,8 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                             case R.id.action_navigation:
                                 //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
                                 //startActivity(intent);
-                                location = getLocation();
+                                getLocation();
                                 addLocation = true;
-
-                                Toast.makeText(AddMoodActivity.this, "Location Added: "+location.getLatitude()
-                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
 
                                 break;
                         }
@@ -297,13 +294,21 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             // Check if GPS enabled
             if (gps.canGetLocation()) {
 
-                double latitude = gps.getLatitude();
-                double longitude = gps.getLongitude();
+                if (gps == null) {
+                    gps.showSettingsAlert();
+                } else {
 
-                currentLocation.setLatitude(latitude);
-                currentLocation.setLongitude(longitude);
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
 
-                return currentLocation;
+                    currentLocation.setLatitude(latitude);
+                    currentLocation.setLongitude(longitude);
+
+                    location = currentLocation;
+
+                    Toast.makeText(AddMoodActivity.this, "Location Added: "+location.getLatitude()
+                            +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
+                }
 
             } else {
                 // Can't get location.
