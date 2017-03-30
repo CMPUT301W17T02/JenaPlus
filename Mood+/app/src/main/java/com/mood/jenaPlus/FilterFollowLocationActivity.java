@@ -139,6 +139,10 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
         moodListView.setAdapter(adapter);
 
+        for (Mood mood: moodArrayList){
+            Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + mood.getId() + mood.getLongitude());
+
+        }
         // Getting all the moods with locations
         for (int i=0; i<moodArrayList.size();i++){
             ArrayList<Mood> userMoods = moodArrayList;
