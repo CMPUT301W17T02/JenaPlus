@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -97,6 +98,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private String userName;
     private ImageButton infoButton;
     final int maxBytes =  65536;
+    private int previousSelectedPosition = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -158,6 +160,25 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 colorString = mi.getColor(colorNum);
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
+
+                view.setBackgroundColor(Color.RED);
+
+                //Taken from https://android--code.blogspot.ca/2015/08/android-gridview-selected-item-color.html
+                ImageView previousSelectedView = (ImageView) gridview.getChildAt(previousSelectedPosition);
+
+                // If there is a previous selected view exists
+                if (previousSelectedPosition != -1)
+                {
+                    // Set the last selected View to deselect
+                    previousSelectedView.setSelected(false);
+
+                    // Set the last selected View background color as deselected item
+                    previousSelectedView.setBackgroundColor(Color.parseColor("#00ff0000"));
+                }
+
+                // Set the current selected view position as previousSelectedPosition
+                previousSelectedPosition = position;
+
             }
         });
 
