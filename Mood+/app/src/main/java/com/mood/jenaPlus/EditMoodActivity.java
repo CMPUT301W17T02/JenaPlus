@@ -413,8 +413,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        offlineController.SyncOffline();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
     }
 
     @Override

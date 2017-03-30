@@ -98,6 +98,8 @@ public class MoodPlusActivity extends MerlinActivity
     ArrayList options1 = new ArrayList();
     ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
+    UserMoodList offlineList = new UserMoodList();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +185,21 @@ public class MoodPlusActivity extends MerlinActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            // Ends current session, has to save offlineList
             super.onBackPressed();
+
+            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+            offlineList = offlineController.loadSavedList(MoodPlusActivity.this);
+
+            if (offlineList == null) {
+                offlineList = new UserMoodList();
+            }
+
+            offlineList = offlineController.getOfflineParticipant().getUserMoodList();
+
+            offlineController.saveOfflineList(offlineList, context);
+
+            Log.d("ENDING SESSION", "ATTEMPTED TO SAVE");
         }
     }
 
@@ -1118,8 +1134,8 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        offlineController.SyncOffline();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
     }
 
     @Override

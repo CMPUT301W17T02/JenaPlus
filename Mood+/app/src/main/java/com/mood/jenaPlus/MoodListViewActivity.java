@@ -242,8 +242,8 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     @Override
     public void onConnect() {
         Log.i("Debug", "online");
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        offlineController.SyncOffline();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
 
     }
 

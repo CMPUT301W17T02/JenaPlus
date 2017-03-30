@@ -280,8 +280,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     public void onConnect() {
         Log.i("Debug", "online");
         //sync, (check if the lists are empty, if not, add/edit/delete ...)
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        offlineController.SyncOffline();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
         networkStatusDisplayer.displayConnected();
     }
 
