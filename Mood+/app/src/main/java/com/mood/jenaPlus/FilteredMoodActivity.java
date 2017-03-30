@@ -144,9 +144,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
             }
         }
 
-
-
-
         TextView test = (TextView) findViewById(R.id.test_string);
         String who = "Mood: " + moodString;
         //test.setText(who);
