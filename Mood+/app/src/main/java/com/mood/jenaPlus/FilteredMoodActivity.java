@@ -138,9 +138,8 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         // Getting all the moods with locations
         for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
+            if(moodArrayList.get(i).getAddLocation().equals(true)){
+                locationMoodList.add(moodArrayList.get(i));
             }
         }
 

@@ -124,10 +124,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
         // Getting all the moods with locations
         for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
-            }
+            locationMoodList.add(moodArrayList.get(i));
         }
 
         // If there is location in the moodList set button visible
