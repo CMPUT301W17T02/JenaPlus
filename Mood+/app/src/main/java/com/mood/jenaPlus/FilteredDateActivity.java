@@ -65,6 +65,8 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
     protected void onStart() {
         super.onStart();
 
+        moodArrayList.clear();
+
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 

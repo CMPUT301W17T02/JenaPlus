@@ -88,6 +88,8 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
     protected void onStart() {
         super.onStart();
 
+        moodArrayList.clear();
+
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 

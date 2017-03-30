@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,12 +30,29 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
     Context context = this;
 
+    protected Button viewMapButton;
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilteredMoodActivity.this, MarkerActivity.class);
+                intent.putExtra("user_moodProvider", locationMoodList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
         /*------------- LOADING THE MOOD  -------------*/
 
@@ -71,6 +89,8 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     protected void onStart() {
         super.onStart();
 
+        moodArrayList.clear();
+
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
@@ -92,6 +112,8 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
                     iterator.remove();
                 }
             }
+
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         if (dateTest.equals("yes")) {
@@ -113,6 +135,16 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
 
         adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
+
+        // Getting all the moods with locations
+        for (int i=0; i<moodArrayList.size();i++){
+            ArrayList<Mood> userMoods = moodArrayList;
+            if(userMoods.get(i).getAddLocation().equals(true)){
+                locationMoodList.add(userMoods.get(i));
+            }
+        }
+
+
 
 
         TextView test = (TextView) findViewById(R.id.test_string);
