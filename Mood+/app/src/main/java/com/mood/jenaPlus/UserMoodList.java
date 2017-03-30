@@ -192,6 +192,27 @@ public class UserMoodList {
         return tempArrayList2;
     }
 
+    public ArrayList<Mood> getFilteredLocation() {
+        int listSize = UserMoodList.size();
+        ArrayList<Mood> tempArrayList1 = UserMoodList;
+        ArrayList<Mood> tempArrayList2 = new ArrayList<>();
+
+        for (int i = 0; i<listSize; i++) {
+            if (tempArrayList1.get(i).getAddLocation()){
+                tempArrayList2.add(tempArrayList1.get(i));
+            }
+        }
+
+        Collections.sort(tempArrayList2, new Comparator<Mood>() {
+            public int compare(Mood o1, Mood o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return tempArrayList2;
+
+    }
+
     /**
      * Is within range boolean.
      *

@@ -16,6 +16,8 @@ import android.widget.TextView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 public class FilteredMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
@@ -31,7 +33,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_filtered_mood);
+        setContentView(R.layout.activity_filter);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /*------------- LOADING THE MOOD  -------------*/
@@ -76,22 +78,37 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
         moodString = bundle.getString("moodString");
 
         String dateTest = bundle.getString("filterRecent");
+        String locationBool = bundle.getString("filterLocation");
         Log.i("date",dateTest);
 
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getFilteredMood(moodString);
+        ArrayList<Mood> tempArrayList = myMoodList.getFilteredMood(moodString);
+        List<Mood> temp = tempArrayList;
 
-        if (moodArrayList.size() <1) {
-            noMoods();
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
         }
 
         if (dateTest.equals("yes")) {
-            for(Mood m: moodArrayList) {
-                Date tempDate = m.getDate();
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                Date tempDate = mood.getDate();
                 if(!isWithinRange(tempDate)){
-                    moodArrayList.remove(m);
+                    iterator.remove();
                 }
             }
+        }
+
+        moodArrayList.addAll(temp);
+
+
+        if (moodArrayList.size() <1) {
+            noMoods();
         }
 
         adapter = new MoodListAdapter(FilteredMoodActivity.this,moodArrayList);
