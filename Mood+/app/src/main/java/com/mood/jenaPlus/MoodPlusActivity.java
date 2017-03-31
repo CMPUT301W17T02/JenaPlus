@@ -277,9 +277,10 @@ public class MoodPlusActivity extends MerlinActivity
             /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
 
             for(int i=0; i <participantList.size();i++){
-                ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
-                getUserMoodOrderedList(userMoods);
+
                 try{
+                    ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
+                    getUserMoodOrderedList(userMoods);
                     if(userMoods.get(0).getAddLocation()){
 
                         double distance;
