@@ -14,4 +14,11 @@
     <string name="Situation">Situation</string>
     <string name="title_activity_edit_mood">EditMoodActivity</string>
     <string name="Search">Search</string>
+
+    <string name="network_connected">Network connected\n Offline Synced</string>
+    <string name="network_disconnected">Network disconnected</string>
+    <string name="current_status">Get Current Status</string>
+    <string name="toast_connected">Connected</string>
+    <string name="toast_disconnected">Disconnected</string>
+    <string name="title_activity_test">Test</string>
 </resources>

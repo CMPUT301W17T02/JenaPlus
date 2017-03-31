@@ -21,6 +21,7 @@ android {
     }
 }
 
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -35,4 +36,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-places:10.0.1'
     compile files('src/include/jest-droid-2.0.1-SNAPSHOT.jar')
     compile 'com.jayway.android.robotium:robotium-solo:5.6.3'
+    compile 'com.novoda:merlin:0.8.0'
+    compile('de.keyboardsurfer.android.widget:crouton:1.7') {
+        exclude module: 'support-v4'
+    }
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }
