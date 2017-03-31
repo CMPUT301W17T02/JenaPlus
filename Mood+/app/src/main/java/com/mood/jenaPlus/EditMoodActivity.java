@@ -244,6 +244,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                                 Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
                                         +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();*/
+
                                 break;
                         }
                         return true;
