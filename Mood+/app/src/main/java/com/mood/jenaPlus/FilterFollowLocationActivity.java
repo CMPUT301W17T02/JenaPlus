@@ -28,15 +28,12 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     String moodString;
 
     Context context = this;
 
     protected Button viewMapButton;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
-
     protected MainMPController mpController;
 
     @Override
@@ -53,7 +50,7 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(FilterFollowLocationActivity.this, MarkerActivity.class);
-                intent.putExtra("participant_moodProvider", locationMoodList);
+                intent.putExtra("participant_moodProvider", moodArrayList);
                 startActivity(intent);
             }
         });
@@ -129,6 +126,8 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
         adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
@@ -139,25 +138,12 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
         moodListView.setAdapter(adapter);
 
-        // Getting all the moods with locations
-        for (int i=0; i<moodArrayList.size();i++){
-            ArrayList<Mood> userMoods = moodArrayList;
-            if(userMoods.get(i).getAddLocation().equals(true)){
-                locationMoodList.add(userMoods.get(i));
-            }
-        }
-
-        // If there is location in the moodList set button visible
-        if(!locationMoodList.isEmpty()){
-            viewMapButton.setVisibility(View.VISIBLE);
-        }
-
     }
 
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No " +moodString+" moods were found.")
+                .setMessage("No moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();

@@ -1,10 +1,12 @@
 package com.mood.jenaPlus;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,7 +19,12 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+
 import android.support.design.widget.NavigationView;
+
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -35,6 +42,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.BufferedInputStream;
@@ -85,6 +96,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected String aText;
     protected String aDate;
     protected Boolean addLocation;
+    private Location location;
     protected Double aLatitude;
     protected Double aLongitude;
     protected String aSocial;
@@ -103,6 +115,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     private NetworkStatusDisplayer networkStatusDisplayer;
     private MerlinsBeard merlinsBeard;
 
+    private static final int PLACE_PICKER_REQUEST = 1020;
 
 
     private Calendar dateEditor = Calendar.getInstance();
@@ -188,7 +201,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.action_camera:
-                                System.out.println("do camera");
                                 cameraIntent();
                                 break;
                             case R.id.socialPopup:
@@ -217,7 +229,21 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                                 break;
 
                             case R.id.action_navigation:
-                                System.out.println("do navigation");
+
+                                try {
+                                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                                    startActivityForResult(builder.build(EditMoodActivity.this), PLACE_PICKER_REQUEST);
+                                } catch (GooglePlayServicesRepairableException e) {
+                                    Log.i("CAN'T OPEN","GooglePlayServicesRepairableException thrown " + e);
+                                } catch (GooglePlayServicesNotAvailableException e) {
+                                    Log.i("CAN'T OPEN","GooglePlayServicesNotAvailableException thrown " + e);
+                                }
+
+                                /*location = getLocation();
+                                addLocation = true;
+
+                                Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
+                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();*/
                                 break;
                         }
                         return true;
@@ -333,6 +359,13 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                 Toast.makeText(EditMoodActivity.this, "Image Updated",Toast.LENGTH_SHORT).show();
             }
         }
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     // Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
@@ -396,6 +429,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         // TODO implements update method
     }
 
+
     @Override
     protected Merlin createMerlin() {
         return new Merlin.Builder()
@@ -440,5 +474,38 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         networkStatusDisplayer.reset();
     }
 
+
+    public Location getLocation() {
+
+        Location currentLocation = new Location("dummyprovider");
+
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(EditMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        } else {
+            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
+            GPSTracker gps = new GPSTracker(context, EditMoodActivity.this);
+
+            // Check if GPS enabled
+            if (gps.canGetLocation()) {
+
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+                currentLocation.setLatitude(latitude);
+                currentLocation.setLongitude(longitude);
+
+                return currentLocation;
+
+            } else {
+                // Can't get location.
+                // GPS or network is not enabled.
+                // Ask user to enable GPS/network in settings.
+                gps.showSettingsAlert();
+            }
+        }
+        return null;
+    }
 
 }

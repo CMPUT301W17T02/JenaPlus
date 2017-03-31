@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -115,6 +116,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private String userName;
     private ImageButton infoButton;
     final int maxBytes =  65536;
+    private int previousSelectedPosition = -1;
 
     private NetworkStatusDisplayer networkStatusDisplayer;
 
@@ -189,6 +191,25 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 colorString = mi.getColor(colorNum);
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
+
+                view.setBackgroundColor(Color.RED);
+
+                //Taken from https://android--code.blogspot.ca/2015/08/android-gridview-selected-item-color.html
+                ImageView previousSelectedView = (ImageView) gridview.getChildAt(previousSelectedPosition);
+
+                // If there is a previous selected view exists
+                if (previousSelectedPosition != -1)
+                {
+                    // Set the last selected View to deselect
+                    previousSelectedView.setSelected(false);
+
+                    // Set the last selected View background color as deselected item
+                    previousSelectedView.setBackgroundColor(Color.parseColor("#00ff0000"));
+                }
+
+                // Set the current selected view position as previousSelectedPosition
+                previousSelectedPosition = position;
+
             }
         });
 
@@ -230,12 +251,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                             case R.id.action_navigation:
                                 //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
                                 //startActivity(intent);
-                                location = getLocation();
+                                getLocation();
                                 addLocation = true;
-
-                                Toast.makeText(AddMoodActivity.this, "Location Added: "+location.getLatitude()
-                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
-
                                 break;
                         }
                         return true;
@@ -375,13 +392,21 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             // Check if GPS enabled
             if (gps.canGetLocation()) {
 
-                double latitude = gps.getLatitude();
-                double longitude = gps.getLongitude();
+                if (gps == null) {
+                    gps.showSettingsAlert();
+                } else {
 
-                currentLocation.setLatitude(latitude);
-                currentLocation.setLongitude(longitude);
+                    double latitude = gps.getLatitude();
+                    double longitude = gps.getLongitude();
 
-                return currentLocation;
+                    currentLocation.setLatitude(latitude);
+                    currentLocation.setLongitude(longitude);
+
+                    location = currentLocation;
+
+                    Toast.makeText(AddMoodActivity.this, "Location Added: "+location.getLatitude()
+                            +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
+                }
 
             } else {
                 // Can't get location.
@@ -405,7 +430,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (merlinsBeard.isConnected()){
+        if (merlinsBeard.isConnected()) {
 
             //trigger = message.getText().toString();
             //Boolean trigCheck = triggerCheck();
@@ -429,58 +454,74 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     idMessage();
                 }
             }
-        }
+            if (addLocation && location == null) {
+                getLocation();
+            }
 
-        //when disconnected
-        else {
-            Toast.makeText(AddMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
-
-            //trigger = message.getText().toString();
-            //Boolean trigCheck = triggerCheck();
-
-            //has location
             if (trigCheck && moodChosen && addLocation) {
-                Toast.makeText(AddMoodActivity.this, "no internet no location my man!!!", Toast.LENGTH_SHORT).show();
 
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
                 finish();
-
-                //no location
             } else if (trigCheck && moodChosen) {
-
-                //UserMoodList userMoodList = new UserMoodList();
-                Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-
-                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-                Participant offlineParticipant = offlineController.getOfflineParticipant();
-                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
-                offlineMoodList.addUserMood(mood);
-
-                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
-
-                if (offlineList == null) {
-                    offlineList = new UserMoodList();
-                }
-
-                offlineList = offlineMoodList;
-
-                offlineController.saveOfflineList(offlineList, context);
-
-                Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
-
-
-
-                //MainMPController mpController = MoodPlusApplication.getMainMPController();
-                //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
                 finish();
-            } else {
 
-                if (!trigCheck) {
-                    Log.i("Debug","not trig");
-                    trigMessage();
-                }
-                if (!moodChosen) {
-                    Log.i("Debug","not mood");
-                    idMessage();
+            }
+
+            //when disconnected
+            else {
+                Toast.makeText(AddMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+
+                //trigger = message.getText().toString();
+                //Boolean trigCheck = triggerCheck();
+
+                //has location
+                if (trigCheck && moodChosen && addLocation) {
+                    Toast.makeText(AddMoodActivity.this, "no internet no location my man!!!", Toast.LENGTH_SHORT).show();
+
+                    finish();
+
+                    //no location
+                } else if (trigCheck && moodChosen) {
+
+                    //UserMoodList userMoodList = new UserMoodList();
+                    Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                    OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                    Participant offlineParticipant = offlineController.getOfflineParticipant();
+                    UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                    offlineMoodList.addUserMood(mood);
+
+                    UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                    if (offlineList == null) {
+                        offlineList = new UserMoodList();
+                    }
+
+                    offlineList = offlineMoodList;
+
+                    offlineController.saveOfflineList(offlineList, context);
+
+                    Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
+
+
+                    //MainMPController mpController = MoodPlusApplication.getMainMPController();
+                    //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                    finish();
+                } else {
+
+                    if (!trigCheck) {
+                        Log.i("Debug", "not trig");
+                        trigMessage();
+                    }
+                    if (!moodChosen) {
+                        Log.i("Debug", "not mood");
+                        idMessage();
+                    }
                 }
             }
         }
