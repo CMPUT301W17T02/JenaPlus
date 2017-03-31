@@ -192,7 +192,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
 
-                view.setBackgroundColor(Color.RED);
+                view.setBackgroundColor(Color.parseColor(colorString));
 
                 //Taken from https://android--code.blogspot.ca/2015/08/android-gridview-selected-item-color.html
                 ImageView previousSelectedView = (ImageView) gridview.getChildAt(previousSelectedPosition);
@@ -436,9 +436,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 getLocation();
             }
 
-            //trigger = message.getText().toString();
-            //Boolean trigCheck = triggerCheck();
-
             if (trigCheck && moodChosen && addLocation) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
@@ -459,6 +456,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     idMessage();
                 }
             }
+
 
         }
 
@@ -513,8 +511,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                         idMessage();
                     }
                 }
-            }
         }
+    }
 
 
     public Boolean triggerCheck() {
