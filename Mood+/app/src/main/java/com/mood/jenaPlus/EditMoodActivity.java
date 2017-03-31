@@ -203,8 +203,6 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                                 location = getLocation();
                                 addLocation = true;
 
-                                Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
-                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
                                 break;
                         }
                         return true;

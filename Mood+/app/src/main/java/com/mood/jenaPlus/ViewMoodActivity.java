@@ -93,8 +93,8 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_interface);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         MoodPlus mp = MoodPlusApplication.getMoodPlus();
         mp.addView(this);
