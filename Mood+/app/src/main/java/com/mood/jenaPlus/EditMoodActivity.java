@@ -123,6 +123,10 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
     Context context = this;
 
+    protected Boolean newLocation = false;
+    double newLat;
+    double newLng;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,9 +274,16 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                         Mood editedMood = userMoodList.getUserMood(position);
 
                         editedMood.setText(message.getText().toString());
-                        editedMood.setAddLocation(addLocation);
-                        editedMood.setLatitude(aLatitude);
-                        editedMood.setLongitude(aLongitude);
+
+                        if(newLocation){
+                            editedMood.setAddLocation(newLocation);
+                            editedMood.setLatitude(newLat);
+                            editedMood.setLongitude(newLng);
+                        }else{
+                            editedMood.setAddLocation(addLocation);
+                            editedMood.setLatitude(aLatitude);
+                            editedMood.setLongitude(aLongitude);
+                        }
                         editedMood.setId(aId);
                         editedMood.setDate(dateEditor.getTime());
                         editedMood.setSocial(socialSituation);
@@ -364,7 +375,12 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(data, this);
                 String toastMsg = String.format("Place: %s", place.getName());
+                LatLng newLatLng = place.getLatLng();
+                newLat = newLatLng.latitude;
+                newLng = newLatLng.longitude;
+                Log.i("PLACE LATLNG","latitude "+ newLat+"longitude "+newLng);
                 Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                newLocation = true;
             }
         }
     }
