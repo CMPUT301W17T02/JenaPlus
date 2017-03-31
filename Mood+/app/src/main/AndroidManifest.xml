@@ -73,7 +73,8 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilteredDateActivity" />
+        <activity android:name=".FilteredDateActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
 
         <service android:name=".GPSTracker" />
 
