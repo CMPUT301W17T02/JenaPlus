@@ -140,7 +140,7 @@ public class MoodPlusActivity extends MerlinActivity
                 viewPager.setCurrentItem(tab.getPosition());
             }
         });
-        
+
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
         merlinsBeard = MerlinsBeard.from(this);
 

@@ -471,6 +471,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 finish();
 
             }
+        }
 
             //when disconnected
             else {
@@ -525,7 +526,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 }
             }
         }
-    }
+
 
     public Boolean triggerCheck() {
         Boolean check = true;
