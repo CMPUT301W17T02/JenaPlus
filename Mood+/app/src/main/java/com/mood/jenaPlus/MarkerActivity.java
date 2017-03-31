@@ -29,7 +29,6 @@ public class MarkerActivity extends FragmentActivity implements
     ArrayList<Mood> moodListLocation;
     LatLng allLatLng;
     ArrayList<Mood> userMoodLocation;
-    int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +38,6 @@ public class MarkerActivity extends FragmentActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
-        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-
-        //startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);
 
     }
 
@@ -94,7 +88,6 @@ public class MarkerActivity extends FragmentActivity implements
 
         }
 
-
         // Set a listener for marker click.
         mMap.setOnMarkerClickListener(this);
     }
@@ -103,9 +96,8 @@ public class MarkerActivity extends FragmentActivity implements
         // Taken from: http://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
         BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(recId);
         Bitmap imageBitmap = bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
 
-        return smallMarker;
+        return Bitmap.createScaledBitmap(imageBitmap, width, height, false);
     }
 
 
