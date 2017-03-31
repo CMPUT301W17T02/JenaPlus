@@ -38,6 +38,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.BufferedInputStream;
@@ -91,7 +95,7 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     protected ImageView cameraImage;
 
-
+    private static final int PLACE_PICKER_REQUEST = 1020;
 
     private Calendar dateEditor = Calendar.getInstance();
     int year, month, day;
@@ -200,11 +204,21 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                                 break;
 
                             case R.id.action_navigation:
-                                location = getLocation();
+
+                                try {
+                                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                                    startActivityForResult(builder.build(EditMoodActivity.this), PLACE_PICKER_REQUEST);
+                                } catch (GooglePlayServicesRepairableException e) {
+                                    Log.i("CAN'T OPEN","GooglePlayServicesRepairableException thrown " + e);
+                                } catch (GooglePlayServicesNotAvailableException e) {
+                                    Log.i("CAN'T OPEN","GooglePlayServicesNotAvailableException thrown " + e);
+                                }
+
+                                /*location = getLocation();
                                 addLocation = true;
 
                                 Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
-                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
+                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();*/
                                 break;
                         }
                         return true;
@@ -279,6 +293,13 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                 imageString = AddMoodActivity.BitMapToString(photo);
                 updatePhoto = true;
                 Toast.makeText(EditMoodActivity.this, "Image Updated",Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
     }
