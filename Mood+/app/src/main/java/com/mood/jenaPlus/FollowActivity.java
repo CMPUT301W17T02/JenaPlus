@@ -34,12 +34,14 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
     SearchView searchUsers;
     private ArrayList<Participant> participantList = new ArrayList<Participant>();
+    private ArrayList<Participant> fullList = new ArrayList<Participant>();
     private ArrayAdapter<Participant> adapter;
     protected ListView participantListView ;
 
     Context context = this;
 
     protected MainMPController mpController;
+
 
 
     @Override
@@ -68,7 +70,8 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         getUsersTask.execute("");
 
         try {
-            participantList = getUsersTask.get();
+            participantList.addAll(getUsersTask.get());
+            fullList.addAll(getUsersTask.get());
             mpController = MoodPlusApplication.getMainMPController();
             Participant participant = mpController.getParticipant();
             Log.i("want to remove", participant.getUserName());
@@ -113,7 +116,6 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         int listSize = participantList.size();
         newText = newText.toLowerCase(Locale.getDefault());
 
-        ArrayList<Participant> allPaticipants = participantList;
         ArrayList<Participant> tempArrayList1 = participantList;
         ArrayList<Participant> tempArrayList2 = new ArrayList<>();
 
@@ -123,23 +125,15 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
                 tempArrayList2.add(tempArrayList1.get(i));
             }
         }
-        Log.i("WHATTTT",""+tempArrayList1);
-        Log.i("WHATTTT2",""+tempArrayList2);
-        Log.i("allParticipants",""+allPaticipants);
-
 
         participantList.clear();
-        if (tempArrayList2.size() < 1) {
-            noUserAlert();
-        }
-        else if(newText.length() == 0) {
-            participantList.addAll(allPaticipants);
-            Log.i("allParticipants",""+allPaticipants);
+        if(newText.length() == 0) {
+            participantList.addAll(fullList);
         }
         else {
             participantList.addAll(tempArrayList2);
         }
-        //adapter.notifyDataSetChanged();
+       adapter.notifyDataSetChanged();
 
         return false;
     }
