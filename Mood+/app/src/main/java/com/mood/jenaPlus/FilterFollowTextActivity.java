@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,21 +26,34 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     String moodString;
 
     Context context = this;
 
+    protected Button viewMapButton;
     protected MainMPController mpController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_text);
+        setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
 
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterFollowTextActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", moodArrayList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
@@ -79,6 +93,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
         String moodId = bundle.getString("moodString");
+        String locationBool = bundle.getString("filterLocation");
         String s = moodString;
         String dateTest = bundle.getString("filterRecent");
         ArrayList<Mood> first = new ArrayList<>();
@@ -96,7 +111,9 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
         List<Mood> temp = first;
 
-        if (!moodId.equals("no")){
+        if (moodId.equals("surprised") || moodId.equals("disgust") || moodId.equals("fear") ||
+                moodId.equals("confused") || moodId.equals("happy") || moodId.equals("angry") ||
+                moodId.equals("sad") || moodId.equals("shame") || moodId.equals("annoyed")){
             Log.i("moodstring", moodId);
             for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
                 Mood mood = iterator.next();
@@ -105,6 +122,14 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
                 }
             }
 
+        }
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
         }
 
         if (dateTest.equals("yes")) {
@@ -119,13 +144,12 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
         moodArrayList.addAll(temp);
 
-
-
-
-
-
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            if(locationBool.equals("yes")){
+                viewMapButton.setVisibility(View.VISIBLE);
+            }
         }
 
         adapter = new MoodFollowerListAdapter(FilterFollowTextActivity.this,moodArrayList);
@@ -141,7 +165,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods with were found.")
+                .setMessage("No moods with keyword \'"+ moodString+"\' were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -156,12 +180,6 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     }
 
-    boolean isWithinRange(Date testDate) {
-        Date endDate = new Date();
-        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
-        return !(testDate.before(startDate) || testDate.after(endDate));
-    }
-
     public ArrayList<Mood> getUserMoodOrderedList() {
 
         Collections.sort(moodArrayList, new Comparator<Mood>() {
@@ -172,5 +190,11 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         });
 
         return this.moodArrayList;
+    }
+
+    boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 }

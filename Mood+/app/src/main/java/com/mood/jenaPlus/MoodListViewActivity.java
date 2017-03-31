@@ -25,9 +25,19 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinsBeard;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -36,7 +46,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by carrotji on 2017-03-25.
  */
 
-public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
+public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, Connectable, Bindable {
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
     private AlertDialog.Builder deleteAlertBuilder;
@@ -53,6 +63,9 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
     private static final int DELETE_PERSON_RESULT_CODE = 1;
     private static final int EDIT_PERSON_RESULT_CODE = 2;
     protected MainMPController mpController;
+
+    private MerlinsBeard merlinsBeard;
+    protected Merlin merlin;
 
     @Nullable
     @Override
@@ -101,6 +114,12 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
 
             }
         });
+
+        merlinsBeard = MerlinsBeard.from(getActivity());
+        merlin = new Merlin.Builder().withConnectableCallbacks().withDisconnectableCallbacks().withBindableCallbacks().build(getActivity());
+        merlin.registerConnectable(this);
+        merlin.registerBindable(this);
+
 
 
     }
@@ -155,19 +174,12 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
 
 
             case DELETE_PERSON_RESULT_CODE:
+
+
                 deleteAlertBuilder = new AlertDialog.Builder(getActivity());
                 getActivity().setResult(RESULT_OK);
 
                 deleteAlertBuilder.setMessage("Are you sure you want to delete this Mood Event?");
-
-                // user selects "Yes" and the Mood Event long clicked will be deleted.
-                deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        mpController.deleteMoodParticipant(moodArrayList.get(longClickedItemIndex));
-                        adapter.notifyDataSetChanged();
-                    }
-                });
 
                 // user selects "No" and the Mood Even long clicked will NOT be deleted.
                 deleteAlertBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -176,6 +188,40 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
                         dialog.cancel();
                     }
                 });
+
+                // user selects "Yes" and the Mood Event long clicked will be deleted.
+                deleteAlertBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        if (merlinsBeard.isConnected()) {
+                            mpController.deleteMoodParticipant(moodArrayList.get(longClickedItemIndex));
+                            adapter.notifyDataSetChanged();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                            Participant offlineParticipant = offlineController.getOfflineParticipant();
+                            UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                            offlineMoodList.deleteUserMood(moodArrayList.get(longClickedItemIndex));
+
+                            UserMoodList offlineList = offlineController.loadSavedList(getContext());
+
+                            if (offlineList == null) {
+                                offlineList = new UserMoodList();
+                            }
+
+                            offlineList = offlineMoodList;
+
+                            offlineController.saveOfflineList(offlineList, getContext());
+
+                            adapter.notifyDataSetChanged();
+
+                        }
+                    }
+
+                });
+
 
                 AlertDialog alertDialog = deleteAlertBuilder.create();
                 alertDialog.show();
@@ -189,6 +235,26 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus> {
 
     @Override
     public void update(MoodPlus moodPlus){
+
+    }
+
+    protected void registerConnectable(Connectable connectable) {
+        merlin.registerConnectable(connectable);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (networkStatus.isAvailable()) {
+            onConnect();
+        }
+    }
+
+
+    @Override
+    public void onConnect() {
+        Log.i("Debug", "online");
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
 
     }
 

@@ -1,7 +1,9 @@
 package com.mood.jenaPlus;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -59,6 +61,36 @@ public class SaveOffline extends AppCompatActivity{
     protected MoodPlusApplication moodPlusApplication;
     protected MoodPlus moodPlus;
     protected Participant participant;
+
+	/**
+     * Saves the offlineList of the user in a shared preference
+     *
+     * @param offlineList
+     * @param id
+     * @param context
+     */
+    public static void saveOfflineList(UserMoodList offlineList, String id, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor prefsEditor = preferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(offlineList);
+        prefsEditor.putString(id, json);
+        prefsEditor.commit();
+    }
+
+	/**
+	 * Loads an existing offlineList
+     *
+     * @param id
+     * @param context
+     * @return
+     */
+    public static UserMoodList loadOfflineList(String id, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String json = preferences.getString(id, null);
+        UserMoodList loadedMoodList = new Gson().fromJson(json, new TypeToken<UserMoodList>(){}.getType());
+        return loadedMoodList;
+    }
 
 
 
@@ -160,6 +192,7 @@ public class SaveOffline extends AppCompatActivity{
         moodPlus.updateParticipant();
 
     }
+
 
     /*
     private Mood dummyMood1(String trigger, Boolean addLocation, Double latitude, Double longitude, String idString,

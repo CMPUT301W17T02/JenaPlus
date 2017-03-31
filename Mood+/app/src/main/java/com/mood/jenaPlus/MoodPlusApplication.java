@@ -69,6 +69,7 @@ public class MoodPlusApplication extends Application {
         return mainMPController;
     }
 
+    //singleton
     transient private static OfflineDataController offlineDataController = null;
 
     static OfflineDataController getOfflineDataController() {

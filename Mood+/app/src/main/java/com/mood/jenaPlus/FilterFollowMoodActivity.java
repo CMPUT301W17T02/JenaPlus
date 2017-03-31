@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This activity shows only one type of mood that was specified from the option in the main
@@ -27,20 +31,34 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     String moodString;
 
     Context context = this;
 
+    protected Button viewMapButton;
     protected MainMPController mpController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filter_follow_mood);
+        setContentView(R.layout.activity_filter);
 
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterFollowMoodActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", moodArrayList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -79,29 +97,63 @@ public class FilterFollowMoodActivity extends AppCompatActivity implements MPVie
         ArrayList<String> participantListStr = participant.getFollowingList();
 
         Bundle bundle = getIntent().getExtras();
-        moodString = bundle.getString("moodString");
+        moodString = bundle.getString("testText");
+        String moodId = bundle.getString("moodString");
+        String locationBool = bundle.getString("filterLocation");
         String dateTest = bundle.getString("filterRecent");
+        ArrayList<Mood> first = new ArrayList<>();
 
         for (int i = 0; i<participantListStr.size(); i++) {
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
-            ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
-            for (Mood m : partMoods) {
-                if (m.getId().equals(moodString)) {
-                    moodArrayList.add(m);
+            ArrayList<Mood> tempArrayList = tempParticipant.getUserMoodList().getUserMoodList();
+
+            for (Mood m : tempArrayList) {
+                if (m.getId().equals(moodId)) {
+                    first.add(m);
                 }
             }
         }
 
-        if (moodArrayList.size() <1) {
-            noMoods();
+        List<Mood> temp = first;
+
+        if (!moodId.equals("no")){
+            Log.i("moodstring", moodId);
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if(!mood.getId().equals(moodId)){
+                    iterator.remove();
+                }
+            }
+
+        }
+
+        if(locationBool.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
+
         }
 
         if (dateTest.equals("yes")) {
-            for(Mood m: moodArrayList) {
-                Date tempDate = m.getDate();
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                Date tempDate = mood.getDate();
                 if(!isWithinRange(tempDate)){
-                    moodArrayList.remove(m);
+                    iterator.remove();
                 }
+            }
+        }
+
+        moodArrayList.addAll(temp);
+
+        if (moodArrayList.size() <1) {
+            noMoods();
+        } else {
+            if (locationBool.equals("yes")) {
+                viewMapButton.setVisibility(View.VISIBLE);
             }
         }
 

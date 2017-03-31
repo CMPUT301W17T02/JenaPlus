@@ -23,7 +23,8 @@
         android:background="@color/buttonColor"
         android:width="150dp"
         android:textColor="@android:color/white"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -42,7 +43,8 @@
         android:text="Add New User"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="29dp"
+        android:width="150dp"
+        android:backgroundTint="#E0E0E0"
         android:layout_below="@+id/Login_button"
         android:layout_centerHorizontal="true" />
 
@@ -54,12 +56,6 @@
         android:layout_above="@+id/Login_button"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="23dp" />
-    <!--<ListView
-        android:id="@+id/participantList"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/get_users"
-        android:layout_height="wrap_content"></ListView> -->
-
 
 
 </RelativeLayout>

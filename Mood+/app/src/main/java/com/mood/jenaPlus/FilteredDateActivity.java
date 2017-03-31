@@ -6,11 +6,15 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,11 +31,10 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_filtered_date);
+        setContentView(R.layout.activity_filter);
 
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
-
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
@@ -44,7 +47,6 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
         test.setText(who);
 
         /*------------------------------------------------*/
-
 
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -63,11 +65,14 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
     protected void onStart() {
         super.onStart();
 
+        moodArrayList.clear();
+
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getFilteredDate();
+
 
         if (moodArrayList.size() <1) {
             noMoods();

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,17 +26,32 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
-    ArrayList<Mood> filteredArrayList = new ArrayList<>();
     String keyword = "";
 
     Context context = this;
+    protected Button viewMapButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_filtered_mood);
+        setContentView(R.layout.activity_filter);
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilteredTextActivity.this, MarkerActivity.class);
+                intent.putExtra("user_moodProvider", moodArrayList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
         /*------------- LOADING THE KEYWORD  -------------*/
 
@@ -71,9 +87,9 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
-
+        moodArrayList.clear();
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
@@ -85,23 +101,32 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         List<Mood> temp = tempArrayList;
         String dateTest = bundle.getString("filterRecent");
         String moodId = bundle.getString("moodString");
+        String locationBool = bundle.getString("filterLocation");
 
-        if (!moodId.equals("no")){
+        if (!moodId.equals("no")) {
             Log.i("moodstring", moodId);
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+            for (Iterator<Mood> iterator = temp.iterator(); iterator.hasNext(); ) {
                 Mood mood = iterator.next();
-                if(!mood.getId().equals(moodId)){
+                if (!mood.getId().equals(moodId)) {
                     iterator.remove();
                 }
             }
+        }
 
+        if (locationBool.equals("yes")) {
+            for (Iterator<Mood> iterator = temp.iterator(); iterator.hasNext(); ) {
+                Mood mood = iterator.next();
+                if (!mood.getAddLocation()) {
+                    iterator.remove();
+                }
+            }
         }
 
         if (dateTest.equals("yes")) {
-            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+            for (Iterator<Mood> iterator = temp.iterator(); iterator.hasNext(); ) {
                 Mood mood = iterator.next();
                 Date tempDate = mood.getDate();
-                if(!isWithinRange(tempDate)){
+                if (!isWithinRange(tempDate)) {
                     iterator.remove();
                 }
             }
@@ -111,11 +136,14 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
 
         if (moodArrayList.size() < 1) {
             noMoods();
+        } else {
+            if (locationBool.equals("yes")) {
+                viewMapButton.setVisibility(View.VISIBLE);
+            }
         }
 
-        adapter = new MoodListAdapter(FilteredTextActivity.this,moodArrayList);
+        adapter = new MoodListAdapter(FilteredTextActivity.this, moodArrayList);
         moodListView.setAdapter(adapter);
-
     }
 
     public void noMoods() {

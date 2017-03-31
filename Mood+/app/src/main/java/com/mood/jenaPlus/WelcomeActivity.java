@@ -73,12 +73,10 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 for (int i = 0; i<pListSize; i++) {
                     String user = participantList.get(i).getUserName();
-                    Log.i("error","Participant: "+ user);
                 }
 
                 for (int i = 0; i<pListSize; i++) {
                     if (participantList.get(i).getUserName().equals(strUser)){
-                        Log.i("Error:","THE PARTICIPANT EXISTSSSSS OMG");
                         seen = true;
                         break;
                         //throw new IllegalArgumentException("Participant exists.");
@@ -86,8 +84,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                         seen = false;
                     }
                 }
-
-                Log.i("Error", "seen is: " + seen);
 
                 // Will only continue if connected to the internet.
                 if (seen== false){
@@ -142,12 +138,10 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
 
                 for (int i = 0; i<pListSize; i++) {
                     String user = participantList.get(i).getUserName();
-                    Log.i("error","Participant: "+ user);
                 }
 
                 for (int i = 0; i<pListSize; i++) {
                     if (participantList.get(i).getUserName().equals(strUser)){
-                        Log.i("Error:","THE PARTICIPANT EXISTSSSSS OMG");
                         seen = true;
                         break;
                         //throw new IllegalArgumentException("Participant exists.");
@@ -155,8 +149,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                         seen = false;
                     }
                 }
-
-                Log.i("Error", "seen is: " + seen);
 
                 // Will only continue if connected to the internet.
                 if (seen== true){

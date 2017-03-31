@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mood.jenaPlus">
+          package="com.mood.jenaPlus">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,7 +27,13 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyBR2lsive6daaW6wPX_my2QKbTkAk1LjiU" />
+
+        <receiver android:name=".NetworkMonitorReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".WelcomeActivity"
@@ -53,13 +59,7 @@
             android:name=".AddMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity"
-            android:windowSoftInputMode="stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".EditMoodActivity"
             android:label="@string/title_activity_edit_mood"
@@ -95,11 +95,28 @@
         <activity
             android:name=".FollowerRequestActivity"
             android:parentActivityName=".MoodPlusActivity" />
+
+
         <activity android:name=".FollowingListActivity"
             android:parentActivityName=".MoodPlusActivity"/>
-        <activity android:name=".FilterFollowDateActivity" />
-        <activity android:name=".FilterFollowMoodActivity" />
-        <activity android:name=".FilterFollowTextActivity" />
+
+
+        <activity
+            android:name=".FilterFollowDateActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity
+            android:name=".FilterFollowMoodActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity
+            android:name=".FilterFollowTextActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".MarkerActivity" />
+        <activity android:name=".GraphActivity"/>
+        <activity android:name=".FilterFollowLocationActivity"
+                  android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".FilteredLocationActivity"
+                  android:parentActivityName=".MoodPlusActivity" />
+
     </application>
 
 </manifest>

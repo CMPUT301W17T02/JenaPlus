@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,26 +14,24 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
-/**
- * This activity is used to view all of the moods of people that the participant
- * follows. It will only show the moods from the past 7 days.
- **/
-
-public class FilterFollowDateActivity extends AppCompatActivity implements MPView<MoodPlus>{
+public class FilteredLocationActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
+    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
 
     Context context = this;
 
-    protected MainMPController mpController;
+    protected Button viewMapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +41,30 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilteredLocationActivity.this, MarkerActivity.class);
+                intent.putExtra("user_moodProvider", moodArrayList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
+
+
         /*---------- LOADING THE PARTICIPANT-------------*/
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-        String d = "Following Moods from last 7 days";
-        test.setText(d);
+
+        String name = participant.getUserName();
+        String id = participant.getId();
+        String who = "Username: " + name ;
+        test.setText(who);
 
         /*------------------------------------------------*/
 
@@ -56,7 +73,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FilterFollowDateActivity.this, ViewMoodActivity.class);
+                Intent intent = new Intent(FilteredLocationActivity.this, ViewMoodActivity.class);
                 intent.putExtra("aMood", (Serializable) moodListView.getItemAtPosition(position));
                 intent.putExtra("pos", position);
                 startActivity(intent);
@@ -67,45 +84,49 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
     @Override
     protected void onStart() {
-
         super.onStart();
+
         moodArrayList.clear();
-        /* ----- REPLACE BY RECENT MOOD LIST METHOD ------ */
-        ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
-        mpController = MoodPlusApplication.getMainMPController();
+        MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-        ArrayList<String> participantListStr = participant.getFollowingList();
 
-        for (int i = 0; i<participantListStr.size(); i++) {
-            Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
-            ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
-            for (Mood m : partMoods) {
-                Date tempDate = m.getDate();
-                if (isWithinRange(tempDate)) {
-                    moodArrayList.add(m);
+        myMoodList = participant.getUserMoodList();
+        ArrayList<Mood> tempArrayList = myMoodList.getFilteredLocation();
+
+        Bundle bundle = getIntent().getExtras();
+        String dateTest = bundle.getString("filterRecent");
+        Log.i("date",dateTest);
+
+        List<Mood> temp = tempArrayList;
+
+        if (dateTest.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                Date tempDate = mood.getDate();
+                if(!isWithinRange(tempDate)){
+                    iterator.remove();
                 }
             }
         }
 
-        /* ----- REPLACE BY RECENT MOOD LIST METHOD ------ */
+        moodArrayList.addAll(temp);
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            viewMapButton.setVisibility(View.VISIBLE);
         }
 
-        adapter = new MoodFollowerListAdapter(FilterFollowDateActivity.this,moodArrayList);
-        getUserMoodOrderedList();
-
+        adapter = new MoodListAdapter(FilteredLocationActivity.this,moodArrayList);
         moodListView.setAdapter(adapter);
 
     }
 
-
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods within 7 days were found.")
+                .setMessage("No moods with a location were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
@@ -120,19 +141,7 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
     }
 
-    public ArrayList<Mood> getUserMoodOrderedList() {
-
-        Collections.sort(moodArrayList, new Comparator<Mood>() {
-
-            public int compare(Mood o1, Mood o2) {
-                return o2.getDate().compareTo(o1.getDate());
-            }
-        });
-
-        return this.moodArrayList;
-    }
-
-    static boolean isWithinRange(Date testDate) {
+    boolean isWithinRange(Date testDate) {
         Date endDate = new Date();
         Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
         return !(testDate.before(startDate) || testDate.after(endDate));
