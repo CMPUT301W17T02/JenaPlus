@@ -432,8 +432,10 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
         if (merlinsBeard.isConnected()) {
 
-            //trigger = message.getText().toString();
-            //Boolean trigCheck = triggerCheck();
+            if (addLocation && location == null) {
+                getLocation();
+            }
+
 
             if (trigCheck && moodChosen && addLocation) {
                 latitude = location.getLatitude();
@@ -454,23 +456,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     idMessage();
                 }
             }
-            if (addLocation && location == null) {
-                getLocation();
-            }
 
-            if (trigCheck && moodChosen && addLocation) {
 
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-                MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
-                finish();
-            } else if (trigCheck && moodChosen) {
-                MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-                finish();
-
-            }
         }
 
             //when disconnected
@@ -524,8 +511,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                         idMessage();
                     }
                 }
-            }
         }
+    }
 
 
     public Boolean triggerCheck() {
