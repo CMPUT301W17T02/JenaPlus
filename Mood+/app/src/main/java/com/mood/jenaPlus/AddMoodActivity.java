@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -49,17 +50,35 @@ import com.google.android.gms.maps.model.LatLng;
 import org.w3c.dom.Text;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.io.OutputStreamWriter;
+
 import java.io.UnsupportedEncodingException;
+
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.gson.Gson;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinsBeard;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
+import com.mood.jenaPlus.presentation.base.MerlinActivity;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
+
+import static android.R.attr.name;
 
 /**
  * This is the main activity to add a mood.
@@ -69,7 +88,7 @@ import java.util.Date;
  *
  */
 
-public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
+public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
     private static final String TAG = "ERROR";
     int idNum;
@@ -97,6 +116,16 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
     private String userName;
     private ImageButton infoButton;
     final int maxBytes =  65536;
+    private int previousSelectedPosition = -1;
+
+    private NetworkStatusDisplayer networkStatusDisplayer;
+
+    private MerlinsBeard merlinsBeard;
+
+    private static final String ADD = "add.sav";
+
+    private UserMoodList userMoodList;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,6 +137,10 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         Participant participant = mpController.getParticipant();
 
         TextView test = (TextView) findViewById(R.id.addtext);
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
+        merlinsBeard = MerlinsBeard.from(this);
+
+        userMoodList = new UserMoodList();
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
@@ -158,6 +191,25 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 colorString = mi.getColor(colorNum);
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
+
+                view.setBackgroundColor(Color.RED);
+
+                //Taken from https://android--code.blogspot.ca/2015/08/android-gridview-selected-item-color.html
+                ImageView previousSelectedView = (ImageView) gridview.getChildAt(previousSelectedPosition);
+
+                // If there is a previous selected view exists
+                if (previousSelectedPosition != -1)
+                {
+                    // Set the last selected View to deselect
+                    previousSelectedView.setSelected(false);
+
+                    // Set the last selected View background color as deselected item
+                    previousSelectedView.setBackgroundColor(Color.parseColor("#00ff0000"));
+                }
+
+                // Set the current selected view position as previousSelectedPosition
+                previousSelectedPosition = position;
+
             }
         });
 
@@ -213,6 +265,53 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 addMood();
             }
         });
+    }
+
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        Log.i("Debug", "online");
+        //sync, (check if the lists are empty, if not, add/edit/delete ...)
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
+        networkStatusDisplayer.displayConnected();
+    }
+
+    @Override
+    public void onDisconnect() {
+        Log.i("Debug", "offline");
+        networkStatusDisplayer.displayDisconnected();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
     }
 
     private void cameraIntent(){
@@ -331,34 +430,103 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
         trigger = message.getText().toString();
         Boolean trigCheck = triggerCheck();
 
-        if (addLocation && location == null) {
-            getLocation();
-        }
+        if (merlinsBeard.isConnected()) {
 
-        if (trigCheck && moodChosen && addLocation) {
+            //trigger = message.getText().toString();
+            //Boolean trigCheck = triggerCheck();
 
-            latitude = location.getLatitude();
-            longitude = location.getLongitude();
-            MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant1(trigger,addLocation,latitude,longitude,idString,socialSituation,imageString,colorString,userName);
-            finish();
-        } else if (trigCheck && moodChosen){
-            MainMPController mpController = MoodPlusApplication.getMainMPController();
-            mpController.addMoodParticipant2(trigger,addLocation,idString,socialSituation,imageString,colorString,userName);
-            finish();
-        }
+            if (trigCheck && moodChosen && addLocation) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+                finish();
+            } else if (trigCheck && moodChosen) {
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                finish();
+            } else {
 
-        else {
-
-            if (!trigCheck) {
-                trigMessage();
+                if (!trigCheck) {
+                    trigMessage();
+                }
+                if (!moodChosen) {
+                    idMessage();
+                }
             }
-            if (!moodChosen){
-                idMessage();
+            if (addLocation && location == null) {
+                getLocation();
+            }
+
+            if (trigCheck && moodChosen && addLocation) {
+
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+                finish();
+            } else if (trigCheck && moodChosen) {
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                finish();
+
             }
         }
 
-    }
+            //when disconnected
+            else {
+                Toast.makeText(AddMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+
+                //trigger = message.getText().toString();
+                //Boolean trigCheck = triggerCheck();
+
+                //has location
+                if (trigCheck && moodChosen && addLocation) {
+                    Toast.makeText(AddMoodActivity.this, "no internet no location my man!!!", Toast.LENGTH_SHORT).show();
+
+                    finish();
+
+                    //no location
+                } else if (trigCheck && moodChosen) {
+
+                    //UserMoodList userMoodList = new UserMoodList();
+                    Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                    OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                    Participant offlineParticipant = offlineController.getOfflineParticipant();
+                    UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                    offlineMoodList.addUserMood(mood);
+
+                    UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                    if (offlineList == null) {
+                        offlineList = new UserMoodList();
+                    }
+
+                    offlineList = offlineMoodList;
+
+                    offlineController.saveOfflineList(offlineList, context);
+
+                    Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
+
+
+                    //MainMPController mpController = MoodPlusApplication.getMainMPController();
+                    //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                    finish();
+                } else {
+
+                    if (!trigCheck) {
+                        Log.i("Debug", "not trig");
+                        trigMessage();
+                    }
+                    if (!moodChosen) {
+                        Log.i("Debug", "not mood");
+                        idMessage();
+                    }
+                }
+            }
+        }
+
 
     public Boolean triggerCheck() {
         Boolean check = true;
@@ -456,6 +624,56 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
             }
         }
     }
+
+
+    private void galleryIntent(){
+        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
+        // 2017-03-10 5:32
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        startActivityForResult(intent, 1);
+    }
+
+
+    /**
+     * Saves tweets in file in JSON format.
+     * @throws FileNotFoundException if folder not exists
+     */
+    private void saveInFile(String filename, UserMoodList userMoodList) {
+        try {
+            FileOutputStream fos = openFileOutput(filename,
+                    Context.MODE_PRIVATE);
+            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
+
+            Gson gson = new Gson();
+            gson.toJson(userMoodList, out);
+            out.flush();
+
+            fos.close();
+        } catch (FileNotFoundException e) {
+            // TODO: Handle the Exception properly later
+            throw new RuntimeException();
+        } catch (IOException e) {
+            throw new RuntimeException();
+        }
+    }
+
+
+    private Mood dummyMood(String trigger, Boolean addLocation, String idString,
+                            String socialSituation, String imageString, String colorString, String userName){
+
+        Mood mood = new Mood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+        mood.setText(trigger);
+        mood.setAddLocation(addLocation);
+        mood.setId(idString);
+        mood.setSocial(socialSituation);
+        mood.setPhoto(imageString);
+        mood.setColor(colorString);
+
+        return mood;
+    }
+
+
 
 }
 

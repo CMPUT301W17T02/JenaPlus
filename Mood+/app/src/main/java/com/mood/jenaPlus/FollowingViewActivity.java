@@ -78,7 +78,7 @@ public class FollowingViewActivity extends Fragment implements MPView<MoodPlus>{
             Participant tempParticipant =  eController.getUsingParticipant(participantListStr.get(i));
             ArrayList<Mood> partMoods = tempParticipant.getUserMoodList().getUserMoodList();
             getUserMoodOrderedList2(partMoods);
-            if(partMoods.size() >0) {
+            if(partMoods.size() >0){
                 moodArrayList.add(partMoods.get(0));
             }
         }

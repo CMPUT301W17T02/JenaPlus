@@ -19,8 +19,12 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
+
+import android.support.design.widget.NavigationView;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
@@ -38,6 +42,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.BufferedInputStream;
@@ -51,13 +59,26 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinsBeard;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
+import com.mood.jenaPlus.presentation.base.MerlinActivity;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
+
+
+
+
 /**
  * This is the main activity to edit an existing mood.
  *
  * @author Cecelia
  */
 
-public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
+public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
 
     private Button socialPopup;
@@ -91,6 +112,10 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
 
     protected ImageView cameraImage;
 
+    private NetworkStatusDisplayer networkStatusDisplayer;
+    private MerlinsBeard merlinsBeard;
+
+    private static final int PLACE_PICKER_REQUEST = 1020;
 
 
     private Calendar dateEditor = Calendar.getInstance();
@@ -108,10 +133,14 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         final MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
         moodPlus.addView(this);
 
+
         final Mood mood = (Mood)getIntent().getSerializableExtra("editMood");
 
         Bundle bundle = getIntent().getExtras();
         final int position = bundle.getInt("pos");
+
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
+        merlinsBeard = MerlinsBeard.from(this);
 
         save = (Button) findViewById(R.id.AddButton);
 
@@ -200,8 +229,21 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                                 break;
 
                             case R.id.action_navigation:
-                                location = getLocation();
+
+                                try {
+                                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                                    startActivityForResult(builder.build(EditMoodActivity.this), PLACE_PICKER_REQUEST);
+                                } catch (GooglePlayServicesRepairableException e) {
+                                    Log.i("CAN'T OPEN","GooglePlayServicesRepairableException thrown " + e);
+                                } catch (GooglePlayServicesNotAvailableException e) {
+                                    Log.i("CAN'T OPEN","GooglePlayServicesNotAvailableException thrown " + e);
+                                }
+
+                                /*location = getLocation();
                                 addLocation = true;
+
+                                Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
+                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();*/
 
                                 break;
                         }
@@ -211,21 +253,48 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
         );
 
         save.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                trigger = message.getText().toString();
-                Boolean trigCheck = triggerCheck();
+                if (merlinsBeard.isConnected()) {
 
-                if (!trigCheck) {
-                    trigMessage();
+                    trigger = message.getText().toString();
+                    Boolean trigCheck = triggerCheck();
+
+                    if (!trigCheck) {
+                        trigMessage();
+
+                    } else {
+                        MainMPController mpController = new MainMPController(moodPlus);
+                        UserMoodList userMoodList = mpController.getParticipant().getUserMoodList();
+
+                        Mood editedMood = userMoodList.getUserMood(position);
+
+                        editedMood.setText(message.getText().toString());
+                        editedMood.setAddLocation(addLocation);
+                        editedMood.setLatitude(aLatitude);
+                        editedMood.setLongitude(aLongitude);
+                        editedMood.setId(aId);
+                        editedMood.setDate(dateEditor.getTime());
+                        editedMood.setSocial(socialSituation);
+                        if (updatePhoto) {
+                            editedMood.setPhoto(imageString);
+                        } else {
+                            editedMood.setPhoto(aPhoto);
+                        }
+                        editedMood.setColor(aColor);
+
+                        moodPlus.updateParticipant();
+                        finish();
+                    }
 
                 }
-
                 else {
-                    MainMPController mpController = new MainMPController(moodPlus);
-                    UserMoodList userMoodList = mpController.getParticipant().getUserMoodList();
+                    Toast.makeText(EditMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                    OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                    Participant offlineParticipant = offlineController.getOfflineParticipant();
+                    UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
 
-                    Mood editedMood = userMoodList.getUserMood(position);
+                    Mood editedMood = offlineMoodList.getUserMood(position);
 
                     editedMood.setText(message.getText().toString());
                     editedMood.setAddLocation(addLocation);
@@ -234,21 +303,33 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                     editedMood.setId(aId);
                     editedMood.setDate(dateEditor.getTime());
                     editedMood.setSocial(socialSituation);
-                    if(updatePhoto){
+                    if (updatePhoto) {
                         editedMood.setPhoto(imageString);
-                    }else{
+                    } else {
                         editedMood.setPhoto(aPhoto);
                     }
                     editedMood.setColor(aColor);
 
-                    moodPlus.updateParticipant();
-                    finish();
-                }
+                    UserMoodList offlineList = offlineController.loadSavedList(getBaseContext());
 
+                    if (offlineList == null) {
+                        offlineList = new UserMoodList();
+                    }
+
+                    offlineList = offlineMoodList;
+
+                    offlineController.saveOfflineList(offlineList, context);
+
+                    finish();
+
+
+                }
             }
         });
 
+
     }
+
 
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -277,6 +358,13 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
                 imageString = AddMoodActivity.BitMapToString(photo);
                 updatePhoto = true;
                 Toast.makeText(EditMoodActivity.this, "Image Updated",Toast.LENGTH_SHORT).show();
+            }
+        }
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+                String toastMsg = String.format("Place: %s", place.getName());
+                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -341,6 +429,52 @@ public class EditMoodActivity extends Activity implements MPView<MoodPlus> {
     public void update(MoodPlus moodPlus){
         // TODO implements update method
     }
+
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        networkStatusDisplayer.displayConnected();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
+    }
+
+    @Override
+    public void onDisconnect() {
+        networkStatusDisplayer.displayDisconnected();
+        //updateOfflineRequest();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
+    }
+
 
     public Location getLocation() {
 

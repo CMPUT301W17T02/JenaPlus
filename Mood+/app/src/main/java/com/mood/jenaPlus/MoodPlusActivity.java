@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -34,11 +36,23 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.gms.maps.model.LatLng;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.mood.jenaPlus.presentation.base.MerlinActivity;
+import com.novoda.merlin.Merlin;
+import com.novoda.merlin.MerlinsBeard;
+import com.novoda.merlin.NetworkStatus;
+import com.novoda.merlin.registerable.bind.Bindable;
+import com.novoda.merlin.registerable.connection.Connectable;
+import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -53,8 +67,8 @@ import java.util.Comparator;
  * @version 1.0
  */
 
-public class MoodPlusActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>{
+public class MoodPlusActivity extends MerlinActivity
+        implements NavigationView.OnNavigationItemSelectedListener, MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
     private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
@@ -73,20 +87,29 @@ public class MoodPlusActivity extends AppCompatActivity
     private Double longitude;
     private Location location;
 
+    protected Merlin merlin;
+
+    private MerlinActivity merlinActivity;
+
+    private NetworkStatusDisplayer networkStatusDisplayer;
+    private MerlinsBeard merlinsBeard;
+
     Boolean searching = false;
     Boolean recent = false;
     Boolean moody = false;
     Boolean locationBool = false;
 
     ArrayList options1 = new ArrayList();
-
     ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
+
+    UserMoodList offlineList = new UserMoodList();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mood_plus);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         moodListView = (ListView) findViewById(R.id.listView);
@@ -95,6 +118,8 @@ public class MoodPlusActivity extends AppCompatActivity
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
+
+        LineChart LineChart = (LineChart) findViewById(R.id.line_chart);
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);
@@ -115,6 +140,17 @@ public class MoodPlusActivity extends AppCompatActivity
                 viewPager.setCurrentItem(tab.getPosition());
             }
         });
+
+        networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
+        merlinsBeard = MerlinsBeard.from(this);
+
+        /*-------------------- REQUEST LOCATION PERMISSION ------------ */
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+
+        /*------------------------------------------------*/
+
 
 
         /* LOADING THE LOGGED IN PARTICIPANT */
@@ -163,7 +199,28 @@ public class MoodPlusActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            // Ends current session, has to save offlineList
             super.onBackPressed();
+
+            if(!merlinsBeard.isConnected()) {
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                offlineList = offlineController.loadSavedList(MoodPlusActivity.this);
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineController.getOfflineParticipant().getUserMoodList();
+
+                offlineController.saveOfflineList(offlineList, context);
+
+                Log.d("ENDING SESSION", "ATTEMPTED TO SAVE");
+            }
+            else {
+                Toast.makeText(context, "ONLINE; don't need to save to file", Toast.LENGTH_SHORT);
+
+                Log.d("HAD INTERNET", "NO NEED TO SAVE BC ALREADY SYNCED");
+            }
         }
     }
 
@@ -198,7 +255,7 @@ public class MoodPlusActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
-
+            
             /*----------------------- PASSING CURRENT LOCATION---------------------*/
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
@@ -1069,6 +1126,51 @@ public class MoodPlusActivity extends AppCompatActivity
                 .show();
     }
 
+
+    @Override
+    protected Merlin createMerlin() {
+        return new Merlin.Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .withBindableCallbacks()
+                .withLogging(true)
+                .build(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerConnectable(this);
+        registerDisconnectable(this);
+        registerBindable(this);
+    }
+
+    @Override
+    public void onBind(NetworkStatus networkStatus) {
+        if (!networkStatus.isAvailable()) {
+            onDisconnect();
+        }
+    }
+
+    @Override
+    public void onConnect() {
+        networkStatusDisplayer.displayConnected();
+        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        //offlineController.SyncOffline();
+    }
+
+    @Override
+    public void onDisconnect() {
+        networkStatusDisplayer.displayDisconnected();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        networkStatusDisplayer.reset();
+
+    }
+
     public void getTextActivityWithMood2() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -1118,6 +1220,38 @@ public class MoodPlusActivity extends AppCompatActivity
         });
 
         builder.show();
+    }
+
+    /**
+     * Check location permission boolean.
+     *
+     * @return the boolean
+     */
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
