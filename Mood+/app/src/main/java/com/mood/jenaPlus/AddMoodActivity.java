@@ -161,7 +161,7 @@ public class AddMoodActivity extends AppCompatActivity implements MPView<MoodPlu
                 moodChosen = true;
                 Toast.makeText(AddMoodActivity.this, "Feeling " + idString ,Toast.LENGTH_SHORT).show();
 
-                view.setBackgroundColor(Color.RED);
+                view.setBackgroundColor(Color.parseColor(colorString));
 
                 //Taken from https://android--code.blogspot.ca/2015/08/android-gridview-selected-item-color.html
                 ImageView previousSelectedView = (ImageView) gridview.getChildAt(previousSelectedPosition);
