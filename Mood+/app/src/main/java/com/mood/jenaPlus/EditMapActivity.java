@@ -80,9 +80,9 @@ public class EditMapActivity extends FragmentActivity implements
             }
         });
 
-        Button button = new Button(this);
-        button.setText("OKAY");
-        addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+        Button button = (Button) findViewById(R.id.set_location);
+        //button.setText("Set New Location");
+        //addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
 
         button.setOnClickListener(new View.OnClickListener() {
 
