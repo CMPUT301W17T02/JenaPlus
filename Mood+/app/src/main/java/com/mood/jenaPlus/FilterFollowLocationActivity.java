@@ -87,8 +87,6 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         moodArrayList.clear();
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
-        TextView test = (TextView) findViewById(R.id.test_string);
-
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
@@ -133,8 +131,8 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
         adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
         getUserMoodOrderedList();
 
-        String d = moodString + " moods";
-        test.setText(d);
+        //String d = moodString + " moods";
+
 
         moodListView.setAdapter(adapter);
 

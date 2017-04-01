@@ -20,7 +20,6 @@
             android:icon="@drawable/ic_graph"
             android:title="Statistics" />
 
-
     </group>
 
     <item android:title="Filter">
@@ -32,6 +31,17 @@
             <item
                 android:id="@+id/menuMyFollowingFilter"
                 android:title="Filter Your Following Moods" />
+
+        </menu>
+    </item>
+
+    <item android:title="Log out">
+        <menu>
+
+            <item android:icon="@drawable/ic_home"
+                android:title="Log Out of Your Account"
+                android:id="@+id/menuLogout"/>
+
 
         </menu>
     </item>

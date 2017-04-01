@@ -84,8 +84,6 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         moodArrayList.clear();
         ElasticsearchMPController eController = MoodPlusApplication.getElasticsearchMPController();
 
-        TextView test = (TextView) findViewById(R.id.test_string);
-
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
@@ -155,8 +153,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         adapter = new MoodFollowerListAdapter(FilterFollowTextActivity.this,moodArrayList);
         getUserMoodOrderedList();
 
-        String d = "Search keyword: "+moodString;
-        test.setText(d);
+        //String d = "Search keyword: "+moodString;
 
         moodListView.setAdapter(adapter);
 
