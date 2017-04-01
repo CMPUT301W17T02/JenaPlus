@@ -235,8 +235,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                             case R.id.action_navigation:
 
-                                Intent intent = new Intent(EditMoodActivity.this, MarkerActivity.class);
-                                intent.putExtra("participant_moodProvider", locationMoodList);
+                                Intent intent = new Intent(EditMoodActivity.this, EditMapActivity.class);
 
                                 startActivity(intent);
                                 /*location = getLocation();

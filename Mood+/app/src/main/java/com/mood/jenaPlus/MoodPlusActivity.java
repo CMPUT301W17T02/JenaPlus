@@ -344,6 +344,9 @@ public class MoodPlusActivity extends MerlinActivity
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
             testFilters2();
+        } else if(id == R.id.menuLogout){
+            MoodPlusActivity.this.finish();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

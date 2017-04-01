@@ -20,7 +20,6 @@
             android:icon="@drawable/ic_graph"
             android:title="Statistics" />
 
-
     </group>
 
     <item android:title="Filter">
@@ -35,5 +34,11 @@
 
         </menu>
     </item>
+
+    <item android:title="Logout"
+        android:id="@+id/menuLogout">
+
+    </item>
+
 
 </menu>

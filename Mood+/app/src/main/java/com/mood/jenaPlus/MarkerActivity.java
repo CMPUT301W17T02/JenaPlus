@@ -5,9 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Parcelable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.location.places.ui.PlacePicker;
@@ -31,6 +34,8 @@ public class MarkerActivity extends FragmentActivity implements
     LatLng allLatLng;
     ArrayList<Mood> userMoodLocation;
     Marker newMarker;
+    double newLat;
+    double newLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,21 @@ public class MarkerActivity extends FragmentActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        Button button = new Button(this);
+        button.setText("BACK");
+        addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                MarkerActivity.this.finish();
+
+            }
+        });
 
     }
 
@@ -51,22 +71,6 @@ public class MarkerActivity extends FragmentActivity implements
 
         UiSettings mUiSettings = mMap.getUiSettings();
         mUiSettings.setZoomControlsEnabled(true);
-
-        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                if(newMarker!=null){ //if marker exists (not null or whatever)
-                    newMarker.setPosition(latLng);
-                }
-                else{
-                    newMarker = mMap.addMarker(new MarkerOptions()
-                            .position(latLng)
-                            .title("Your Destination"));
-                }
-                Toast.makeText(MarkerActivity.this, latLng.latitude+" "+latLng.longitude, Toast.LENGTH_SHORT).show();
-            }
-        });
-
 
 
         if( getIntent().hasExtra("user_moodProvider")) {
