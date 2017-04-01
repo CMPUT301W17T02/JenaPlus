@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     android:id="@+id/adding">
 
-    <ImageButton
-        android:id="@+id/info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_info"
-        android:backgroundTint="@android:color/transparent"/>
-
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -26,25 +19,43 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp">
 
-            <TextView
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="10dp">
+
+                <ImageButton
+                    android:id="@+id/info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:src="@drawable/ic_info"
+                    android:backgroundTint="@android:color/transparent"/>
+
+                <TextView
+                    android:id="@+id/Select"
+                    android:textColor="#263238"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="20sp"
+                    android:textAllCaps="true"
+                    android:text="Select a Mood" />
+
+            </LinearLayout>
+
+
+
+            <!--TextView
                 android:id="@+id/addtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textSize="15sp"
-                android:paddingTop="10dp"
-                android:text="Username: " />
+                android:text="Username: " /-->
 
-            <TextView
-                android:id="@+id/Select"
-                android:textColor="#263238"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:textSize="20sp"
-                android:textAllCaps="true"
-                android:text="Select a Mood" />
+
 
 
 
@@ -60,13 +71,12 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="10dp"
-                android:paddingBottom="10dp"
                 android:gravity="center" />
 
 
             <EditText
                 android:id="@+id/message"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:textSize="20sp"
