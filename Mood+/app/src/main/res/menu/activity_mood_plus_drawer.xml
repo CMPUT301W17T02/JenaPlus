@@ -39,7 +39,7 @@
         <menu>
 
             <item android:icon="@drawable/ic_home"
-                android:title="Log Out Of Your Account"
+                android:title="Log Out of Your Account"
                 android:id="@+id/menuLogout"/>
 
 

@@ -237,7 +237,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                                 Intent intent = new Intent(EditMoodActivity.this, EditMapActivity.class);
 
-                                startActivity(intent);
+                                startActivityForResult(intent,PLACE_PICKER_REQUEST);
                                 /*location = getLocation();
                                 addLocation = true;
 
@@ -368,13 +368,12 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         }
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                LatLng newLatLng = place.getLatLng();
+                LatLng newLatLng = (LatLng) data.getParcelableExtra("new_position");
+
                 newLat = newLatLng.latitude;
                 newLng = newLatLng.longitude;
                 Log.i("PLACE LATLNG","latitude "+ newLat+"longitude "+newLng);
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, ""+newLat+" "+newLng, Toast.LENGTH_LONG).show();
                 newLocation = true;
             }
         }

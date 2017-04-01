@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -25,12 +26,10 @@ public class EditMapActivity extends FragmentActivity implements
         GoogleMap.OnMarkerClickListener,
         OnMapReadyCallback {
 
-    ArrayList<Mood> moodListLocation;
-    LatLng allLatLng;
-    ArrayList<Mood> userMoodLocation;
     Marker newMarker;
     double newLat;
     double newLng;
+    LatLng position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,32 +41,14 @@ public class EditMapActivity extends FragmentActivity implements
         mapFragment.getMapAsync(this);
 
 
-        Button button = new Button(this);
-        button.setText("OKAY");
-        addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-
-                LatLng position = new LatLng(newLat,newLng);
-                Bundle args = new Bundle();
-                args.putParcelable("new_position", position);
-                // args.putParcelable("to_position", toPosition);
-                Intent i=new Intent(EditMapActivity.this,EditMoodActivity.class);
-                startActivity(i);
-
-            }
-        });
-
     }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
+
 
     /** Called when the map is ready. */
     @Override
@@ -89,10 +70,39 @@ public class EditMapActivity extends FragmentActivity implements
                             .position(latLng)
                             .title("Your Destination")
                             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)));
-                    newLng = latLng.longitude;
-                    newLat = latLng.latitude;
+
                 }
+                newLng = latLng.longitude;
+                newLat = latLng.latitude;
+
                 Toast.makeText(EditMapActivity.this, latLng.latitude+" "+latLng.longitude, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        Button button = new Button(this);
+        button.setText("OKAY");
+        addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                position = new LatLng(newLat,newLng);
+                Log.i("SET LOCATION",""+newLat+" "+newLng);
+                Bundle args = new Bundle();
+                args.putParcelable("new_position", position);
+                Intent intent=new Intent(EditMapActivity.this,EditMoodActivity.class);
+                intent.putExtras(args);
+                setResult(EditMoodActivity.RESULT_OK,intent);
+                finish();
+
+                ;
+
+//                startActivity(intent);
+
             }
         });
 
