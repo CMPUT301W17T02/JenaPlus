@@ -65,10 +65,6 @@
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".EditMoodActivity"
-            android:label="@string/title_activity_edit_mood"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity
             android:name=".FilteredTextActivity"
@@ -122,7 +118,9 @@
         <activity
             android:name=".FilteredLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".EditMapActivity"></activity>
+        <activity android:name=".EditMapActivity" />
+        <activity android:name=".EditMoodActivity"
+            android:parentActivityName=".MoodPlusActivity"></activity>
     </application>
 
 </manifest>
