@@ -33,9 +33,6 @@ public class MarkerActivity extends FragmentActivity implements
     ArrayList<Mood> moodListLocation;
     LatLng allLatLng;
     ArrayList<Mood> userMoodLocation;
-    Marker newMarker;
-    double newLat;
-    double newLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +42,6 @@ public class MarkerActivity extends FragmentActivity implements
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-
-        Button button = new Button(this);
-        button.setText("BACK");
-        addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
-
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                MarkerActivity.this.finish();
-
-            }
-        });
 
     }
 
@@ -75,8 +57,6 @@ public class MarkerActivity extends FragmentActivity implements
 
         if( getIntent().hasExtra("user_moodProvider")) {
             userMoodLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("user_moodProvider");
-            //Log.i("TAGGGGGG","PASSING USER MOOD LOCATION" + userMoodLocation);
-            //Log.i("SECOND TAG","EMPTY"+moodListLocation);
 
             for (Mood mood: userMoodLocation){
                 allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
@@ -93,12 +73,9 @@ public class MarkerActivity extends FragmentActivity implements
         }
         else if(getIntent().hasExtra("participant_moodProvider")){
             moodListLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
-            //Log.i("TAGGGGGG","PASSING Participant moods LOCATION" + moodListLocation);
-            //Log.i("SECOND TAG","EMPTY"+userMoodLocation);
 
             for (Mood mood: moodListLocation){
-                //Log.i("LATLNG!!!!!!","Contents of arrayLocation: " + mood.getLatitude()+mood.getLongitude() );
-                //Log.i("MOODS ID!!!!!!",mood.getId() + mood.getUserName());
+
                 allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
 
                 // Creating markers
