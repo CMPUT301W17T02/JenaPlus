@@ -52,6 +52,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 
 /**
@@ -119,8 +120,6 @@ public class MoodPlusActivity extends MerlinActivity
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
-
-        //LineChart LineChart = (LineChart) findViewById(R.id.line_chart);
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);

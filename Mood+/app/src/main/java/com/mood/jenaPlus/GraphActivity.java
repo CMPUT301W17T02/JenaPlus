@@ -19,6 +19,7 @@ import java.util.List;
 import static android.R.attr.data;
 import static android.R.attr.entries;
 import static android.media.CamcorderProfile.get;
+import static com.github.mikephil.charting.charts.CombinedChart.DrawOrder.BAR;
 
 public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
@@ -46,50 +47,55 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
     int confusedC = 0;
 
     BarChart chart ;
-    List<BarEntry> BarEntry  = new ArrayList<>();
-    ArrayList<String> BarEntryLabels = new ArrayList<>();
-    BarDataSet set ;
+    ArrayList<BarEntry> BARENTRY ;
+    ArrayList<String> BarEntryLabels ;
+    BarDataSet Bardataset ;
+    BarData BARDATA ;
     int mSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
 
         chart = (BarChart) findViewById(R.id.BarChart);
 
+        BARENTRY = new ArrayList<>();
         BarEntryLabels = new ArrayList<String>();
 
         AddValuesToBARENTRY();
 
         AddValuesToBarEntryLabels();
 
-        set = new BarDataSet(BarEntry, "BarDataSet");
-        dataSets.add( (IBarDataSet) set);
+        Bardataset = new BarDataSet(BARENTRY, "Projects");
 
-        BarData b = new BarData(dataSets);
-        chart.setData(b);
-        chart.setFitBars(true);
+        BARDATA = new BarData(BarEntryLabels, Bardataset);
 
-        //chart.animateY(3000);
+
+        Bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        chart.setData(BARDATA);
+
+        chart.animateY(3000);
         chart.invalidate();
 
-    }
 
+    }
     public void AddValuesToBARENTRY(){
 
-        BarEntry.add(new BarEntry(0f, happyC));
-        BarEntry.add(new BarEntry(1f, angryC));
-        BarEntry.add(new BarEntry(2f, surprisedC));
-        BarEntry.add(new BarEntry(3f, disgustC));
-        BarEntry.add(new BarEntry(4f, fearC));
-        BarEntry.add(new BarEntry(5f, sadC));
-        BarEntry.add(new BarEntry(6f, shameC));
-        BarEntry.add(new BarEntry(7f, annoyedC));
-        BarEntry.add(new BarEntry(8f, confusedC));
+        BARENTRY.add(new BarEntry(2f, 0));
+        BARENTRY.add(new BarEntry(4f, 1));
+        BARENTRY.add(new BarEntry(5f, 2));
+        BARENTRY.add(new BarEntry(2f, 3));
+        BARENTRY.add(new BarEntry(7f, 4));
+        BARENTRY.add(new BarEntry(7f, 5));
+        BARENTRY.add(new BarEntry(9f, 6));
+        BARENTRY.add(new BarEntry(10f, 7));
+        BARENTRY.add(new BarEntry(1f, 8));
+
 
     }
+
 
     public void AddValuesToBarEntryLabels(){
 
@@ -111,10 +117,10 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
     }
 
+
     @Override
     protected void onStart(){
         super.onStart();
-
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
@@ -124,31 +130,41 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
 
         for (int i = 0; i<mSize; i++) {
-            if (moodArrayList.get(i).equals(happy)){
+            Log.i("Debug",moodArrayList.get(i).getId());
+            if (moodArrayList.get(i).getId().equals(happy)){
+                Log.i("Debug",""+happyC);
                 happyC++;
 
-            } else if(moodArrayList.get(i).equals(angry)) {
+            } else if(moodArrayList.get(i).getId().equals(angry)) {
+                Log.i("Debug",""+angryC);
                 angryC++;
 
-            }else if(moodArrayList.get(i).equals(surprised)) {
+            }else if(moodArrayList.get(i).getId().equals(surprised)) {
+                Log.i("Debug",""+surprisedC);
                 surprisedC++;
 
-            }else if(moodArrayList.get(i).equals(disgust)) {
+            }else if(moodArrayList.get(i).getId().equals(disgust)) {
+                Log.i("Debug",""+disgustC);
                 disgustC++;
 
-            }else if(moodArrayList.get(i).equals(fear)) {
+            }else if(moodArrayList.get(i).getId().equals(fear)) {
+                Log.i("Debug",""+fearC);
                 fearC++;
 
-            }else if(moodArrayList.get(i).equals(sad)) {
+            }else if(moodArrayList.get(i).getId().equals(sad)) {
+                Log.i("Debug",""+sadC);
                 sadC++;
 
-            }else if(moodArrayList.get(i).equals(shame)) {
+            }else if(moodArrayList.get(i).getId().equals(shame)) {
+                Log.i("Debug",""+shameC);
                 shameC++;
 
-            }else if(moodArrayList.get(i).equals(annoyed)) {
+            }else if(moodArrayList.get(i).getId().equals(annoyed)) {
+                Log.i("Debug",""+annoyedC);
                 annoyedC++;
 
-            }else if(moodArrayList.get(i).equals(confused)) {
+            }else if(moodArrayList.get(i).getId().equals(confused)) {
+                Log.i("Debug",""+confusedC);
                 confusedC++;
             }
 
