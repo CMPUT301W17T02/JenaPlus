@@ -97,7 +97,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private String trigger;
     private String idString;
     private String colorString;
-    
+
 
     private Button addButton;
     private EditText message;
@@ -137,7 +137,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        TextView test = (TextView) findViewById(R.id.addtext);
+        //TextView test = (TextView) findViewById(R.id.addtext);
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
         merlinsBeard = MerlinsBeard.from(this);
 
@@ -148,8 +148,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         String name = participant.getUserName();
         userName = name;
         String id = participant.getId();
-        String who = "UserName: "+ name;
-        test.setText(who);
+        //String who = "UserName: "+ name;
+        //test.setText(who);
 
         /*------------------------------------------------*/
 

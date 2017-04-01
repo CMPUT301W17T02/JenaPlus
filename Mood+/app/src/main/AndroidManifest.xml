@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE"/>
+    <permission      android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -73,7 +75,8 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilteredDateActivity" />
+        <activity android:name=".FilteredDateActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
 
         <service android:name=".GPSTracker" />
 

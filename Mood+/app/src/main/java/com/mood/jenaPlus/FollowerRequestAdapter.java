@@ -51,8 +51,8 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
             public void onClick(View v) {
                 Toast.makeText(getContext(), "ACCEPTED " + participant.getUserName(),Toast.LENGTH_SHORT).show();
                 mpController.acceptRequest(participant.getUserName());
-
                 notifyDataSetChanged();
+
             }
         });
 
