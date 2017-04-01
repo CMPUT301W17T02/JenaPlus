@@ -103,6 +103,7 @@ public class MoodPlusActivity extends MerlinActivity
     ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     UserMoodList offlineList = new UserMoodList();
+    Participant usingPart;
 
 
     @Override
@@ -160,6 +161,7 @@ public class MoodPlusActivity extends MerlinActivity
         Participant participant = mpController.getParticipant();
 
         String name = participant.getUserName();
+        usingPart = participant;
         String id = participant.getId();
 
         /*----------------------ADD MOOD BUTTON-----------------------*/
@@ -279,6 +281,11 @@ public class MoodPlusActivity extends MerlinActivity
 
             try {
                 participantList = getUsersTask.get();
+                for (Participant p : participantList){
+                    if (p.getUserName().equals(usingPart.getUserName())){
+                        participantList.remove(p);
+                    }
+                }
                 mpController = MoodPlusApplication.getMainMPController();
 
             } catch (Exception e) {
