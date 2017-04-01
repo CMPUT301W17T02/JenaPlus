@@ -97,7 +97,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private String trigger;
     private String idString;
     private String colorString;
-    
+
 
     private Button addButton;
     private EditText message;
