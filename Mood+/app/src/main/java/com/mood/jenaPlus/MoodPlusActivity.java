@@ -200,21 +200,13 @@ public class MoodPlusActivity extends MerlinActivity
     }
 
     public void registerBroadcastReceiver() {
-
         IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 
         this.registerReceiver(broadcastReceiver, myFilter);
-
-        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
-
     }
 
     public void unregisterBroadcastReceiver() {
-
         this.unregisterReceiver(broadcastReceiver);
-
-        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
-
     }
 
 
@@ -1197,8 +1189,6 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
-        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        //offlineController.SyncOffline();
     }
 
     @Override
