@@ -36,7 +36,6 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /* -------------- VIEW MAP BUTTON ---------------*/
@@ -51,7 +50,7 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
             }
         });
 
-        /* -------------- VIEW MAP BUTTON ---------------*/
+        /* -----------------------------*/
 
         /*------------- LOADING THE KEYWORD  -------------*/
 

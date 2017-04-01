@@ -1,6 +1,5 @@
 package com.mood.jenaPlus;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -8,77 +7,49 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
+
 import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
-
-import android.support.design.widget.NavigationView;
-
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
-import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
+import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
+import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
+import com.mood.jenaPlus.presentation.base.MerlinActivity;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
 import com.novoda.merlin.NetworkStatus;
 import com.novoda.merlin.registerable.bind.Bindable;
 import com.novoda.merlin.registerable.connection.Connectable;
 import com.novoda.merlin.registerable.disconnection.Disconnectable;
-import com.mood.jenaPlus.presentation.base.MerlinActivity;
-import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
-import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 
-
-
-
-/**
- * This is the main activity to edit an existing mood.
- *
- * @author Cecelia
- */
+import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
@@ -131,11 +102,12 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
     private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_mood_interface);
+        setContentView(R.layout.activity_edit_mood);
+
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         final MoodPlus moodPlus = MoodPlusApplication.getMoodPlus();
@@ -213,6 +185,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                             case R.id.action_camera:
                                 cameraIntent();
                                 break;
+
                             case R.id.socialPopup:
                                 // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
                                 // 04-03-2015 01:16
@@ -240,20 +213,9 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                             case R.id.action_navigation:
 
-                                try {
-                                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                                    startActivityForResult(builder.build(EditMoodActivity.this), PLACE_PICKER_REQUEST);
-                                } catch (GooglePlayServicesRepairableException e) {
-                                    Log.i("CAN'T OPEN","GooglePlayServicesRepairableException thrown " + e);
-                                } catch (GooglePlayServicesNotAvailableException e) {
-                                    Log.i("CAN'T OPEN","GooglePlayServicesNotAvailableException thrown " + e);
-                                }
+                                Intent intent = new Intent(EditMoodActivity.this, EditMapActivity.class);
+                                startActivityForResult(intent,PLACE_PICKER_REQUEST);
 
-                                /*location = getLocation();
-                                addLocation = true;
-
-                                Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
-                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();*/
 
                                 break;
                         }
@@ -366,11 +328,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
             }
         });
 
-
     }
-
-
-
 
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
@@ -403,13 +361,12 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         }
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                LatLng newLatLng = place.getLatLng();
+                LatLng newLatLng = (LatLng) data.getParcelableExtra("new_position");
+
                 newLat = newLatLng.latitude;
                 newLng = newLatLng.longitude;
                 Log.i("PLACE LATLNG","latitude "+ newLat+"longitude "+newLng);
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, ""+newLat+" "+newLng, Toast.LENGTH_LONG).show();
                 newLocation = true;
             }
         }
@@ -547,9 +504,9 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
         Location currentLocation = new Location("dummyprovider");
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(EditMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(EditMoodActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
             //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
@@ -575,5 +532,4 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         }
         return null;
     }
-
 }

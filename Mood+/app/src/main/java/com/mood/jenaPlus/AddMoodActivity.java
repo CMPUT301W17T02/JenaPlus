@@ -227,7 +227,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                         switch (item.getItemId()) {
                             case R.id.action_camera:
                                 cameraIntent();
-                                //galleryIntent();
 
                                 break;
                             case R.id.socialPopup:
@@ -256,8 +255,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                                 break;
 
                             case R.id.action_navigation:
-                                //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
-                                //startActivity(intent);
                                 getLocation();
                                 addLocation = true;
                                 break;
@@ -686,15 +683,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 return;
             }
         }
-    }
-
-
-    private void galleryIntent(){
-        // Taken from http://stackoverflow.com/questions/5309190/android-pick-images-from-gallery
-        // 2017-03-10 5:32
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
     }
 
 
