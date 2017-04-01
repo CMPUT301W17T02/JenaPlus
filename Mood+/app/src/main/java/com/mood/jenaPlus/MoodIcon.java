@@ -20,21 +20,21 @@ public class MoodIcon  {
         switch (icon) {
             case 0: this.hexColor = "#FFCC80"; //orange
                 break;
-            case 1: this.hexColor = "#B2FF59"; //green
+            case 1: this.hexColor = "#A5D6A7"; //green
                 break;
-            case 2: this.hexColor = "#A1887F"; //black
+            case 2: this.hexColor = "#BDBDBD"; //black
                 break;
-            case 3: this.hexColor = "#EA80FC"; //purple
+            case 3: this.hexColor = "#E1BEE7"; //purple
                 break;
-            case 4: this.hexColor = "#FFF59D"; //yellow
+            case 4: this.hexColor = "#FFF176"; //yellow
                 break;
             case 5: this.hexColor = "#FF8A80"; //red
                 break;
-            case 6: this.hexColor = "#8C9EFF"; //blue
+            case 6: this.hexColor = "#BBDEFB"; //blue
                 break;
             case 7: this.hexColor = "#F8BBD0"; // pink
                 break;
-            default: this.hexColor = "#69F0AE"; // drak blue
+            default: this.hexColor = "#A7FFEB"; // drak blue
                 break;
         }
         return hexColor;
