@@ -247,7 +247,12 @@ public class MoodPlusActivity extends MerlinActivity
 
         //Refresh button
         if (id == R.id.action_refresh) {
-            
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
             return true;
         }
 
