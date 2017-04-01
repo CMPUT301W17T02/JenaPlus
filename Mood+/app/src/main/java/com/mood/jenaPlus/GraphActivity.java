@@ -10,6 +10,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -45,50 +46,48 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
     int confusedC = 0;
 
     BarChart chart ;
-    ArrayList<BarEntry> BARENTRY ;
-    ArrayList<String> BarEntryLabels ;
-    BarDataSet Bardataset ;
-    BarData BARDATA ;
+    List<BarEntry> BarEntry  = new ArrayList<>();
+    ArrayList<String> BarEntryLabels = new ArrayList<>();
+    BarDataSet set ;
     int mSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
 
         chart = (BarChart) findViewById(R.id.BarChart);
 
-        BARENTRY = new ArrayList<>();
         BarEntryLabels = new ArrayList<String>();
 
         AddValuesToBARENTRY();
 
         AddValuesToBarEntryLabels();
 
-        Bardataset = new BarDataSet(BARENTRY, "Projects");
+        set = new BarDataSet(BarEntry, "BarDataSet");
+        dataSets.add( (IBarDataSet) set);
 
-        BARDATA = new BarData(BarEntryLabels, Bardataset);
+        BarData b = new BarData(dataSets);
+        chart.setData(b);
+        chart.setFitBars(true);
 
-
-        Bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        chart.setData(BARDATA);
-
-        chart.animateY(3000);
-
+        //chart.animateY(3000);
+        chart.invalidate();
 
     }
+
     public void AddValuesToBARENTRY(){
 
-        BARENTRY.add(new BarEntry(0f, happyC));
-        BARENTRY.add(new BarEntry(1f, angryC));
-        BARENTRY.add(new BarEntry(2f, surprisedC));
-        BARENTRY.add(new BarEntry(3f, disgustC));
-        BARENTRY.add(new BarEntry(4f, fearC));
-        BARENTRY.add(new BarEntry(5f, sadC));
-        BARENTRY.add(new BarEntry(6f, shameC));
-        BARENTRY.add(new BarEntry(7f, annoyedC));
-        BARENTRY.add(new BarEntry(8f, confusedC));
+        BarEntry.add(new BarEntry(0f, happyC));
+        BarEntry.add(new BarEntry(1f, angryC));
+        BarEntry.add(new BarEntry(2f, surprisedC));
+        BarEntry.add(new BarEntry(3f, disgustC));
+        BarEntry.add(new BarEntry(4f, fearC));
+        BarEntry.add(new BarEntry(5f, sadC));
+        BarEntry.add(new BarEntry(6f, shameC));
+        BarEntry.add(new BarEntry(7f, annoyedC));
+        BarEntry.add(new BarEntry(8f, confusedC));
 
     }
 
@@ -112,9 +111,9 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
     }
 
-
     @Override
     protected void onStart(){
+        super.onStart();
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();

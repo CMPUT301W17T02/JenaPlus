@@ -120,7 +120,7 @@ public class MoodPlusActivity extends MerlinActivity
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
 
-        LineChart LineChart = (LineChart) findViewById(R.id.line_chart);
+        //LineChart LineChart = (LineChart) findViewById(R.id.line_chart);
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);
