@@ -10,6 +10,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 import static android.R.attr.data;
 import static android.R.attr.entries;
 import static android.media.CamcorderProfile.get;
+import static com.github.mikephil.charting.charts.CombinedChart.DrawOrder.BAR;
 
 public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
@@ -75,22 +77,25 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
         chart.setData(BARDATA);
 
         chart.animateY(3000);
+        chart.invalidate();
 
 
     }
     public void AddValuesToBARENTRY(){
 
-        BARENTRY.add(new BarEntry(0f, happyC));
-        BARENTRY.add(new BarEntry(1f, angryC));
-        BARENTRY.add(new BarEntry(2f, surprisedC));
-        BARENTRY.add(new BarEntry(3f, disgustC));
-        BARENTRY.add(new BarEntry(4f, fearC));
-        BARENTRY.add(new BarEntry(5f, sadC));
-        BARENTRY.add(new BarEntry(6f, shameC));
-        BARENTRY.add(new BarEntry(7f, annoyedC));
-        BARENTRY.add(new BarEntry(8f, confusedC));
+        BARENTRY.add(new BarEntry(2f, 0));
+        BARENTRY.add(new BarEntry(4f, 1));
+        BARENTRY.add(new BarEntry(5f, 2));
+        BARENTRY.add(new BarEntry(2f, 3));
+        BARENTRY.add(new BarEntry(7f, 4));
+        BARENTRY.add(new BarEntry(7f, 5));
+        BARENTRY.add(new BarEntry(9f, 6));
+        BARENTRY.add(new BarEntry(10f, 7));
+        BARENTRY.add(new BarEntry(1f, 8));
+
 
     }
+
 
     public void AddValuesToBarEntryLabels(){
 
@@ -115,7 +120,7 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
     @Override
     protected void onStart(){
-
+        super.onStart();
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
@@ -125,31 +130,41 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
 
         for (int i = 0; i<mSize; i++) {
-            if (moodArrayList.get(i).equals(happy)){
+            Log.i("Debug",moodArrayList.get(i).getId());
+            if (moodArrayList.get(i).getId().equals(happy)){
+                Log.i("Debug",""+happyC);
                 happyC++;
 
-            } else if(moodArrayList.get(i).equals(angry)) {
+            } else if(moodArrayList.get(i).getId().equals(angry)) {
+                Log.i("Debug",""+angryC);
                 angryC++;
 
-            }else if(moodArrayList.get(i).equals(surprised)) {
+            }else if(moodArrayList.get(i).getId().equals(surprised)) {
+                Log.i("Debug",""+surprisedC);
                 surprisedC++;
 
-            }else if(moodArrayList.get(i).equals(disgust)) {
+            }else if(moodArrayList.get(i).getId().equals(disgust)) {
+                Log.i("Debug",""+disgustC);
                 disgustC++;
 
-            }else if(moodArrayList.get(i).equals(fear)) {
+            }else if(moodArrayList.get(i).getId().equals(fear)) {
+                Log.i("Debug",""+fearC);
                 fearC++;
 
-            }else if(moodArrayList.get(i).equals(sad)) {
+            }else if(moodArrayList.get(i).getId().equals(sad)) {
+                Log.i("Debug",""+sadC);
                 sadC++;
 
-            }else if(moodArrayList.get(i).equals(shame)) {
+            }else if(moodArrayList.get(i).getId().equals(shame)) {
+                Log.i("Debug",""+shameC);
                 shameC++;
 
-            }else if(moodArrayList.get(i).equals(annoyed)) {
+            }else if(moodArrayList.get(i).getId().equals(annoyed)) {
+                Log.i("Debug",""+annoyedC);
                 annoyedC++;
 
-            }else if(moodArrayList.get(i).equals(confused)) {
+            }else if(moodArrayList.get(i).getId().equals(confused)) {
+                Log.i("Debug",""+confusedC);
                 confusedC++;
             }
 
