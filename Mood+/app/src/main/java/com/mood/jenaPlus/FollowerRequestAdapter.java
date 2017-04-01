@@ -54,6 +54,7 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
                 remove(participant);
 
                 notifyDataSetChanged();
+
             }
         });
 

@@ -245,6 +245,17 @@ public class MoodPlusActivity extends MerlinActivity
             return true;
         }
 
+        //Refresh button
+        if (id == R.id.action_refresh) {
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -277,9 +288,10 @@ public class MoodPlusActivity extends MerlinActivity
             /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
 
             for(int i=0; i <participantList.size();i++){
-                ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
-                getUserMoodOrderedList(userMoods);
+
                 try{
+                    ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
+                    getUserMoodOrderedList(userMoods);
                     if(userMoods.get(0).getAddLocation()){
 
                         double distance;

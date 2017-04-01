@@ -78,7 +78,7 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
                 }
                 else if(mainParticipant.getUserName().equals(participant.getUserName())) {
                     ownFollow();
-                    
+
                 }
                 else {
                     Toast.makeText(getContext(),"FOLLOWING " + participant.getUserName(), Toast.LENGTH_SHORT).show();
