@@ -35,10 +35,15 @@
         </menu>
     </item>
 
-    <item android:title="Logout"
-        android:id="@+id/menuLogout">
+    <item android:title="Log out">
+        <menu>
 
+            <item android:icon="@drawable/ic_home"
+                android:title="Log Out Of Your Account"
+                android:id="@+id/menuLogout"/>
+
+
+        </menu>
     </item>
-
 
 </menu>
