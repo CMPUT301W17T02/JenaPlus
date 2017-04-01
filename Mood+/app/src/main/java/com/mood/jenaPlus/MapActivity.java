@@ -53,6 +53,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private Marker followingMarker;
     ArrayList<Mood> moodListLocation;
     LatLng allLatLng;
+    Marker m ; //reference to the marker
 
     /**
      *
