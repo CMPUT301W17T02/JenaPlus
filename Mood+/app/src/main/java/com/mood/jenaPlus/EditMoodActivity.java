@@ -91,7 +91,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected Boolean newLocation = false;
     double newLat;
     double newLng;
-    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +173,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                             case R.id.action_camera:
                                 cameraIntent();
                                 break;
+
                             case R.id.socialPopup:
                                 // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
                                 // 04-03-2015 01:16
@@ -202,13 +202,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                             case R.id.action_navigation:
 
                                 Intent intent = new Intent(EditMoodActivity.this, EditMapActivity.class);
-
                                 startActivityForResult(intent,PLACE_PICKER_REQUEST);
-                                /*location = getLocation();
-                                addLocation = true;
 
-                                Toast.makeText(EditMoodActivity.this, "Location Added: "+location.getLatitude()
-                                        +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();*/
 
                                 break;
                         }
