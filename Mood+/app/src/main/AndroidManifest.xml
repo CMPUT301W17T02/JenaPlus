@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE"/>
+    <permission      android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,7 +29,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyDABYhh4h0I7KzggNbpc2qADo2WODMf30w" />
 
         <receiver android:name=".NetworkMonitorReceiver">
             <intent-filter>
@@ -53,8 +55,8 @@
         <activity
             android:name=".ViewMoodActivity"
             android:label="Mood+"
-            android:parentActivityName=".MoodPlusActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:parentActivityName=".MoodPlusActivity"/>
+            <!--android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
@@ -73,7 +75,8 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilteredDateActivity" />
+        <activity android:name=".FilteredDateActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
 
         <service android:name=".GPSTracker" />
 
@@ -95,9 +98,12 @@
         <activity
             android:name=".FollowerRequestActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity
-            android:name=".FollowingListActivity"
-            android:parentActivityName=".MoodPlusActivity" />
+
+
+        <activity android:name=".FollowingListActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
+
+
         <activity
             android:name=".FilterFollowDateActivity"
             android:parentActivityName=".MoodPlusActivity" />

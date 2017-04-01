@@ -46,14 +46,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      */
     private GoogleApiClient mGoogleApiClient;
     /**
-     * The M last location.
-     */
-    private Location mLastLocation;
-    /**
-     * The current location marker.
-     */
-    private Marker mCurrLocationMarker;
-    /**
      * The map location request.
      */
     private LocationRequest mLocationRequest;
@@ -61,7 +53,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private Marker followingMarker;
     ArrayList<Mood> moodListLocation;
     LatLng allLatLng;
-    ArrayList<LatLng> allLocations = new ArrayList<>();
 
     /**
      *
@@ -72,9 +63,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkLocationPermission();
-        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -89,6 +77,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public void onMapReady(GoogleMap map) {
         mMap = map;
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+            UiSettings mUiSettings = mMap.getUiSettings();
+            mUiSettings.setZoomControlsEnabled(true);
+        }
         moodListLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
         Log.i("MOOOOOOOOODS","ALL MOODS WITH LOCATION: " + moodListLocation);
 
@@ -107,13 +101,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 15.0f));
             followingMarker.setTag(0);
 
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
-            UiSettings mUiSettings = mMap.getUiSettings();
-            mUiSettings.setZoomControlsEnabled(true);
         }
 
         buildGoogleApiClient();
@@ -195,42 +182,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
      * The constant MY_PERMISSIONS_REQUEST_LOCATION.
      */
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
-    /**
-     * Check location permission boolean.
-     *
-     * @return the boolean
-     */
-    public boolean checkLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            // Asking user if explanation is needed
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
-
-                //Prompt the user once explanation has been shown
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-
-
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     /**
      *

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -35,6 +36,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.google.android.gms.maps.model.LatLng;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
@@ -49,6 +51,8 @@ import com.novoda.merlin.registerable.disconnection.Disconnectable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+
+import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 
 /**
  * This is the main activity class of the MoodPlus application. From this activity
@@ -115,6 +119,8 @@ public class MoodPlusActivity extends MerlinActivity
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
 
+        LineChart LineChart = (LineChart) findViewById(R.id.line_chart);
+
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -137,6 +143,14 @@ public class MoodPlusActivity extends MerlinActivity
 
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
         merlinsBeard = MerlinsBeard.from(this);
+
+        /*-------------------- REQUEST LOCATION PERMISSION ------------ */
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkLocationPermission();
+        }
+
+        /*------------------------------------------------*/
+
 
 
         /* LOADING THE LOGGED IN PARTICIPANT */
@@ -231,6 +245,17 @@ public class MoodPlusActivity extends MerlinActivity
             return true;
         }
 
+        //Refresh button
+        if (id == R.id.action_refresh) {
+            Intent intent = getIntent();
+            overridePendingTransition(0, 0);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -241,7 +266,7 @@ public class MoodPlusActivity extends MerlinActivity
         int id = item.getItemId();
 
         if (id == R.id.nearMe) {
-
+            
             /*----------------------- PASSING CURRENT LOCATION---------------------*/
             location = getLocation();
             LatLng position = new LatLng(location.getLatitude(),location.getLongitude());
@@ -263,9 +288,10 @@ public class MoodPlusActivity extends MerlinActivity
             /*----------------------- PASSING FOLLOWING LOCATION---------------------*/
 
             for(int i=0; i <participantList.size();i++){
-                ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
-                getUserMoodOrderedList(userMoods);
+
                 try{
+                    ArrayList<Mood> userMoods = participantList.get(i).getUserMoodList().getUserMoodList();
+                    getUserMoodOrderedList(userMoods);
                     if(userMoods.get(0).getAddLocation()){
 
                         double distance;
@@ -862,7 +888,7 @@ public class MoodPlusActivity extends MerlinActivity
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        searching = recent = moody = false;
+                        searching = recent = moody = locationBool = false;
                     }
                 }).create();
         dialog.show();
@@ -1206,6 +1232,38 @@ public class MoodPlusActivity extends MerlinActivity
         });
 
         builder.show();
+    }
+
+    /**
+     * Check location permission boolean.
+     *
+     * @return the boolean
+     */
+    public boolean checkLocationPermission(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Asking user if explanation is needed
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                //Prompt the user once explanation has been shown
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_LOCATION);
+            }
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

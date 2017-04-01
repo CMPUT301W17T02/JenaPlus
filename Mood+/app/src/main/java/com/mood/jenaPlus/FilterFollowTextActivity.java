@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -25,12 +26,12 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
     protected ListView moodListView;
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
-    private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
     String moodString;
 
     Context context = this;
 
+    protected Button viewMapButton;
     protected MainMPController mpController;
 
     @Override
@@ -40,6 +41,19 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
         moodListView = (ListView) findViewById(R.id.listView);
 
+        /* -------------- VIEW MAP BUTTON ---------------*/
+        viewMapButton = (Button) findViewById(R.id.view_map_button);
+
+        viewMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FilterFollowTextActivity.this, MarkerActivity.class);
+                intent.putExtra("participant_moodProvider", moodArrayList);
+                startActivity(intent);
+            }
+        });
+
+        /* -------------- VIEW MAP BUTTON ---------------*/
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
@@ -75,7 +89,6 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         ArrayList<String> participantListStr = participant.getFollowingList();
-        ArrayList<Mood> tempList = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
         moodString = bundle.getString("testText");
@@ -133,6 +146,10 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
 
         if (moodArrayList.size() <1) {
             noMoods();
+        } else {
+            if(locationBool.equals("yes")){
+                viewMapButton.setVisibility(View.VISIBLE);
+            }
         }
 
         adapter = new MoodFollowerListAdapter(FilterFollowTextActivity.this,moodArrayList);
