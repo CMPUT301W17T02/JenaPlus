@@ -56,6 +56,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -126,7 +127,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected Boolean newLocation = false;
     double newLat;
     double newLng;
-
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,15 +235,10 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                             case R.id.action_navigation:
 
-                                try {
-                                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                                    startActivityForResult(builder.build(EditMoodActivity.this), PLACE_PICKER_REQUEST);
-                                } catch (GooglePlayServicesRepairableException e) {
-                                    Log.i("CAN'T OPEN","GooglePlayServicesRepairableException thrown " + e);
-                                } catch (GooglePlayServicesNotAvailableException e) {
-                                    Log.i("CAN'T OPEN","GooglePlayServicesNotAvailableException thrown " + e);
-                                }
+                                Intent intent = new Intent(EditMoodActivity.this, MarkerActivity.class);
+                                intent.putExtra("participant_moodProvider", locationMoodList);
 
+                                startActivity(intent);
                                 /*location = getLocation();
                                 addLocation = true;
 

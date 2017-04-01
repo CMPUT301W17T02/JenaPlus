@@ -250,8 +250,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                                 break;
 
                             case R.id.action_navigation:
-                                //Intent intent = new Intent(AddMoodActivity.this, MapActivity.class);
-                                //startActivity(intent);
                                 getLocation();
                                 addLocation = true;
                                 break;

@@ -30,6 +30,7 @@ public class MarkerActivity extends FragmentActivity implements
     ArrayList<Mood> moodListLocation;
     LatLng allLatLng;
     ArrayList<Mood> userMoodLocation;
+    Marker newMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +46,28 @@ public class MarkerActivity extends FragmentActivity implements
     /** Called when the map is ready. */
     @Override
     public void onMapReady(GoogleMap map) {
-        GoogleMap mMap = map;
+        final GoogleMap mMap = map;
         Marker followingMarker;
 
         UiSettings mUiSettings = mMap.getUiSettings();
         mUiSettings.setZoomControlsEnabled(true);
+
+        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                if(newMarker!=null){ //if marker exists (not null or whatever)
+                    newMarker.setPosition(latLng);
+                }
+                else{
+                    newMarker = mMap.addMarker(new MarkerOptions()
+                            .position(latLng)
+                            .title("Your Destination"));
+                }
+                Toast.makeText(MarkerActivity.this, latLng.latitude+" "+latLng.longitude, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         if( getIntent().hasExtra("user_moodProvider")) {
             userMoodLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("user_moodProvider");
@@ -65,7 +83,7 @@ public class MarkerActivity extends FragmentActivity implements
                 followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
                         .title("Feeling "+ mood.getId())
                         .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 2.0f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 3.0f));
                 followingMarker.setTag(0);
             }
         }
@@ -86,7 +104,7 @@ public class MarkerActivity extends FragmentActivity implements
                         .title(mood.getUserName())
                         .snippet("Feeling "+ mood.getId())
                         .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 2.0f));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(allLatLng, 3.0f));
                 followingMarker.setTag(0);
             }
 
