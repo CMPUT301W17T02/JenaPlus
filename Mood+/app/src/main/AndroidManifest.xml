@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE"/>
+    <permission      android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,7 +29,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAmVkQf1ndzYevnSDuxkCWB4dHiTTdNhCs" />
+            android:value="AIzaSyDABYhh4h0I7KzggNbpc2qADo2WODMf30w" />
 
         <receiver android:name=".NetworkMonitorReceiver">
             <intent-filter>
