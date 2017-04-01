@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -104,6 +106,8 @@ public class MoodPlusActivity extends MerlinActivity
 
     UserMoodList offlineList = new UserMoodList();
 
+    private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +127,8 @@ public class MoodPlusActivity extends MerlinActivity
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);
+
+        registerBroadcastReceiver();
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -192,6 +198,26 @@ public class MoodPlusActivity extends MerlinActivity
         textName.setText(name);
 
     }
+
+    public void registerBroadcastReceiver() {
+
+        IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        this.registerReceiver(broadcastReceiver, myFilter);
+
+        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void unregisterBroadcastReceiver() {
+
+        this.unregisterReceiver(broadcastReceiver);
+
+        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -1155,6 +1181,7 @@ public class MoodPlusActivity extends MerlinActivity
         registerConnectable(this);
         registerDisconnectable(this);
         registerBindable(this);
+        registerBroadcastReceiver();
     }
 
     @Override
@@ -1179,6 +1206,7 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterBroadcastReceiver();
         networkStatusDisplayer.reset();
 
     }

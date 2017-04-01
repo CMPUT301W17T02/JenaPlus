@@ -34,15 +34,17 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
 
 		// Checks if there is network connectivity.
 		if (wifi.isConnected() || mobile.isConnected()) {
-			Toast.makeText(context, "Network Available; Syncing", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(context, "Network Available; Syncing", Toast.LENGTH_SHORT).show();
 
 			OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
 
-			//UserMoodList tempList = offlineController.loadSavedList(context);
+			UserMoodList tempList = offlineController.loadSavedList(context);
 
-			offlineController.SyncOfflineList(context);
-			Toast.makeText(context, "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT);
-			Log.d("LAST SESSION", "Syncing");
+			if(tempList != null) {
+				offlineController.SyncOfflineList(context);
+				Toast.makeText(context, "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT).show();
+				Log.d("Network Available", "Syncing");
+			}
 
 			/*
 			offlineController.SyncOffline();
@@ -50,7 +52,10 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
 			Log.d("THIS SESSION", "Syncing");
 			*/
 
-			Log.d("TRIGGERED", "Network Available; SYNC");
+			//Log.d("TRIGGERED", "Network Available; SYNC");
+		}
+		else {
+			Toast.makeText(context, "Network Unavailable", Toast.LENGTH_SHORT).show();
 		}
 
 	}

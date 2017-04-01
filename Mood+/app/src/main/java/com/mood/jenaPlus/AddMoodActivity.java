@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -16,6 +17,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Image;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -127,6 +129,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
     private UserMoodList userMoodList;
 
+    private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -142,6 +146,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         merlinsBeard = MerlinsBeard.from(this);
 
         userMoodList = new UserMoodList();
+
+        registerBroadcastReceiver();
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
@@ -268,6 +274,24 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         });
     }
 
+    public void registerBroadcastReceiver() {
+
+        IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        this.registerReceiver(broadcastReceiver, myFilter);
+
+        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void unregisterBroadcastReceiver() {
+
+        this.unregisterReceiver(broadcastReceiver);
+
+        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
+    }
+
 
     @Override
     protected Merlin createMerlin() {
@@ -285,6 +309,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         registerConnectable(this);
         registerDisconnectable(this);
         registerBindable(this);
+        registerBroadcastReceiver();
     }
 
     @Override
@@ -312,6 +337,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterBroadcastReceiver();
         networkStatusDisplayer.reset();
     }
 
@@ -442,11 +468,56 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 longitude = location.getLongitude();
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
                 mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+
+                // Saves the user's moodlist
+                Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                Participant offlineParticipant = offlineController.getOfflineParticipant();
+                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                //offlineMoodList.addUserMood(mood);
+
+                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineMoodList;
+
+                offlineController.saveOfflineList(offlineList, context);
+
+                Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
+                Log.d("In ADDMOOD", "Saving to list");
+
+
                 finish();
 
             } else if (trigCheck && moodChosen) {
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
                 mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                // Saves the user's moodlist
+                Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                Participant offlineParticipant = offlineController.getOfflineParticipant();
+                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                //offlineMoodList.addUserMood(mood);
+
+                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineMoodList;
+
+                offlineController.saveOfflineList(offlineList, context);
+
+                Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
+                Log.d("In ADDMOOD", "Saving to list");
+
                 finish();
             } else {
 
@@ -478,6 +549,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 } else if (trigCheck && moodChosen) {
 
                     //UserMoodList userMoodList = new UserMoodList();
+                    // saves the user's moodlist
                     Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
 
                     OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
@@ -495,7 +567,10 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
                     offlineController.saveOfflineList(offlineList, context);
 
-                    Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
+                    Log.d("In ADDMOOD", "Saving to list");
+
+                    //Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
 
 
                     //MainMPController mpController = MoodPlusApplication.getMainMPController();
