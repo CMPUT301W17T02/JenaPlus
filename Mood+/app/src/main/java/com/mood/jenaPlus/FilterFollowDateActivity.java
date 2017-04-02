@@ -39,15 +39,14 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /*---------- LOADING THE PARTICIPANT-------------*/
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
-        String d = "Following Moods from last 7 days";
-        test.setText(d);
+        //String d = "Following Moods from last 7 days";
+
 
         /*------------------------------------------------*/
 

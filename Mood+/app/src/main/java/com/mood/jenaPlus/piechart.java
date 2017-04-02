@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -115,7 +116,12 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
 
         pieDataSet = new PieDataSet(entries, "");
         pieData = new PieData(PieEntryLabels, pieDataSet);
-        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieDataSet.setColors(new int[] {Color.parseColor("#FFCC80"),Color.parseColor("#A5D6A7"),
+                Color.parseColor("#BDBDBD"),
+                Color.parseColor("#E1BEE7"),Color.parseColor("#FFF176"),Color.parseColor("#FF8A80"),
+                Color.parseColor("#BBDEFB"),Color.parseColor("#F8BBD0"),Color.parseColor("#A7FFEB"),
+        });
+
         pieChart.setData(pieData);
         pieChart.animateY(3000);
         pieChart.invalidate();

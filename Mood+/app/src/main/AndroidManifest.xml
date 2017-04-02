@@ -65,10 +65,6 @@
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity
-            android:name=".EditMoodActivity"
-            android:label="@string/title_activity_edit_mood"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MapActivity" />
         <activity
             android:name=".FilteredTextActivity"
@@ -115,18 +111,24 @@
             android:name=".FilterFollowTextActivity"
             android:parentActivityName=".MoodPlusActivity" />
         <activity android:name=".MarkerActivity" />
-        <activity android:name=".GraphActivity" />
+        <activity android:name=".GraphActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
         <activity
             android:name=".FilterFollowLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
         <activity
             android:name=".FilteredLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
-<<<<<<< HEAD
-        <activity android:name=".Piechart"></activity>
-=======
+
+        <activity android:name=".Piechart"
+            android:parentActivityName=".MoodPlusActivity" />
+
+
         <activity android:name=".EditMapActivity"></activity>
->>>>>>> 568942d7cd9bcf1d389f773701d88053b4bcd55d
+
+        <activity android:name=".EditMoodActivity"
+            android:parentActivityName=".MoodPlusActivity"></activity>
+
     </application>
 
 </manifest>

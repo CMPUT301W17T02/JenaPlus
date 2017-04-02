@@ -85,11 +85,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             mUiSettings.setZoomControlsEnabled(true);
         }
         moodListLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
-        Log.i("MOOOOOOOOODS","ALL MOODS WITH LOCATION: " + moodListLocation);
 
         for (Mood mood: moodListLocation){
-            Log.i("LATLNG!!!!!!","Contents of arrayLocation: " + mood.getLatitude()+mood.getLongitude() );
-            Log.i("MOODS ID!!!!!!",mood.getId() + mood.getUserName());
+
             allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
 
             // Creating markers

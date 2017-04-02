@@ -350,7 +350,7 @@ public class MoodPlusActivity extends MerlinActivity
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
             testFilters2();
-        } else if(id == R.id.menuLogout){
+        } else if(id == R.id.logout){
             MoodPlusActivity.this.finish();
 
         }
@@ -1152,7 +1152,7 @@ public class MoodPlusActivity extends MerlinActivity
         new AlertDialog.Builder(context)
                 .setTitle("View Statistics")
                 .setItems(new CharSequence[]
-                                {},
+                                {"Bar Chart", "Pie Chart"},
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {

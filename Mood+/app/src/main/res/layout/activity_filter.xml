@@ -9,13 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/test_string"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"/>
 
         <ListView
             android:layout_width="match_parent"
@@ -33,9 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="view map"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:backgroundTint="#64DD17"
+        android:padding="15dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
 

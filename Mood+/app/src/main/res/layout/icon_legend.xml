@@ -162,10 +162,11 @@
             android:src="@drawable/ic_yes"
             android:layout_marginLeft="20dp"
             android:backgroundTint="#4DD0E1"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="50dp"
             />
 
 
     </LinearLayout>
+
 
 </LinearLayout>

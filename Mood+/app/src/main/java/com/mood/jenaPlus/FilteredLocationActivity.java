@@ -37,8 +37,6 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-
-        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /* -------------- VIEW MAP BUTTON ---------------*/
@@ -53,7 +51,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
             }
         });
 
-        /* -------------- VIEW MAP BUTTON ---------------*/
+        /* -----------------------------*/
 
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -63,8 +61,7 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
 
         String name = participant.getUserName();
         String id = participant.getId();
-        String who = "Username: " + name ;
-        test.setText(who);
+
 
         /*------------------------------------------------*/
 

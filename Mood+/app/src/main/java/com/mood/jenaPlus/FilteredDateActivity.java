@@ -33,7 +33,6 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
-        TextView test = (TextView) findViewById(R.id.test_string);
         moodListView = (ListView) findViewById(R.id.listView);
 
         /*---------- LOADING THE PARTICIPANT-------------*/
@@ -41,10 +40,8 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        String name = participant.getUserName();
-        String id = participant.getId();
-        String who = "Username: " + name ;
-        test.setText(who);
+        //String name = participant.getUserName();
+        //String id = participant.getId();
 
         /*------------------------------------------------*/
 
