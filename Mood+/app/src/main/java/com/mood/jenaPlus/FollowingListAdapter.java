@@ -44,7 +44,7 @@ public class FollowingListAdapter extends ArrayAdapter<Participant> {
             MainMPController mpController = MoodPlusApplication.getMainMPController();
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(),"UNFOLLOW " + participant.getUserName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(),"Unfollowing " + participant.getUserName(), Toast.LENGTH_SHORT).show();
                 mpController.unfollowParticipant(participant.getUserName());
 
                 v.setEnabled(false);

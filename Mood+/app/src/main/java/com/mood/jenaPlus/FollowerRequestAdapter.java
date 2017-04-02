@@ -49,7 +49,7 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
             MainMPController mpController = MoodPlusApplication.getMainMPController();
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "ACCEPTED " + participant.getUserName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), participant.getUserName()+" is now following you",Toast.LENGTH_SHORT).show();
                 mpController.acceptRequest(participant.getUserName());
                 remove(participant);
 
@@ -63,7 +63,7 @@ public class FollowerRequestAdapter extends ArrayAdapter<Participant> {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "DECLINED " + participant.getUserName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Declined " + participant.getUserName()+ "'s request",Toast.LENGTH_SHORT).show();
                 mpController.rejectRequest(participant.getUserName());
                 remove(participant);
 

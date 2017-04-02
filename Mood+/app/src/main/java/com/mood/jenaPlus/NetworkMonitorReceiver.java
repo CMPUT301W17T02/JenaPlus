@@ -41,7 +41,6 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
 			/*
 			if(tempList != null) {
 				offlineController.SyncOfflineList(context);
-				Toast.makeText(context, "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT).show();
 				Log.d("Network Available", "Syncing");
 			}
 			*/

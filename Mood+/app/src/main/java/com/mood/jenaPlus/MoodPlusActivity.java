@@ -336,10 +336,6 @@ public class MoodPlusActivity extends MerlinActivity
 
             }
 
-            for (Mood mood: locationMoodList){
-                Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + locationMoodList + mood.getUserName() );}
-
-
             /*--------------- PASSING LIST OF LOCATIONS TO MAP ACTIVITY ----------------*/
             Bundle args = new Bundle();
             args.putParcelable("longLat_dataProvider",position);
