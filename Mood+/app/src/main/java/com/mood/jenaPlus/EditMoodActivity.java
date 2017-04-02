@@ -56,6 +56,7 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -126,7 +127,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected Boolean newLocation = false;
     double newLat;
     double newLng;
-
+    ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -234,15 +235,9 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                             case R.id.action_navigation:
 
-                                try {
-                                    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                                    startActivityForResult(builder.build(EditMoodActivity.this), PLACE_PICKER_REQUEST);
-                                } catch (GooglePlayServicesRepairableException e) {
-                                    Log.i("CAN'T OPEN","GooglePlayServicesRepairableException thrown " + e);
-                                } catch (GooglePlayServicesNotAvailableException e) {
-                                    Log.i("CAN'T OPEN","GooglePlayServicesNotAvailableException thrown " + e);
-                                }
+                                Intent intent = new Intent(EditMoodActivity.this, EditMapActivity.class);
 
+                                startActivityForResult(intent,PLACE_PICKER_REQUEST);
                                 /*location = getLocation();
                                 addLocation = true;
 
@@ -373,13 +368,12 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         }
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(data, this);
-                String toastMsg = String.format("Place: %s", place.getName());
-                LatLng newLatLng = place.getLatLng();
+                LatLng newLatLng = (LatLng) data.getParcelableExtra("new_position");
+
                 newLat = newLatLng.latitude;
                 newLng = newLatLng.longitude;
                 Log.i("PLACE LATLNG","latitude "+ newLat+"longitude "+newLng);
-                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, ""+newLat+" "+newLng, Toast.LENGTH_LONG).show();
                 newLocation = true;
             }
         }

@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,63 +70,18 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
         BARENTRY = new ArrayList<>();
         BarEntryLabels = new ArrayList<String>();
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-        myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getUserMoodList();
-        mSize = moodArrayList.size();
-
-
-        for (int i = 0; i<mSize; i++) {
-            Log.i("Debug",moodArrayList.get(i).getId());
-            if (moodArrayList.get(i).getId().equals(happy)){
-                Log.i("Debug",""+happyC);
-                happyC++;
-
-            } else if(moodArrayList.get(i).getId().equals(angry)) {
-                Log.i("Debug",""+angryC);
-                angryC++;
-
-            }else if(moodArrayList.get(i).getId().equals(surprised)) {
-                Log.i("Debug",""+surprisedC);
-                surprisedC++;
-
-            }else if(moodArrayList.get(i).getId().equals(disgust)) {
-                Log.i("Debug",""+disgustC);
-                disgustC++;
-
-            }else if(moodArrayList.get(i).getId().equals(fear)) {
-                Log.i("Debug",""+fearC);
-                fearC++;
-
-            }else if(moodArrayList.get(i).getId().equals(sad)) {
-                Log.i("Debug",""+sadC);
-                sadC++;
-
-            }else if(moodArrayList.get(i).getId().equals(shame)) {
-                Log.i("Debug",""+shameC);
-                shameC++;
-
-            }else if(moodArrayList.get(i).getId().equals(annoyed)) {
-                Log.i("Debug",""+annoyedC);
-                annoyedC++;
-
-            }else if(moodArrayList.get(i).getId().equals(confused)) {
-                Log.i("Debug",""+confusedC);
-                confusedC++;
-            }
-
-        }
-
-
         AddValuesToBARENTRY();
         AddValuesToBarEntryLabels();
 
         Bardataset = new BarDataSet(BARENTRY, "Projects");
+        Bardataset.setColors(new int[] {Color.parseColor("#FFCC80"),Color.parseColor("#A5D6A7"),
+                Color.parseColor("#BDBDBD"),
+                Color.parseColor("#E1BEE7"),Color.parseColor("#FFF176"),Color.parseColor("#FF8A80"),
+                Color.parseColor("#BBDEFB"),Color.parseColor("#F8BBD0"),Color.parseColor("#A7FFEB"),
+                });
 
         BARDATA = new BarData(BarEntryLabels, Bardataset);
-        Bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
+
 
         chart.setData(BARDATA);
 
@@ -135,17 +91,16 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
     }
     public void AddValuesToBARENTRY(){
-        Log.i("counter",""+happyC);
-        Log.i("counterC",""+(float)happyC);
-        BARENTRY.add(new BarEntry((float)happyC, 0));
-        BARENTRY.add(new BarEntry((float)angryC, 1));
-        BARENTRY.add(new BarEntry((float)surprisedC, 2));
-        BARENTRY.add(new BarEntry((float)disgustC, 3));
-        BARENTRY.add(new BarEntry((float)fearC, 4));
-        BARENTRY.add(new BarEntry((float)sadC, 5));
-        BARENTRY.add(new BarEntry((float)shameC, 6));
-        BARENTRY.add(new BarEntry((float)annoyedC, 7));
-        BARENTRY.add(new BarEntry((float)confusedC, 8));
+
+        BARENTRY.add(new BarEntry(2f, 0));
+        BARENTRY.add(new BarEntry(4f, 1));
+        BARENTRY.add(new BarEntry(5f, 2));
+        BARENTRY.add(new BarEntry(2f, 3));
+        BARENTRY.add(new BarEntry(7f, 4));
+        BARENTRY.add(new BarEntry(7f, 5));
+        BARENTRY.add(new BarEntry(9f, 6));
+        BARENTRY.add(new BarEntry(10f, 7));
+        BARENTRY.add(new BarEntry(1f, 8));
 
 
     }
@@ -171,4 +126,9 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
     }
 
+
+
 }
+
+
+

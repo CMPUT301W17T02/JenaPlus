@@ -37,6 +37,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.gms.maps.model.LatLng;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
@@ -104,6 +105,7 @@ public class MoodPlusActivity extends MerlinActivity
     ArrayList<Mood> locationMoodList = new ArrayList<Mood>();
 
     UserMoodList offlineList = new UserMoodList();
+    Participant usingPart;
 
 
     @Override
@@ -119,8 +121,6 @@ public class MoodPlusActivity extends MerlinActivity
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
-
-
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);
@@ -161,6 +161,7 @@ public class MoodPlusActivity extends MerlinActivity
         Participant participant = mpController.getParticipant();
 
         String name = participant.getUserName();
+        usingPart = participant;
         String id = participant.getId();
 
         /*----------------------ADD MOOD BUTTON-----------------------*/
@@ -280,6 +281,11 @@ public class MoodPlusActivity extends MerlinActivity
 
             try {
                 participantList = getUsersTask.get();
+                for (Participant p : participantList){
+                    if (p.getUserName().equals(usingPart.getUserName())){
+                        participantList.remove(p);
+                    }
+                }
                 mpController = MoodPlusApplication.getMainMPController();
 
             } catch (Exception e) {
@@ -339,12 +345,14 @@ public class MoodPlusActivity extends MerlinActivity
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
         } else if (id == R.id.graph){
-            Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
-            startActivity(graphIntent);
+            graphActivityDialog();
         } else if (id == R.id.menuMyOwnMoodFilter){
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
             testFilters2();
+        } else if(id == R.id.menuLogout){
+            MoodPlusActivity.this.finish();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -644,8 +652,6 @@ public class MoodPlusActivity extends MerlinActivity
 
                 .setIcon(android.R.drawable.ic_menu_search)
                 .show();
-
-
     }
 
     public void getMoodDialog1() {
@@ -1136,6 +1142,33 @@ public class MoodPlusActivity extends MerlinActivity
                         })
 
                 .setIcon(android.R.drawable.ic_menu_search)
+                .show();
+    }
+
+    public void graphActivityDialog() {
+        // Taken from http://stackoverflow.com/questions/30345243/android-dialog-with-multiple-
+        // button-how-to-implement-switch-case
+        // 2017-03-26 Rajan Bhavsar
+        new AlertDialog.Builder(context)
+                .setTitle("View Statistics")
+                .setItems(new CharSequence[]
+                                {},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
+                                        startActivity(graphIntent);
+                                        break;
+                                    case 1:
+                                        Intent pieintent = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        startActivity(pieintent);
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(android.R.drawable.ic_menu_info_details)
                 .show();
     }
 

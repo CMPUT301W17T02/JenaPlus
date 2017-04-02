@@ -68,7 +68,7 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 MoodPlus model = MoodPlusApplication.getMoodPlus();
                 model.getParticipantElastic(strUser);
 
-                boolean seen = true;
+                boolean seen = false;
                 int pListSize = participantList.size();
 
                 for (int i = 0; i<pListSize; i++) {

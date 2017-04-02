@@ -122,7 +122,11 @@
         <activity
             android:name=".FilteredLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
+<<<<<<< HEAD
         <activity android:name=".Piechart"></activity>
+=======
+        <activity android:name=".EditMapActivity"></activity>
+>>>>>>> 568942d7cd9bcf1d389f773701d88053b4bcd55d
     </application>
 
 </manifest>
