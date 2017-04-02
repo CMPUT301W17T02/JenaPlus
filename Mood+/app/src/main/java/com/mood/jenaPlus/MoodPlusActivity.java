@@ -21,14 +21,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -36,8 +34,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.gms.maps.model.LatLng;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
@@ -53,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 
 /**
