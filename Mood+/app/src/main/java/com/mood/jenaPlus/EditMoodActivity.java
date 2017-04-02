@@ -273,7 +273,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                 }
                 else {
-                    Toast.makeText(EditMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditMoodActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
 
                     Boolean offline = true;
 
@@ -361,7 +361,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                 newLat = newLatLng.latitude;
                 newLng = newLatLng.longitude;
                 Log.i("PLACE LATLNG","latitude "+ newLat+"longitude "+newLng);
-                Toast.makeText(this, ""+newLat+" "+newLng, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "New Location Added", Toast.LENGTH_LONG).show();
                 newLocation = true;
             }
         }

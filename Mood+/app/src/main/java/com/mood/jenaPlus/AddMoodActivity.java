@@ -420,8 +420,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
                     location = currentLocation;
 
-                    Toast.makeText(AddMoodActivity.this, "Location Added: "+location.getLatitude()
-                            +","+location.getLongitude() ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddMoodActivity.this, "Location Added",Toast.LENGTH_SHORT).show();
                 }
 
             } else {
@@ -485,14 +484,14 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
             //when disconnected
             else {
-                Toast.makeText(AddMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddMoodActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
                 //trigger = message.getText().toString();
                 //Boolean trigCheck = triggerCheck();
 
                 //has location
                 if (trigCheck && moodChosen && addLocation) {
-                    Toast.makeText(AddMoodActivity.this, "no internet no location my man!!!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddMoodActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
                     finish();
 
