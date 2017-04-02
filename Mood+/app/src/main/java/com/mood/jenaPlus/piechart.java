@@ -28,7 +28,7 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
 
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
-    private ArrayAdapter<Mood> adapter;
+
     String happy = "happy";
     String angry = "angry";
     String surprised = "surprised";

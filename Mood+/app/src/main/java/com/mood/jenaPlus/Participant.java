@@ -21,8 +21,6 @@ public class Participant extends User {
     private String id;
 
     private UserMoodList userMoodList = new UserMoodList();
-    private MoodList followingMoodList = new MoodList();
-
     private ArrayList<String> pendingFollowing = new ArrayList<String>();
     private ArrayList<String> followingList = new ArrayList<>();
     private ArrayList<String> pendingFollowers = new ArrayList<>();
@@ -132,23 +130,6 @@ public class Participant extends User {
         this.userMoodList = userMoodList;
     }
 
-    /**
-     * Gets following mood list.
-     *
-     * @return the following mood list
-     */
-    public MoodList getFollowingMoodList() {
-        return followingMoodList;
-    }
-
-    /**
-     * Sets following mood list.
-     *
-     * @param followingMoodList the following mood list
-     */
-    public void setFollowingMoodList(MoodList followingMoodList) {
-        this.followingMoodList = followingMoodList;
-    }
 
     /* ----------------------FOLLOWER/FOLLOWING LISTS ---------------------------*/
 
