@@ -9,7 +9,18 @@ import de.keyboardsurfer.android.widget.crouton.LifecycleCallback;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
 /**
- * Created by ceciliaxiang on 2017-03-26.
+ * This is the Novoda crouton class of the connectivity display.
+ * Ideally, from this activity, a crouton is initialize by makeCrouton,
+ * and can show and hide and close.
+ * A crouton can be set to current and a current crouton can be hide.
+ * It can be checked if the crouton is shown or not by checking if there is a current crouton
+ * or not.
+ * A crouton can be clicked, and will be hide it it's been clicked.
+ *
+ * This class is originally implemented by Novoda merlin: https://github.com/novoda/merlin
+ * and some small changes has been made to meet our own needs.
+ *
+ * @author Novoda Merlin
  */
 
 public class NovodaCrouton {

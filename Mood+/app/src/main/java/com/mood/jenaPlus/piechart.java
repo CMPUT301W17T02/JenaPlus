@@ -6,58 +6,136 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 
 import com.github.mikephil.charting.charts.BarChart;
+
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 
+/**
+ * This is the pie chart activity class of the statistics.
+ *
+ * @author Cecilia
+ */
 public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
 
 
+    /**
+     * The Mood array list.
+     */
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
 
+    /**
+     * The Happy.
+     */
     String happy = "happy";
+    /**
+     * The Angry.
+     */
     String angry = "angry";
+    /**
+     * The Surprised.
+     */
     String surprised = "surprised";
+    /**
+     * The Disgust.
+     */
     String disgust = "disgust";
+    /**
+     * The Fear.
+     */
     String fear = "fear";
+    /**
+     * The Sad.
+     */
     String sad = "sad";
+    /**
+     * The Shame.
+     */
     String shame = "shame";
+    /**
+     * The Annoyed.
+     */
     String annoyed = "annoyed";
+    /**
+     * The Confused.
+     */
     String confused = "confused";
 
+    /**
+     * The Happy counter.
+     */
     int happyC = 0;
+    /**
+     * The Angry counter.
+     */
     int angryC = 0;
+    /**
+     * The Surprised counter.
+     */
     int surprisedC = 0;
+    /**
+     * The Disgust counter.
+     */
     int disgustC = 0;
+    /**
+     * The Fear counter.
+     */
     int fearC = 0;
+    /**
+     * The Sad counter.
+     */
     int sadC = 0;
+    /**
+     * The Shame c.
+     */
     int shameC = 0;
+    /**
+     * The Annoyed counter.
+     */
     int annoyedC = 0;
+    /**
+     * The Confused counter.
+     */
     int confusedC = 0;
 
+    /**
+     * The size of userMoodList.
+     */
     int mSize;
 
+    /**
+     * The Pie chart.
+     */
     PieChart pieChart ;
+    /**
+     * The Entries.
+     */
     ArrayList<Entry> entries ;
+    /**
+     * The Pie entry labels.
+     */
     ArrayList<String> PieEntryLabels ;
+    /**
+     * The Pie data set.
+     */
     PieDataSet pieDataSet ;
+    /**
+     * The Pie data.
+     */
     PieData pieData ;
     private ImageButton infoButton;
 
@@ -102,39 +180,30 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
         for (int i = 0; i<mSize; i++) {
             Log.i("Debug",moodArrayList.get(i).getId());
             if (moodArrayList.get(i).getId().equals(happy)){
-                Log.i("Debug",""+happyC);
                 happyC++;
 
             } else if(moodArrayList.get(i).getId().equals(angry)) {
-                Log.i("Debug",""+angryC);
                 angryC++;
 
             }else if(moodArrayList.get(i).getId().equals(surprised)) {
-                Log.i("Debug",""+surprisedC);
                 surprisedC++;
 
             }else if(moodArrayList.get(i).getId().equals(disgust)) {
-                Log.i("Debug",""+disgustC);
                 disgustC++;
 
             }else if(moodArrayList.get(i).getId().equals(fear)) {
-                Log.i("Debug",""+fearC);
                 fearC++;
 
             }else if(moodArrayList.get(i).getId().equals(sad)) {
-                Log.i("Debug",""+sadC);
                 sadC++;
 
             }else if(moodArrayList.get(i).getId().equals(shame)) {
-                Log.i("Debug",""+shameC);
                 shameC++;
 
             }else if(moodArrayList.get(i).getId().equals(annoyed)) {
-                Log.i("Debug",""+annoyedC);
                 annoyedC++;
 
             }else if(moodArrayList.get(i).getId().equals(confused)) {
-                Log.i("Debug",""+confusedC);
                 confusedC++;
             }
 
@@ -182,6 +251,10 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
         });
 
     }
+
+    /**
+     * Add values to pie entry.
+     */
     public void AddValuesToPIEENTRY(){
 
         entries.add(new BarEntry((float)happyC, 0));
@@ -197,6 +270,9 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
 
     }
 
+    /**
+     * Add values to pie entry labels.
+     */
     public void AddValuesToPieEntryLabels(){
 
         PieEntryLabels.add(happy);
