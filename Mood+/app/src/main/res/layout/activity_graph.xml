@@ -24,5 +24,4 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_info"/>
 
-
 </RelativeLayout>

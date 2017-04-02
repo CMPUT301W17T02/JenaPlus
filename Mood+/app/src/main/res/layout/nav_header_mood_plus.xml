@@ -28,6 +28,7 @@
         android:textStyle="bold"
         android:gravity="left"
         android:layout_marginBottom="10dp"
+        android:layout_below="@+id/email"
         android:id="@+id/username"
         android:layout_alignLeft="@+id/email"
         android:layout_alignStart="@+id/email"
@@ -39,10 +40,11 @@
         android:text="Mood+"
         android:id="@+id/email"
         android:gravity="left"
-        android:layout_above="@+id/username"
+        android:layout_below="@+id/profile_image"
         android:layout_alignLeft="@+id/profile_image"
         android:layout_alignStart="@+id/profile_image"
         android:textSize="14sp"
+        android:paddingTop="10dp"
         android:textColor="#fff" />
 
 </RelativeLayout>

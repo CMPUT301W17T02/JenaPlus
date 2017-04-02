@@ -13,6 +13,8 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="@android:color/white"
+            android:dividerHeight="0.5dp"
             android:id="@+id/listView">
 
         </ListView>
