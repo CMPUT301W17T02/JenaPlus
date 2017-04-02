@@ -76,14 +76,13 @@ public class AddMoodActivityTest extends ActivityInstrumentationTestCase2{
         solo.clickInList(0);
         solo.assertCurrentActivity("Wrong Activity", ViewMoodActivity.class);
 
-        // Click on the navigation button
+        // Click on the navigation button, view the mood, view the location, and go back to main
         solo.clickOnView((solo.getView(R.id.test_location)));
+        solo.assertCurrentActivity("Wrong Activity", MapActivity.class);
+        solo.goBack();
         solo.assertCurrentActivity("Wrong Activity", ViewMoodActivity.class);
-
-
-
-
-
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
 
         // Remove the test mood
         deleteTestMood();
