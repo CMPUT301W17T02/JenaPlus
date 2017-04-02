@@ -55,11 +55,12 @@
         android:layout_marginBottom="20dp"
         android:hint="@string/EditSFeeling" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/selected_image"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
         android:layout_below="@id/message"
         android:layout_centerHorizontal="true"/>
 
