@@ -114,7 +114,7 @@
             android:name=".FilteredLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
 
-        <activity android:name=".Piechart"
+        <activity android:name=".piechart"
             android:parentActivityName=".MoodPlusActivity" />
 
 
