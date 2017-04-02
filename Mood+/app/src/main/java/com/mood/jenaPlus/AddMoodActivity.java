@@ -157,7 +157,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             public boolean onLongClick(View v) {
                 new AlertDialog.Builder(context)
                         .setTitle("Delete Image")
-                        .setMessage("Do you want to delete an image?")
+                        .setMessage("Do you want to delete this image?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 imageString = "";

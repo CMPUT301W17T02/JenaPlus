@@ -44,9 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:width="150dp"
-        android:backgroundTint="#E0E0E0"
+        android:layout_marginBottom="5dp"
+        android:background="#E0E0E0"
         android:layout_below="@+id/Login_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true" />
 
     <EditText
         android:id="@+id/loginUserName"
