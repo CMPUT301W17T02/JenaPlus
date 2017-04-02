@@ -32,8 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:textSize="15sp"
-                android:text="Situation"
-                android:maxLength="20"
+                android:textStyle="bold"
                 android:layout_below="@+id/time"
                 android:textColor="@android:color/black"
                 android:paddingBottom="15dp"
@@ -68,8 +67,8 @@
 
             <ImageButton
                 android:id="@+id/selected_image"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
                 android:layout_below="@id/message"

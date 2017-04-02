@@ -162,16 +162,16 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                 new AlertDialog.Builder(context)
                         .setTitle("Delete Image")
-                        .setMessage("Do you want to delete an image?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setMessage("Do you want to delete this image?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 aPhoto = "";
                                 cameraImage.setImageBitmap(null);
                             }
                         })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+                                dialog.dismiss();
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -225,6 +225,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                                                 Toast.LENGTH_SHORT
                                         ).show();
                                         socialSituation = (String) item.getTitle();
+                                        situation.setText(socialSituation);
                                         return true;
                                     }
                                 });
