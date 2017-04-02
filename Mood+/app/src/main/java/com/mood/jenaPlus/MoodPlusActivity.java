@@ -1150,12 +1150,71 @@ public class MoodPlusActivity extends MerlinActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case 0:
-                                        Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
-                                        startActivity(graphIntent);
+                                        barDateDialog();
                                         break;
                                     case 1:
-                                        Intent pieintent = new Intent(MoodPlusActivity.this, Piechart.class);
-                                        startActivity(pieintent);
+                                        pieDateDialog();
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(android.R.drawable.ic_menu_info_details)
+                .show();
+    }
+
+    public void barDateDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Which moods to use?")
+                .setItems(new CharSequence[]
+                                {"Moods from the last 7 days", "All moods"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        Intent graphIntent1 = new Intent(MoodPlusActivity.this, GraphActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("sevenDays","yes");
+                                        graphIntent1.putExtras(bundle);
+                                        startActivity(graphIntent1);
+                                        break;
+                                    case 1:
+                                        Intent graphIntent2 = new Intent(MoodPlusActivity.this, GraphActivity.class);
+                                        Bundle bundle2 = new Bundle();
+                                        bundle2.putString("sevenDays","no");
+                                        graphIntent2.putExtras(bundle2);
+                                        startActivity(graphIntent2);
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(android.R.drawable.ic_menu_info_details)
+                .show();
+
+    }
+
+    public void pieDateDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Which moods to use?")
+                .setItems(new CharSequence[]
+                                {"Moods from the last 7 days", "All moods"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        Intent graphIntent1 = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("sevenDays","yes");
+                                        graphIntent1.putExtras(bundle);
+                                        startActivity(graphIntent1);
+                                        break;
+                                    case 1:
+                                        Intent graphIntent2 = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Bundle bundle2 = new Bundle();
+                                        bundle2.putString("sevenDays","no");
+                                        graphIntent2.putExtras(bundle2);
+                                        startActivity(graphIntent2);
                                         break;
                                 }
                             }

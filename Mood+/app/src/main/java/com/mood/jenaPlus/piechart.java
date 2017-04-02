@@ -17,6 +17,9 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
@@ -67,8 +70,24 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
+        Bundle bundle = getIntent().getExtras();
+        String dateCheck = bundle.getString("sevenDays");
+
         myMoodList = participant.getUserMoodList();
-        moodArrayList = myMoodList.getUserMoodList();
+        ArrayList<Mood> first = myMoodList.getUserMoodList();
+
+        List<Mood> temp = first;
+        if (dateCheck.equals("yes")) {
+            for(Iterator<Mood> iterator = temp.iterator(); iterator.hasNext();) {
+                Mood mood = iterator.next();
+                Date tempDate = mood.getDate();
+                if(!isWithinRange(tempDate)){
+                    iterator.remove();
+                }
+            }
+        }
+
+        moodArrayList.addAll(temp);
         mSize = moodArrayList.size();
 
 
@@ -167,5 +186,10 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
     @Override
     public void update(MoodPlus moodPlus) {
 
+    }
+    static boolean isWithinRange(Date testDate) {
+        Date endDate = new Date();
+        Date startDate = new Date(System.currentTimeMillis() - 7L * 24 * 3600 * 1000);
+        return !(testDate.before(startDate) || testDate.after(endDate));
     }
 }
