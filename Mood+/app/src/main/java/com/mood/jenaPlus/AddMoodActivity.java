@@ -427,6 +427,20 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
                 mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
 
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                Participant offlineParticipant = offlineController.getOfflineParticipant();
+                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+
+                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineMoodList;
+
+                offlineController.saveOfflineList(offlineList, context);
+
 
                 finish();
 
