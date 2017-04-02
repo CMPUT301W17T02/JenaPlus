@@ -23,7 +23,7 @@ import java.util.Date;
  * @version 1.0.0
  * @since 1.0
  */
-public class Mood implements Serializable{
+public class  Mood implements Serializable{
     private String id;
     private String userName;
     private String text;
