@@ -66,11 +66,6 @@ public class GPSTracker extends Service {
 // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    /**
-     * Instantiates a new Gps tracker.
-     */
-    public GPSTracker() {
-    }
 
     /**
      * Instantiates a new Gps tracker.
@@ -107,7 +102,6 @@ public class GPSTracker extends Service {
             } else {
                 this.canGetLocation = true;
                 if (isNetworkEnabled) {
-                    int requestPermissionsCode = 50;
 
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,

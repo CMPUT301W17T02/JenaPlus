@@ -77,39 +77,30 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
         for (int i = 0; i<mSize; i++) {
             Log.i("Debug",moodArrayList.get(i).getId());
             if (moodArrayList.get(i).getId().equals(happy)){
-                Log.i("Debug",""+happyC);
                 happyC++;
 
             } else if(moodArrayList.get(i).getId().equals(angry)) {
-                Log.i("Debug",""+angryC);
                 angryC++;
 
             }else if(moodArrayList.get(i).getId().equals(surprised)) {
-                Log.i("Debug",""+surprisedC);
                 surprisedC++;
 
             }else if(moodArrayList.get(i).getId().equals(disgust)) {
-                Log.i("Debug",""+disgustC);
                 disgustC++;
 
             }else if(moodArrayList.get(i).getId().equals(fear)) {
-                Log.i("Debug",""+fearC);
                 fearC++;
 
             }else if(moodArrayList.get(i).getId().equals(sad)) {
-                Log.i("Debug",""+sadC);
                 sadC++;
 
             }else if(moodArrayList.get(i).getId().equals(shame)) {
-                Log.i("Debug",""+shameC);
                 shameC++;
 
             }else if(moodArrayList.get(i).getId().equals(annoyed)) {
-                Log.i("Debug",""+annoyedC);
                 annoyedC++;
 
             }else if(moodArrayList.get(i).getId().equals(confused)) {
-                Log.i("Debug",""+confusedC);
                 confusedC++;
             }
 
@@ -137,7 +128,6 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
                 });
 
         BARDATA = new BarData(BarEntryLabels, Bardataset);
-
 
         chart.setData(BARDATA);
 

@@ -35,7 +35,6 @@ public class EditMapActivity extends FragmentActivity implements
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
     }
 
     @Override
@@ -44,12 +43,10 @@ public class EditMapActivity extends FragmentActivity implements
     }
 
 
-
     /** Called when the map is ready. */
     @Override
     public void onMapReady(GoogleMap map) {
         final GoogleMap mMap = map;
-        Marker followingMarker;
 
         UiSettings mUiSettings = mMap.getUiSettings();
         mUiSettings.setZoomControlsEnabled(true);
@@ -76,8 +73,6 @@ public class EditMapActivity extends FragmentActivity implements
         });
 
         Button button = (Button) findViewById(R.id.set_location);
-        //button.setText("Set New Location");
-        //addContentView(button, new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -94,9 +89,6 @@ public class EditMapActivity extends FragmentActivity implements
                 setResult(EditMoodActivity.RESULT_OK,intent);
                 finish();
 
-                ;
-
-//                startActivity(intent);
 
             }
         });

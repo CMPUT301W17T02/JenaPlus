@@ -57,21 +57,6 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
         Bundle bundle = getIntent().getExtras();
         keyword = bundle.getString("testText");
 
-        //getNewList();
-
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-        String name = participant.getUserName();
-        String id = participant.getId();
-        String who = "Name: "+ name + "\nkeyword: " + keyword;
-        //test.setText(who);
-
-        /*------------------------------------------------*/
-
-
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

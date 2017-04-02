@@ -35,16 +35,6 @@ public class FilteredDateActivity extends AppCompatActivity implements MPView<Mo
 
         moodListView = (ListView) findViewById(R.id.listView);
 
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-        //String name = participant.getUserName();
-        //String id = participant.getId();
-
-        /*------------------------------------------------*/
-
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

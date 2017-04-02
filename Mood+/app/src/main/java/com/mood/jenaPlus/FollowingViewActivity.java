@@ -49,10 +49,6 @@ public class FollowingViewActivity extends Fragment implements MPView<MoodPlus>{
 
         moodListView = (ListView) getView().findViewById(R.id.listView);
 
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

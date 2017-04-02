@@ -51,8 +51,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
             }
         });
 
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -106,7 +104,6 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
         }
 
         moodArrayList.addAll(temp);
-
 
         if (moodArrayList.size() <1) {
             noMoods();
