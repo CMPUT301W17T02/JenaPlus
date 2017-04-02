@@ -10,7 +10,6 @@ public class OfflineDataController {
 
     //singleton
     MoodPlus moodPlus = null;
-    SaveOffline saveOffline  = new SaveOffline();
 
 
     public OfflineDataController(MoodPlus aMoodPlus){

@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
@@ -36,19 +35,14 @@ import static android.app.Activity.RESULT_OK;
  */
 
 public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, Connectable, Bindable {
-    private static final String FILENAME = "moodPlus.sav";
     protected ListView moodListView;
     private AlertDialog.Builder deleteAlertBuilder;
 
     private ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     protected ArrayAdapter<Mood> adapter;
     private UserMoodList myMoodList = new UserMoodList();
-    private FollowingMoodList foMoodList = new FollowingMoodList();
-
-    private String searchText = "";
 
     private int longClickedItemIndex;
-    private static final int VIEW_PERSON_RESULT_CODE = 0;
     private static final int DELETE_PERSON_RESULT_CODE = 1;
     private static final int EDIT_PERSON_RESULT_CODE = 2;
     protected MainMPController mpController;
@@ -65,22 +59,8 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
 
         moodListView = (ListView) getView().findViewById(R.id.listView);
-
-        //getActivity().setSupportActionBar(toolbar);
-
-
-        /* LOADING THE LOGGED IN PARTICIPANT */
-
-        final MainMPController mpController = MoodPlusApplication.getMainMPController();
-
-        Participant participant = mpController.getParticipant();
-
-        String name = participant.getUserName();
-        String id = participant.getId();
-
 
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -134,6 +114,18 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     public void onStart(){
         super.onStart();
 
+        if(merlinsBeard.isConnected()) {
+            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+
+            UserMoodList tempList = offlineController.loadSavedList(getActivity());
+
+
+            if(tempList != null) {
+                offlineController.SyncOfflineList(getActivity());
+            }
+
+        }
+        
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
@@ -155,7 +147,6 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
             case EDIT_PERSON_RESULT_CODE:
 
                 Intent intent = new Intent(getActivity(), EditMoodActivity.class);
-
                 intent.putExtra("editMood", (Serializable) moodListView.getItemAtPosition(longClickedItemIndex));
                 intent.putExtra("pos", longClickedItemIndex);
                 startActivity(intent);
@@ -188,21 +179,40 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
 
                             adapter.notifyDataSetChanged();
 
-                            Boolean offline = false;
-                            Mood deletedMood = new Mood();
-                            saveToList(offline, deletedMood);
 
-                            Log.d("INDELETE", "SHOULD HAVE DELETED");
+                            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                            Participant offlineParticipant = offlineController.getOfflineParticipant();
+                            UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
 
+
+                            UserMoodList offlineList = offlineController.loadSavedList(getContext());
+
+                            if (offlineList == null) {
+                                offlineList = new UserMoodList();
+                            }
+
+                            offlineList = offlineMoodList;
+
+                            offlineController.saveOfflineList(offlineList, getContext());
 
                         }
                         else{
-                            Toast.makeText(getActivity(), "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
+                            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                            Participant offlineParticipant = offlineController.getOfflineParticipant();
+                            UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                            offlineMoodList.deleteUserMood(moodArrayList.get(longClickedItemIndex));
 
-                            Boolean offline = true;
-                            Mood deletedMood = moodArrayList.get(longClickedItemIndex);
+                            UserMoodList offlineList = offlineController.loadSavedList(getContext());
 
-                            saveToList(offline, deletedMood);
+                            if (offlineList == null) {
+                                offlineList = new UserMoodList();
+                            }
+
+                            offlineList = offlineMoodList;
+
+                            offlineController.saveOfflineList(offlineList, getContext());
+
+                            adapter.notifyDataSetChanged();
 
                         }
                     }
@@ -215,43 +225,13 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
 
                 return false;
 
-
         }
         return super.onContextItemSelected(item);
-    }
-
-    public void saveToList(Boolean offline, Mood deletedMood) {
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        Participant offlineParticipant = offlineController.getOfflineParticipant();
-        UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
-
-        if(offline == true) {
-            offlineMoodList.deleteUserMood(deletedMood);
-        }
-
-        UserMoodList offlineList = offlineController.loadSavedList(getContext());
-
-        if (offlineList == null) {
-            offlineList = new UserMoodList();
-        }
-
-        offlineList = offlineMoodList;
-
-        offlineController.saveOfflineList(offlineList, getContext());
-
-        Toast.makeText(getActivity(), "Saved Moods!", Toast.LENGTH_SHORT).show();
-        Log.d("In MAIN", "Saving to list");
-
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void update(MoodPlus moodPlus){
 
-    }
-
-    protected void registerConnectable(Connectable connectable) {
-        merlin.registerConnectable(connectable);
     }
 
     @Override
@@ -265,6 +245,7 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     @Override
     public void onConnect() {
         Log.i("Debug", "online");
+
     }
 
 

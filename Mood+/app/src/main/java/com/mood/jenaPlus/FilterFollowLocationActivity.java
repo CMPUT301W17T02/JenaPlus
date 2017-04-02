@@ -55,17 +55,6 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
             }
         });
 
-        /* -------------- VIEW MAP BUTTON ---------------*/
-
-
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-
-        /*------------------------------------------------*/
-
 
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -130,9 +119,6 @@ public class FilterFollowLocationActivity extends AppCompatActivity implements M
 
         adapter = new MoodFollowerListAdapter(FilterFollowLocationActivity.this,moodArrayList);
         getUserMoodOrderedList();
-
-        //String d = moodString + " moods";
-
 
         moodListView.setAdapter(adapter);
 

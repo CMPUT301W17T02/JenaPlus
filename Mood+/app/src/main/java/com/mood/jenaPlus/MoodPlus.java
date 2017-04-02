@@ -13,10 +13,6 @@ public class MoodPlus extends MPModel<MPView> {
 
     protected UserMoodList userMoods; // ArrayList of user moods
 
-    public UserMoodList getUserMoods() {
-        return userMoods;
-    }
-
     public void setMoods(UserMoodList newMoods) {
         this.userMoods = newMoods;
     }

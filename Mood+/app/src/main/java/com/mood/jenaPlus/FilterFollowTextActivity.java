@@ -53,16 +53,6 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
             }
         });
 
-        /* -------------- VIEW MAP BUTTON ---------------*/
-
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-
-        /*------------------------------------------------*/
-
 
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
