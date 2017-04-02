@@ -441,6 +441,8 @@ public class MoodPlusActivity extends MerlinActivity
     /*-------------------------------------OWN FILTER MOODS---------------------------------------*/
 
     public void testFilters() {
+        searching = recent = moody = locationBool = false;
+
         final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
@@ -633,6 +635,8 @@ public class MoodPlusActivity extends MerlinActivity
                                         Toast.makeText(context, "Filter By Annoyed Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
+                                    default:
+
 
                                 }
                             }
@@ -762,7 +766,7 @@ public class MoodPlusActivity extends MerlinActivity
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 dialog.cancel();
 
             }
@@ -826,6 +830,7 @@ public class MoodPlusActivity extends MerlinActivity
         final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
+        searching = recent = moody = locationBool = false;
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Filter your following moods")

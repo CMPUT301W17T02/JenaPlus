@@ -149,7 +149,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         aLatitude = mood.getLatitude();
         aLongitude = mood.getLongitude();
 
-
         cameraImage = (ImageButton) findViewById(R.id.selected_image);
 
         //Display Image
@@ -162,7 +161,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                 new AlertDialog.Builder(context)
                         .setTitle("Delete Image")
-                        .setMessage("Do you want to delete an image?")
+                        .setMessage("Do you want to delete your image?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 aPhoto = "";
@@ -179,9 +178,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                 return false;
             }
         });
-
-
-        registerBroadcastReceiver();
 
 
         date.setOnClickListener(new View.OnClickListener() {

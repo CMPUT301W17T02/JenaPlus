@@ -31,17 +31,28 @@ public class DeleteMoodActivityTest extends ActivityInstrumentationTestCase2 {
     public void testDeleteMood() {
         solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.loginUserName));
-        solo.enterText((EditText) solo.getView(R.id.loginUserName), "herb");
+        solo.enterText((EditText) solo.getView(R.id.loginUserName), "josefina");
         solo.clickOnButton("Log in");
-        assertTrue(solo.waitForText("Username: herb"));
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
+
+        solo.clickOnView((solo.getView(R.id.fab)));
+        solo.assertCurrentActivity("Wrong Activity", AddMoodActivity.class);
+
+        GridView gridview = (GridView)solo.getView(R.id.gridView);
+        View element = gridview.getChildAt(2);
+        solo.clickOnView(element);
+
+        solo.clickOnView((solo.getView(R.id.socialPopup)));
+        solo.searchText("With a crowd");
+        solo.clickOnText("With a crowd");
+
+
+        solo.clickOnView((solo.getView(R.id.AddButton)));
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
 
         solo.clickLongInList(0);
         solo.clickOnText("Delete");
         solo.clickOnText("Yes");
-        assertTrue(solo.waitForText("Username: herb"));
-        solo.waitForActivity("MoodPlusActivity");
-
 
     }
 }
