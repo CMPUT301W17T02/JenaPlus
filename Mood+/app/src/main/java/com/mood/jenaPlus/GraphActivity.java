@@ -27,36 +27,116 @@ import static android.R.attr.entries;
 import static android.media.CamcorderProfile.get;
 import static com.github.mikephil.charting.charts.CombinedChart.DrawOrder.BAR;
 
+/**
+ * This is the Graph activity class of the statistics.
+ *
+ * @author Cecilia
+ */
 public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
+    /**
+     * The Mood array list.
+     */
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
     private ArrayAdapter<Mood> adapter;
+    /**
+     * The Happy.
+     */
     String happy = "happy";
+    /**
+     * The Angry.
+     */
     String angry = "angry";
+    /**
+     * The Surprised.
+     */
     String surprised = "surprised";
+    /**
+     * The Disgust.
+     */
     String disgust = "disgust";
+    /**
+     * The Fear.
+     */
     String fear = "fear";
+    /**
+     * The Sad.
+     */
     String sad = "sad";
+    /**
+     * The Shame.
+     */
     String shame = "shame";
+    /**
+     * The Annoyed.
+     */
     String annoyed = "annoyed";
+    /**
+     * The Confused.
+     */
     String confused = "confused";
 
+    /**
+     * The Happy counter.
+     */
     int happyC = 0;
+    /**
+     * The Angry counter.
+     */
     int angryC = 0;
+    /**
+     * The Surprised counter.
+     */
     int surprisedC = 0;
+    /**
+     * The Disgust counter.
+     */
     int disgustC = 0;
+    /**
+     * The Fear counter.
+     */
     int fearC = 0;
+    /**
+     * The Sad counter.
+     */
     int sadC = 0;
+    /**
+     * The Shame counter.
+     */
     int shameC = 0;
+    /**
+     * The Annoyed counter.
+     */
     int annoyedC = 0;
+    /**
+     * The Confused counter.
+     */
     int confusedC = 0;
 
+    /**
+     * The Bar Chart.
+     */
     BarChart chart ;
+    /**
+     * The Bar entry.
+     */
     ArrayList<BarEntry> BARENTRY ;
+    /**
+     * The Bar entry labels.
+     */
     ArrayList<String> BarEntryLabels ;
+    /**
+     * The Bar dataset.
+     */
     BarDataSet Bardataset ;
+    /**
+     * The Barchart data.
+     */
     BarData BARDATA ;
+    /**
+     * The size of userMoodList.
+     */
     int mSize;
 
     @Override
@@ -130,6 +210,10 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
 
     }
+
+    /**
+     * Add values to bar entry.
+     */
     public void AddValuesToBARENTRY(){
         Log.i("counter",""+happyC);
         Log.i("counterC",""+(float)happyC);
@@ -147,6 +231,9 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
     }
 
 
+    /**
+     * Add values to bar entry labels.
+     */
     public void AddValuesToBarEntryLabels(){
 
         BarEntryLabels.add(happy);
