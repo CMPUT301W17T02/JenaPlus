@@ -1,0 +1,281 @@
+https://elastic.vfree.org/cmput301w17t2/user/AVsq9whfDCyqBhwh02-v
+
+{
+    "followerList":
+    [
+    ],
+    "followingList":
+    [
+    ],
+    "followingMoodList":
+    {
+        "FollowingMoodList":
+        [
+        ],
+        "UserMoodList":
+        [
+        ]
+    },
+    "id": "AVsq9whfDCyqBhwh02-v",
+    "pendingFollowers":
+    [
+    ],
+    "pendingFollowing":
+    [
+    ],
+    "userMoodList":
+    {
+        "UserMoodList":
+        [
+            {
+                "addLocation": false,
+                "color": "#69F0AE",
+                "date": "2017-04-01T13:53:08-0600",
+                "id": "annoyed",
+                "photo": "",
+                "social": "",
+                "text": "blahh",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#F8BBD0",
+                "date": "2017-04-01T13:52:51-0600",
+                "id": "shame",
+                "photo": "",
+                "social": "",
+                "text": "cv",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#69F0AE",
+                "date": "2017-04-01T13:52:40-0600",
+                "id": "annoyed",
+                "latitude": 53.526781601590464,
+                "longitude": -113.52364864200354,
+                "photo": "",
+                "social": "",
+                "text": "omnom",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#A1887F",
+                "date": "2017-04-01T13:49:51-0600",
+                "id": "fear",
+                "photo": "",
+                "social": "",
+                "text": "omnomnom",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#FFF59D",
+                "date": "2017-04-01T13:49:35-0600",
+                "id": "happy",
+                "photo": "",
+                "social": "",
+                "text": "food",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#8C9EFF",
+                "date": "2017-04-01T13:49:23-0600",
+                "id": "sad",
+                "latitude": 53.526781601590464,
+                "longitude": -113.52364864200354,
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#FFF59D",
+                "date": "2017-04-01T13:49:16-0600",
+                "id": "happy",
+                "latitude": 53.526781601590464,
+                "longitude": -113.52364864200354,
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#FF8A80",
+                "date": "2017-04-01T13:46:08-0600",
+                "id": "angry",
+                "photo": "",
+                "social": "",
+                "text": "hii",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#FFF59D",
+                "date": "2017-04-01T13:45:28-0600",
+                "id": "happy",
+                "latitude": 53.5267464,
+                "longitude": -113.5275913,
+                "photo": "",
+                "social": "",
+                "text": "hqpp",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#8C9EFF",
+                "date": "2017-04-01T13:44:49-0600",
+                "id": "sad",
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#8C9EFF",
+                "date": "2017-04-01T13:44:42-0600",
+                "id": "sad",
+                "photo": "",
+                "social": "",
+                "text": "miii",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#FF8A80",
+                "date": "2017-04-01T13:44:33-0600",
+                "id": "angry",
+                "latitude": 53.526781601590464,
+                "longitude": -113.52364864200354,
+                "photo": "",
+                "social": "",
+                "text": "m",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#FFCC80",
+                "date": "2017-04-01T13:41:06-0600",
+                "id": "surprised",
+                "photo": "",
+                "social": "",
+                "text": "oooo",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#B2FF59",
+                "date": "2017-04-01T13:40:57-0600",
+                "id": "disgust",
+                "photo": "",
+                "social": "",
+                "text": "mooo",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#A1887F",
+                "date": "2017-04-01T13:39:16-0600",
+                "id": "fear",
+                "latitude": 53.526781601590464,
+                "longitude": -113.52364864200354,
+                "photo": "",
+                "social": "",
+                "text": "fail 391",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#B2FF59",
+                "date": "2017-04-01T13:37:32-0600",
+                "id": "disgust",
+                "latitude": 53.52822294272681,
+                "longitude": -113.52548830211163,
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#F8BBD0",
+                "date": "2017-04-01T13:36:10-0600",
+                "id": "shame",
+                "latitude": 53.52758020470938,
+                "longitude": -113.52957129478455,
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": true,
+                "color": "#FF8A80",
+                "date": "2017-04-01T13:34:46-0600",
+                "id": "angry",
+                "latitude": 53.52758020470938,
+                "longitude": -113.52957129478455,
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#FFF59D",
+                "date": "2017-04-01T13:31:49-0600",
+                "id": "happy",
+                "photo": "",
+                "social": "",
+                "text": "blah",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#EA80FC",
+                "date": "2017-04-01T13:31:36-0600",
+                "id": "confused",
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#A1887F",
+                "date": "2017-04-01T13:31:31-0600",
+                "id": "fear",
+                "photo": "",
+                "social": "",
+                "text": "",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#B2FF59",
+                "date": "2017-04-01T13:31:26-0600",
+                "id": "disgust",
+                "photo": "",
+                "social": "",
+                "text": "blah",
+                "userName": "josefina"
+            },
+            {
+                "addLocation": false,
+                "color": "#EA80FC",
+                "date": "2017-04-01T13:53:20-0600",
+                "id": "confused",
+                "photo": "",
+                "social": "",
+                "text": "hmm",
+                "userName": "josefina"
+            }
+        ]
+    },
+    "userName": "josefina"
+}

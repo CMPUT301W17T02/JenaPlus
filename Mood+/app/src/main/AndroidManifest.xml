@@ -111,16 +111,24 @@
             android:name=".FilterFollowTextActivity"
             android:parentActivityName=".MoodPlusActivity" />
         <activity android:name=".MarkerActivity" />
-        <activity android:name=".GraphActivity" />
+        <activity android:name=".GraphActivity"
+            android:parentActivityName=".MoodPlusActivity"/>
         <activity
             android:name=".FilterFollowLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
         <activity
             android:name=".FilteredLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".EditMapActivity" />
+
+        <activity android:name=".Piechart"
+            android:parentActivityName=".MoodPlusActivity" />
+
+
+        <activity android:name=".EditMapActivity"></activity>
+
         <activity android:name=".EditMoodActivity"
             android:parentActivityName=".MoodPlusActivity"></activity>
+
     </application>
 
 </manifest>
