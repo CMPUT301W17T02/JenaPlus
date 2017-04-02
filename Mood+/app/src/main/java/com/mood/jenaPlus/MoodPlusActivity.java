@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -21,14 +23,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -36,8 +36,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.google.android.gms.maps.model.LatLng;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
@@ -53,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
 
 /**
@@ -107,6 +104,8 @@ public class MoodPlusActivity extends MerlinActivity
     UserMoodList offlineList = new UserMoodList();
     Participant usingPart;
 
+    private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +123,8 @@ public class MoodPlusActivity extends MerlinActivity
 
         tabLayout = (TabLayout) findViewById(R.id.menu_tab);
         tabLayout.setupWithViewPager(viewPager);
+
+        registerBroadcastReceiver();
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -194,6 +195,18 @@ public class MoodPlusActivity extends MerlinActivity
         textName.setText(name);
 
     }
+
+    public void registerBroadcastReceiver() {
+        IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        this.registerReceiver(broadcastReceiver, myFilter);
+    }
+
+    public void unregisterBroadcastReceiver() {
+        this.unregisterReceiver(broadcastReceiver);
+    }
+
+
 
     @Override
     public void onBackPressed() {
@@ -322,10 +335,6 @@ public class MoodPlusActivity extends MerlinActivity
                 }
 
             }
-
-            for (Mood mood: locationMoodList){
-                Log.i("PARTTTTTTTTTTYYYY!!!","Contents of arrayLocation: " + locationMoodList + mood.getUserName() );}
-
 
             /*--------------- PASSING LIST OF LOCATIONS TO MAP ACTIVITY ----------------*/
             Bundle args = new Bundle();
@@ -1161,7 +1170,7 @@ public class MoodPlusActivity extends MerlinActivity
                                         startActivity(graphIntent);
                                         break;
                                     case 1:
-                                        Intent pieintent = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Intent pieintent = new Intent(MoodPlusActivity.this, piechart.class);
                                         startActivity(pieintent);
                                         break;
                                 }
@@ -1189,6 +1198,7 @@ public class MoodPlusActivity extends MerlinActivity
         registerConnectable(this);
         registerDisconnectable(this);
         registerBindable(this);
+        registerBroadcastReceiver();
     }
 
     @Override
@@ -1201,8 +1211,6 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     public void onConnect() {
         networkStatusDisplayer.displayConnected();
-        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        //offlineController.SyncOffline();
     }
 
     @Override
@@ -1213,6 +1221,7 @@ public class MoodPlusActivity extends MerlinActivity
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterBroadcastReceiver();
         networkStatusDisplayer.reset();
 
     }

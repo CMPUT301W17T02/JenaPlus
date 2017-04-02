@@ -81,7 +81,7 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
 
                 }
                 else {
-                    Toast.makeText(getContext(),"FOLLOWING " + participant.getUserName(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Following request sent to " + participant.getUserName(), Toast.LENGTH_SHORT).show();
                     Log.i("fromfollowactivity", participant.getUserName());
                     MainMPController mpController = MoodPlusApplication.getMainMPController();
                     mpController.addFollowRequest(participant.getUserName());
