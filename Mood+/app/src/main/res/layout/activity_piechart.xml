@@ -8,7 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@android:color/white"
     tools:context="com.mood.jenaPlus.Piechart">
+
+
 
 
     <com.github.mikephil.charting.charts.PieChart
@@ -16,4 +19,11 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_info"/>
 </RelativeLayout>

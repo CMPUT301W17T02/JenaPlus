@@ -1,10 +1,14 @@
 package com.mood.jenaPlus;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -58,6 +62,10 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
     BarDataSet Bardataset ;
     BarData BARDATA ;
     int mSize;
+
+    private ImageButton infoButton;
+
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +122,27 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
             }
 
         }
+
+        infoButton = (ImageButton) findViewById(R.id.info);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // custom dialog
+                final Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.color_legend);
+
+                ImageButton dialogButton = (ImageButton) dialog.findViewById(R.id.dialogButtonOK);
+                // if button is clicked, close the custom dialog
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
 
 
         BARENTRY = new ArrayList<>();
