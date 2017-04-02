@@ -6,27 +6,18 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static android.R.attr.data;
-import static android.R.attr.entries;
-import static android.media.CamcorderProfile.get;
-import static com.github.mikephil.charting.charts.CombinedChart.DrawOrder.BAR;
-
-public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus> {
+public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
 
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();
@@ -51,23 +42,24 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
     int annoyedC = 0;
     int confusedC = 0;
 
-    BarChart chart ;
-    ArrayList<BarEntry> BARENTRY ;
-    ArrayList<String> BarEntryLabels ;
-    BarDataSet Bardataset ;
-    BarData BARDATA ;
     int mSize;
+
+    PieChart pieChart ;
+    ArrayList<Entry> entries ;
+    ArrayList<String> PieEntryLabels ;
+    PieDataSet pieDataSet ;
+    PieData pieData ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_graph);
+        setContentView(R.layout.activity_piechart);
 
-        chart = (BarChart) findViewById(R.id.BarChart);
+        pieChart = (PieChart) findViewById(R.id.chart1);
 
+        entries = new ArrayList<>();
+        PieEntryLabels = new ArrayList<String>();
 
-        BARENTRY = new ArrayList<>();
-        BarEntryLabels = new ArrayList<String>();
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
@@ -118,50 +110,43 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
         }
 
+        AddValuesToPIEENTRY();
+        AddValuesToPieEntryLabels();
 
-        AddValuesToBARENTRY();
-        AddValuesToBarEntryLabels();
-
-        Bardataset = new BarDataSet(BARENTRY, "Projects");
-
-        BARDATA = new BarData(BarEntryLabels, Bardataset);
-        Bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        chart.setData(BARDATA);
-
-        chart.animateY(3000);
-        chart.invalidate();
-
+        pieDataSet = new PieDataSet(entries, "");
+        pieData = new PieData(PieEntryLabels, pieDataSet);
+        pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        pieChart.setData(pieData);
+        pieChart.animateY(3000);
+        pieChart.invalidate();
 
     }
-    public void AddValuesToBARENTRY(){
-        Log.i("counter",""+happyC);
-        Log.i("counterC",""+(float)happyC);
-        BARENTRY.add(new BarEntry((float)happyC, 0));
-        BARENTRY.add(new BarEntry((float)angryC, 1));
-        BARENTRY.add(new BarEntry((float)surprisedC, 2));
-        BARENTRY.add(new BarEntry((float)disgustC, 3));
-        BARENTRY.add(new BarEntry((float)fearC, 4));
-        BARENTRY.add(new BarEntry((float)sadC, 5));
-        BARENTRY.add(new BarEntry((float)shameC, 6));
-        BARENTRY.add(new BarEntry((float)annoyedC, 7));
-        BARENTRY.add(new BarEntry((float)confusedC, 8));
+    public void AddValuesToPIEENTRY(){
+
+        entries.add(new BarEntry((float)happyC, 0));
+        entries.add(new BarEntry((float)angryC, 1));
+        entries.add(new BarEntry((float)surprisedC, 2));
+        entries.add(new BarEntry((float)disgustC, 3));
+        entries.add(new BarEntry((float)fearC, 4));
+        entries.add(new BarEntry((float)sadC, 5));
+        entries.add(new BarEntry((float)shameC, 6));
+        entries.add(new BarEntry((float)annoyedC, 7));
+        entries.add(new BarEntry((float)confusedC, 8));
 
 
     }
 
+    public void AddValuesToPieEntryLabels(){
 
-    public void AddValuesToBarEntryLabels(){
-
-        BarEntryLabels.add(happy);
-        BarEntryLabels.add(angry);
-        BarEntryLabels.add(surprised);
-        BarEntryLabels.add(disgust);
-        BarEntryLabels.add(fear);
-        BarEntryLabels.add(sad);
-        BarEntryLabels.add(shame);
-        BarEntryLabels.add(annoyed);
-        BarEntryLabels.add(confused);
+        PieEntryLabels.add(happy);
+        PieEntryLabels.add(angry);
+        PieEntryLabels.add(surprised);
+        PieEntryLabels.add(disgust);
+        PieEntryLabels.add(fear);
+        PieEntryLabels.add(sad);
+        PieEntryLabels.add(shame);
+        PieEntryLabels.add(annoyed);
+        PieEntryLabels.add(confused);
 
     }
 
@@ -170,5 +155,4 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
     public void update(MoodPlus moodPlus) {
 
     }
-
 }

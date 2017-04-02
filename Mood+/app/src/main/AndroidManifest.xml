@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.mood.jenaPlus">
+    package="com.mood.jenaPlus">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -11,8 +11,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.SEND_SMS" />
-    <uses-permission android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE"/>
-    <permission      android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE" />
+
+    <permission
+        android:name="com.mood.jenaPlus.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -55,13 +58,13 @@
         <activity
             android:name=".ViewMoodActivity"
             android:label="Mood+"
-            android:parentActivityName=".MoodPlusActivity"/>
-            <!--android:theme="@style/AppTheme.NoActionBar" />-->
+            android:parentActivityName=".MoodPlusActivity" />
+        <!-- android:theme="@style/AppTheme.NoActionBar" /> -->
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".EditMoodActivity"
             android:label="@string/title_activity_edit_mood"
@@ -75,8 +78,9 @@
             android:name=".FilteredMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilteredDateActivity"
-            android:parentActivityName=".MoodPlusActivity"/>
+        <activity
+            android:name=".FilteredDateActivity"
+            android:parentActivityName=".MoodPlusActivity" />
 
         <service android:name=".GPSTracker" />
 
@@ -98,12 +102,9 @@
         <activity
             android:name=".FollowerRequestActivity"
             android:parentActivityName=".MoodPlusActivity" />
-
-
-        <activity android:name=".FollowingListActivity"
-            android:parentActivityName=".MoodPlusActivity"/>
-
-
+        <activity
+            android:name=".FollowingListActivity"
+            android:parentActivityName=".MoodPlusActivity" />
         <activity
             android:name=".FilterFollowDateActivity"
             android:parentActivityName=".MoodPlusActivity" />
@@ -114,12 +115,14 @@
             android:name=".FilterFollowTextActivity"
             android:parentActivityName=".MoodPlusActivity" />
         <activity android:name=".MarkerActivity" />
-        <activity android:name=".GraphActivity"/>
-        <activity android:name=".FilterFollowLocationActivity"
-                  android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".FilteredLocationActivity"
-                  android:parentActivityName=".MoodPlusActivity" />
-
+        <activity android:name=".GraphActivity" />
+        <activity
+            android:name=".FilterFollowLocationActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity
+            android:name=".FilteredLocationActivity"
+            android:parentActivityName=".MoodPlusActivity" />
+        <activity android:name=".Piechart"></activity>
     </application>
 
 </manifest>
