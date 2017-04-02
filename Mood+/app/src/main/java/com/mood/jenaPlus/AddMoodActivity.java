@@ -272,13 +272,21 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     }
 
     public void registerBroadcastReceiver() {
+
         IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 
         this.registerReceiver(broadcastReceiver, myFilter);
+
+        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
     }
 
     public void unregisterBroadcastReceiver() {
+
         this.unregisterReceiver(broadcastReceiver);
+
+        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
     }
 
 
@@ -446,7 +454,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         Boolean trigCheck = triggerCheck();
 
         if (merlinsBeard.isConnected()) {
-            Boolean offline = false;
 
             if (addLocation && location == null) {
                 getLocation();
@@ -458,7 +465,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
                 mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
 
-                saveToList(offline);
+
+
 
                 finish();
 
@@ -466,7 +474,26 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
                 mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
 
-                saveToList(offline);
+                // Saves the user's moodlist
+                Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                Participant offlineParticipant = offlineController.getOfflineParticipant();
+                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                //offlineMoodList.addUserMood(mood);
+
+                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineMoodList;
+
+                offlineController.saveOfflineList(offlineList, context);
+
+                Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
+                Log.d("In ADDMOOD", "Saving to list");
 
                 finish();
             } else {
@@ -498,10 +525,33 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     //no location
                 } else if (trigCheck && moodChosen) {
 
-                    Boolean offline = true;
+                    //UserMoodList userMoodList = new UserMoodList();
+                    // saves the user's moodlist
+                    Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
 
-                    saveToList(offline);
+                    OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                    Participant offlineParticipant = offlineController.getOfflineParticipant();
+                    UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+                    offlineMoodList.addUserMood(mood);
 
+                    UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                    if (offlineList == null) {
+                        offlineList = new UserMoodList();
+                    }
+
+                    offlineList = offlineMoodList;
+
+                    offlineController.saveOfflineList(offlineList, context);
+
+                    Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
+                    Log.d("In ADDMOOD", "Saving to list");
+
+                    //Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
+
+
+                    //MainMPController mpController = MoodPlusApplication.getMainMPController();
+                    //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
                     finish();
                 } else {
 
@@ -515,32 +565,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     }
                 }
         }
-    }
-
-    public void saveToList(Boolean offline) {
-        // Saves the user's moodlist
-        Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        Participant offlineParticipant = offlineController.getOfflineParticipant();
-        UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
-
-        if(offline == true) {
-            offlineMoodList.addUserMood(mood);
-        }
-
-        UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
-
-        if (offlineList == null) {
-            offlineList = new UserMoodList();
-        }
-
-        offlineList = offlineMoodList;
-
-        offlineController.saveOfflineList(offlineList, context);
-
-        Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT).show();
-        Log.d("In ADDMOOD", "Saving to list");
     }
 
 

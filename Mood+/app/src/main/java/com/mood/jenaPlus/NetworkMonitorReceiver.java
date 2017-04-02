@@ -38,10 +38,12 @@ public class NetworkMonitorReceiver extends BroadcastReceiver {
 
 			UserMoodList tempList = offlineController.loadSavedList(context);
 
+			/*
 			if(tempList != null) {
 				offlineController.SyncOfflineList(context);
 				Log.d("Network Available", "Syncing");
 			}
+			*/
 		}
 		else {
 			Toast.makeText(context, "Network Unavailable", Toast.LENGTH_SHORT).show();
