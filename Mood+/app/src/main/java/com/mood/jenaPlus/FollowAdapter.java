@@ -90,7 +90,9 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
                     //remove(participant);
                 }
 
-                v.setBackgroundColor(Color.parseColor("#E0E0E0"));
+                //Button b = (Button) v;
+                //b.setText("Followed");
+                //b.setBackgroundColor(Color.parseColor("#E0E0E0"));
                 v.setEnabled(false);
                 notifyDataSetChanged();
             }
