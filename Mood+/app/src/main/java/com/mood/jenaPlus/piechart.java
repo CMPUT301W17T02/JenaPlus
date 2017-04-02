@@ -18,7 +18,9 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class piechart extends AppCompatActivity implements MPView<MoodPlus> {
+
+public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
+
 
     ArrayList<Mood> moodArrayList = new ArrayList<Mood>();
     private UserMoodList myMoodList = new UserMoodList();

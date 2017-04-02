@@ -1170,7 +1170,7 @@ public class MoodPlusActivity extends MerlinActivity
                                         startActivity(graphIntent);
                                         break;
                                     case 1:
-                                        Intent pieintent = new Intent(MoodPlusActivity.this, piechart.class);
+                                        Intent pieintent = new Intent(MoodPlusActivity.this, Piechart.class);
                                         startActivity(pieintent);
                                         break;
                                 }
