@@ -5,10 +5,18 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+
+import android.media.Image;
+import android.net.ConnectivityManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -92,6 +100,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     double newLat;
     double newLng;
 
+    private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +157,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         cameraImage = (ImageView) findViewById(R.id.selected_image);
         Bitmap photo = ViewMoodActivity.StringToBitMap(aPhoto);
         cameraImage.setImageBitmap(photo);
+
+        registerBroadcastReceiver();
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,41 +263,21 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                         editedMood.setColor(aColor);
 
                         moodPlus.updateParticipant();
+
+                        Boolean offline = false;
+
+                        saveToList(offline, position);
+
                         finish();
                     }
 
                 }
                 else {
                     Toast.makeText(EditMoodActivity.this, "ughhhhh get your internet my man!!", Toast.LENGTH_SHORT).show();
-                    OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-                    Participant offlineParticipant = offlineController.getOfflineParticipant();
-                    UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
 
-                    Mood editedMood = offlineMoodList.getUserMood(position);
+                    Boolean offline = true;
 
-                    editedMood.setText(message.getText().toString());
-                    editedMood.setAddLocation(addLocation);
-                    editedMood.setLatitude(aLatitude);
-                    editedMood.setLongitude(aLongitude);
-                    editedMood.setId(aId);
-                    editedMood.setDate(dateEditor.getTime());
-                    editedMood.setSocial(socialSituation);
-                    if (updatePhoto) {
-                        editedMood.setPhoto(imageString);
-                    } else {
-                        editedMood.setPhoto(aPhoto);
-                    }
-                    editedMood.setColor(aColor);
-
-                    UserMoodList offlineList = offlineController.loadSavedList(getBaseContext());
-
-                    if (offlineList == null) {
-                        offlineList = new UserMoodList();
-                    }
-
-                    offlineList = offlineMoodList;
-
-                    offlineController.saveOfflineList(offlineList, context);
+                    saveToList(offline, position);
 
                     finish();
 
@@ -294,6 +286,43 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
             }
         });
 
+    }
+
+    public void saveToList(Boolean offline, int position) {
+        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+        Participant offlineParticipant = offlineController.getOfflineParticipant();
+        UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+
+        if(offline == true) {
+            Mood editedMood = offlineMoodList.getUserMood(position);
+
+            editedMood.setText(message.getText().toString());
+            editedMood.setAddLocation(addLocation);
+            editedMood.setLatitude(aLatitude);
+            editedMood.setLongitude(aLongitude);
+            editedMood.setId(aId);
+            editedMood.setDate(dateEditor.getTime());
+            editedMood.setSocial(socialSituation);
+            if (updatePhoto) {
+                editedMood.setPhoto(imageString);
+            } else {
+                editedMood.setPhoto(aPhoto);
+            }
+            editedMood.setColor(aColor);
+        }
+
+        UserMoodList offlineList = offlineController.loadSavedList(getBaseContext());
+
+        if (offlineList == null) {
+            offlineList = new UserMoodList();
+        }
+
+        offlineList = offlineMoodList;
+
+        offlineController.saveOfflineList(offlineList, context);
+
+        Toast.makeText(EditMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT).show();
+        Log.d("in EDITMOOD", "Saving to list");
     }
 
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
@@ -399,6 +428,24 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         // TODO implements update method
     }
 
+    public void registerBroadcastReceiver() {
+
+        IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+
+        this.registerReceiver(broadcastReceiver, myFilter);
+
+        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
+    }
+
+    public void unregisterBroadcastReceiver() {
+
+        this.unregisterReceiver(broadcastReceiver);
+
+        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
+
+    }
+
 
     @Override
     protected Merlin createMerlin() {
@@ -416,6 +463,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         registerConnectable(this);
         registerDisconnectable(this);
         registerBindable(this);
+
+        registerBroadcastReceiver();
     }
 
     @Override
@@ -441,6 +490,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     @Override
     protected void onPause() {
         super.onPause();
+        unregisterBroadcastReceiver();
         networkStatusDisplayer.reset();
     }
 
