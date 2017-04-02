@@ -76,6 +76,7 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
+        chart.setDescription("Mood events statistics");
 
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getUserMoodList();
@@ -143,7 +144,7 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
 
         AddValuesToBarEntryLabels();
 
-        Bardataset = new BarDataSet(BARENTRY, "Projects");
+        Bardataset = new BarDataSet(BARENTRY, "");
         Bardataset.setColors(new int[] {
                 Color.parseColor("#FFF176"), //yellow
                 Color.parseColor("#FF8A80"), //red

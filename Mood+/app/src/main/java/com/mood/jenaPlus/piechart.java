@@ -77,6 +77,7 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
         myMoodList = participant.getUserMoodList();
         moodArrayList = myMoodList.getUserMoodList();
         mSize = moodArrayList.size();
+        pieChart.setDescription("Mood events statistics");
 
 
         for (int i = 0; i<mSize; i++) {
