@@ -70,7 +70,7 @@ public class EditMapActivity extends FragmentActivity implements
                 newLng = latLng.longitude;
                 newLat = latLng.latitude;
 
-                Toast.makeText(EditMapActivity.this, latLng.latitude+" "+latLng.longitude, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditMapActivity.this, "Location Added", Toast.LENGTH_SHORT).show();
 
             }
         });
