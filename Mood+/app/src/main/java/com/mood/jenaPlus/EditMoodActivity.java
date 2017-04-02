@@ -31,6 +31,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,7 +84,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected TextView date;
     protected EditText message;
 
-    protected ImageView cameraImage;
+    protected ImageButton cameraImage;
 
     private NetworkStatusDisplayer networkStatusDisplayer;
     private MerlinsBeard merlinsBeard;
@@ -154,9 +155,36 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         aLongitude = mood.getLongitude();
 
 
-        cameraImage = (ImageView) findViewById(R.id.selected_image);
+        cameraImage = (ImageButton) findViewById(R.id.selected_image);
+
+        //Display Image
         Bitmap photo = ViewMoodActivity.StringToBitMap(aPhoto);
         cameraImage.setImageBitmap(photo);
+
+        cameraImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Image")
+                        .setMessage("Do you want to delete an image?")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                aPhoto = "";
+                                cameraImage.setImageBitmap(null);
+                            }
+                        })
+                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return false;
+            }
+        });
+
 
         registerBroadcastReceiver();
 
