@@ -106,8 +106,6 @@ public class ElasticsearchMPController {
 
             Participant participant = new Participant(null);
 
-            //String userName = search_parameters[0];
-
             String query = search_parameters[0];
 
             System.out.println(query);
