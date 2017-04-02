@@ -41,16 +41,6 @@ public class FilterFollowDateActivity extends AppCompatActivity implements MPVie
 
         moodListView = (ListView) findViewById(R.id.listView);
 
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-        //String d = "Following Moods from last 7 days";
-
-
-        /*------------------------------------------------*/
-
-
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

@@ -42,8 +42,6 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
 
     protected MainMPController mpController;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +55,11 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         searchUsers.setIconifiedByDefault(false);
         searchUsers.setOnQueryTextListener(this);
 
-
     }
 
     @Override
     protected void onStart() {
-        // TODO Auto-generated method stub
         super.onStart();
-        //loadFromFile(); // TODO replace this with elastic search
 
         ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");

@@ -59,12 +59,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     private Button save;
     private ImageView selected_image;
 
-    int idNum;
-    int colorNum;
     String socialSituation;
     String trigger;
-    String idString;
-    String colorString;
 
     protected String aId;
     protected String aText;
@@ -101,7 +97,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     double newLat;
     double newLng;
 
-    private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +182,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
 
         registerBroadcastReceiver();
+
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -306,16 +302,11 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                         offlineController.saveOfflineList(offlineList, context);
 
-                        Toast.makeText(EditMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
-                        Log.d("in EDITMOOD", "Saving to list");
-
                         finish();
                     }
 
                 }
                 else {
-                    Toast.makeText(EditMoodActivity.this, "No internet connection", Toast.LENGTH_SHORT).show();
-
                     OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
                     Participant offlineParticipant = offlineController.getOfflineParticipant();
                     UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
@@ -343,11 +334,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                     }
 
                     offlineList = offlineMoodList;
-
                     offlineController.saveOfflineList(offlineList, context);
-
-                    Toast.makeText(EditMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
-                    Log.d("in EDITMOOD", "Saving to list");
 
                     finish();
 
@@ -461,23 +448,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         // TODO implements update method
     }
 
-    public void registerBroadcastReceiver() {
-
-        IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-
-        this.registerReceiver(broadcastReceiver, myFilter);
-
-        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void unregisterBroadcastReceiver() {
-
-        this.unregisterReceiver(broadcastReceiver);
-
-        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
-
-    }
 
 
     @Override
@@ -497,7 +467,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         registerDisconnectable(this);
         registerBindable(this);
 
-        registerBroadcastReceiver();
     }
 
     @Override
@@ -523,7 +492,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterBroadcastReceiver();
         networkStatusDisplayer.reset();
     }
 
@@ -537,7 +505,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
             ActivityCompat.requestPermissions(EditMoodActivity.this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
-            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
+
             GPSTracker gps = new GPSTracker(context, EditMoodActivity.this);
 
             // Check if GPS enabled

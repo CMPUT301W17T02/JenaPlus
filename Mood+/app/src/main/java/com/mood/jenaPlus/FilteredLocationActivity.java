@@ -54,18 +54,6 @@ public class FilteredLocationActivity extends AppCompatActivity implements MPVie
         /* -----------------------------*/
 
 
-        /*---------- LOADING THE PARTICIPANT-------------*/
-
-        MainMPController mpController = MoodPlusApplication.getMainMPController();
-        Participant participant = mpController.getParticipant();
-
-        String name = participant.getUserName();
-        String id = participant.getId();
-
-
-        /*------------------------------------------------*/
-
-
         moodListView.setAdapter(adapter);
         moodListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

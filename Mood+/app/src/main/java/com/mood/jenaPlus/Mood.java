@@ -23,7 +23,6 @@ import java.util.Date;
  * @version 1.0.0
  * @since 1.0
  */
-
 public class Mood implements Serializable{
     private String id;
     private String userName;
@@ -36,7 +35,7 @@ public class Mood implements Serializable{
     private String photo;
     private String color;
 
-	/**
+    /**
      * Instantiates a new Mood.
      */
     public Mood() {
@@ -48,12 +47,14 @@ public class Mood implements Serializable{
      *
      * @param text        The trigger which will be < = 20 characters/<4 words
      * @param addLocation Boolean if a location is selected
+     * @param Latitude    the latitude
+     * @param Longitude   the longitude
      * @param id          The mood icon ID
      * @param social      The social situation of participant
      * @param photo       Photo taken
      * @param color       Color of the associated mood
+     * @param userName    the user name
      */
-
     public Mood(String text, Boolean addLocation, Double Latitude, Double Longitude, String id,
                 String social, String photo, String color, String userName) {
         this.text = text;
@@ -67,10 +68,19 @@ public class Mood implements Serializable{
         this.date = new Date();
         this.userName = userName;
 
-
-        //this.save();    // saves to elastic search server
     }
 
+    /**
+     * Instantiates a new Mood.
+     *
+     * @param text        the text
+     * @param addLocation the add location
+     * @param id          the id
+     * @param social      the social
+     * @param photo       the photo
+     * @param color       the color
+     * @param userName    the user name
+     */
     public Mood(String text, Boolean addLocation, String id,
                 String social, String photo, String color, String userName) {
         this.text = text;
@@ -82,7 +92,6 @@ public class Mood implements Serializable{
         this.date = new Date();
         this.userName = userName;
 
-        //this.save();    // saves to elastic search server
     }
 
     /**
@@ -140,68 +149,39 @@ public class Mood implements Serializable{
         }
     }
 
-    /**
-     * Gets mood id.
-     *
-     * @param moodId the mood id
-     * @return the mood id
-     */
-    public String getMoodId(int moodId) {
-        MoodIcon m = new MoodIcon();
-        id = m.getMood(moodId);
-        return id;
-    }
 
     /**
-     * Gets mood color.
+     * Gets latitude.
      *
-     * @param moodId the mood id
-     * @return the mood color
+     * @return the latitude
      */
-    public String getMoodColor(int moodId) {
-        MoodIcon m = new MoodIcon();
-        color = m.getColor(moodId);
-        return color;
-    }
-
-    /**
-     * Gets location.
-     *
-     * @return the location
-     */
-
-   /* public NewLocation getLocation() {
-
-        return newLocation;
-    }*/
-
-    /**
-     * Sets location.
-     *
-     */
-
-    /*public void setLocation(NewLocation location) {
-
-        if (!addLocation && location == null) {
-            this.newLocation = "";
-        }
-        else {
-            this.newLocation = location;
-        }
-    }*/
-
     public Double getLatitude() {
         return latitude;
     }
 
+    /**
+     * Gets longitude.
+     *
+     * @return the longitude
+     */
     public Double getLongitude() {
         return longitude;
     }
 
+    /**
+     * Sets latitude.
+     *
+     * @param lat the lat
+     */
     public void setLatitude(Double lat) {
         this.latitude = lat;
     }
 
+    /**
+     * Sets longitude.
+     *
+     * @param lon the lon
+     */
     public void setLongitude(Double lon) {
         this.longitude = lon;
     }
@@ -307,15 +287,23 @@ public class Mood implements Serializable{
         this.addLocation = addLocation;
     }
 
+    /**
+     * Gets user name.
+     *
+     * @return the user name
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Sets user name.
+     *
+     * @param userName the user name
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
-
-
 
 
     /**

@@ -92,7 +92,6 @@ import static android.R.attr.name;
 
 public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
-    private static final String TAG = "ERROR";
     int idNum;
     int colorNum;
     private String socialSituation;
@@ -122,14 +121,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private int previousSelectedPosition = -1;
 
     private NetworkStatusDisplayer networkStatusDisplayer;
-
     private MerlinsBeard merlinsBeard;
-
-    private static final String ADD = "add.sav";
-
-    private UserMoodList userMoodList;
-
-    private NetworkMonitorReceiver broadcastReceiver = new NetworkMonitorReceiver();
 
 
     @Override
@@ -145,17 +137,13 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
         merlinsBeard = MerlinsBeard.from(this);
 
-        userMoodList = new UserMoodList();
-
-        registerBroadcastReceiver();
 
         /*-------DEBUGGING TO SEE USERNAME AND ID ------*/
 
         String name = participant.getUserName();
         userName = name;
         String id = participant.getId();
-        //String who = "UserName: "+ name;
-        //test.setText(who);
+
 
         /*------------------------------------------------*/
 
@@ -271,24 +259,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         });
     }
 
-    public void registerBroadcastReceiver() {
-
-        IntentFilter myFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-
-        this.registerReceiver(broadcastReceiver, myFilter);
-
-        //Toast.makeText(this, "MAIN; Registered Broadcast Receiver", Toast.LENGTH_SHORT).show();
-
-    }
-
-    public void unregisterBroadcastReceiver() {
-
-        this.unregisterReceiver(broadcastReceiver);
-
-        //Toast.makeText(this, "MAIN; Unregistered Broadcast Receiver", Toast.LENGTH_SHORT).show();
-
-    }
-
 
     @Override
     protected Merlin createMerlin() {
@@ -306,7 +276,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         registerConnectable(this);
         registerDisconnectable(this);
         registerBindable(this);
-        registerBroadcastReceiver();
     }
 
     @Override
@@ -318,23 +287,17 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
     @Override
     public void onConnect() {
-        Log.i("Debug", "online");
-        //sync, (check if the lists are empty, if not, add/edit/delete ...)
-        //OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-        //offlineController.SyncOffline();
         networkStatusDisplayer.displayConnected();
     }
 
     @Override
     public void onDisconnect() {
-        Log.i("Debug", "offline");
         networkStatusDisplayer.displayDisconnected();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterBroadcastReceiver();
         networkStatusDisplayer.reset();
     }
 
@@ -410,7 +373,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             ActivityCompat.requestPermissions(AddMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
-            //Toast.makeText(context, "You have granted permission", Toast.LENGTH_SHORT).show();
             GPSTracker gps = new GPSTracker(context, AddMoodActivity.this);
 
             // Check if GPS enabled
@@ -465,22 +427,9 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
                 mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
 
-
-
-
-                finish();
-
-            } else if (trigCheck && moodChosen) {
-                MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-
-                // Saves the user's moodlist
-                Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
-
                 OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
                 Participant offlineParticipant = offlineController.getOfflineParticipant();
                 UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
-                //offlineMoodList.addUserMood(mood);
 
                 UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
 
@@ -492,10 +441,28 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
                 offlineController.saveOfflineList(offlineList, context);
 
-                Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
-                Log.d("In ADDMOOD", "Saving to list");
 
                 finish();
+
+            } else if (trigCheck && moodChosen) {
+                MainMPController mpController = MoodPlusApplication.getMainMPController();
+                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+
+                OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
+                Participant offlineParticipant = offlineController.getOfflineParticipant();
+                UserMoodList offlineMoodList = offlineParticipant.getUserMoodList();
+
+                UserMoodList offlineList = offlineController.loadSavedList(getApplicationContext());
+
+                if (offlineList == null) {
+                    offlineList = new UserMoodList();
+                }
+
+                offlineList = offlineMoodList;
+
+                offlineController.saveOfflineList(offlineList, context);
+                finish();
+
             } else {
 
                 if (!trigCheck) {
@@ -511,22 +478,14 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
             //when disconnected
             else {
-                Toast.makeText(AddMoodActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
-
-                //trigger = message.getText().toString();
-                //Boolean trigCheck = triggerCheck();
-
                 //has location
                 if (trigCheck && moodChosen && addLocation) {
-                    //Toast.makeText(AddMoodActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
                     finish();
 
                     //no location
                 } else if (trigCheck && moodChosen) {
 
-                    //UserMoodList userMoodList = new UserMoodList();
-                    // saves the user's moodlist
                     Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
 
                     OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
@@ -541,17 +500,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     }
 
                     offlineList = offlineMoodList;
-
                     offlineController.saveOfflineList(offlineList, context);
 
-                    Toast.makeText(AddMoodActivity.this, "Saved Moods!", Toast.LENGTH_SHORT);
-                    Log.d("In ADDMOOD", "Saving to list");
-
-                    //Toast.makeText(AddMoodActivity.this, "almost there man, almost", Toast.LENGTH_SHORT).show();
-
-
-                    //MainMPController mpController = MoodPlusApplication.getMainMPController();
-                    //mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
                     finish();
                 } else {
 
@@ -662,30 +612,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 }
                 return;
             }
-        }
-    }
-
-
-    /**
-     * Saves tweets in file in JSON format.
-     * @throws FileNotFoundException if folder not exists
-     */
-    private void saveInFile(String filename, UserMoodList userMoodList) {
-        try {
-            FileOutputStream fos = openFileOutput(filename,
-                    Context.MODE_PRIVATE);
-            BufferedWriter out = new BufferedWriter(new OutputStreamWriter(fos));
-
-            Gson gson = new Gson();
-            gson.toJson(userMoodList, out);
-            out.flush();
-
-            fos.close();
-        } catch (FileNotFoundException e) {
-            // TODO: Handle the Exception properly later
-            throw new RuntimeException();
-        } catch (IOException e) {
-            throw new RuntimeException();
         }
     }
 
