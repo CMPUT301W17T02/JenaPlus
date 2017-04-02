@@ -344,8 +344,7 @@ public class MoodPlusActivity extends MerlinActivity
             Intent requestIntent = new Intent(MoodPlusActivity.this, FollowerRequestActivity.class);
             startActivity(requestIntent);
         } else if (id == R.id.graph){
-            Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
-            startActivity(graphIntent);
+            graphActivityDialog();
         } else if (id == R.id.menuMyOwnMoodFilter){
             testFilters();
         } else if(id == R.id.menuMyFollowingFilter){
@@ -652,8 +651,6 @@ public class MoodPlusActivity extends MerlinActivity
 
                 .setIcon(android.R.drawable.ic_menu_search)
                 .show();
-
-
     }
 
     public void getMoodDialog1() {
@@ -1144,6 +1141,33 @@ public class MoodPlusActivity extends MerlinActivity
                         })
 
                 .setIcon(android.R.drawable.ic_menu_search)
+                .show();
+    }
+
+    public void graphActivityDialog() {
+        // Taken from http://stackoverflow.com/questions/30345243/android-dialog-with-multiple-
+        // button-how-to-implement-switch-case
+        // 2017-03-26 Rajan Bhavsar
+        new AlertDialog.Builder(context)
+                .setTitle("View Statistics")
+                .setItems(new CharSequence[]
+                                {},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
+                                        startActivity(graphIntent);
+                                        break;
+                                    case 1:
+                                        Intent graphIntent = new Intent(MoodPlusActivity.this, PieChart.class);
+                                        startActivity(graphIntent);
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(android.R.drawable.ic_menu_info_details)
                 .show();
     }
 

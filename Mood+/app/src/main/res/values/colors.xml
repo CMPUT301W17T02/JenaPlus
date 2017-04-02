@@ -12,5 +12,15 @@
     <color name="red">#FF0000</color>
     <color name="black">#000000</color>
 
+    <color name="suprised">#FFCC80</color>
+    <color name="disgust">#A5D6A7</color>
+    <color name ="fear">#BDBDBD</color>
+    <color name="confused">#E1BEE7</color>
+    <color name="happy">#FFF176</color>
+    <color name="angry">#FF8A80</color>
+    <color name="sad">#BBDEFB</color>
+    <color name="shame">#F8BBD0</color>
+    <color name="annoyed">#A7FFEB</color>
+
 
 </resources>

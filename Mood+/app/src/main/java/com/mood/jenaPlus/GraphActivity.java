@@ -1,5 +1,6 @@
 package com.mood.jenaPlus;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,11 +69,14 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
         AddValuesToBarEntryLabels();
 
         Bardataset = new BarDataSet(BARENTRY, "Projects");
+        Bardataset.setColors(new int[] {Color.parseColor("#FFCC80"),Color.parseColor("#A5D6A7"),
+                Color.parseColor("#BDBDBD"),
+                Color.parseColor("#E1BEE7"),Color.parseColor("#FFF176"),Color.parseColor("#FF8A80"),
+                Color.parseColor("#BBDEFB"),Color.parseColor("#F8BBD0"),Color.parseColor("#A7FFEB"),
+                });
 
         BARDATA = new BarData(BarEntryLabels, Bardataset);
 
-
-        Bardataset.setColors(ColorTemplate.COLORFUL_COLORS);
 
         chart.setData(BARDATA);
 
