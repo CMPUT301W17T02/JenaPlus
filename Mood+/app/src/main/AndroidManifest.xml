@@ -34,12 +34,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDABYhh4h0I7KzggNbpc2qADo2WODMf30w" />
 
-        <receiver android:name=".NetworkMonitorReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
-
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/app_name"

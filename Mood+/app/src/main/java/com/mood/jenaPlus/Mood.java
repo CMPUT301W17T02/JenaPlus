@@ -36,6 +36,13 @@ public class Mood implements Serializable{
     private String photo;
     private String color;
 
+	/**
+     * Instantiates a new Mood.
+     */
+    public Mood() {
+        this.date = new Date();
+    }
+
     /**
      * Instantiates a new Mood.
      *
