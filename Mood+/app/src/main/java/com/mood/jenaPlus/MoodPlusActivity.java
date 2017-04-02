@@ -1189,7 +1189,7 @@ public class MoodPlusActivity extends MerlinActivity
                             }
                         })
 
-                .setIcon(android.R.drawable.ic_menu_info_details)
+                .setIcon(R.drawable.ic_graph)
                 .show();
 
     }
@@ -1220,7 +1220,7 @@ public class MoodPlusActivity extends MerlinActivity
                             }
                         })
 
-                .setIcon(R.drawable.ic_graph)
+                .setIcon(R.drawable.ic_piechart)
                 .show();
     }
 
