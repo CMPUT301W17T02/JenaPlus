@@ -157,16 +157,16 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             public boolean onLongClick(View v) {
                 new AlertDialog.Builder(context)
                         .setTitle("Delete Image")
-                        .setMessage("Do you want to delete an image?")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setMessage("Do you want to delete this image?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 imageString = "";
                                 image.setImageBitmap(null);
                             }
                         })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+                                dialog.dismiss();
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -353,7 +353,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
         //2017-03-26
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,50, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,60, baos);
         byte [] b=baos.toByteArray();
         String temp=Base64.encodeToString(b, Base64.DEFAULT);
         return temp;

@@ -15,45 +15,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/layout1"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp">
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:paddingBottom="55dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/Select"
+                android:textColor="#263238"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingTop="10dp">
-
-                <ImageButton
-                    android:id="@+id/info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:src="@drawable/ic_info"
-                    android:backgroundTint="@android:color/transparent"/>
-
-                <TextView
-                    android:id="@+id/Select"
-                    android:textColor="#263238"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:textAllCaps="true"
-                    android:text="Select a Mood" />
-
-            </LinearLayout>
-
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:textAllCaps="true"
+                android:paddingTop="15dp"
+                android:paddingBottom="8dp"
+                android:text="Select a Mood" />
 
             <GridView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/gridView"
                 android:layout_width="wrap_content"
-                android:layout_height="231dp"
-                android:columnWidth="1dp"
+                android:layout_height="wrap_content"
+                android:columnWidth="0.2dp"
                 android:numColumns="3"
-                android:verticalSpacing="5dp"
-                android:stretchMode="columnWidth"
                 android:paddingStart="20dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
@@ -65,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
                 android:textSize="20sp"
                 android:hint="@string/EnterMessage"
                 android:imeOptions="actionDone"
@@ -72,18 +56,22 @@
 
             <ImageButton
                 android:id="@+id/selected_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center"/>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="30dp"
-                android:layout_weight="1"/>
         </LinearLayout>
+
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_info"
+        android:backgroundTint="@android:color/transparent"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -108,8 +96,5 @@
             android:backgroundTint="@android:color/holo_blue_light" />
 
     </LinearLayout>
-
-
-
 
 </RelativeLayout>

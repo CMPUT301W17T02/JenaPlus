@@ -72,6 +72,7 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected String aSocial;
     protected String aPhoto;
     private Boolean updatePhoto = false;
+    private Boolean updateSocial = false;
     private String imageString = "";
     protected String aColor;
 
@@ -161,16 +162,18 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
                 new AlertDialog.Builder(context)
                         .setTitle("Delete Image")
+
                         .setMessage("Do you want to delete your image?")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
                             public void onClick(DialogInterface dialog, int which) {
                                 aPhoto = "";
                                 cameraImage.setImageBitmap(null);
                             }
                         })
-                        .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
+                                dialog.dismiss();
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
@@ -224,6 +227,8 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                                                 Toast.LENGTH_SHORT
                                         ).show();
                                         socialSituation = (String) item.getTitle();
+                                        updateSocial = true;
+                                        situation.setText(socialSituation);
                                         return true;
                                     }
                                 });
@@ -274,7 +279,11 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                         }
                         editedMood.setId(aId);
                         editedMood.setDate(dateEditor.getTime());
-                        editedMood.setSocial(socialSituation);
+                        if(updateSocial){
+                            editedMood.setSocial(socialSituation);
+                        }else{
+                            editedMood.setSocial(aSocial);
+                        }
                         if (updatePhoto) {
                             editedMood.setPhoto(imageString);
                         } else {
@@ -315,7 +324,11 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                     editedMood.setLongitude(aLongitude);
                     editedMood.setId(aId);
                     editedMood.setDate(dateEditor.getTime());
-                    editedMood.setSocial(socialSituation);
+                    if(updateSocial){
+                        editedMood.setSocial(socialSituation);
+                    }else{
+                        editedMood.setSocial(aSocial);
+                    }
                     if (updatePhoto) {
                         editedMood.setPhoto(imageString);
                     } else {

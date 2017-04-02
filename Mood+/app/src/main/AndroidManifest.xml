@@ -53,7 +53,6 @@
             android:name=".ViewMoodActivity"
             android:label="Mood+"
             android:parentActivityName=".MoodPlusActivity" />
-        <!-- android:theme="@style/AppTheme.NoActionBar" /> -->
         <activity
             android:name=".AddMoodActivity"
             android:label="Mood+"
@@ -71,8 +70,6 @@
         <activity
             android:name=".FilteredDateActivity"
             android:parentActivityName=".MoodPlusActivity" />
-
-        <service android:name=".GPSTracker" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
