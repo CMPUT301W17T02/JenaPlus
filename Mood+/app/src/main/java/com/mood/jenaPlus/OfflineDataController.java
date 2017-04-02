@@ -31,12 +31,6 @@ public class OfflineDataController {
 
         moodPlus.updateParticipant();
 
-        //UserMoodList newOfflineMoodList = new UserMoodList();
-        //saveOffline.saveOfflineList(newOfflineMoodList, participantID, context);
-    }
-
-    public void SyncOffline() {
-        moodPlus.updateParticipant();
     }
 
     public UserMoodList loadSavedList(Context context) {
