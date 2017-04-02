@@ -134,19 +134,20 @@ public class MoodListViewActivity extends Fragment implements MPView<MoodPlus>, 
     public void onStart(){
         super.onStart();
 
+        if(merlinsBeard.isConnected()) {
+            OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
 
-        OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
-
-        UserMoodList tempList = offlineController.loadSavedList(getActivity());
+            UserMoodList tempList = offlineController.loadSavedList(getActivity());
 
 
-        if(tempList != null) {
-            offlineController.SyncOfflineList(getActivity());
-            Toast.makeText(getActivity(), "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT).show();
-            Log.d("Network Available", "Syncing");
+            if(tempList != null) {
+                offlineController.SyncOfflineList(getActivity());
+                Toast.makeText(getActivity(), "Syncing changes from LAST SESSION", Toast.LENGTH_SHORT).show();
+                Log.d("Network Available", "Syncing");
+            }
+
         }
-
-
+        
         mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
         myMoodList = participant.getUserMoodList();
