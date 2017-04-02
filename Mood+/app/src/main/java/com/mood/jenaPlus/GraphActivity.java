@@ -130,8 +130,8 @@ public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus>
                 Color.parseColor("#FFCC80"), //orange
                 Color.parseColor("#A5D6A7"), //green
                 Color.parseColor("#BDBDBD"), //black
-                Color.parseColor("#BBDEFB"), //blue
-                Color.parseColor("#F8BBD0"), //pink
+                Color.parseColor("#B3E5FC"), //blue
+                Color.parseColor("#F48FB1"), //pink
                 Color.parseColor("#A7FFEB"),
                 Color.parseColor("#E1BEE7"), //purple
                 });
