@@ -36,6 +36,7 @@ public class EditMapActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_map);
 
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -53,9 +54,11 @@ public class EditMapActivity extends FragmentActivity implements
     public void onMapReady(GoogleMap map) {
         final GoogleMap mMap = map;
 
+        // Enabled zoom button
         UiSettings mUiSettings = mMap.getUiSettings();
         mUiSettings.setZoomControlsEnabled(true);
 
+        // Placed marker on map when long click
         mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @Override
             public void onMapLongClick(LatLng latLng) {
@@ -72,8 +75,6 @@ public class EditMapActivity extends FragmentActivity implements
                 newLng = latLng.longitude;
                 newLat = latLng.latitude;
 
-                Toast.makeText(EditMapActivity.this, "Location Added", Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -87,6 +88,8 @@ public class EditMapActivity extends FragmentActivity implements
 
                 position = new LatLng(newLat,newLng);
                 Log.i("SET LOCATION",""+newLat+" "+newLng);
+
+                //Passing LatLng of the new location back to EditMoodActivity
                 Bundle args = new Bundle();
                 args.putParcelable("new_position", position);
                 Intent intent=new Intent(EditMapActivity.this,EditMoodActivity.class);
