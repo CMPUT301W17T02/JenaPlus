@@ -122,7 +122,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No " +moodString+" moods were found.")
+                .setMessage("No moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
