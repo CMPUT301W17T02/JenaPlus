@@ -1206,14 +1206,14 @@ public class MoodPlusActivity extends MerlinActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case 0:
-                                        Intent graphIntent1 = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Intent graphIntent1 = new Intent(MoodPlusActivity.this, StatsActivity.class);
                                         Bundle bundle = new Bundle();
                                         bundle.putString("sevenDays","yes");
                                         graphIntent1.putExtras(bundle);
                                         startActivity(graphIntent1);
                                         break;
                                     case 1:
-                                        Intent graphIntent2 = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Intent graphIntent2 = new Intent(MoodPlusActivity.this, StatsActivity.class);
                                         Bundle bundle2 = new Bundle();
                                         bundle2.putString("sevenDays","no");
                                         graphIntent2.putExtras(bundle2);
