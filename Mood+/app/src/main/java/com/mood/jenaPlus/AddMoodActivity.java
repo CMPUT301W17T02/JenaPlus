@@ -67,7 +67,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private String idString;
     private String colorString;
 
-
     private Button addButton;
     private EditText message;
     private GridView gridview;
@@ -116,6 +115,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         message = (EditText) findViewById(R.id.message);
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+        // Enabled image button clickable for deleting purposes
         image = (ImageButton) findViewById(R.id.selected_image);
 
         image.setOnLongClickListener(new View.OnLongClickListener() {
@@ -141,6 +142,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             }
         });
 
+        // Mood Icon legend, pop up dialog
         infoButton = (ImageButton) findViewById(R.id.info);
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,6 +164,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
             }
         });
 
+        // Mood Icons
         gridview = (GridView) findViewById(R.id.gridView);
         gridview.setAdapter(new MoodIconAdapter(this));
 
@@ -291,22 +294,26 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         networkStatusDisplayer.reset();
     }
 
+    /**
+     * Opening Device's camera to take picture
+     */
     private void cameraIntent(){
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, 1234);
     }
 
 
+    /**
+     * Saving Image to device's storage, use the compress method on the Bitmap
+     * object to write image to the output stream
+     * Taken from: http://www.e-nature.ch/tech/saving-loading-bitmaps-to-the-android-device-storage-internal-external/
+     * 2017-03-26
+     * @param image
+     * @return
+     */
     public boolean saveImageToInternalStorage(Bitmap image) {
-        //Taken from: http://www.e-nature.ch/tech/saving-loading-bitmaps-to-the-android-device
-        // -storage-internal-external/
-        //2017-03-26
         try {
-            // Use the compress method on the Bitmap object to write image to
-            // the OutputStream
             FileOutputStream fos = context.openFileOutput("desiredFilename.png", Context.MODE_PRIVATE);
-
-            // Writing the bitmap to the output stream
             image.compress(Bitmap.CompressFormat.PNG, 100, fos);
             fos.close();
 
@@ -317,10 +324,14 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         }
     }
 
+    /**
+     * Converting bitmap image to string for storing in Elasticsearch, compressed image size.
+     * Taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+     * 2017-03-26
+     * @param bitmap
+     * @return
+     */
     public static String BitMapToString(Bitmap bitmap){
-        //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap
-        // -to-string-and-vice-versa
-        //2017-03-26
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG,60, baos);
         byte [] b=baos.toByteArray();
@@ -329,6 +340,14 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     }
 
 
+    /**
+     * Receiving an image from camera,
+     * check the image byte size is over maxBytes.
+     * Call BitMapToString method to convert image.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode,data);
@@ -339,23 +358,28 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 Bitmap photo = (Bitmap) extras.get("data");
                 image.setImageBitmap(photo);
                 saveImageToInternalStorage(photo);
-                imageString = BitMapToString(photo);
 
                 Double result = 4*Math.ceil((imageString.length()/3));
                 Log.i("BYTES",""+result);
                 if(result > maxBytes){
                     Log.i("BYTES","IMAGE IS TOO BIG");
+                    imageString = "";
+                    Toast.makeText(AddMoodActivity.this, "Image is too large, cannot be added",Toast.LENGTH_SHORT).show();
                 }else{
                     Log.i("BYTES","ADD IMAGE");
+                    imageString = BitMapToString(photo);
+                    Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
                 }
-
-
-                Toast.makeText(AddMoodActivity.this, "Image Added",Toast.LENGTH_SHORT).show();
-
             }
         }
     }
 
+    /**
+     * Get current latitude and longitude and set position by
+     * calling GPSTracker class.
+     * Ask user to enable GPS/network in settings.
+     * @return
+     */
     public Location getLocation() {
 
         Location currentLocation = new Location("dummyprovider");
@@ -390,9 +414,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 }
 
             } else {
-                // Can't get location.
-                // GPS or network is not enabled.
-                // Ask user to enable GPS/network in settings.
                 gps.showSettingsAlert();
             }
         }

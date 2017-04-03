@@ -20,9 +20,13 @@ import java.util.ArrayList;
  * The Marker Activity is for viewing map of mood events,
  * it is used when filtering mood events of the user or
  * the following participants by location.
+<<<<<<< HEAD
+ * @author Carrol
+=======
  *
    @author Carrol
  * @version 1.0
+>>>>>>> 21bb85f22d4bc0361d817f456c45d3b6652a6125
  */
 
 public class MarkerActivity extends FragmentActivity implements
@@ -54,15 +58,17 @@ public class MarkerActivity extends FragmentActivity implements
         mUiSettings.setZoomControlsEnabled(true);
 
 
+        // Get User Mood List with location
         if( getIntent().hasExtra("user_moodProvider")) {
             userMoodLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("user_moodProvider");
 
             for (Mood mood: userMoodLocation){
                 allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
 
-                // Creating markers
+                // Creating markers with mood icons
                 int recId = getResources().getIdentifier(mood.getId(), "drawable", getApplicationContext().getPackageName());
 
+                // Placing Marker on the map with emotional states
                 followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
                         .title("Feeling "+ mood.getId())
                         .icon(BitmapDescriptorFactory.fromBitmap(resizeMapIcons(recId,150,150))));
@@ -70,16 +76,19 @@ public class MarkerActivity extends FragmentActivity implements
                 followingMarker.setTag(0);
             }
         }
+        // Get other participants mood list with location
         else if(getIntent().hasExtra("participant_moodProvider")){
+
             moodListLocation = (ArrayList<Mood>) getIntent().getSerializableExtra("participant_moodProvider");
 
             for (Mood mood: moodListLocation){
 
                 allLatLng = new LatLng(mood.getLatitude(), mood.getLongitude());
 
-                // Creating markers
+                // Creating markers with mood icons
                 int recId = getResources().getIdentifier(mood.getId(), "drawable", getApplicationContext().getPackageName());
 
+                // Placing Marker on the map with user name and emotional states
                 followingMarker = mMap.addMarker(new MarkerOptions().position(allLatLng)
                         .title(mood.getUserName())
                         .snippet("Feeling "+ mood.getId())
@@ -94,8 +103,18 @@ public class MarkerActivity extends FragmentActivity implements
         mMap.setOnMarkerClickListener(this);
     }
 
+    /**
+     * This method resize images by getting the image id
+     * from drawable and specified certain width and height
+     *
+     * Taken from: http://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
+     * 2017-03-29
+     * @param recId
+     * @param width
+     * @param height
+     * @return
+     */
     public Bitmap resizeMapIcons(Integer recId, int width, int height){
-        // Taken from: http://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
         BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(recId);
         Bitmap imageBitmap = bitmapdraw.getBitmap();
 
