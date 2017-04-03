@@ -4,6 +4,15 @@
 # CMPUT301 T02 Group Project
  Mood+ is a mobile application that allows one to post, track, and share their moods. For  university students or staff, this could allow a clearer picture of their experiences, perceptions, and mental well-being in the face of challenges in academic life.
 
+## Javadoc
+[LINK TO JAVADOC](https://cmput301w17t02.github.io/JenaPlus/)
+
+## Note
+
+* Android Studio 2.2.3
+* JDK 1.7.0
+* CompiledSdkVersion 22 and above 
+* BuildToolsVersion 25.0.2
 
 
 ## Advertisement Video:
