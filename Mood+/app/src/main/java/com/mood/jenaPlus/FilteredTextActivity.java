@@ -19,7 +19,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This activity is used to view participant mood events filtered by text or key word.
+ * This activity is used to view participant mood events filtered by text or key word. This filter
+ * activity will check for all 4 combinations of filters. Text, Mood, Most Recent, and Location.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class FilteredTextActivity extends AppCompatActivity implements MPView<MoodPlus>{

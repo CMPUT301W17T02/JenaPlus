@@ -17,18 +17,33 @@ import io.searchbox.core.SearchResult;
 import io.searchbox.params.Parameters;
 
 /**
- * This is the main Elastic search controller.
+ * This is the main Elastic search controller. This controller communicates with the server <br>
+ *     by adding users, getting all the users, getting one user, and updating the user.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class ElasticsearchMPController {
 
     private static JestDroidClient client;
+    /**
+     * The Mood plus.
+     */
     MoodPlus moodPlus = null;
 
+    /**
+     * Instantiates a new Elasticsearch mp controller.
+     *
+     * @param aMoodPlus the a mood plus
+     */
     public ElasticsearchMPController(MoodPlus aMoodPlus) {
         this.moodPlus = aMoodPlus; // Adding a model to a controller.
     }
 
+    /**
+     * This task adds a participant to the elastic search server.
+     */
     public static class AddUsersTask extends AsyncTask<Participant, Void, Void> {
         @Override
         protected Void doInBackground(Participant... participants) {
@@ -58,6 +73,9 @@ public class ElasticsearchMPController {
         }
     }
 
+    /**
+     * This task gets all of the participants from the elastic search server
+     */
     public static class GetUsersTask extends AsyncTask<String, Void, ArrayList<Participant>> {
         @Override
         protected ArrayList<Participant> doInBackground(String... search_parameters) {
@@ -66,8 +84,6 @@ public class ElasticsearchMPController {
             ArrayList<Participant> participants = new ArrayList<Participant>();
 
             String query = "" + search_parameters[0] + "";
-            System.out.println(query);
-
 
             // TODO Build the query
             Search search = new Search.Builder(query)
@@ -83,7 +99,6 @@ public class ElasticsearchMPController {
                     participants.addAll(foundParticipant);
                 } else {
                     Log.i("Error", "The search query failed to find any users that matched");
-                    System.out.println("could not find error");
                 }
             } catch (Exception e) {
                 Log.i("Error", "Something went wrong when tried to communicate with the elasticsearch server!");
@@ -94,6 +109,9 @@ public class ElasticsearchMPController {
     }
 
 
+    /**
+     * This task gets one single participant from the elastic search server
+     */
     public static class GetOneUserTask extends AsyncTask<String, Void, Participant> {
         @Override
         protected Participant doInBackground(String... search_parameters) {
@@ -132,6 +150,9 @@ public class ElasticsearchMPController {
 
     }
 
+    /**
+     * This is the main task used to update a user in the elastic search server.
+     */
     public static class UpdateUsersTask extends AsyncTask<Participant, Void, Void> {
         @Override
         protected Void doInBackground(Participant... participants) {
@@ -160,11 +181,22 @@ public class ElasticsearchMPController {
         }
     }
 
+    /**
+     * Update user.
+     *
+     * @param participant the participant
+     */
     public void updateUser(Participant participant) {
         UpdateUsersTask updateUsersTask = new UpdateUsersTask();
         updateUsersTask.execute(participant);
     }
 
+    /**
+     * Gets using participant.
+     *
+     * @param aName the a name
+     * @return the using participant
+     */
     public Participant getUsingParticipant(String aName) {
         Participant returnedParticipant = new Participant(null);
 
@@ -192,6 +224,9 @@ public class ElasticsearchMPController {
         return returnedParticipant;
     }
 
+    /**
+     * Verify settings.
+     */
     public static void verifySettings() {
         if (client == null) {
             DroidClientConfig.Builder builder = new DroidClientConfig.Builder("https://elastic.vfree.org");

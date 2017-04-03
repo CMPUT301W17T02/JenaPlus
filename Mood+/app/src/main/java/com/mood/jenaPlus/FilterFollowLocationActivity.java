@@ -21,7 +21,11 @@ import java.util.List;
 
 /**
  * This activity is used to view all of the moods of people that the participant
- * follows. It will show the mood events that have location attached.
+ * follows. It will show the mood events that have location attached. Location and Most Recent
+ * filter combinations will be checked in this filter activity view.
+ *
+ * @author Carlo
+ * @version 1.0
  **/
 
 public class FilterFollowLocationActivity extends AppCompatActivity implements MPView<MoodPlus>{

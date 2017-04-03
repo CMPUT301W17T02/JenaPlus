@@ -19,7 +19,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This activity is used to view participant mood events filtered by location.
+ * This activity is used to view participant mood events filtered by location. This activity also
+ * checks for a most recent filter choice as well.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class FilteredLocationActivity extends AppCompatActivity implements MPView<MoodPlus> {
