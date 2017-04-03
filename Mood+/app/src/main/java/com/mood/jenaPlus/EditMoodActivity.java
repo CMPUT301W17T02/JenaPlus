@@ -182,7 +182,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
             }
         });
 
-
         date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
