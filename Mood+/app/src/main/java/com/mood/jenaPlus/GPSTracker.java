@@ -20,7 +20,12 @@ import android.util.Log;
 import android.location.LocationListener;
 
 /**
- * GPSTracker class is used to get the current position location
+ * This is GPSTracker class, used for getting the current location
+ * of the device. It is first asked the user for permission.
+ * This class is being called in getLocation method in AddMoodActivity
+ * and MoodPlusActivity
+ *
+ * @author KishuDroid
  * Taken from http://stackoverflow.com/questions/36915290/getting-latitude-and-longitude-0-0-in-android-m
  * 2017-03-12
  */
