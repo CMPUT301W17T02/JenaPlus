@@ -12,13 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+/**
+ * This activity is used to view participant mood events filtered by text or key word.
+ */
 
 public class FilteredTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
 

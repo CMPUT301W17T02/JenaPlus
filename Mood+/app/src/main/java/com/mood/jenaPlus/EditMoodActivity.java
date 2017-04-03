@@ -5,24 +5,17 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
-
-import android.media.Image;
-import android.net.ConnectivityManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
 import android.view.MenuItem;
@@ -49,13 +42,14 @@ import com.novoda.merlin.registerable.disconnection.Disconnectable;
 
 import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
+
+/**
+ * EditMoodActivity for editing mood event.
+ */
 
 public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
 
-
-    private Button socialPopup;
     private Button save;
     private ImageView selected_image;
 
@@ -132,15 +126,15 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         date = (EditText) findViewById(R.id.time);
         date.setText(aDate);
 
-        aText = mood.getText().toString();
+        aText = mood.getText();
         message = (EditText) findViewById(R.id.message);
         message.setText(aText);
 
-        aSocial = mood.getSocial().toString();
+        aSocial = mood.getSocial();
         situation = (TextView) findViewById(R.id.situation);
         situation.setText(aSocial);
 
-        aPhoto = mood.getPhoto().toString();
+        aPhoto = mood.getPhoto();
 
         aColor = mood.getColor();
         View view = this.getWindow().getDecorView();

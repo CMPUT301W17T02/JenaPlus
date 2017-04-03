@@ -12,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;

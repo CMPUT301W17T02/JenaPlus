@@ -1,11 +1,8 @@
 package com.mood.jenaPlus;
 
-import android.location.Location;
+
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
 
 public class MoodPlus extends MPModel<MPView> {
 

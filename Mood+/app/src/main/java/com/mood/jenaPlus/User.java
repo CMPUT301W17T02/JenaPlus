@@ -1,9 +1,5 @@
 package com.mood.jenaPlus;
 
-import android.icu.text.MessagePattern;
-
-import io.searchbox.annotations.JestId;
-
 /**
  * This is a general abstract user class.
  * A user of the app must have a username.
