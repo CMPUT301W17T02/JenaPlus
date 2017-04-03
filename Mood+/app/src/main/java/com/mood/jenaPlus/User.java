@@ -3,6 +3,7 @@ package com.mood.jenaPlus;
 /**
  * This is a general abstract user class.
  * A user of the app must have a username.
+ *
  * @author Cecelia
  */
 
