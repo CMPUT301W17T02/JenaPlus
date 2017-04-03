@@ -90,6 +90,32 @@ public class AddMoodActivityTest extends ActivityInstrumentationTestCase2{
 
     }
 
+    public void testAddSocialSituationMood() {
+
+        solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
+        solo.clearEditText((EditText) solo.getView(R.id.loginUserName));
+        solo.enterText((EditText) solo.getView(R.id.loginUserName), "josefina");
+        solo.clickOnButton("Log in");
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
+
+        solo.clickOnView((solo.getView(R.id.fab)));
+        solo.assertCurrentActivity("Wrong Activity", AddMoodActivity.class);
+
+        // clicking on the first mood: "Feeling Surprised" appears on the toast
+        GridView gridview = (GridView)solo.getView(R.id.gridView);
+        View element = gridview.getChildAt(0);
+        solo.clickOnView(element);
+
+        solo.clickOnView((solo.getView(R.id.socialPopup)));
+        solo.searchText("Alone");
+        solo.clickOnText("Alone");
+
+        solo.clickOnView((solo.getView(R.id.AddButton)));
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
+        deleteTestMood();
+
+    }
+
     public void deleteTestMood() {
 
         solo.clickLongInList(0);
