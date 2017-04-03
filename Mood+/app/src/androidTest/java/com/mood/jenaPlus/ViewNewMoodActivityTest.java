@@ -32,9 +32,8 @@ public class ViewNewMoodActivityTest  extends ActivityInstrumentationTestCase2 {
     public void testViewNewMood() {
         solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.loginUserName));
-        solo.enterText((EditText) solo.getView(R.id.loginUserName), "herb");
+        solo.enterText((EditText) solo.getView(R.id.loginUserName), "josefina");
         solo.clickOnButton("Log in");
-        assertTrue(solo.waitForText("Username: herb"));
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
 
         solo.clickOnView((solo.getView(R.id.fab)));
@@ -51,16 +50,14 @@ public class ViewNewMoodActivityTest  extends ActivityInstrumentationTestCase2 {
         solo.clickOnText("Alone");
 
         solo.clickOnView((solo.getView(R.id.AddButton)));
-        solo.waitForActivity("MoodPlusActivity");
-        assertTrue(solo.waitForText("Username: herb"));
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
 
         solo.clickInList(0);
-        solo.waitForActivity("ViewMoodActivity");
         assertTrue(solo.waitForText("Alone"));
         solo.assertCurrentActivity("Wrong Activity", ViewMoodActivity.class);
 
-
     }
+
+
 
 }

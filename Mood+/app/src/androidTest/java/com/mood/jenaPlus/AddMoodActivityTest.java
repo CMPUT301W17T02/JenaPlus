@@ -28,12 +28,11 @@ public class AddMoodActivityTest extends ActivityInstrumentationTestCase2{
         solo = new Solo(getInstrumentation(),getActivity());
     }
 
-    public void testAddMood() {
+    public void testAddBareMood() {
         solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.loginUserName));
-        solo.enterText((EditText) solo.getView(R.id.loginUserName), "herb");
+        solo.enterText((EditText) solo.getView(R.id.loginUserName), "josefina");
         solo.clickOnButton("Log in");
-        assertTrue(solo.waitForText("Username: herb"));
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
 
         solo.clickOnView((solo.getView(R.id.fab)));
@@ -46,14 +45,56 @@ public class AddMoodActivityTest extends ActivityInstrumentationTestCase2{
         solo.clickOnView(element);
 
 
-       // solo.clearEditText((EditText) solo.getView(R.id.message));
-       // solo.enterText((EditText) solo.getView(R.id.message), "Feeling Surprised!!");
-
         solo.clickOnView((solo.getView(R.id.AddButton)));
-        solo.waitForActivity("MoodPlusActivity");
-        assertTrue(solo.waitForText("Username: herb"));
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
+        deleteTestMood();
+    }
+
+    public void testAddLocationMood() {
+
+        solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
+        solo.clearEditText((EditText) solo.getView(R.id.loginUserName));
+        solo.enterText((EditText) solo.getView(R.id.loginUserName), "josefina");
+        solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
 
+        solo.clickOnView((solo.getView(R.id.fab)));
+        solo.assertCurrentActivity("Wrong Activity", AddMoodActivity.class);
+
+        // clicking on the first mood: "Feeling Surprised" appears on the toast
+        GridView gridview = (GridView)solo.getView(R.id.gridView);
+        View element = gridview.getChildAt(0);
+        solo.clickOnView(element);
+
+        // Click the location button
+        solo.clickOnView((solo.getView(R.id.action_navigation)));
+
+        // Add mood and return to main activity.
+        solo.clickOnView((solo.getView(R.id.AddButton)));
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
+
+        solo.clickInList(0);
+        solo.assertCurrentActivity("Wrong Activity", ViewMoodActivity.class);
+
+        // Click on the navigation button, view the mood, view the location, and go back to main
+        solo.clickOnView((solo.getView(R.id.test_location)));
+        solo.assertCurrentActivity("Wrong Activity", MapActivity.class);
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", ViewMoodActivity.class);
+        solo.goBack();
+        solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
+
+        // Remove the test mood
+        deleteTestMood();
+
+
+    }
+
+    public void deleteTestMood() {
+
+        solo.clickLongInList(0);
+        solo.clickOnText("Delete");
+        solo.clickOnText("Yes");
     }
 
 

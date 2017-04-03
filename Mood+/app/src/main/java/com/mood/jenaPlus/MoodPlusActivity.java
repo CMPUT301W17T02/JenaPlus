@@ -441,6 +441,8 @@ public class MoodPlusActivity extends MerlinActivity
     /*-------------------------------------OWN FILTER MOODS---------------------------------------*/
 
     public void testFilters() {
+        searching = recent = moody = locationBool = false;
+
         final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
@@ -633,6 +635,8 @@ public class MoodPlusActivity extends MerlinActivity
                                         Toast.makeText(context, "Filter By Annoyed Moods",
                                                 Toast.LENGTH_SHORT).show();
                                         break;
+                                    default:
+
 
                                 }
                             }
@@ -762,7 +766,7 @@ public class MoodPlusActivity extends MerlinActivity
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                searching = recent = moody = false;
+                searching = recent = moody = locationBool = false;
                 dialog.cancel();
 
             }
@@ -826,6 +830,7 @@ public class MoodPlusActivity extends MerlinActivity
         final CharSequence[] items = {" Text "," Most Recent "," Mood ", " Location "};
         // arraylist to keep the selected items
         final ArrayList selectedItems=new ArrayList();
+        searching = recent = moody = locationBool = false;
 
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Filter your following moods")
@@ -1145,18 +1150,77 @@ public class MoodPlusActivity extends MerlinActivity
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which) {
                                     case 0:
-                                        Intent graphIntent = new Intent(MoodPlusActivity.this, GraphActivity.class);
-                                        startActivity(graphIntent);
+                                        barDateDialog();
                                         break;
                                     case 1:
-                                        Intent pieintent = new Intent(MoodPlusActivity.this, Piechart.class);
-                                        startActivity(pieintent);
+                                        pieDateDialog();
                                         break;
                                 }
                             }
                         })
 
                 .setIcon(android.R.drawable.ic_menu_info_details)
+                .show();
+    }
+
+    public void barDateDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Which moods to use?")
+                .setItems(new CharSequence[]
+                                {"Moods from the last 7 days", "All moods"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        Intent graphIntent1 = new Intent(MoodPlusActivity.this, GraphActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("sevenDays","yes");
+                                        graphIntent1.putExtras(bundle);
+                                        startActivity(graphIntent1);
+                                        break;
+                                    case 1:
+                                        Intent graphIntent2 = new Intent(MoodPlusActivity.this, GraphActivity.class);
+                                        Bundle bundle2 = new Bundle();
+                                        bundle2.putString("sevenDays","no");
+                                        graphIntent2.putExtras(bundle2);
+                                        startActivity(graphIntent2);
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(R.drawable.ic_graph)
+                .show();
+
+    }
+
+    public void pieDateDialog() {
+        new AlertDialog.Builder(context)
+                .setTitle("Which moods to use?")
+                .setItems(new CharSequence[]
+                                {"Moods from the last 7 days", "All moods"},
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case 0:
+                                        Intent graphIntent1 = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("sevenDays","yes");
+                                        graphIntent1.putExtras(bundle);
+                                        startActivity(graphIntent1);
+                                        break;
+                                    case 1:
+                                        Intent graphIntent2 = new Intent(MoodPlusActivity.this, Piechart.class);
+                                        Bundle bundle2 = new Bundle();
+                                        bundle2.putString("sevenDays","no");
+                                        graphIntent2.putExtras(bundle2);
+                                        startActivity(graphIntent2);
+                                        break;
+                                }
+                            }
+                        })
+
+                .setIcon(R.drawable.ic_piechart)
                 .show();
     }
 

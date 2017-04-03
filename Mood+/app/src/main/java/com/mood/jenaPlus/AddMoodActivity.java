@@ -103,7 +103,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
     private Button addButton;
     private EditText message;
     private GridView gridview;
-    private ImageView image;
+    private ImageButton image;
 
     Context context = this;
 
@@ -150,7 +150,30 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         message = (EditText) findViewById(R.id.message);
         addButton = (Button) findViewById(R.id.AddButton);
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        image = (ImageView) findViewById(R.id.selected_image);
+        image = (ImageButton) findViewById(R.id.selected_image);
+
+        image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(context)
+                        .setTitle("Delete Image")
+                        .setMessage("Do you want to delete this image?")
+                        .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                imageString = "";
+                                image.setImageBitmap(null);
+                            }
+                        })
+                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return false;
+            }
+        });
 
         infoButton = (ImageButton) findViewById(R.id.info);
         infoButton.setOnClickListener(new View.OnClickListener() {
@@ -330,7 +353,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
         //2017-03-26
         ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,50, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,60, baos);
         byte [] b=baos.toByteArray();
         String temp=Base64.encodeToString(b, Base64.DEFAULT);
         return temp;

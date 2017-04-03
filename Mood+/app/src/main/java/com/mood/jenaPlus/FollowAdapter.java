@@ -3,6 +3,7 @@ package com.mood.jenaPlus;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -86,9 +87,12 @@ public class FollowAdapter extends ArrayAdapter<Participant> {
                     MainMPController mpController = MoodPlusApplication.getMainMPController();
                     mpController.addFollowRequest(participant.getUserName());
                     mpController.setPendingFollowers(participant.getUserName());
-                    remove(participant);
+                    //remove(participant);
                 }
 
+                Button b = (Button) v;
+                b.setText("Followed");
+                b.setBackgroundColor(Color.parseColor("#E0E0E0"));
                 v.setEnabled(false);
                 notifyDataSetChanged();
             }

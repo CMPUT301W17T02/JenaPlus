@@ -27,9 +27,8 @@ public class WelcomeActivityTest extends ActivityInstrumentationTestCase2 {
 
     public void testLoginParticipant(){
         solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
-        solo.enterText((EditText) solo.getView(R.id.loginUserName),"herb");
+        solo.enterText((EditText) solo.getView(R.id.loginUserName),"josefina");
         solo.clickOnButton("Log in");
-        assertTrue(solo.waitForText("Username: herb"));
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
     }
 
