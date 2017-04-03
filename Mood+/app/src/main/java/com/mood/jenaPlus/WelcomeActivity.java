@@ -15,7 +15,11 @@ import java.util.ArrayList;
 
 /**
  * This is the start up activity, allow the user to log in to
- * the MoodPlus Application
+ * the MoodPlus Application. If a user exists they will not be able to log in, and will be
+ * prompted to enter in a new user name. A user name cannot be empty.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlus> {
