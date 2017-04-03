@@ -12,13 +12,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
+ * This is for creating mood list, displaying emotional states,
+ * Date, and trigger to the MoodListViewActivity.
  * Created by carrotji on 2017-03-12.
  */
 public class MoodListAdapter extends ArrayAdapter<Mood> {
 
-    /**
-     * The Context.
-     */
     Context context;
 
     /**
@@ -48,7 +47,7 @@ public class MoodListAdapter extends ArrayAdapter<Mood> {
         String aId = moodList.getId();
         String color = moodList.getColor();
 
-       view.setBackgroundColor(Color.parseColor(color));
+        view.setBackgroundColor(Color.parseColor(color));
 
 
         int recId = context.getResources().getIdentifier(aId, "drawable", context.getPackageName());

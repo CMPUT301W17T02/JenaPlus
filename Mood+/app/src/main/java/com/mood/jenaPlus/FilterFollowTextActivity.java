@@ -12,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +19,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+/**
+ * This activity is used to view all of the moods of people that the participant
+ * follows. It will show the mood events that contain certain text or key word.
+ **/
 
 public class FilterFollowTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
 

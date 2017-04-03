@@ -12,6 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
+ * This is for creating mood follower list, displaying emotional states,
+ * Date, and trigger to the all the FilterActivity.
  * Created by Carlo on 2017-03-25.
  */
 

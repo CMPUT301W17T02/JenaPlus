@@ -6,32 +6,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.location.Criteria;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.media.Image;
-import android.net.ConnectivityManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Base64;
 import android.util.Log;
@@ -44,32 +28,9 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.maps.model.LatLng;
-
-import org.w3c.dom.Text;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.io.OutputStreamWriter;
-
-import java.io.UnsupportedEncodingException;
-
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import com.google.gson.Gson;
 import com.novoda.merlin.Merlin;
 import com.novoda.merlin.MerlinsBeard;
 import com.novoda.merlin.NetworkStatus;
@@ -79,8 +40,6 @@ import com.novoda.merlin.registerable.disconnection.Disconnectable;
 import com.mood.jenaPlus.presentation.base.MerlinActivity;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
-
-import static android.R.attr.name;
 
 /**
  * This is the main activity to add a mood.
@@ -133,7 +92,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         MainMPController mpController = MoodPlusApplication.getMainMPController();
         Participant participant = mpController.getParticipant();
 
-        //TextView test = (TextView) findViewById(R.id.addtext);
         networkStatusDisplayer = new NetworkStatusCroutonDisplayer(this);
         merlinsBeard = MerlinsBeard.from(this);
 
@@ -143,7 +101,6 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         String name = participant.getUserName();
         userName = name;
         String id = participant.getId();
-
 
         /*------------------------------------------------*/
 
@@ -365,7 +322,7 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
         super.onActivityResult(requestCode, resultCode,data);
         if(requestCode == 1234){
             if(resultCode == Activity.RESULT_OK){
-                //handleBigCameraPhoto();
+
                 Bundle extras = data.getExtras();
                 Bitmap photo = (Bitmap) extras.get("data");
                 image.setImageBitmap(photo);

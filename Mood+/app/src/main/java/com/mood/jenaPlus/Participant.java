@@ -1,9 +1,5 @@
 package com.mood.jenaPlus;
 
-import android.location.Location;
-
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 import io.searchbox.annotations.JestId;
