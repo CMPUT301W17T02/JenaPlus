@@ -22,8 +22,11 @@ import java.util.List;
 
 /**
  * This is the pie chart activity class of the statistics.
+ * It shows the pie chart statistic for the participant,
+ * and gives two options to filter most recent and all moods.
  *
  * @author Cecilia
+ * @version 1.0
  */
 public class StatsActivity extends AppCompatActivity implements MPView<MoodPlus> {
 

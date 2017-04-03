@@ -8,6 +8,7 @@ import io.searchbox.annotations.JestId;
  * This is the main participant class which contains a Jest Id for elastic search,
  * a moodlist that contains their own list of moods, a following moodlist, and 2 lists for
  * who they follow and who is following them.
+ *
  * @author Cecelia
  * @author Carlo
  */

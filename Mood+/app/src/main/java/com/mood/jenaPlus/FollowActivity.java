@@ -15,6 +15,7 @@ import java.util.Locale;
 /**
  * This activity is used when a participant wants to follow another participant.
  * From clicking the top right button on the main activity.
+ * Searching for participant.
  *
  * @author Carlo
  * @author Carrol
@@ -97,6 +98,11 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         return false;
     }
 
+    /**
+     * Search for participant by a given text
+     * @param newText
+     * @return
+     */
     @Override
     public boolean onQueryTextChange(String newText) {
         int listSize = participantList.size();
@@ -119,7 +125,7 @@ public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus
         else {
             participantList.addAll(tempArrayList2);
         }
-       adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged();
 
         return false;
     }
