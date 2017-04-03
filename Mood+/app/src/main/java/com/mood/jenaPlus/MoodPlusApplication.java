@@ -3,7 +3,7 @@ package com.mood.jenaPlus;
 import android.app.Application;
 
 /**
- *
+ * Mood Plus Application
  * @author Carrol
  * @author Carlo
  */

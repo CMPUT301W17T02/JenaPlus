@@ -3,7 +3,7 @@ package com.mood.jenaPlus;
 import java.util.ArrayList;
 
 /**
- * Created by carrotji on 2017-02-25.
+ * MP Model
  *
  * @param <V> the type parameter
  */

@@ -3,6 +3,9 @@ package com.mood.jenaPlus;
 
 import android.util.Log;
 
+/**
+ * Main Activity of MoodPlus application
+ */
 
 public class MoodPlus extends MPModel<MPView> {
 
