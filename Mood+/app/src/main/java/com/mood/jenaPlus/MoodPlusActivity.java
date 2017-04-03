@@ -55,7 +55,10 @@ import static com.mood.jenaPlus.MapActivity.MY_PERMISSIONS_REQUEST_LOCATION;
  * This is the main activity class of the MoodPlus application. From this activity
  * A participant may add a new mood or view an existing mood.
  * If the participant uses the slider navigation drawer, the user is able to filter
- * moods by text, a certain mood, or by the date (last 7 days).
+ * moods by text, a certain mood, by the date (last 7 days), as well as by location. A participant
+ * may also search for other users, follow other users, unfollow users, view other participants
+ * with a mood within a 5 km radius, and view statistics in the form of a bar or pie chart.
+ *
  * @author Carlo
  * @author Cecelia
  * @author Carrol
