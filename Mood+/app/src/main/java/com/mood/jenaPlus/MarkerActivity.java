@@ -20,13 +20,9 @@ import java.util.ArrayList;
  * The Marker Activity is for viewing map of mood events,
  * it is used when filtering mood events of the user or
  * the following participants by location.
-<<<<<<< HEAD
- * @author Carrol
-=======
  *
-   @author Carrol
+ * @author Carrol
  * @version 1.0
->>>>>>> 21bb85f22d4bc0361d817f456c45d3b6652a6125
  */
 
 public class MarkerActivity extends FragmentActivity implements

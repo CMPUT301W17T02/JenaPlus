@@ -44,8 +44,21 @@ import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+
 /**
- * EditMoodActivity for editing mood event.
+ * This is the main activity to edit a mood. A participant can edit a mood by long click on the mood.
+ * A photo can be edited, which will bring the participant to their camera; or deleted;
+ * A participant can also change the social situation as well as their location from location picker.
+ * A trigger message can also be edited or deleted, and the date can also be changed.
+ *
+ *<br>
+ *     A participant is able to edit a mood offline, and will be synced to the server once
+ *     internet connection is resumed.
+ *
+ * @author Carrol
+ * @author Cecilia
+ * @author Julienne
+ * @version 1.0
  */
 
 public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {

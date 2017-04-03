@@ -24,9 +24,12 @@ import static android.media.CamcorderProfile.get;
 import static com.github.mikephil.charting.charts.CombinedChart.DrawOrder.BAR;
 
 /**
- * This is the Graph activity class of the statistics.
+ * This is the bar chart activity class of the statistics.
+ * It shows the bar chart statistic for the participant,
+ * and gives two options to filter most recent and all moods.
  *
  * @author Cecilia
+ * @version 1.0
  */
 public class GraphActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
