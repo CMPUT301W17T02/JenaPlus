@@ -18,7 +18,13 @@ import java.util.ArrayList;
 
 
 /**
- * This is for viewing mood events
+ * This is for viewing mood events. It will show all attributes of a mood from a participant,
+ * except their user name. If a location is attached to a modd then a navigation marker will
+ * appear to view on a map.
+ *
+ * @author Carlo
+ * @author Carrol
+ * @version 1.0
  */
 public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 

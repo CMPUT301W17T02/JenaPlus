@@ -19,7 +19,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This activity is used to view participant mood events filtered by emotional states.
+ * This activity is used to view participant mood events filtered by emotional states. This filter
+ * will check for only Mood, Most Recent, and Location filter combinations.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class FilteredMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {

@@ -14,6 +14,9 @@ import java.util.ArrayList;
 /**
  * The FollowerRequestAdapter class created a listView for FollowerRequestActivity,
  * this listView contains acceptButton and declineButton.
+ *
+ * @author Carrol
+ * @version 1.0
  */
 
 public class FollowerRequestAdapter extends ArrayAdapter<Participant> {

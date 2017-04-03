@@ -17,6 +17,10 @@ import java.util.ArrayList;
  * This class is used to view all the participants someone follows.
  * From this class you can unfollow using long click, or if you short
  * click on a participant you can view their mood list.
+ *
+ * @author Carlo
+ * @author Carrol
+ * @version 1.0
  * **/
 
 public class FollowingListActivity extends AppCompatActivity implements MPView<MoodPlus> {

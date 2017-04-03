@@ -15,7 +15,11 @@ import java.util.ArrayList;
 
 /**
  * This is the start up activity, allow the user to log in to
- * the MoodPlus Application
+ * the MoodPlus Application. If a user exists they will not be able to log in, and will be
+ * prompted to enter in a new user name. A user name cannot be empty.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlus> {
@@ -40,7 +44,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
             @Override
             public void onClick(View v) {
 
-                // Taken from http://stackoverflow.com/questions/7071578/connectivitymanager-to-verify-internet-connection
+                // Taken from http://stackoverflow.com/questions/7071578/
+                // connectivitymanager-to-verify-internet-connection
                 // 03-07-2017 23:06
                 ConnectivityManager cm =
                         (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -57,21 +62,22 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 int pListSize = participantList.size();
 
                 for (int i = 0; i<pListSize; i++) {
-                    String user = participantList.get(i).getUserName();
-                }
-
-                for (int i = 0; i<pListSize; i++) {
                     if (participantList.get(i).getUserName().equals(strUser)){
                         seen = true;
                         break;
-                        //throw new IllegalArgumentException("Participant exists.");
                     } else {
                         seen = false;
                     }
                 }
 
                 // Will only continue if connected to the internet.
-                if (seen== false){
+                if (strUser.equals("")){
+                    userName.setError("No users have an empty user name.");
+                }
+                else if(!isConnected) {
+                    userName.setError("Not Connected To the Internet");
+                }
+                else if (!seen){
                     userName.setError("User Doesn't Exist, Press Add New ");
                 }
 
@@ -90,7 +96,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         MoodPlus moodPlus = MoodPlusApplication.getMoodPlus(); // Taken from FillerCreep
         moodPlus.addView(this); // Taken from FillerCreep
 
-        ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+        ElasticsearchMPController.GetUsersTask getUsersTask =
+                new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");
 
         try {
@@ -122,10 +129,6 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 int pListSize = participantList.size();
 
                 for (int i = 0; i<pListSize; i++) {
-                    String user = participantList.get(i).getUserName();
-                }
-
-                for (int i = 0; i<pListSize; i++) {
                     if (participantList.get(i).getUserName().equals(strUser)){
                         seen = true;
                         break;
@@ -136,14 +139,18 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
                 }
 
                 // Will only continue if connected to the internet.
-                if (seen== true){
+                if (strUser.equals("")){
+                    userName.setError("Cannot add an empty user name");
+                }
+                else if (seen){
                     userName.setError("User Name already taken. Try again. ");
                 }
 
                 else if (isConnected) {
                     setResult(RESULT_OK);
                     Participant newParticipant = new Participant(strUser);
-                    ElasticsearchMPController.AddUsersTask addUser = new ElasticsearchMPController.AddUsersTask();
+                    ElasticsearchMPController.AddUsersTask addUser =
+                            new ElasticsearchMPController.AddUsersTask();
                     addUser.execute(newParticipant);
 
                     model.getParticipantElastic(strUser);
@@ -163,7 +170,8 @@ public class WelcomeActivity extends AppCompatActivity implements MPView<MoodPlu
         super.onStart();
         //loadFromFile(); // TODO replace this with elastic search
 
-        ElasticsearchMPController.GetUsersTask getUsersTask = new ElasticsearchMPController.GetUsersTask();
+        ElasticsearchMPController.GetUsersTask getUsersTask =
+                new ElasticsearchMPController.GetUsersTask();
         getUsersTask.execute("");
 
         try {

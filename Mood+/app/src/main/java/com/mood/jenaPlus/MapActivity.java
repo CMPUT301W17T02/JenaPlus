@@ -32,6 +32,9 @@ import java.util.ArrayList;
  * The Map activity is used for viewing the participant current location,
  * view mood events that have location and view other participant mood event
  * with location that is 5 km near me.
+ *
+ * @author Carrol
+ * @version 1.0
  */
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback,

@@ -22,7 +22,11 @@ import java.util.List;
 
 /**
  * This activity is used to view all of the moods of people that the participant
- * follows. It will show the mood events that contain certain text or key word.
+ * follows. It will show the mood events that contain certain text or key word. This filter activity
+ * will check for all 4 combinations of filter options. Text, Mood, Most Recent, and Location.
+ *
+ * @author Carlo
+ * @version 1.0
  **/
 
 public class FilterFollowTextActivity extends AppCompatActivity implements MPView<MoodPlus>{

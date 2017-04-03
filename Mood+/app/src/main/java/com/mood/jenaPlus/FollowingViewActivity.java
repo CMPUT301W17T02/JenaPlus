@@ -20,6 +20,12 @@ import java.util.Comparator;
 
 /**
  * Fragment for mood events of the people you are following
+ * This fragment will only show the most recent mood from the participants you are following,
+ * provided that they have a mood.
+ *
+ * @author Carlo
+ * @author Carrol
+ * @version 1.0
  */
 
 public class FollowingViewActivity extends Fragment implements MPView<MoodPlus>{

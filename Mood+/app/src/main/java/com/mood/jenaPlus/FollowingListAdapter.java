@@ -15,6 +15,10 @@ import java.util.ArrayList;
 /**
  * The FollowingListAdapter class created a listView for FollowingListActivity,
  * this listView contains unfollow button.
+ *
+ * @author Carlo
+ * @author Carrol
+ * @version 1.0
  */
 
 public class FollowingListAdapter extends ArrayAdapter<Participant> {

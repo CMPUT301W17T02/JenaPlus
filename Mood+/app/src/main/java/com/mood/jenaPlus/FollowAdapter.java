@@ -17,6 +17,9 @@ import java.util.ArrayList;
 /**
  * The FollowAdapter class created a listView for FollowActivity,
  * this listView contains follow button.
+ *
+ * @author Carrol
+ * @version 1.0
  */
 
 public class FollowAdapter extends ArrayAdapter<Participant> {

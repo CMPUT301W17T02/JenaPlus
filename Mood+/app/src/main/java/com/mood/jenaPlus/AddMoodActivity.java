@@ -42,14 +42,23 @@ import com.mood.jenaPlus.connectivity.display.NetworkStatusDisplayer;
 import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
 
 /**
- * This is the main activity to add a mood.
+ * This is the main activity to add a mood. A participant must choose a mood icon. A photo can be
+ * picked, which will bring the participant to their camera. A participant can also add a
+ * social situation as well as their location. The location will be taken from GPS Tracker Class.
+ *
+ *<br>
+ *     A participant is able to add a mood offline, and will be synced to the server once
+ *     internet connection is resumed.
  *
  * @author Carlo
  * @author Carrol
- *
+ * @author Cecilia
+ * @author Julienne
+ * @version 1.0
  */
 
-public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable, Disconnectable, Bindable {
+public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable,
+        Disconnectable, Bindable {
 
     int idNum;
     int colorNum;
@@ -201,7 +210,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
                                 break;
                             case R.id.socialPopup:
-                                // Taken from http://stackoverflow.com/questions/21329132/android-custom-dropdown-popup-menu
+                                // Taken from http://stackoverflow.com/questions/21329132/
+                                // android-custom-dropdown-popup-menu
                                 // 04-03-2015 01:16
                                 View menuItemView = findViewById(R.id.socialPopup);
                                 PopupMenu popup = new PopupMenu(AddMoodActivity.this, menuItemView);
@@ -374,9 +384,13 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
         Location currentLocation = new Location("dummyprovider");
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(AddMoodActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(context,
+                Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(AddMoodActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         } else {
             GPSTracker gps = new GPSTracker(context, AddMoodActivity.this);
@@ -428,7 +442,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude, idString, socialSituation, imageString, colorString, userName);
+                mpController.addMoodParticipant1(trigger, addLocation, latitude, longitude,
+                        idString, socialSituation, imageString, colorString, userName);
 
                 OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
                 Participant offlineParticipant = offlineController.getOfflineParticipant();
@@ -449,7 +464,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
             } else if (trigCheck && moodChosen) {
                 MainMPController mpController = MoodPlusApplication.getMainMPController();
-                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                mpController.addMoodParticipant2(trigger, addLocation, idString, socialSituation,
+                        imageString, colorString, userName);
 
                 OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
                 Participant offlineParticipant = offlineController.getOfflineParticipant();
@@ -489,7 +505,8 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
                     //no location
                 } else if (trigCheck && moodChosen) {
 
-                    Mood mood = dummyMood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+                    Mood mood = dummyMood(trigger, addLocation, idString, socialSituation,
+                            imageString, colorString, userName);
 
                     OfflineDataController offlineController = MoodPlusApplication.getOfflineDataController();
                     Participant offlineParticipant = offlineController.getOfflineParticipant();
@@ -620,9 +637,11 @@ public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>,
 
 
     private Mood dummyMood(String trigger, Boolean addLocation, String idString,
-                            String socialSituation, String imageString, String colorString, String userName){
+                            String socialSituation, String imageString, String colorString,
+                           String userName){
 
-        Mood mood = new Mood(trigger, addLocation, idString, socialSituation, imageString, colorString, userName);
+        Mood mood = new Mood(trigger, addLocation, idString, socialSituation, imageString,
+                colorString, userName);
         mood.setText(trigger);
         mood.setAddLocation(addLocation);
         mood.setId(idString);

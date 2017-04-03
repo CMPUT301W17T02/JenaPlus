@@ -6,9 +6,11 @@ import java.util.Comparator;
 import java.util.Date;
 
 /**
- * This is the class that defines the mood list of a user.
+ * This is the main class that defines the mood list of a user.
  *
- * @author Julienne and Carlo Created on 2017-03-10.
+ * @author Julienne
+ * @author Carlo
+ * @version 1.0
  */
 public class UserMoodList {
 
