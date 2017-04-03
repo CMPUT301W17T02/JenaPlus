@@ -1,5 +1,4 @@
 package com.mood.jenaPlus;
-import android.location.Location;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -95,5 +94,5 @@ public class ParticipantTest{
         assertEquals(mood0.getText(),text);
         assertEquals(mood1.getText(),text2);
     }
-    
+
 }
