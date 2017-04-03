@@ -18,7 +18,11 @@ import java.util.Date;
 
 /**
  * This activity is used to view all of the moods of people that the participant
- * follows. It will only show the moods from the past 7 days.
+ * follows. It will only show the moods from the past 7 days. Assumption from the filter logic in
+ * MoodPlusActivity that only the "Most Recent" option was checked.
+ *
+ * @author Carlo
+ * @version 1.0
  **/
 
 public class FilterFollowDateActivity extends AppCompatActivity implements MPView<MoodPlus>{

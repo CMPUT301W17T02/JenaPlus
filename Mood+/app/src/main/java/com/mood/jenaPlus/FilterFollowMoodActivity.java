@@ -22,7 +22,11 @@ import java.util.List;
 
 /**
  * This activity shows only one type of mood that was specified from the option in the main
- * activity. The moods come from all of the people the participant is following.
+ * activity. The moods come from all of the people the participant is following. This activity filter
+ * will check for combinations of Mood, Most Recent and Location options.
+ *
+ * @author Carlo
+ * @version 1.0
  **/
 
 public class FilterFollowMoodActivity extends AppCompatActivity implements MPView<MoodPlus>{

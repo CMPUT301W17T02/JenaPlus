@@ -16,6 +16,10 @@ import java.util.ArrayList;
 
 /**
  * This activity is used to view participant mood events filtered by the most recent seven days.
+ * Assumption from the filters chosen that only date was picked as a filter.
+ *
+ * @author Carlo
+ * @version 1.0
  */
 
 public class FilteredDateActivity extends AppCompatActivity implements MPView<MoodPlus> {

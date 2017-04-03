@@ -48,11 +48,13 @@ import com.mood.jenaPlus.connectivity.display.NetworkStatusCroutonDisplayer;
  *
  *<br>
  *     A participant is able to add a mood offline, and will be synced to the server once
- *     internet connection is resumed. 
+ *     internet connection is resumed.
  *
  * @author Carlo
  * @author Carrol
- *
+ * @author Cecilia
+ * @author Julienne
+ * @version 1.0
  */
 
 public class AddMoodActivity extends MerlinActivity implements MPView<MoodPlus>, Connectable,
