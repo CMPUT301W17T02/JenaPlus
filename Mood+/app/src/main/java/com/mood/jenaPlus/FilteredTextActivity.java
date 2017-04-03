@@ -56,8 +56,6 @@ public class FilteredTextActivity extends AppCompatActivity implements MPView<Mo
             }
         });
 
-        /* -----------------------------*/
-
         /*------------- LOADING THE KEYWORD  -------------*/
 
         Bundle bundle = getIntent().getExtras();

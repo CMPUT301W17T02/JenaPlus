@@ -58,7 +58,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     Marker m ; //reference to the marker
 
     /**
-     *
+     * Obtain the SupportMapFragment and get notified when the map is ready to be used.
      * @param savedInstanceState
      */
     @Override
@@ -66,14 +66,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
     /**
-     *
+     * Place markers of participant mood list that contain location
      * @param map
      */
     @Override
@@ -109,8 +108,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     }
 
+    /**
+     * Resizing images from drawable
+     * Taken from: http://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
+     * @param recId
+     * @param width
+     * @param height
+     * @return
+     */
     public Bitmap resizeMapIcons(Integer recId,int width, int height){
-        // Taken from: http://stackoverflow.com/questions/35718103/how-to-specify-the-size-of-the-icon-on-the-marker-in-google-maps-v2-android
         BitmapDrawable bitmapdraw = (BitmapDrawable)getResources().getDrawable(recId);
         Bitmap imageBitmap = bitmapdraw.getBitmap();
         Bitmap smallMarker = Bitmap.createScaledBitmap(imageBitmap, width, height, false);
@@ -131,7 +137,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     }
 
     /**
-     *
+     * Getting the Current Location and placing a marker on the map
      * @param bundle
      */
     @Override
@@ -185,7 +191,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
     /**
-     *
+     * Ask user for permission to allow access of the map
      * @param requestCode
      * @param permissions
      * @param grantResults
