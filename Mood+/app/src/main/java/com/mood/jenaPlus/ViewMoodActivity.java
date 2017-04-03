@@ -98,9 +98,6 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_interface);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         MoodPlus mp = MoodPlusApplication.getMoodPlus();
         mp.addView(this);
 
@@ -152,12 +149,15 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
 
         }
 
+        /**
+         * Passing LatLng through intent form ViewMoodActivity to MapActivity
+         * Taken from http://stackoverflow.com/questions/30106507/pass-longitude-and-latitude-with-intent-to-another-class
+         * 2017-03-21
+         */
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(addLocation){
-                    //Taken from http://stackoverflow.com/questions/30106507/pass-longitude-and-latitude-with-intent-to-another-class
-                    //2017-03-21
                     LatLng position = new LatLng(aLatitude,aLongitude);
 
                     Bundle args = new Bundle();
@@ -177,9 +177,14 @@ public class ViewMoodActivity extends AppCompatActivity implements MPView<MoodPl
 
     }
 
+    /**
+     * Convert String to BitMap
+     * http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
+     * 2017-03-26
+     * @param encodedString
+     * @return
+     */
     public static Bitmap StringToBitMap(String encodedString){
-        //taken from: http://stackoverflow.com/questions/13562429/how-many-ways-to-convert-bitmap-to-string-and-vice-versa
-        //2017-03-26
         try {
             byte [] encodeByte=Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);

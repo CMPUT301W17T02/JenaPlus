@@ -347,6 +347,9 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
 
     }
 
+    /**
+     * Creating Calendar for choosing a date,month, and year.
+     */
     private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
@@ -357,12 +360,22 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         }
     };
 
+    /**
+     * Opening Device's camera to take picture
+     */
     private void cameraIntent(){
         Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(cameraIntent, 1234);
     }
 
 
+    /**
+     * Receiving Image from Camera Intent
+     * and receiving LatLng from MarkerActivity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode,data);
@@ -389,8 +402,10 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         }
     }
 
-    // Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
-    // 12 Mar 2017 12:42
+    /**
+     * Taken from http://stackoverflow.com/questions/4427608/android-getting-resource-id-from-string
+     * 12 Mar 2017 12:42
+     */
     public static int getId(String resourceName, Class<?> c) {
         try {
             Field idField = c.getDeclaredField(resourceName);
@@ -416,8 +431,13 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
         return check;
     }
 
-    //Taken from http://javarevisited.blogspot.ca/2015/02/how-to-count-number-of-words-in-string.html
-    //11 March 2017 19-41
+    /**
+     * Counting words from the user input
+     * Taken from http://javarevisited.blogspot.ca/2015/02/how-to-count-number-of-words-in-string.html
+     * 11 March 2017 19-41
+     * @param word
+     * @return
+     */
     public int countWord(String word) {
         if (word == null) {
             return 0;
@@ -498,6 +518,12 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     }
 
 
+    /**
+     * Get current latitude and longitude and set position by
+     * calling GPSTracker class.
+     * Ask user to enable GPS/network in settings.
+     * @return
+     */
     public Location getLocation() {
 
         Location currentLocation = new Location("dummyprovider");
@@ -522,9 +548,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
                 return currentLocation;
 
             } else {
-                // Can't get location.
-                // GPS or network is not enabled.
-                // Ask user to enable GPS/network in settings.
                 gps.showSettingsAlert();
             }
         }
