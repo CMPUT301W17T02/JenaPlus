@@ -112,14 +112,12 @@
         <activity
             android:name=".FilteredLocationActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity
-            android:name=".Piechart"
-            android:parentActivityName=".MoodPlusActivity" />
         <activity android:name=".EditMapActivity" />
         <activity
             android:name=".EditMoodActivity"
             android:parentActivityName=".MoodPlusActivity" />
-        <activity android:name=".StatsActivity"></activity>
+        <activity android:name=".StatsActivity"
+            android:parentActivityName=".MoodPlusActivity"></activity>
     </application>
 
 </manifest>

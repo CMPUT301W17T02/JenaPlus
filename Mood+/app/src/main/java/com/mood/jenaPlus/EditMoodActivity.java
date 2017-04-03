@@ -73,7 +73,6 @@ public class EditMoodActivity extends MerlinActivity implements MPView<MoodPlus>
     protected String aText;
     protected String aDate;
     protected Boolean addLocation;
-    private Location location;
     protected Double aLatitude;
     protected Double aLongitude;
     protected String aSocial;
