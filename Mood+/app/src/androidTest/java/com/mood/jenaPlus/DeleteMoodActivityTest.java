@@ -30,7 +30,6 @@ public class DeleteMoodActivityTest extends ActivityInstrumentationTestCase2 {
 
     public void testDeleteMood() {
         solo.assertCurrentActivity("Wrong Activity", WelcomeActivity.class);
-        solo.clearEditText((EditText) solo.getView(R.id.loginUserName));
         solo.enterText((EditText) solo.getView(R.id.loginUserName), "josefina");
         solo.clickOnButton("Log in");
         solo.assertCurrentActivity("Wrong Activity", MoodPlusActivity.class);
