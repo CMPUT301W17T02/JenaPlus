@@ -46,7 +46,7 @@ public class FollowingListAdapter extends ArrayAdapter<Participant> {
             public void onClick(View v) {
                 Toast.makeText(getContext(),"Unfollowing " + participant.getUserName(), Toast.LENGTH_SHORT).show();
                 mpController.unfollowParticipant(participant.getUserName());
-
+                v.setBackgroundColor(Color.parseColor("#E0E0E0"));
                 v.setEnabled(false);
                 notifyDataSetChanged();
             }
