@@ -12,8 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,6 +19,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+/**
+ * This activity is used to view all of the moods of people that the participant
+ * follows. It will show the mood events that contain certain text or key word.
+ **/
 
 public class FilterFollowTextActivity extends AppCompatActivity implements MPView<MoodPlus>{
 
@@ -152,7 +155,7 @@ public class FilterFollowTextActivity extends AppCompatActivity implements MPVie
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No moods with keyword \'"+ moodString+"\' were found.")
+                .setMessage("No moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();

@@ -7,7 +7,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
 
 /**
  * This is for creating mood icons into a gridview

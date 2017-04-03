@@ -8,11 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-
-import com.github.mikephil.charting.charts.BarChart;
-
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;

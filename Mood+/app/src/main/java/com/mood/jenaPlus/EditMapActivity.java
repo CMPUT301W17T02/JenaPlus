@@ -17,6 +17,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * EditMapActivity is for user to pick a location, place a marker
+ * on a Map and pass LatLng to EditMoodActivity.
+ */
+
 public class EditMapActivity extends FragmentActivity implements
         GoogleMap.OnMarkerClickListener,
         OnMapReadyCallback {

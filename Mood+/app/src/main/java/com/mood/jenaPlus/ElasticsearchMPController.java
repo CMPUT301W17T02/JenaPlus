@@ -2,8 +2,6 @@ package com.mood.jenaPlus;
 
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.EditText;
-
 
 import com.searchly.jestdroid.DroidClientConfig;
 import com.searchly.jestdroid.JestClientFactory;
@@ -13,16 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.searchbox.core.DocumentResult;
-import io.searchbox.core.Get;
 import io.searchbox.core.Index;
 import io.searchbox.core.Search;
 import io.searchbox.core.SearchResult;
-import io.searchbox.core.Update;
-import io.searchbox.core.search.aggregation.PercentileRanksAggregation;
 import io.searchbox.params.Parameters;
 
 /**
- * Created by carrotji on 2017-03-05.
+ * This is the main Elastic search controller.
  */
 
 public class ElasticsearchMPController {

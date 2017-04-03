@@ -3,9 +3,12 @@ https://elastic.vfree.org/cmput301w17t2/user/AVsq9whfDCyqBhwh02-v
 {
     "followerList":
     [
+     "carmelita"
     ],
     "followingList":
     [
+     "armando",
+     "roberto"
     ],
     "followingMoodList":
     {

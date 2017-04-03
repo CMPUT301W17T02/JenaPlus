@@ -12,13 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+/**
+ * This activity is used to view participant mood events filtered by emotional states.
+ */
 
 public class FilteredMoodActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
@@ -122,7 +124,7 @@ public class FilteredMoodActivity extends AppCompatActivity implements MPView<Mo
     public void noMoods() {
         new AlertDialog.Builder(context)
                 .setTitle("No Moods")
-                .setMessage("No " +moodString+" moods were found.")
+                .setMessage("No moods were found.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
