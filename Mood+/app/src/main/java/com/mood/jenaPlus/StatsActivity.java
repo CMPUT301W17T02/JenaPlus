@@ -25,7 +25,7 @@ import java.util.List;
  *
  * @author Cecilia
  */
-public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
+public class StatsActivity extends AppCompatActivity implements MPView<MoodPlus> {
 
 
     /**
@@ -140,7 +140,7 @@ public class Piechart extends AppCompatActivity implements MPView<MoodPlus> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_piechart);
+        setContentView(R.layout.activity_stats);
 
         pieChart = (PieChart) findViewById(R.id.chart1);
 
