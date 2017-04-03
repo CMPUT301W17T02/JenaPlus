@@ -15,6 +15,10 @@ import java.util.ArrayList;
 /**
  * This activity is used to view the follower requests
  * From clicking the menu in the Navigation drawer.
+ *
+ * @author Carlo
+ * @author Carrol
+ * @version 1.0
  **/
 
 public class FollowerRequestActivity extends AppCompatActivity implements MPView<MoodPlus> {

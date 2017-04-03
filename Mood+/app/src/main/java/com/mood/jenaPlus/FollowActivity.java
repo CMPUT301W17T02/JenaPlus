@@ -15,6 +15,10 @@ import java.util.Locale;
 /**
  * This activity is used when a participant wants to follow another participant.
  * From clicking the top right button on the main activity.
+ *
+ * @author Carlo
+ * @author Carrol
+ * @version 1.0
  **/
 
 public class FollowActivity extends AppCompatActivity implements MPView<MoodPlus>,SearchView.OnQueryTextListener{
